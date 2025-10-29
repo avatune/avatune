@@ -20,6 +20,7 @@
     "@avatune/types": "workspace:*"
   },
   "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
     "@rsbuild/plugin-react": "^1.4.1",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",

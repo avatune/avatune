@@ -1,8 +1,13 @@
 {
-  "name": "@repo/typescript-config",
+  "name": "@avatune/typescript-config",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
+  "exports": {
+    "./base": "./base.json",
+    "./react-library": "./react-library.json",
+    "./nextjs": "./nextjs.json"
+  },
   "publishConfig": {
     "access": "public"
   }
