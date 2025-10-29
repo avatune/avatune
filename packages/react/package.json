@@ -17,7 +17,8 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
-    "@avatune/types": "workspace:*"
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",

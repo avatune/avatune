@@ -10,7 +10,6 @@ export default defineConfig({
   ],
   source: {
     entry: {
-      index: './src/index.ts',
       vanilla: './src/vanilla.ts',
       react: './src/react.ts',
     },

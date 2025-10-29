@@ -180,6 +180,7 @@ const result = await predictor.predict(imageTensor)
 - Single quotes, semicolons optional (ASI)
 - Organize imports on save
 - CSS modules enabled
+- Do not add obvious comments
 
 Format: `bun run format`
 

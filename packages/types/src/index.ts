@@ -93,14 +93,20 @@ export type ReactTheme = Theme<ReactAvatarItem>
 export type AvatarPartCategory = keyof Theme
 
 /**
- * Configuration for avatar generation - can specify by identifier or by tags
+ * Configuration for avatar generation
+ * - String value = identifier (e.g., { hair: 'long' })
+ * - String[] value = tags to filter by (e.g., { hair: ['blond', 'long'] })
+ * - Can include 'seed' for reproducible generation
  */
 export interface AvatarConfig {
-  /** Specific identifiers for each part (e.g., { hair: 'long-blond' }) */
-  parts?: Partial<Record<AvatarPartCategory, string>>
-  /** Tags to filter parts (e.g., { hair: ['blond', 'long'] }) */
-  tags?: Partial<Record<AvatarPartCategory, string[]>>
-  /** Random seed for reproducible generation */
+  body?: string | string[]
+  ears?: string | string[]
+  eyebrows?: string | string[]
+  eyes?: string | string[]
+  hair?: string | string[]
+  head?: string | string[]
+  mouth?: string | string[]
+  noses?: string | string[]
   seed?: string | number
 }
 

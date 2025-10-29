@@ -15,10 +15,7 @@ import {
 } from '@avatune/modern-cartoon-assets'
 import type { ReactTheme } from '@avatune/types'
 
-/**
- * Default React theme with React components
- */
-export const reactTheme: ReactTheme = {
+export default {
   body: {
     shirt: {
       Component: Shirt,
@@ -113,4 +110,4 @@ export const reactTheme: ReactTheme = {
       tags: ['simple', 'curved'],
     },
   },
-}
+} satisfies ReactTheme

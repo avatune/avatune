@@ -1,24 +1,21 @@
-import type { VanillaTheme } from '@avatune/types'
 import {
-  shirt,
-  sweater,
-  turtleneck,
+  dots,
   earsDefault,
   funny,
-  dots,
-  long,
-  short,
-  oval,
   laugh,
+  long,
   nervous,
+  oval,
+  shirt,
+  short,
   smile,
+  sweater,
+  turtleneck,
   сurve,
 } from '@avatune/modern-cartoon-assets/svg'
+import type { VanillaTheme } from '@avatune/types'
 
-/**
- * Default vanilla theme with SVG code strings
- */
-export const vanillaTheme: VanillaTheme = {
+export default {
   body: {
     shirt: {
       code: shirt,
@@ -113,4 +110,4 @@ export const vanillaTheme: VanillaTheme = {
       tags: ['simple', 'curved'],
     },
   },
-}
+} satisfies VanillaTheme

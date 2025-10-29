@@ -5,71 +5,13 @@ import type {
   ReactAvatarItem,
   ReactTheme,
 } from '@avatune/types'
+import {
+  AVATAR_CATEGORIES,
+  BASE_AVATAR_SIZE,
+  seededRandom,
+  selectItem,
+} from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
-
-/**
- * Simple seeded random number generator for reproducible results
- */
-function seededRandom(seed: string | number): () => number {
-  let value = typeof seed === 'number' ? seed : hashString(seed)
-  return () => {
-    value = (value * 9301 + 49297) % 233280
-    return value / 233280
-  }
-}
-
-/**
- * Simple string hash function
- */
-function hashString(str: string): number {
-  let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
-  }
-  return Math.abs(hash)
-}
-
-/**
- * Select an item from a collection based on identifier or tags
- */
-function selectItem(
-  collection: Record<string, ReactAvatarItem>,
-  identifier?: string,
-  tags?: string[],
-  random?: () => number,
-): { key: string; item: ReactAvatarItem } | null {
-  // If identifier specified, return that item
-  if (identifier && collection[identifier]) {
-    return { key: identifier, item: collection[identifier] }
-  }
-
-  // Filter by tags if specified
-  let candidates = Object.entries(collection)
-
-  if (tags && tags.length > 0) {
-    candidates = candidates.filter(([, item]) =>
-      tags.every((tag) => item.tags.includes(tag)),
-    )
-  }
-
-  if (candidates.length === 0) {
-    return null
-  }
-
-  // Pick random item (or first if no random function)
-  const index = random ? Math.floor(random() * candidates.length) : 0
-  const selected = candidates[index]
-
-  if (!selected) {
-    return null
-  }
-
-  const [key, item] = selected
-
-  return { key, item }
-}
 
 export interface AvatarProps {
   /** Theme to use for rendering */
@@ -92,39 +34,27 @@ export interface AvatarProps {
 export function Avatar({
   theme,
   config = {},
-  width = 400,
-  height = 400,
+  width = BASE_AVATAR_SIZE,
+  height = BASE_AVATAR_SIZE,
   className,
   style,
 }: AvatarProps) {
   const result = useMemo(() => {
-    const random = config.seed ? seededRandom(config.seed) : Math.random
+    const random =
+      'seed' in config && config.seed ? seededRandom(config.seed) : Math.random
 
     const selected: Partial<Record<AvatarPartCategory, ReactAvatarItem>> = {}
     const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
 
-    const categories: AvatarPartCategory[] = [
-      'body',
-      'ears',
-      'eyebrows',
-      'eyes',
-      'hair',
-      'head',
-      'mouth',
-      'noses',
-    ]
+    for (const category of AVATAR_CATEGORIES) {
+      const value = (
+        config as Partial<Record<AvatarPartCategory, string | string[]>>
+      )[category]
 
-    // Select items for each category
-    for (const category of categories) {
-      const identifier = config.parts?.[category]
-      const tags = config.tags?.[category]
+      const identifier = typeof value === 'string' ? value : undefined
+      const tags = Array.isArray(value) ? value : undefined
 
-      const result = selectItem(
-        theme[category] as Record<string, ReactAvatarItem>,
-        identifier,
-        tags,
-        random,
-      )
+      const result = selectItem(theme[category], identifier, tags, random)
 
       if (result) {
         selected[category] = result.item
@@ -144,12 +74,14 @@ export function Avatar({
     [result.selected],
   )
 
-  // Calculate responsive scale factor (base size is 400)
-  const scaleFactor = width / 400
+  // Calculate responsive scale factor
+  const scaleFactor = width / BASE_AVATAR_SIZE
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Avatar"
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
@@ -185,26 +117,19 @@ export function generateAvatarData(
   theme: ReactTheme,
   config: AvatarConfig = {},
 ): AvatarResult {
-  const random = config.seed ? seededRandom(config.seed) : Math.random
+  const random =
+    'seed' in config && config.seed ? seededRandom(config.seed) : Math.random
 
   const selected: Partial<Record<AvatarPartCategory, ReactAvatarItem>> = {}
   const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
 
-  const categories: AvatarPartCategory[] = [
-    'body',
-    'ears',
-    'eyebrows',
-    'eyes',
-    'hair',
-    'head',
-    'mouth',
-    'noses',
-  ]
+  for (const category of AVATAR_CATEGORIES) {
+    const value = (
+      config as Partial<Record<AvatarPartCategory, string | string[]>>
+    )[category]
 
-  // Select items for each category
-  for (const category of categories) {
-    const identifier = config.parts?.[category]
-    const tags = config.tags?.[category]
+    const identifier = typeof value === 'string' ? value : undefined
+    const tags = Array.isArray(value) ? value : undefined
 
     const result = selectItem(
       theme[category] as Record<string, ReactAvatarItem>,

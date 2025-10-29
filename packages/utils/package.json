@@ -1,5 +1,5 @@
 {
-  "name": "@avatune/vanilla",
+  "name": "@avatune/utils",
   "version": "0.0.0",
   "type": "module",
   "exports": {
@@ -17,11 +17,9 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
-    "@avatune/types": "workspace:*",
-    "@avatune/utils": "workspace:*"
+    "@avatune/types": "workspace:*"
   },
   "devDependencies": {
-    "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
     "typescript": "^5.9.3"
