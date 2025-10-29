@@ -1,0 +1,40 @@
+{
+  "name": "@avatune/modern-cartoon-theme",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@avatune/modern-cartoon-assets": "workspace:*",
+    "@avatune/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "@types/react": "^19.0.8",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  }
+}

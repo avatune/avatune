@@ -10,8 +10,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@avatune/modern-cartoon": "workspace:*",
-    "@avatune/assets": "workspace:*",
+    "@avatune/modern-cartoon-assets": "workspace:*",
+    "@avatune/modern-cartoon-theme": "workspace:*",
+    "@avatune/react": "workspace:*",
+    "@avatune/types": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

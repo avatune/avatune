@@ -1,0 +1,19 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/modern-cartoon-assets/svg": [
+        "../modern-cartoon-assets/dist/svg/index.d.ts"
+      ],
+      "@avatune/modern-cartoon-assets/react": [
+        "../modern-cartoon-assets/dist/react/index.d.ts"
+      ]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

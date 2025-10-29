@@ -10,10 +10,8 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@avatune/assets": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
-    "@avatune/modern-cartoon": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",

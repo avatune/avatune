@@ -1,0 +1,27 @@
+{
+  "name": "@avatune/vanilla",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@avatune/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "typescript": "^5.9.3"
+  }
+}

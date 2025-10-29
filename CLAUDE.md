@@ -9,7 +9,7 @@ Avatune is a monorepo combining ML-powered avatar analysis with browser-based av
 1. **Python ML Training** - TensorFlow/Keras models trained on CelebA and FairFace datasets, converted to TensorFlow.js
 2. **TypeScript Packages** - Browser-compatible ML predictor packages using TensorFlow.js
 3. **Avatar Rendering** - Modern cartoon avatar generation from analysis results
-4. **Demo App** - React app showcasing the full pipeline
+4. **Demo Apps** - React example apps showcasing the full pipeline
 
 The workflow: Python trains models → exports to TFJS → TypeScript packages load models → browser inference.
 
@@ -19,23 +19,22 @@ The workflow: Python trains models → exports to TFJS → TypeScript packages l
 
 ```
 avatune/
-├── apps/
-│   └── example/          # React demo app (Rsbuild + React 19)
-├── packages/
-│   ├── hair-color-predictor/    # TFJS browser inference
-│   ├── hair-length-predictor/   # TFJS browser inference
-│   ├── skin-tone-predictor/     # TFJS browser inference
-│   ├── modern-cartoon/          # SVG avatar renderer
-│   ├── assets/                  # Shared SVG assets
+├── apps/               # Example applications
+│   ├── *-example/     # React demo apps (Rsbuild + React 19)
+│   └── ...
+├── packages/          # Reusable packages
+│   ├── *-predictor/   # TFJS browser inference packages
+│   ├── modern-cartoon/ # SVG avatar renderer
+│   ├── assets/        # Shared SVG assets
 │   ├── eslint-config/
 │   └── typescript-config/
-└── python/
-    ├── notebooks/        # Marimo notebooks for training
+└── python/            # ML training pipeline
+    ├── notebooks/     # Marimo notebooks for training
     │   ├── hair_color/
     │   ├── hair_length/
     │   └── skin_tone/
-    ├── data/             # Training datasets
-    └── models/           # Trained Keras models + TFJS exports
+    ├── data/          # Training datasets (gitignored)
+    └── models/        # Trained Keras models + TFJS exports
 ```
 
 ### Key Technologies
@@ -77,14 +76,14 @@ bun run check-types
 ### Workspace-Specific
 
 ```bash
-# Build single package
-turbo build --filter=@avatune/hair-color-predictor
+# Build single package (use actual package name from package.json)
+turbo build --filter=@avatune/<package-name>
 
-# Dev mode for specific app
-turbo dev --filter=modern-cartoon-example
+# Dev mode for specific app (use actual app name)
+turbo dev --filter=<app-name>
 
-# Run demo app
-cd apps/example && bun run dev
+# Run specific app
+cd apps/<app-name> && bun run dev
 ```
 
 ### Python ML Training
@@ -108,26 +107,38 @@ Training notebooks automatically convert models to TFJS format at `models/tfjs/{
 
 ### Predictor Packages
 
-All ML predictor packages (`*-predictor`) use **rslib.config.ts** with:
+All ML predictor packages (`packages/*-predictor/`) use **rslib.config.ts** with:
 - Dual format output: ESM + CJS
 - Type definitions bundled separately (`dts: { bundle: false }`)
 - TensorFlow.js marked as external (peer dependency)
 - Node 18+ target syntax
+- Build output: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
 
-Build output: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
+### Other Packages
 
-### Modern Cartoon Package
+- **assets**: ESM-only, SVG handling (inline or raw), path aliases
+- **modern-cartoon**: ESM-only, depends on assets package
+- All use rslib for consistent library bundling
 
-Uses **rslib.config.ts** with:
-- ESM-only output
-- SVG handling: inline assets or raw source (via `?raw` query)
-- Path aliases: `@assets`, `@src`
+### Example Apps
 
-### Example App
-
-Uses **rsbuild.config.ts** with React plugin. Hot reload enabled.
+- Use **rsbuild.config.ts** with React plugin
+- Hot reload enabled in dev mode
+- Automatic model copying from `python/models/*/tfjs/` to `public/models/`
+- Models available at `/models/<model-name>/model.json` in browser
 
 ## ML Models Pipeline
+
+### Models Overview
+
+All models follow a consistent structure:
+- **Classes**: 3-4 categories per model
+- **Input**: 128x128 RGB images, normalized to [0, 1]
+- **Architecture**: MobileNetV2-based CNNs
+- **Format**: TensorFlow.js (quantized to uint8 for smaller size)
+- **Location**: `python/models/<model_name>/tfjs/`
+
+Current models include hair color, skin tone, and hair length predictors. Check `python/models/` for the complete list.
 
 ### Training Flow
 
@@ -150,13 +161,18 @@ models/
 
 ### TFJS Integration
 
-TypeScript packages load models via:
+Predictor packages export classes with `loadModel()` and `predict()` methods:
 ```typescript
-import * as tf from '@tensorflow/tfjs'
-await tf.loadLayersModel('path/to/model.json')
+// Example usage
+const predictor = new HairColorPrediction()
+await predictor.loadModel()
+const result = await predictor.predict(imageTensor)
 ```
 
-Models are externalized in rslib builds (not bundled) - users install TFJS as peer dependency.
+- Models are externalized in rslib builds (not bundled)
+- TensorFlow.js is a peer dependency
+- Model paths resolved via `getModelPath()` utility in each package
+- Default base path: `/models` (configurable via `globalThis.__TFJS_MODEL_BASE_URL__`)
 
 ## Code Style
 
@@ -181,26 +197,28 @@ No test framework currently configured. Tests should be added to individual pack
 
 ### Turborepo Tasks
 
-Defined in [turbo.json](turbo.json):
-- `build` - Depends on upstream builds, caches `.next/**`
+Defined in `turbo.json`:
+- `build` - Depends on upstream builds, caches `.next/**` and `dist/**`
 - `dev` - No cache, persistent (long-running servers)
 - `lint` - Depends on upstream linting
 - `check-types` - Depends on upstream type checking
 
 ### Workspace Protocol
 
-All internal dependencies use `workspace:*` protocol for linking (see package.json files).
+All internal dependencies use `workspace:*` protocol for linking.
 
 ### Python Paths
 
-Marimo notebooks use relative paths from their location:
-- Data: `../../data/` (from `python/notebooks/{topic}/`)
-- Models: `../../../models/` (from `python/notebooks/{topic}/`)
+Marimo notebooks use relative paths from their location to access `../../data/` and `../../../models/`.
+
+### Model Integration
+
+Example apps use Rspack plugins to automatically copy models from `python/models/` during build. No manual copying required.
 
 ## Development Workflow
 
-1. **Training new models**: Work in `python/notebooks/`, run marimo notebooks
-2. **Updating predictors**: Models auto-export to `models/tfjs/`, copy to package assets if needed
-3. **Building packages**: Run `turbo build` from root (handles dependencies)
-4. **Testing changes**: Run demo app with `turbo dev --filter=modern-cartoon-example`
-5. **Adding features**: Create branches, use Turborepo caching for fast rebuilds
+1. **Training new models**: Work in `python/notebooks/`, run marimo notebooks, models auto-export to TFJS
+2. **Building packages**: Run `bun run build` from root (handles all dependencies via Turborepo)
+3. **Testing changes**: Run any example app with `bun run dev` (models copied automatically)
+4. **Adding features**: Create feature branches, Turborepo caching ensures fast rebuilds
+5. **Working with models**: Predictor packages automatically resolve model paths - no config needed
