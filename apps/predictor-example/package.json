@@ -1,0 +1,31 @@
+{
+  "name": "@avatune/predictor-example",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "check": "biome check --write",
+    "dev": "rsbuild dev --open",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@avatune/assets": "workspace:*",
+    "@avatune/hair-color-predictor": "workspace:*",
+    "@avatune/hair-length-predictor": "workspace:*",
+    "@avatune/modern-cartoon": "workspace:*",
+    "@avatune/skin-tone-predictor": "workspace:*",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.22.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.5.14",
+    "@rsbuild/plugin-react": "^1.4.1",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.4",
+    "typescript": "^5.9.3"
+  }
+}
