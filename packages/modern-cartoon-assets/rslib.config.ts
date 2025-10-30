@@ -1,8 +1,9 @@
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSvgr } from '@rsbuild/plugin-svgr'
+import { pluginVue } from '@rsbuild/plugin-vue'
 import { defineConfig } from '@rslib/core'
+import { pluginSvgToVue } from './plugins/svg-to-vue/plugin'
 
-//TODO: add entry points
 export default defineConfig({
   lib: [
     {
@@ -13,10 +14,17 @@ export default defineConfig({
   ],
   source: {
     entry: {
-      index: './src/index.ts',
       react: './src/react.ts',
       svg: './src/svg.ts',
+      vue: './src/vue.ts',
     },
   },
-  plugins: [pluginSvgr(), pluginReact()],
+  plugins: [
+    pluginSvgr(),
+    pluginSvgToVue({
+      svgo: true,
+    }),
+    pluginVue(),
+    pluginReact(),
+  ],
 })

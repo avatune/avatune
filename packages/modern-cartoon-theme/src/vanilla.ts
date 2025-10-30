@@ -1,6 +1,6 @@
 import {
+  curve,
   dots,
-  earsDefault,
   funny,
   laugh,
   long,
@@ -9,9 +9,9 @@ import {
   shirt,
   short,
   smile,
+  standard,
   sweater,
   turtleneck,
-  сurve,
 } from '@avatune/modern-cartoon-assets/svg'
 import type { VanillaTheme } from '@avatune/types'
 import shared from './shared'
@@ -35,9 +35,9 @@ export default {
   },
   ears: {
     ...shared.ears,
-    default: {
-      ...shared.ears.default,
-      code: earsDefault,
+    standard: {
+      ...shared.ears.standard,
+      code: standard,
     },
   },
   eyebrows: {
@@ -91,7 +91,7 @@ export default {
     ...shared.noses,
     curve: {
       ...shared.noses.curve,
-      code: сurve,
+      code: curve,
     },
   },
 } satisfies VanillaTheme

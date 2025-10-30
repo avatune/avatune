@@ -20,7 +20,7 @@ export default {
     },
   },
   ears: {
-    default: {
+    standard: {
       position: { x: 0.22, y: 0.55 },
       layer: 100,
       tags: ['basic'],

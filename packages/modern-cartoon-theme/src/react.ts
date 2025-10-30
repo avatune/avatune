@@ -1,7 +1,6 @@
 import {
   Curve,
   Dots,
-  EarsDefault,
   Funny,
   Laugh,
   Long,
@@ -10,9 +9,10 @@ import {
   Shirt,
   Short,
   Smile,
+  Standard,
   Sweater,
   Turtleneck,
-} from '@avatune/modern-cartoon-assets'
+} from '@avatune/modern-cartoon-assets/react'
 import type { ReactTheme } from '@avatune/types'
 import shared from './shared'
 
@@ -35,9 +35,9 @@ export default {
   },
   ears: {
     ...shared.ears,
-    default: {
-      ...shared.ears.default,
-      Component: EarsDefault,
+    standard: {
+      ...shared.ears.standard,
+      Component: Standard,
     },
   },
   eyebrows: {

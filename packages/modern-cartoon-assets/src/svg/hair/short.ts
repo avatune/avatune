@@ -1,3 +1,3 @@
-import svg from './short.svg?raw'
-export default svg
-export { svg }
+import short from './short.svg?raw'
+export default short
+export { short }
