@@ -14,100 +14,84 @@ import {
   сurve,
 } from '@avatune/modern-cartoon-assets/svg'
 import type { VanillaTheme } from '@avatune/types'
+import shared from './shared'
 
 export default {
+  ...shared,
   body: {
+    ...shared.body,
     shirt: {
+      ...shared.body.shirt,
       code: shirt,
-      position: { x: 0.1, y: 0.8 },
-      layer: 10,
-      tags: ['casual', 'basic'],
     },
     sweater: {
+      ...shared.body.sweater,
       code: sweater,
-      position: { x: 0.1, y: 0.8 },
-      layer: 10,
-      tags: ['warm', 'cozy'],
     },
     turtleneck: {
+      ...shared.body.turtleneck,
       code: turtleneck,
-      position: { x: 0.1, y: 0.8 },
-      layer: 10,
-      tags: ['formal', 'warm'],
     },
   },
   ears: {
+    ...shared.ears,
     default: {
+      ...shared.ears.default,
       code: earsDefault,
-      position: { x: 0.22, y: 0.55 },
-      layer: 5,
-      tags: ['basic'],
     },
   },
   eyebrows: {
+    ...shared.eyebrows,
     funny: {
+      ...shared.eyebrows.funny,
       code: funny,
-      position: { x: 0.28, y: 0.4 },
-      layer: 30,
-      tags: ['expressive', 'playful'],
     },
   },
   eyes: {
+    ...shared.eyes,
     dots: {
+      ...shared.eyes.dots,
       code: dots,
-      position: { x: 0.35, y: 0.45 },
-      layer: 20,
-      tags: ['simple', 'cute'],
     },
   },
   hair: {
+    ...shared.hair,
     long: {
+      ...shared.hair.long,
       code: long,
-      position: { x: 0.06, y: 0.2 },
-      layer: 50,
-      tags: ['long', 'flowing'],
     },
     short: {
+      ...shared.hair.short,
       code: short,
-      position: { x: 0.13, y: 0.16 },
-      layer: 50,
-      tags: ['short', 'neat'],
     },
   },
   head: {
+    ...shared.head,
     oval: {
+      ...shared.head.oval,
       code: oval,
-      position: { x: 0.21, y: 0.2 },
-      layer: 1,
-      tags: ['basic', 'neutral'],
     },
   },
   mouth: {
+    ...shared.mouth,
     laugh: {
+      ...shared.mouth.laugh,
       code: laugh,
-      position: { x: 0.4, y: 0.63 },
-      layer: 25,
-      tags: ['happy', 'expressive'],
     },
     nervous: {
+      ...shared.mouth.nervous,
       code: nervous,
-      position: { x: 0.4, y: 0.63 },
-      layer: 25,
-      tags: ['anxious', 'subtle'],
     },
     smile: {
+      ...shared.mouth.smile,
       code: smile,
-      position: { x: 0.4, y: 0.63 },
-      layer: 25,
-      tags: ['happy', 'friendly'],
     },
   },
   noses: {
+    ...shared.noses,
     curve: {
+      ...shared.noses.curve,
       code: сurve,
-      position: { x: 0.45, y: 0.53 },
-      layer: 15,
-      tags: ['simple', 'curved'],
     },
   },
 } satisfies VanillaTheme

@@ -89,7 +89,9 @@ export function Avatar({
       style={style}
     >
       {sortedItems.map(([category, item]) => {
-        if (!item) return null
+        if (!item) {
+          return null
+        }
 
         const Component = item.Component
 
@@ -97,10 +99,16 @@ export function Avatar({
         const transformX = width * item.position.x
         const transformY = height * item.position.y
 
+        const configColor =
+          'seed' in config
+            ? undefined
+            : config[`${category as AvatarPartCategory}Color`]
+
         return (
           <g
             key={category}
             transform={`translate(${transformX}, ${transformY}) scale(${scaleFactor})`}
+            style={{ color: configColor || item.color }}
           >
             <Component />
           </g>

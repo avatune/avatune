@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react'
+import type { ComponentType, SVGProps } from 'react'
 
 /**
  * Position offset for an avatar item
@@ -18,6 +18,8 @@ export interface BaseAvatarItem {
   layer: number
   /** Tags for categorization and filtering (e.g., ['blond', 'long'] for hair) */
   tags: string[]
+  /** Color of the item */
+  color?: string
 }
 
 /**
@@ -33,7 +35,7 @@ export interface VanillaAvatarItem extends BaseAvatarItem {
  */
 export interface ReactAvatarItem extends BaseAvatarItem {
   /** React component to render */
-  Component: ComponentType<any>
+  Component: ComponentType<SVGProps<SVGSVGElement>>
 }
 
 /**
@@ -98,17 +100,12 @@ export type AvatarPartCategory = keyof Theme
  * - String[] value = tags to filter by (e.g., { hair: ['blond', 'long'] })
  * - Can include 'seed' for reproducible generation
  */
-export interface AvatarConfig {
-  body?: string | string[]
-  ears?: string | string[]
-  eyebrows?: string | string[]
-  eyes?: string | string[]
-  hair?: string | string[]
-  head?: string | string[]
-  mouth?: string | string[]
-  noses?: string | string[]
-  seed?: string | number
-}
+export type AvatarConfig =
+  | (Partial<Record<AvatarPartCategory, string | string[]>> &
+      Partial<Record<`${AvatarPartCategory}Color`, string>>)
+  | {
+      seed: string | number
+    }
 
 /**
  * Result of avatar generation

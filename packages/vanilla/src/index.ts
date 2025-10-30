@@ -56,14 +56,23 @@ export function renderAvatar(
 
   const svgParts: string[] = []
 
-  for (const [, item] of sortedItems) {
+  for (const [category, item] of sortedItems) {
     if (item) {
       // Convert percentage positions to pixel coordinates
       const transformX = width * item.position.x
       const transformY = height * item.position.y
 
+      const configColor =
+        'seed' in config
+          ? undefined
+          : config[`${category as AvatarPartCategory}Color`]
+      const color = configColor || item.color
+      const style = color ? `style="color: ${color}"` : ''
+      const transform = `transform="translate(${transformX}, ${transformY}) scale(${scaleFactor})"`
+      const attributes = [transform, style].filter(Boolean).join(' ')
+
       // Wrap each SVG in a group with transform for positioning and scaling
-      const transformed = `<g transform="translate(${transformX}, ${transformY}) scale(${scaleFactor})">${item.code}</g>`
+      const transformed = `<g ${attributes}>${item.code}</g>`
       svgParts.push(transformed)
     }
   }
