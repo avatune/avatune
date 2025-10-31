@@ -1,60 +1,30 @@
-<script lang="ts">
+<script lang="ts" generics="T extends SvelteTheme">
 import type {
   AvatarConfig,
   AvatarPartCategory,
-  SvelteAvatarItem,
   SvelteTheme,
+  TypedAvatarConfig,
 } from '@avatune/types'
-import {
-  AVATAR_CATEGORIES,
-  BASE_AVATAR_SIZE,
-  seededRandom,
-  selectItem,
-} from '@avatune/utils'
+import { BASE_AVATAR_SIZE, selectItemFromConfig } from '@avatune/utils'
 
-interface Props {
-  theme: SvelteTheme
-  config?: AvatarConfig
+type Props = TypedAvatarConfig<T> & {
+  theme: T
   width?: number
   height?: number
   class?: string
   style?: string
 }
 
-let {
+const {
   theme,
-  config = {},
   width = BASE_AVATAR_SIZE,
   height = BASE_AVATAR_SIZE,
   class: className,
   style,
+  ...config
 }: Props = $props()
 
-const result = $derived.by(() => {
-  const random =
-    'seed' in config && config.seed ? seededRandom(config.seed) : Math.random
-
-  const selected: Partial<Record<AvatarPartCategory, SvelteAvatarItem>> = {}
-  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
-
-  for (const category of AVATAR_CATEGORIES) {
-    const value = (
-      config as Partial<Record<AvatarPartCategory, string | string[]>>
-    )[category]
-
-    const identifier = typeof value === 'string' ? value : undefined
-    const tags = Array.isArray(value) ? value : undefined
-
-    const itemResult = selectItem(theme[category], identifier, tags, random)
-
-    if (itemResult) {
-      selected[category] = itemResult.item
-      identifiers[category] = itemResult.key
-    }
-  }
-
-  return { selected, identifiers }
-})
+const result = $derived(selectItemFromConfig(config as AvatarConfig, theme))
 
 const sortedItems = $derived(
   Object.entries(result.selected).sort(
@@ -79,10 +49,7 @@ const scaleFactor = $derived(width / BASE_AVATAR_SIZE)
     {#if item}
       {@const transformX = width * item.position.x}
       {@const transformY = height * item.position.y}
-      {@const configColor =
-        'seed' in config
-          ? undefined
-          : config[`${category}Color`]}
+      {@const configColor = config.seed ? undefined : config[`${category}Color` as `${AvatarPartCategory}Color`]}
       {@const ItemComponent = item.Component}
       <g
         transform="translate({transformX}, {transformY}) scale({scaleFactor})"

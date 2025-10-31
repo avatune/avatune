@@ -1,7 +1,9 @@
 import type {
+  AvatarConfig,
   AvatarItem,
   AvatarItemCollection,
   AvatarPartCategory,
+  Theme,
 } from '@avatune/types'
 
 /**
@@ -84,4 +86,34 @@ export function selectItem<T extends AvatarItem>(
   const [key, item] = selected
 
   return { key, item }
+}
+
+export function selectItemFromConfig<T extends AvatarItem>(
+  config: AvatarConfig,
+  theme: Theme<T>,
+): {
+  selected: Partial<Record<AvatarPartCategory, T>>
+  identifiers: Partial<Record<AvatarPartCategory, string>>
+} & { seed?: string | number } {
+  const random =
+    typeof config.seed !== 'undefined' ? seededRandom(config.seed) : Math.random
+
+  const selected: Partial<Record<AvatarPartCategory, T>> = {}
+  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
+
+  for (const category of AVATAR_CATEGORIES) {
+    const value = config[category]
+
+    const identifier = typeof value === 'string' ? value : undefined
+    const tags = Array.isArray(value) ? value : undefined
+
+    const result = selectItem(theme[category], identifier, tags, random)
+
+    if (result) {
+      selected[category] = result.item
+      identifiers[category] = result.key
+    }
+  }
+
+  return { selected, identifiers }
 }

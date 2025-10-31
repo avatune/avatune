@@ -64,6 +64,19 @@
         "typescript": "^5.9.3",
       },
     },
+    "apps/vanilla-example": {
+      "name": "@avatune/vanilla-example",
+      "version": "0.0.0",
+      "dependencies": {
+        "@avatune/modern-cartoon-theme": "workspace:*",
+        "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
+      },
+      "devDependencies": {
+        "@rsbuild/core": "^1.5.14",
+        "typescript": "^5.9.3",
+      },
+    },
     "apps/vue-example": {
       "name": "@avatune/vue-example",
       "version": "0.0.0",
@@ -334,6 +347,8 @@
     "@avatune/utils": ["@avatune/utils@workspace:packages/utils"],
 
     "@avatune/vanilla": ["@avatune/vanilla@workspace:packages/vanilla"],
+
+    "@avatune/vanilla-example": ["@avatune/vanilla-example@workspace:apps/vanilla-example"],
 
     "@avatune/vue": ["@avatune/vue@workspace:packages/vue"],
 

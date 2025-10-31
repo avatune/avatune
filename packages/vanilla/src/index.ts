@@ -1,7 +1,7 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
-  AvatarResult,
+  TypedAvatarConfig,
   VanillaAvatarItem,
   VanillaTheme,
 } from '@avatune/types'
@@ -15,19 +15,22 @@ import {
 /**
  * Generate avatar SVG code from theme and config
  */
-export function renderAvatar(
-  theme: VanillaTheme,
-  config: AvatarConfig = {},
-): AvatarResult & { svg: string } {
+export function avatar<T extends VanillaTheme = VanillaTheme>(
+  theme: T,
+  config: TypedAvatarConfig<T> = {},
+): string {
+  const avatarConfig = config as AvatarConfig
   const random =
-    'seed' in config && config.seed ? seededRandom(config.seed) : Math.random
+    'seed' in avatarConfig && avatarConfig.seed
+      ? seededRandom(avatarConfig.seed)
+      : Math.random
 
   const selected: Partial<Record<AvatarPartCategory, VanillaAvatarItem>> = {}
   const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
 
   for (const category of AVATAR_CATEGORIES) {
     const value = (
-      config as Partial<Record<AvatarPartCategory, string | string[]>>
+      avatarConfig as Partial<Record<AvatarPartCategory, string | string[]>>
     )[category]
 
     const identifier = typeof value === 'string' ? value : undefined
@@ -63,9 +66,9 @@ export function renderAvatar(
       const transformY = height * item.position.y
 
       const configColor =
-        'seed' in config
+        'seed' in avatarConfig
           ? undefined
-          : config[`${category as AvatarPartCategory}Color`]
+          : avatarConfig[`${category as AvatarPartCategory}Color`]
       const color = configColor || item.color
       const style = color ? `style="color: ${color}"` : ''
       const transform = `transform="translate(${transformX}, ${transformY}) scale(${scaleFactor})"`
@@ -81,35 +84,5 @@ export function renderAvatar(
   ${svgParts.join('\n  ')}
 </svg>`
 
-  return {
-    selected,
-    identifiers,
-    svg,
-  }
-}
-
-/**
- * Get all available identifiers for a specific category
- */
-export function getAvailableItems(
-  theme: VanillaTheme,
-  category: AvatarPartCategory,
-): string[] {
-  return Object.keys(theme[category])
-}
-
-/**
- * Get all available tags for a specific category
- */
-export function getAvailableTags(
-  theme: VanillaTheme,
-  category: AvatarPartCategory,
-): string[] {
-  const tags = new Set<string>()
-  for (const item of Object.values(theme[category])) {
-    for (const tag of item.tags) {
-      tags.add(tag)
-    }
-  }
-  return Array.from(tags)
+  return svg
 }

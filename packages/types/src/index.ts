@@ -82,11 +82,10 @@ export function isReactItem(item: AvatarItem): item is ReactAvatarItem {
 /**
  * Collection of avatar items by identifier
  */
-export type AvatarItemCollection<T extends AvatarItem = AvatarItem> = Record<
-  string,
-  T
->
-
+export type AvatarItemCollection<
+  T extends AvatarItem = AvatarItem,
+  Identifier extends string = string,
+> = Record<Identifier, T>
 /**
  * Complete theme defining all avatar parts
  */
@@ -127,24 +126,47 @@ export type SvelteTheme = Theme<SvelteAvatarItem>
 export type AvatarPartCategory = keyof Theme
 
 /**
+ * Extract all identifiers from a theme category
+ */
+export type ExtractIdentifiers<T extends AvatarItemCollection> = keyof T
+
+/**
+ * Extract all tags from a theme category
+ */
+export type ExtractTags<T extends AvatarItemCollection> =
+  T[keyof T]['tags'][number]
+
+/**
+ * Type-safe configuration for a specific theme
+ * Provides autocomplete for identifiers and tags
+ */
+export type TypedAvatarConfig<T extends Theme> = {
+  seed?: string | number
+  body?: ExtractIdentifiers<T['body']> | ExtractTags<T['body']>[]
+  ears?: ExtractIdentifiers<T['ears']> | ExtractTags<T['ears']>[]
+  eyebrows?: ExtractIdentifiers<T['eyebrows']> | ExtractTags<T['eyebrows']>[]
+  eyes?: ExtractIdentifiers<T['eyes']> | ExtractTags<T['eyes']>[]
+  hair?: ExtractIdentifiers<T['hair']> | ExtractTags<T['hair']>[]
+  head?: ExtractIdentifiers<T['head']> | ExtractTags<T['head']>[]
+  mouth?: ExtractIdentifiers<T['mouth']> | ExtractTags<T['mouth']>[]
+  noses?: ExtractIdentifiers<T['noses']> | ExtractTags<T['noses']>[]
+  bodyColor?: string
+  earsColor?: string
+  eyebrowsColor?: string
+  eyesColor?: string
+  hairColor?: string
+  headColor?: string
+  mouthColor?: string
+  nosesColor?: string
+}
+
+/**
  * Configuration for avatar generation
  * - String value = identifier (e.g., { hair: 'long' })
  * - String[] value = tags to filter by (e.g., { hair: ['blond', 'long'] })
  * - Can include 'seed' for reproducible generation
  */
-export type AvatarConfig =
-  | (Partial<Record<AvatarPartCategory, string | string[]>> &
-      Partial<Record<`${AvatarPartCategory}Color`, string>>)
-  | {
-      seed: string | number
-    }
-
-/**
- * Result of avatar generation
- */
-export interface AvatarResult {
-  /** Selected items for each part */
-  selected: Partial<Record<AvatarPartCategory, AvatarItem>>
-  /** Identifiers of selected items */
-  identifiers: Partial<Record<AvatarPartCategory, string>>
-}
+export type AvatarConfig<A extends AvatarItem = AvatarItem, T = Theme<A>> = {
+  seed?: string | number
+} & Partial<{ [K in keyof T]: string | string[] }> &
+  Partial<{ [K in keyof T as `${K & string}Color`]: string }>

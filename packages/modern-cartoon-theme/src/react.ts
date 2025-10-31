@@ -94,4 +94,4 @@ export default {
       Component: Curve,
     },
   },
-} satisfies ReactTheme
+} as const satisfies ReactTheme

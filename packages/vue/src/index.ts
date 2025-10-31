@@ -1,16 +1,10 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
-  AvatarResult,
-  VueAvatarItem,
+  TypedAvatarConfig,
   VueTheme,
 } from '@avatune/types'
-import {
-  AVATAR_CATEGORIES,
-  BASE_AVATAR_SIZE,
-  seededRandom,
-  selectItem,
-} from '@avatune/utils'
+import { BASE_AVATAR_SIZE, selectItemFromConfig } from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -19,20 +13,19 @@ import {
   type PropType,
 } from 'vue'
 
-export interface AvatarProps {
-  /** Theme to use for rendering */
-  theme: VueTheme
-  /** Configuration for avatar generation */
-  config?: AvatarConfig
-  /** Width of the avatar (default: 400) */
-  width?: number
-  /** Height of the avatar (default: 400) */
-  height?: number
-  /** Optional className for the SVG container */
-  class?: string
-  /** Optional style for the SVG container */
-  style?: CSSProperties
-}
+export type AvatarProps<T extends VueTheme = VueTheme> =
+  TypedAvatarConfig<T> & {
+    /** Theme to use for rendering */
+    theme: T
+    /** Width of the avatar (default: 400) */
+    width?: number
+    /** Height of the avatar (default: 400) */
+    height?: number
+    /** Optional className for the SVG container */
+    class?: string
+    /** Optional style for the SVG container */
+    style?: CSSProperties
+  }
 
 /**
  * Vue component for rendering avatars
@@ -44,9 +37,73 @@ export const Avatar = defineComponent({
       type: Object as PropType<VueTheme>,
       required: true,
     },
-    config: {
-      type: Object as PropType<AvatarConfig>,
-      default: () => ({}),
+    seed: {
+      type: String,
+      default: undefined,
+    },
+    body: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    ears: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    eyebrows: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    eyes: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    hair: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    head: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    mouth: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    noses: {
+      type: [String, Array] as PropType<string | string[]>,
+      default: undefined,
+    },
+    bodyColor: {
+      type: String,
+      default: undefined,
+    },
+    earsColor: {
+      type: String,
+      default: undefined,
+    },
+    eyebrowsColor: {
+      type: String,
+      default: undefined,
+    },
+    eyesColor: {
+      type: String,
+      default: undefined,
+    },
+    hairColor: {
+      type: String,
+      default: undefined,
+    },
+    headColor: {
+      type: String,
+      default: undefined,
+    },
+    mouthColor: {
+      type: String,
+      default: undefined,
+    },
+    nosesColor: {
+      type: String,
+      default: undefined,
     },
     width: {
       type: Number,
@@ -66,38 +123,9 @@ export const Avatar = defineComponent({
     },
   },
   setup(props) {
-    const result = computed(() => {
-      const random =
-        'seed' in props.config && props.config.seed
-          ? seededRandom(props.config.seed)
-          : Math.random
-
-      const selected: Partial<Record<AvatarPartCategory, VueAvatarItem>> = {}
-      const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
-
-      for (const category of AVATAR_CATEGORIES) {
-        const value = (
-          props.config as Partial<Record<AvatarPartCategory, string | string[]>>
-        )[category]
-
-        const identifier = typeof value === 'string' ? value : undefined
-        const tags = Array.isArray(value) ? value : undefined
-
-        const result = selectItem(
-          props.theme[category],
-          identifier,
-          tags,
-          random,
-        )
-
-        if (result) {
-          selected[category] = result.item
-          identifiers[category] = result.key
-        }
-      }
-
-      return { selected, identifiers }
-    })
+    const result = computed(() =>
+      selectItemFromConfig(props as AvatarConfig, props.theme),
+    )
 
     const sortedItems = computed(() =>
       Object.entries(result.value.selected).sort(
@@ -131,10 +159,9 @@ export const Avatar = defineComponent({
           const transformX = props.width * item.position.x
           const transformY = props.height * item.position.y
 
-          const configColor =
-            'seed' in props.config
-              ? undefined
-              : props.config[`${category as AvatarPartCategory}Color`]
+          const configColor = props.seed
+            ? undefined
+            : props[`${category}Color` as `${AvatarPartCategory}Color`]
 
           return h(
             'g',
@@ -150,66 +177,3 @@ export const Avatar = defineComponent({
     }
   },
 })
-
-/**
- * Generate avatar data without rendering (useful for server-side or data generation)
- */
-export function generateAvatarData(
-  theme: VueTheme,
-  config: AvatarConfig = {},
-): AvatarResult {
-  const random =
-    'seed' in config && config.seed ? seededRandom(config.seed) : Math.random
-
-  const selected: Partial<Record<AvatarPartCategory, VueAvatarItem>> = {}
-  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
-
-  for (const category of AVATAR_CATEGORIES) {
-    const value = (
-      config as Partial<Record<AvatarPartCategory, string | string[]>>
-    )[category]
-
-    const identifier = typeof value === 'string' ? value : undefined
-    const tags = Array.isArray(value) ? value : undefined
-
-    const result = selectItem(
-      theme[category] as Record<string, VueAvatarItem>,
-      identifier,
-      tags,
-      random,
-    )
-
-    if (result) {
-      selected[category] = result.item
-      identifiers[category] = result.key
-    }
-  }
-
-  return { selected, identifiers }
-}
-
-/**
- * Get all available identifiers for a specific category
- */
-export function getAvailableItems(
-  theme: VueTheme,
-  category: AvatarPartCategory,
-): string[] {
-  return Object.keys(theme[category])
-}
-
-/**
- * Get all available tags for a specific category
- */
-export function getAvailableTags(
-  theme: VueTheme,
-  category: AvatarPartCategory,
-): string[] {
-  const tags = new Set<string>()
-  for (const item of Object.values(theme[category])) {
-    for (const tag of item.tags) {
-      tags.add(tag)
-    }
-  }
-  return Array.from(tags)
-}
