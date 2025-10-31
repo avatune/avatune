@@ -1,14 +1,32 @@
 <script setup lang="ts">
-import { Shirt } from '@avatune/modern-cartoon-assets/vue'
+import theme from '@avatune/modern-cartoon-theme/vue'
+import { Avatar } from '@avatune/vue'
 </script>
 
 <template>
   <div class="content">
-    <h1>Rsbuild with Vue</h1>
-    <p>Start building amazing things with Rsbuild.</p>
-    <div class="preview">
-      <Shirt class="asset" />
-    </div>
+    <h1>Modern Cartoon Avatar Example</h1>
+    <Avatar
+      :theme="theme"
+      :config="{
+        body: 'shirt',
+        ears: 'default',
+        eyebrows: 'funny',
+        eyes: 'dots',
+        hair: 'short',
+        head: 'oval',
+        mouth: 'smile',
+        noses: 'curve',
+      }"
+    />
+
+    <h2>Random Avatar (tag-based)</h2>
+    <Avatar
+      :theme="theme"
+      :config="{
+        seed: 'random-seed-123',
+      }"
+    />
   </div>
 </template>
 
@@ -20,6 +38,7 @@ import { Shirt } from '@avatune/modern-cartoon-assets/vue'
   text-align: center;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .content h1 {
@@ -27,19 +46,9 @@ import { Shirt } from '@avatune/modern-cartoon-assets/vue'
   font-weight: 700;
 }
 
-.content p {
-  font-size: 1.2rem;
-  font-weight: 400;
-  opacity: 0.5;
-}
-
-.preview {
-  margin-top: 24px;
-}
-
-.asset :deep(svg) {
-  width: 160px;
-  height: auto;
-  display: inline-block;
+.content h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 2rem;
 }
 </style>

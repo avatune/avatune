@@ -1,0 +1,36 @@
+{
+  "name": "@avatune/svelte",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js",
+      "import": "./dist/index.js"
+    }
+  },
+  "svelte": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@rsbuild/plugin-svelte": "^1.0.10",
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "svelte": "^5.0.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "svelte": ">=5.0.0"
+  }
+}

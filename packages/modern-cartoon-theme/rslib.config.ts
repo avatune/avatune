@@ -1,3 +1,5 @@
+import { pluginSvelte } from '@rsbuild/plugin-svelte'
+import { pluginVue } from '@rsbuild/plugin-vue'
 import { defineConfig } from '@rslib/core'
 
 export default defineConfig({
@@ -12,6 +14,8 @@ export default defineConfig({
     entry: {
       vanilla: './src/vanilla.ts',
       react: './src/react.ts',
+      vue: './src/vue.ts',
+      svelte: './src/svelte.ts',
     },
   },
   output: {
@@ -23,4 +27,5 @@ export default defineConfig({
       '@avatune/types': '@avatune/types',
     },
   },
+  plugins: [pluginVue(), pluginSvelte()],
 })

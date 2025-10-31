@@ -14,8 +14,28 @@ declare module '*.svg' {
   export default url
 }
 
+declare module '*.svg?svelte' {
+  import type { Component } from 'svelte'
+  import type { SVGAttributes } from 'svelte/elements'
+
+  interface SvgComponentProps extends SVGAttributes<SVGSVGElement> {
+    className?: string
+    style?: string
+  }
+
+  const component: Component<SvgComponentProps>
+  export default component
+  export const raw: string
+}
+
 declare module '*.svg?vue' {
-  import type { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
+  import type { DefineComponent, SVGAttributes } from 'vue'
+
+  interface SvgComponentProps extends SVGAttributes {
+    className?: string
+    style?: string
+  }
+
+  const component: DefineComponent<SvgComponentProps>
   export default component
 }

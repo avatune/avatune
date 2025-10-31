@@ -1,5 +1,5 @@
 {
-  "name": "@avatune/vue-example",
+  "name": "@avatune/svelte-example",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@avatune/modern-cartoon-theme": "workspace:*",
+    "@avatune/svelte": "workspace:*",
     "@avatune/types": "workspace:*",
-    "@avatune/vue": "workspace:*",
-    "vue": "^3.5.22"
+    "svelte": "^5.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.5.14",
-    "@rsbuild/plugin-vue": "^1.1.2",
+    "@rsbuild/plugin-svelte": "^1.0.10",
     "typescript": "^5.9.3"
   }
 }

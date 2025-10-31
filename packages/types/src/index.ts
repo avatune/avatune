@@ -1,4 +1,6 @@
 import type { ComponentType, SVGProps } from 'react'
+import type { Component as SvelteComponent } from 'svelte'
+import type { DefineComponent } from 'vue'
 
 /**
  * Position offset for an avatar item
@@ -39,9 +41,29 @@ export interface ReactAvatarItem extends BaseAvatarItem {
 }
 
 /**
- * Avatar item can be either vanilla or React
+ * Vue avatar item with a Vue component
  */
-export type AvatarItem = VanillaAvatarItem | ReactAvatarItem
+export interface VueAvatarItem extends BaseAvatarItem {
+  /** Vue component to render */
+  Component: DefineComponent<any, any, any>
+}
+
+/**
+ * Svelte avatar item with a Svelte component
+ */
+export interface SvelteAvatarItem extends BaseAvatarItem {
+  /** Svelte component to render */
+  Component: SvelteComponent<any, any>
+}
+
+/**
+ * Avatar item can be vanilla, React, Vue, or Svelte
+ */
+export type AvatarItem =
+  | VanillaAvatarItem
+  | ReactAvatarItem
+  | VueAvatarItem
+  | SvelteAvatarItem
 
 /**
  * Type guard to check if an item is a vanilla item
@@ -88,6 +110,16 @@ export type VanillaTheme = Theme<VanillaAvatarItem>
  * React theme with React components
  */
 export type ReactTheme = Theme<ReactAvatarItem>
+
+/**
+ * Vue theme with Vue components
+ */
+export type VueTheme = Theme<VueAvatarItem>
+
+/**
+ * Svelte theme with Svelte components
+ */
+export type SvelteTheme = Theme<SvelteAvatarItem>
 
 /**
  * Avatar part categories
