@@ -1,0 +1,33 @@
+{
+  "name": "@avatune/rsbuild-plugin-svg-to-vue",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Rsbuild plugin to transform SVG files into Vue components",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": ">=1.0.0"
+  }
+}

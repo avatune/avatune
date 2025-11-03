@@ -130,6 +130,8 @@
       "name": "@avatune/modern-cartoon-assets",
       "version": "0.0.0",
       "devDependencies": {
+        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
         "@rsbuild/core": "^1.5.17",
         "@rsbuild/plugin-react": "^1.4.1",
         "@rsbuild/plugin-svelte": "^1.0.10",
@@ -201,6 +203,42 @@
       },
       "peerDependencies": {
         "react": ">=18.0.0",
+      },
+    },
+    "packages/rebuild-plugin-svg-to-svelte": {
+      "name": "@avatune/rsbuild-plugin-svg-to-svelte",
+      "version": "0.0.0",
+      "dependencies": {
+        "@svgr/core": "^8.1.0",
+        "@svgr/plugin-svgo": "^8.1.0",
+      },
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^22.18.12",
+        "svelte": "^5.0.0",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "@rsbuild/core": ">=1.0.0",
+        "svelte": ">=5.0.0",
+      },
+    },
+    "packages/rsbuild-plugin-svg-to-vue": {
+      "name": "@avatune/rsbuild-plugin-svg-to-vue",
+      "version": "0.0.0",
+      "dependencies": {
+        "@svgr/core": "^8.1.0",
+        "@svgr/plugin-svgo": "^8.1.0",
+      },
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^22.18.12",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "@rsbuild/core": ">=1.0.0",
       },
     },
     "packages/skin-tone-predictor": {
@@ -333,6 +371,10 @@
     "@avatune/predictor-example": ["@avatune/predictor-example@workspace:apps/predictor-example"],
 
     "@avatune/react": ["@avatune/react@workspace:packages/react"],
+
+    "@avatune/rsbuild-plugin-svg-to-svelte": ["@avatune/rsbuild-plugin-svg-to-svelte@workspace:packages/rebuild-plugin-svg-to-svelte"],
+
+    "@avatune/rsbuild-plugin-svg-to-vue": ["@avatune/rsbuild-plugin-svg-to-vue@workspace:packages/rsbuild-plugin-svg-to-vue"],
 
     "@avatune/skin-tone-predictor": ["@avatune/skin-tone-predictor@workspace:packages/skin-tone-predictor"],
 

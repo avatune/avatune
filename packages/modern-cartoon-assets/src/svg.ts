@@ -1,36 +1,36 @@
-import { shirt } from './svg/body/shirt'
-import { sweater } from './svg/body/sweater'
-import { turtleneck } from './svg/body/turtleneck'
+import bodyShirt from './svg/body/shirt.svg?raw'
+import bodySweater from './svg/body/sweater.svg?raw'
+import bodyTurtleneck from './svg/body/turtleneck.svg?raw'
 
-import { standard } from './svg/ears/standard'
+import earsStandard from './svg/ears/standard.svg?raw'
 
-import { funny } from './svg/eyebrows/funny'
+import eyebrowsFunny from './svg/eyebrows/funny.svg?raw'
 
-import { dots } from './svg/eyes/dots'
+import eyesDots from './svg/eyes/dots.svg?raw'
 
-import { long } from './svg/hair/long'
-import { short } from './svg/hair/short'
+import hairLong from './svg/hair/long.svg?raw'
+import hairShort from './svg/hair/short.svg?raw'
 
-import { oval } from './svg/head/oval'
+import headOval from './svg/head/oval.svg?raw'
 
-import { laugh } from './svg/mouth/laugh'
-import { nervous } from './svg/mouth/nervous'
-import { smile } from './svg/mouth/smile'
+import mouthLaugh from './svg/mouth/laugh.svg?raw'
+import mouthNervous from './svg/mouth/nervous.svg?raw'
+import mouthSmile from './svg/mouth/smile.svg?raw'
 
-import { curve } from './svg/noses/curve'
+import nosesCurve from './svg/noses/curve.svg?raw'
 
 export {
-  shirt,
-  sweater,
-  turtleneck,
-  standard,
-  funny,
-  dots,
-  long,
-  short,
-  oval,
-  laugh,
-  nervous,
-  smile,
-  curve,
+  bodyShirt,
+  bodySweater,
+  bodyTurtleneck,
+  earsStandard,
+  eyebrowsFunny,
+  eyesDots,
+  hairLong,
+  hairShort,
+  headOval,
+  mouthLaugh,
+  mouthNervous,
+  mouthSmile,
+  nosesCurve,
 }

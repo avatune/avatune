@@ -1,18 +1,18 @@
 import {
-  curve,
-  dots,
-  funny,
-  laugh,
-  long,
-  nervous,
-  oval,
-  shirt,
-  short,
-  smile,
-  standard,
-  sweater,
-  turtleneck,
-} from '@avatune/modern-cartoon-assets/svg'
+  bodyShirt,
+  bodySweater,
+  bodyTurtleneck,
+  earsStandard,
+  eyebrowsFunny,
+  eyesDots,
+  hairLong,
+  hairShort,
+  headOval,
+  mouthLaugh,
+  mouthNervous,
+  mouthSmile,
+  nosesCurve,
+} from '@avatune/modern-cartoon-assets'
 import type { VanillaTheme } from '@avatune/types'
 import shared from './shared'
 
@@ -22,76 +22,76 @@ export default {
     ...shared.body,
     shirt: {
       ...shared.body.shirt,
-      code: shirt,
+      code: bodyShirt,
     },
     sweater: {
       ...shared.body.sweater,
-      code: sweater,
+      code: bodySweater,
     },
     turtleneck: {
       ...shared.body.turtleneck,
-      code: turtleneck,
+      code: bodyTurtleneck,
     },
   },
   ears: {
     ...shared.ears,
     standard: {
       ...shared.ears.standard,
-      code: standard,
+      code: earsStandard,
     },
   },
   eyebrows: {
     ...shared.eyebrows,
     funny: {
       ...shared.eyebrows.funny,
-      code: funny,
+      code: eyebrowsFunny,
     },
   },
   eyes: {
     ...shared.eyes,
     dots: {
       ...shared.eyes.dots,
-      code: dots,
+      code: eyesDots,
     },
   },
   hair: {
     ...shared.hair,
     long: {
       ...shared.hair.long,
-      code: long,
+      code: hairLong,
     },
     short: {
       ...shared.hair.short,
-      code: short,
+      code: hairShort,
     },
   },
   head: {
     ...shared.head,
     oval: {
       ...shared.head.oval,
-      code: oval,
+      code: headOval,
     },
   },
   mouth: {
     ...shared.mouth,
     laugh: {
       ...shared.mouth.laugh,
-      code: laugh,
+      code: mouthLaugh,
     },
     nervous: {
       ...shared.mouth.nervous,
-      code: nervous,
+      code: mouthNervous,
     },
     smile: {
       ...shared.mouth.smile,
-      code: smile,
+      code: mouthSmile,
     },
   },
   noses: {
     ...shared.noses,
     curve: {
       ...shared.noses.curve,
-      code: curve,
+      code: nosesCurve,
     },
   },
-} satisfies VanillaTheme
+} as const satisfies VanillaTheme

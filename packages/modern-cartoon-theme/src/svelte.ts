@@ -1,17 +1,17 @@
 import {
-  Curve,
-  Dots,
-  Funny,
-  Laugh,
-  Long,
-  Nervous,
-  Oval,
-  Shirt,
-  Short,
-  Smile,
-  Standard,
-  Sweater,
-  Turtleneck,
+  BodyShirt,
+  BodySweater,
+  BodyTurtleneck,
+  EarsStandard,
+  EyebrowsFunny,
+  EyesDots,
+  HairLong,
+  HairShort,
+  HeadOval,
+  MouthLaugh,
+  MouthNervous,
+  MouthSmile,
+  NosesCurve,
 } from '@avatune/modern-cartoon-assets/svelte'
 import type { SvelteTheme } from '@avatune/types'
 import shared from './shared'
@@ -22,76 +22,76 @@ export default {
     ...shared.body,
     shirt: {
       ...shared.body.shirt,
-      Component: Shirt,
+      Component: BodyShirt,
     },
     sweater: {
       ...shared.body.sweater,
-      Component: Sweater,
+      Component: BodySweater,
     },
     turtleneck: {
       ...shared.body.turtleneck,
-      Component: Turtleneck,
+      Component: BodyTurtleneck,
     },
   },
   ears: {
     ...shared.ears,
     standard: {
       ...shared.ears.standard,
-      Component: Standard,
+      Component: EarsStandard,
     },
   },
   eyebrows: {
     ...shared.eyebrows,
     funny: {
       ...shared.eyebrows.funny,
-      Component: Funny,
+      Component: EyebrowsFunny,
     },
   },
   eyes: {
     ...shared.eyes,
     dots: {
       ...shared.eyes.dots,
-      Component: Dots,
+      Component: EyesDots,
     },
   },
   hair: {
     ...shared.hair,
     long: {
       ...shared.hair.long,
-      Component: Long,
+      Component: HairLong,
     },
     short: {
       ...shared.hair.short,
-      Component: Short,
+      Component: HairShort,
     },
   },
   head: {
     ...shared.head,
     oval: {
       ...shared.head.oval,
-      Component: Oval,
+      Component: HeadOval,
     },
   },
   mouth: {
     ...shared.mouth,
     laugh: {
       ...shared.mouth.laugh,
-      Component: Laugh,
+      Component: MouthLaugh,
     },
     nervous: {
       ...shared.mouth.nervous,
-      Component: Nervous,
+      Component: MouthNervous,
     },
     smile: {
       ...shared.mouth.smile,
-      Component: Smile,
+      Component: MouthSmile,
     },
   },
   noses: {
     ...shared.noses,
     curve: {
       ...shared.noses.curve,
-      Component: Curve,
+      Component: NosesCurve,
     },
   },
-} satisfies SvelteTheme
+} as const satisfies SvelteTheme
