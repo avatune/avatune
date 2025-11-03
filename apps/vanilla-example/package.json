@@ -12,7 +12,8 @@
   "dependencies": {
     "@avatune/modern-cartoon-theme": "workspace:*",
     "@avatune/types": "workspace:*",
-    "@avatune/utils": "workspace:*"
+    "@avatune/utils": "workspace:*",
+    "@avatune/vanilla": "workspace:*"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.5.14",
