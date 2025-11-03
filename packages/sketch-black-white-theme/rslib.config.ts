@@ -21,7 +21,8 @@ export default defineConfig({
   output: {
     target: 'node',
     externals: {
-      '@avatune/sketch-black-white-assets': '@avatune/sketch-black-white-assets',
+      '@avatune/sketch-black-white-assets':
+        '@avatune/sketch-black-white-assets',
       '@avatune/sketch-black-white-assets/svg':
         '@avatune/sketch-black-white-assets/svg',
       '@avatune/types': '@avatune/types',

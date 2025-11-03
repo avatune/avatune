@@ -71,6 +71,7 @@
         "@avatune/modern-cartoon-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
+        "@avatune/vanilla": "workspace:*",
       },
       "devDependencies": {
         "@rsbuild/core": "^1.5.14",
@@ -216,9 +217,9 @@
         "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
-        "deepmerge": "",
+        "deepmerge": "^4.3.1",
         "svelte": "^5.0.0",
-        "svgo": "",
+        "svgo": "^4.0.0",
         "typescript": "^5.9.3",
       },
       "peerDependencies": {
@@ -243,6 +244,7 @@
       },
       "peerDependencies": {
         "@rsbuild/core": ">=1.0.0",
+        "@vue/compiler-sfc": "^3.5.22",
       },
     },
     "packages/sketch-black-white-assets": {
@@ -289,6 +291,7 @@
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "@types/react": "^19.0.8",
+        "react": ">=18.0.0",
         "svelte": "^5.0.0",
         "typescript": "^5.9.3",
         "vue": "^3.5.22",
@@ -344,6 +347,7 @@
       "name": "@avatune/types",
       "version": "0.0.0",
       "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "@types/react": "^19.0.8",
@@ -364,6 +368,7 @@
         "@avatune/types": "workspace:*",
       },
       "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "typescript": "^5.9.3",
