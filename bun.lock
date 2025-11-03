@@ -34,9 +34,9 @@
       "name": "@avatune/example",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/modern-cartoon-assets": "workspace:*",
-        "@avatune/modern-cartoon-theme": "workspace:*",
         "@avatune/react": "workspace:*",
+        "@avatune/sketch-black-white-assets": "workspace:*",
+        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
@@ -205,7 +205,7 @@
         "react": ">=18.0.0",
       },
     },
-    "packages/rebuild-plugin-svg-to-svelte": {
+    "packages/rsbuild-plugin-svg-to-svelte": {
       "name": "@avatune/rsbuild-plugin-svg-to-svelte",
       "version": "0.0.0",
       "dependencies": {
@@ -216,7 +216,9 @@
         "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
+        "deepmerge": "",
         "svelte": "^5.0.0",
+        "svgo": "",
         "typescript": "^5.9.3",
       },
       "peerDependencies": {
@@ -235,11 +237,72 @@
         "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
+        "deepmerge": "^4.3.1",
+        "svgo": "^4.0.0",
         "typescript": "^5.9.3",
       },
       "peerDependencies": {
         "@rsbuild/core": ">=1.0.0",
       },
+    },
+    "packages/sketch-black-white-assets": {
+      "name": "@avatune/sketch-black-white-assets",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
+        "@rsbuild/core": "^1.5.17",
+        "@rsbuild/plugin-react": "^1.4.1",
+        "@rsbuild/plugin-svelte": "^1.0.10",
+        "@rsbuild/plugin-svgr": "^1.2.2",
+        "@rsbuild/plugin-vue": "^1.2.0",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^24.9.1",
+        "deepmerge": "^4.3.1",
+        "react": "v19.2.0",
+        "svelte": "^5.0.0",
+        "svgo": "^4.0.0",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0",
+        "svelte": ">=5.0.0",
+        "vue": "^3.5.22",
+      },
+      "optionalPeers": [
+        "react",
+        "svelte",
+        "vue",
+      ],
+    },
+    "packages/sketch-black-white-theme": {
+      "name": "@avatune/sketch-black-white-theme",
+      "version": "0.0.0",
+      "dependencies": {
+        "@avatune/sketch-black-white-assets": "workspace:*",
+        "@avatune/types": "workspace:*",
+      },
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rsbuild/plugin-svelte": "^1.0.10",
+        "@rsbuild/plugin-vue": "^1.2.0",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^22.18.12",
+        "@types/react": "^19.0.8",
+        "svelte": "^5.0.0",
+        "typescript": "^5.9.3",
+        "vue": "^3.5.22",
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0",
+        "svelte": ">=5.0.0",
+        "vue": "^3.5.22",
+      },
+      "optionalPeers": [
+        "react",
+        "svelte",
+        "vue",
+      ],
     },
     "packages/skin-tone-predictor": {
       "name": "@avatune/skin-tone-predictor",
@@ -284,7 +347,10 @@
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "@types/react": "^19.0.8",
+        "react": ">=18.0.0",
+        "svelte": ">=5.0.0",
         "typescript": "^5.9.3",
+        "vue": "^3.5.22",
       },
     },
     "packages/typescript-config": {
@@ -372,9 +438,13 @@
 
     "@avatune/react": ["@avatune/react@workspace:packages/react"],
 
-    "@avatune/rsbuild-plugin-svg-to-svelte": ["@avatune/rsbuild-plugin-svg-to-svelte@workspace:packages/rebuild-plugin-svg-to-svelte"],
+    "@avatune/rsbuild-plugin-svg-to-svelte": ["@avatune/rsbuild-plugin-svg-to-svelte@workspace:packages/rsbuild-plugin-svg-to-svelte"],
 
     "@avatune/rsbuild-plugin-svg-to-vue": ["@avatune/rsbuild-plugin-svg-to-vue@workspace:packages/rsbuild-plugin-svg-to-vue"],
+
+    "@avatune/sketch-black-white-assets": ["@avatune/sketch-black-white-assets@workspace:packages/sketch-black-white-assets"],
+
+    "@avatune/sketch-black-white-theme": ["@avatune/sketch-black-white-theme@workspace:packages/sketch-black-white-theme"],
 
     "@avatune/skin-tone-predictor": ["@avatune/skin-tone-predictor@workspace:packages/skin-tone-predictor"],
 
@@ -1006,6 +1076,8 @@
 
     "@avatune/modern-cartoon-assets/@types/node": ["@types/node@24.9.2", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA=="],
 
+    "@avatune/sketch-black-white-assets/@types/node": ["@types/node@24.9.2", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA=="],
+
     "@rslib/core/@rsbuild/core": ["@rsbuild/core@1.6.0-beta.1", "", { "dependencies": { "@rspack/core": "1.6.0-beta.1", "@rspack/lite-tapable": "~1.0.1", "@swc/helpers": "^0.5.17", "core-js": "~3.46.0", "jiti": "^2.6.1" }, "bin": { "rsbuild": "bin/rsbuild.js" } }, "sha512-UjQnvXDW9m/hS4DP66ubGIMVjK2PzYx8tzgiinrO0kjNCr9i8KWuJSJGUWyczFMpSsXxp20LnuTxtx7kiGiYdA=="],
 
     "@svgr/plugin-svgo/svgo": ["svgo@3.3.2", "", { "dependencies": { "@trysound/sax": "0.2.0", "commander": "^7.2.0", "css-select": "^5.1.0", "css-tree": "^2.3.1", "css-what": "^6.1.0", "csso": "^5.0.5", "picocolors": "^1.0.0" }, "bin": "./bin/svgo" }, "sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw=="],
@@ -1031,6 +1103,8 @@
     "terser/commander": ["commander@2.20.3", "", {}, "sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ=="],
 
     "@avatune/modern-cartoon-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
+
+    "@avatune/sketch-black-white-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "@rslib/core/@rsbuild/core/@rspack/core": ["@rspack/core@1.6.0-beta.1", "", { "dependencies": { "@module-federation/runtime-tools": "0.21.1", "@rspack/binding": "1.6.0-beta.1", "@rspack/lite-tapable": "1.0.1" }, "peerDependencies": { "@swc/helpers": ">=0.5.1" }, "optionalPeers": ["@swc/helpers"] }, "sha512-2ff8XWonPPHyQ6mEWogMspg+Sul3lXZUfNQVrbYSjfNpi8CeDV0/ZtRbHHbAXiy6pz5fvBFL6X+i/ATckjTYBw=="],
 

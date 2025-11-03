@@ -25,6 +25,8 @@
     "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
+    "deepmerge": "^4.3.1",
+    "svgo": "^4.0.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

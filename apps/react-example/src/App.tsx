@@ -1,5 +1,5 @@
-import theme from '@avatune/modern-cartoon-theme/react'
 import { Avatar } from '@avatune/react'
+import theme from '@avatune/sketch-black-white-theme/react'
 
 const App = () => {
   return (
@@ -7,14 +7,13 @@ const App = () => {
       <h2>Modern Cartoon Avatar Example</h2>
       <Avatar
         theme={theme}
-        body="shirt"
         ears="standard"
-        eyebrows="funny"
-        eyes="dots"
-        hair="short"
+        eyebrows="sharp"
+        eyes="sharp"
+        hair="rocket"
         head="oval"
-        mouth="smile"
-        noses="curve"
+        mouth="lips"
+        noses="sharp"
       />
 
       <h2>Random Avatar (tag-based)</h2>

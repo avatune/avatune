@@ -1,4 +1,4 @@
-import { pluginSvgToSvelte } from '../rsbuild-plugin-svg-to-svelte/dist'
+import { pluginSvgToSvelte } from '@avatune/rsbuild-plugin-svg-to-svelte'
 import { pluginSvgToVue } from '@avatune/rsbuild-plugin-svg-to-vue'
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSvelte } from '@rsbuild/plugin-svelte'

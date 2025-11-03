@@ -1,5 +1,5 @@
 {
-  "extends": "../typescript-config/base.json",
+  "extends": "@avatune/typescript-config/base",
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "bundler",
@@ -13,6 +13,12 @@
       ],
       "@avatune/modern-cartoon-assets/react": [
         "../modern-cartoon-assets/dist/react/index.d.ts"
+      ],
+      "@avatune/modern-cartoon-assets/svelte": [
+        "../modern-cartoon-assets/dist/svelte/index.d.ts"
+      ],
+      "@avatune/modern-cartoon-assets/vue": [
+        "../modern-cartoon-assets/dist/vue/index.d.ts"
       ]
     }
   },

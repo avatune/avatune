@@ -1,0 +1,67 @@
+{
+  "name": "@avatune/sketch-black-white-assets",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/svg.d.ts",
+      "import": "./dist/svg.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./svelte": {
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js"
+    },
+    "./svg": {
+      "types": "./dist/svg.d.ts",
+      "import": "./dist/svg.js"
+    }
+  },
+  "types": "./dist/svg.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "devDependencies": {
+    "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+    "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
+    "@rsbuild/core": "^1.5.17",
+    "@rsbuild/plugin-react": "^1.4.1",
+    "@rsbuild/plugin-svelte": "^1.0.10",
+    "@rsbuild/plugin-svgr": "^1.2.2",
+    "@rsbuild/plugin-vue": "^1.2.0",
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^24.9.1",
+    "deepmerge": "^4.3.1",
+    "react": "v19.2.0",
+    "svelte": "^5.0.0",
+    "svgo": "^4.0.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "svelte": ">=5.0.0",
+    "vue": "^3.5.22"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
+  }
+}
