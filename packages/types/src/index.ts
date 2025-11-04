@@ -102,7 +102,8 @@ export interface Theme<T extends AvatarItem = AvatarItem> {
     size: number
     backgroundColor?: string
     borderColor?: string
-    borderWidth?: number
+    borderWidth?: number | string
+    borderRadius?: number | string
   }
   body: AvatarItemCollection<T>
   ears: AvatarItemCollection<T>

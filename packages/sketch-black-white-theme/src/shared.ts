@@ -9,6 +9,7 @@ export default {
     borderColor: '#000000',
     backgroundColor: '#FFFFFF',
     borderWidth: 3,
+    borderRadius: '100%',
   },
   body: {},
   ears: {

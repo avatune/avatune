@@ -4,7 +4,11 @@ import type {
   ReactTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { AVATAR_CATEGORIES, selectItemFromConfig } from '@avatune/utils'
+import {
+  AVATAR_CATEGORIES,
+  metadataToStyle,
+  selectItemFromConfig,
+} from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> =
@@ -29,7 +33,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
   width = theme.metadata.size,
   height = theme.metadata.size,
   className,
-  style,
+  style = {},
   ...config
 }: AvatarProps<T>) {
   const configDep = AVATAR_CATEGORIES.flatMap((category) => [
@@ -52,10 +56,6 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
 
   const scaleFactor = width / theme.metadata.size
 
-  const backgroundColor = theme.metadata.backgroundColor
-  const borderColor = theme.metadata.borderColor
-  const borderWidth = theme.metadata.borderWidth
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -66,13 +66,8 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
       viewBox={`0 0 ${width} ${height}`}
       className={className}
       style={{
+        ...(metadataToStyle(theme.metadata) as CSSProperties),
         ...style,
-        backgroundColor,
-        border:
-          borderWidth && borderColor
-            ? `${borderWidth}px solid ${borderColor}`
-            : undefined,
-        borderRadius: '100%',
       }}
     >
       {sortedItems.map(([category, item]) => {

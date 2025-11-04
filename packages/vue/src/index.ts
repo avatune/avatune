@@ -4,7 +4,7 @@ import type {
   TypedAvatarConfig,
   VueTheme,
 } from '@avatune/types'
-import { selectItemFromConfig } from '@avatune/utils'
+import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -154,17 +154,9 @@ export const Avatar = defineComponent({
       () => actualWidth.value / props.theme.metadata.size,
     )
 
-    const backgroundColor = props.theme.metadata.backgroundColor
-    const borderColor = props.theme.metadata.borderColor
-    const borderWidth = props.theme.metadata.borderWidth
     const finalStyle = computed(() => ({
+      ...(metadataToStyle(props.theme.metadata) as CSSProperties),
       ...(props.style || {}),
-      backgroundColor,
-      border:
-        borderWidth && borderColor
-          ? `${borderWidth}px solid ${borderColor}`
-          : undefined,
-      borderRadius: '100%',
     }))
 
     return () => {

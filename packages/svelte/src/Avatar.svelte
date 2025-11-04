@@ -5,7 +5,7 @@ import type {
   SvelteTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { selectItemFromConfig } from '@avatune/utils'
+import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
 
 type Props = TypedAvatarConfig<T> & {
   theme: T
@@ -34,20 +34,8 @@ const sortedItems = $derived(
 
 const scaleFactor = $derived(width / theme.metadata.size)
 
-const backgroundColor = theme.metadata.backgroundColor
-const borderColor = theme.metadata.borderColor
-const borderWidth = theme.metadata.borderWidth
 const finalStyle = $derived(
-  [
-    style,
-    backgroundColor ? `background-color: ${backgroundColor}` : '',
-    borderWidth && borderColor
-      ? `border: ${borderWidth}px solid ${borderColor}`
-      : '',
-    'border-radius: 100%',
-  ]
-    .filter(Boolean)
-    .join('; '),
+  [metadataToStyle(theme.metadata, 'string'), style].filter(Boolean).join('; '),
 )
 </script>
 
