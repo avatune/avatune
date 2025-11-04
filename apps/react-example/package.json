@@ -9,7 +9,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@avatune/sketch-black-white-assets": "workspace:*",
+    "@avatune/flat-design-theme": "workspace:*",
     "@avatune/sketch-black-white-theme": "workspace:*",
     "@avatune/react": "workspace:*",
     "@avatune/types": "workspace:*",
