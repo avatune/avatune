@@ -8,8 +8,8 @@ Avatune is a monorepo combining ML-powered avatar analysis with browser-based av
 
 1. **Python ML Training** - TensorFlow/Keras models trained on CelebA and FairFace datasets, converted to TensorFlow.js
 2. **TypeScript Packages** - Browser-compatible ML predictor packages using TensorFlow.js
-3. **Avatar Rendering** - Modern cartoon avatar generation from analysis results
-4. **Demo Apps** - React example apps showcasing the full pipeline
+3. **Avatar Rendering** - Avatar generation from analysis results
+4. **Demo Apps** - React, Vue, Svelte example apps showcasing the full pipeline
 
 The workflow: Python trains models → exports to TFJS → TypeScript packages load models → browser inference.
 
@@ -117,7 +117,7 @@ All ML predictor packages (`packages/*-predictor/`) use **rslib.config.ts** with
 ### Other Packages
 
 - **assets**: ESM-only, SVG handling (inline or raw), path aliases
-- **modern-cartoon**: ESM-only, depends on assets package
+- **theme**: ESM-only, depends on assets package
 - All use rslib for consistent library bundling
 
 ### Example Apps

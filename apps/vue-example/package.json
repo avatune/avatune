@@ -10,7 +10,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@avatune/modern-cartoon-theme": "workspace:*",
+    "@avatune/sketch-black-white-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/vue": "workspace:*",
     "vue": "^3.5.22"

@@ -7,11 +7,6 @@ import type {
 } from '@avatune/types'
 
 /**
- * Base avatar size for calculations (400x400)
- */
-export const BASE_AVATAR_SIZE = 400
-
-/**
  * Avatar part categories in rendering order
  */
 export const AVATAR_CATEGORIES = [

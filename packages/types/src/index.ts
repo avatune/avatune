@@ -5,10 +5,18 @@ import type { DefineComponent } from 'vue'
 /**
  * Position offset for an avatar item
  */
-export interface Position {
-  x: number
-  y: number
-}
+export type Position =
+  | {
+      x: number | string
+      y: number | string
+    }
+  | ((
+      width: number,
+      height: number,
+    ) => {
+      x: number | string
+      y: number | string
+    })
 
 /**
  * Base avatar item that can be either vanilla (SVG code) or React component
@@ -90,6 +98,12 @@ export type AvatarItemCollection<
  * Complete theme defining all avatar parts
  */
 export interface Theme<T extends AvatarItem = AvatarItem> {
+  metadata: {
+    size: number
+    backgroundColor?: string
+    borderColor?: string
+    borderWidth?: number
+  }
   body: AvatarItemCollection<T>
   ears: AvatarItemCollection<T>
   eyebrows: AvatarItemCollection<T>
@@ -123,7 +137,7 @@ export type SvelteTheme = Theme<SvelteAvatarItem>
 /**
  * Avatar part categories
  */
-export type AvatarPartCategory = keyof Theme
+export type AvatarPartCategory = Exclude<keyof Theme, 'metadata'>
 
 /**
  * Extract all identifiers from a theme category

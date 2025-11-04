@@ -4,15 +4,15 @@ import theme from '@avatune/sketch-black-white-theme/react'
 const App = () => {
   return (
     <div className="content">
-      <h2>Modern Cartoon Avatar Example</h2>
+      <h2>Custom Avatar Example</h2>
       <Avatar
         theme={theme}
-        ears="standard"
-        eyebrows="sharp"
-        eyes="sharp"
-        hair="rocket"
+        ears="round"
+        eyebrows="bold"
+        eyes="standard"
+        hair="star"
         head="oval"
-        mouth="lips"
+        mouth="smirk"
         noses="sharp"
       />
 

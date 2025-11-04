@@ -53,7 +53,7 @@
       "name": "@avatune/svelte-example",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/modern-cartoon-theme": "workspace:*",
+        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "svelte": "^5.0.0",
@@ -68,7 +68,7 @@
       "name": "@avatune/vanilla-example",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/modern-cartoon-theme": "workspace:*",
+        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
         "@avatune/vanilla": "workspace:*",
@@ -82,7 +82,7 @@
       "name": "@avatune/vue-example",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/modern-cartoon-theme": "workspace:*",
+        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",
         "vue": "^3.5.22",
@@ -126,65 +126,6 @@
         "@tensorflow/tfjs-backend-wasm": "^4.22.0",
         "@tensorflow/tfjs-backend-webgl": "^4.22.0",
       },
-    },
-    "packages/modern-cartoon-assets": {
-      "name": "@avatune/modern-cartoon-assets",
-      "version": "0.0.0",
-      "devDependencies": {
-        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
-        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
-        "@rsbuild/core": "^1.5.17",
-        "@rsbuild/plugin-react": "^1.4.1",
-        "@rsbuild/plugin-svelte": "^1.0.10",
-        "@rsbuild/plugin-svgr": "^1.2.2",
-        "@rsbuild/plugin-vue": "^1.2.0",
-        "@rslib/core": "^0.16.1",
-        "@types/node": "^24.9.1",
-        "deepmerge": "^4.3.1",
-        "react": "v19.2.0",
-        "svelte": "^5.0.0",
-        "svgo": "^4.0.0",
-        "typescript": "^5.9.3",
-      },
-      "peerDependencies": {
-        "react": ">=18.0.0",
-        "svelte": ">=5.0.0",
-        "vue": "^3.5.22",
-      },
-      "optionalPeers": [
-        "react",
-        "svelte",
-        "vue",
-      ],
-    },
-    "packages/modern-cartoon-theme": {
-      "name": "@avatune/modern-cartoon-theme",
-      "version": "0.0.0",
-      "dependencies": {
-        "@avatune/modern-cartoon-assets": "workspace:*",
-        "@avatune/types": "workspace:*",
-      },
-      "devDependencies": {
-        "@avatune/typescript-config": "workspace:*",
-        "@rsbuild/plugin-svelte": "^1.0.10",
-        "@rsbuild/plugin-vue": "^1.2.0",
-        "@rslib/core": "^0.16.1",
-        "@types/node": "^22.18.12",
-        "@types/react": "^19.0.8",
-        "svelte": "^5.0.0",
-        "typescript": "^5.9.3",
-        "vue": "^3.5.22",
-      },
-      "peerDependencies": {
-        "react": ">=18.0.0",
-        "svelte": ">=5.0.0",
-        "vue": "^3.5.22",
-      },
-      "optionalPeers": [
-        "react",
-        "svelte",
-        "vue",
-      ],
     },
     "packages/react": {
       "name": "@avatune/react",
@@ -434,10 +375,6 @@
     "@avatune/hair-color-predictor": ["@avatune/hair-color-predictor@workspace:packages/hair-color-predictor"],
 
     "@avatune/hair-length-predictor": ["@avatune/hair-length-predictor@workspace:packages/hair-length-predictor"],
-
-    "@avatune/modern-cartoon-assets": ["@avatune/modern-cartoon-assets@workspace:packages/modern-cartoon-assets"],
-
-    "@avatune/modern-cartoon-theme": ["@avatune/modern-cartoon-theme@workspace:packages/modern-cartoon-theme"],
 
     "@avatune/predictor-example": ["@avatune/predictor-example@workspace:apps/predictor-example"],
 
@@ -1079,8 +1016,6 @@
 
     "zimmerframe": ["zimmerframe@1.1.4", "", {}, "sha512-B58NGBEoc8Y9MWWCQGl/gq9xBCe4IiKM0a2x7GZdQKOW5Exr8S1W24J6OgM1njK8xCRGvAJIL/MxXHf6SkmQKQ=="],
 
-    "@avatune/modern-cartoon-assets/@types/node": ["@types/node@24.9.2", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA=="],
-
     "@avatune/sketch-black-white-assets/@types/node": ["@types/node@24.9.2", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA=="],
 
     "@rslib/core/@rsbuild/core": ["@rsbuild/core@1.6.0-beta.1", "", { "dependencies": { "@rspack/core": "1.6.0-beta.1", "@rspack/lite-tapable": "~1.0.1", "@swc/helpers": "^0.5.17", "core-js": "~3.46.0", "jiti": "^2.6.1" }, "bin": { "rsbuild": "bin/rsbuild.js" } }, "sha512-UjQnvXDW9m/hS4DP66ubGIMVjK2PzYx8tzgiinrO0kjNCr9i8KWuJSJGUWyczFMpSsXxp20LnuTxtx7kiGiYdA=="],
@@ -1106,8 +1041,6 @@
     "svelte-loader/loader-utils": ["loader-utils@2.0.4", "", { "dependencies": { "big.js": "^5.2.2", "emojis-list": "^3.0.0", "json5": "^2.1.2" } }, "sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw=="],
 
     "terser/commander": ["commander@2.20.3", "", {}, "sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ=="],
-
-    "@avatune/modern-cartoon-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "@avatune/sketch-black-white-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 

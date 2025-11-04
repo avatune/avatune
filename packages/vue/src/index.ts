@@ -4,7 +4,7 @@ import type {
   TypedAvatarConfig,
   VueTheme,
 } from '@avatune/types'
-import { BASE_AVATAR_SIZE, selectItemFromConfig } from '@avatune/utils'
+import { selectItemFromConfig } from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -107,11 +107,11 @@ export const Avatar = defineComponent({
     },
     width: {
       type: Number,
-      default: BASE_AVATAR_SIZE,
+      default: undefined,
     },
     height: {
       type: Number,
-      default: BASE_AVATAR_SIZE,
+      default: undefined,
     },
     class: {
       type: String,
@@ -123,8 +123,20 @@ export const Avatar = defineComponent({
     },
   },
   setup(props) {
+    const config = computed(() => {
+      const {
+        theme: _theme,
+        width: _width,
+        height: _height,
+        class: _class,
+        style: _style,
+        ...rest
+      } = props as Record<string, unknown>
+      return rest as AvatarConfig
+    })
+
     const result = computed(() =>
-      selectItemFromConfig(props as AvatarConfig, props.theme),
+      selectItemFromConfig(config.value, props.theme),
     )
 
     const sortedItems = computed(() =>
@@ -133,7 +145,27 @@ export const Avatar = defineComponent({
       ),
     )
 
-    const scaleFactor = computed(() => props.width / BASE_AVATAR_SIZE)
+    const actualWidth = computed(() => props.width ?? props.theme.metadata.size)
+    const actualHeight = computed(
+      () => props.height ?? props.theme.metadata.size,
+    )
+
+    const scaleFactor = computed(
+      () => actualWidth.value / props.theme.metadata.size,
+    )
+
+    const backgroundColor = props.theme.metadata.backgroundColor
+    const borderColor = props.theme.metadata.borderColor
+    const borderWidth = props.theme.metadata.borderWidth
+    const finalStyle = computed(() => ({
+      ...(props.style || {}),
+      backgroundColor,
+      border:
+        borderWidth && borderColor
+          ? `${borderWidth}px solid ${borderColor}`
+          : undefined,
+      borderRadius: '100%',
+    }))
 
     return () => {
       return h(
@@ -142,11 +174,11 @@ export const Avatar = defineComponent({
           xmlns: 'http://www.w3.org/2000/svg',
           role: 'img',
           'aria-label': 'Avatar',
-          width: props.width,
-          height: props.height,
-          viewBox: `0 0 ${props.width} ${props.height}`,
+          width: actualWidth.value,
+          height: actualHeight.value,
+          viewBox: `0 0 ${actualWidth.value} ${actualHeight.value}`,
           class: props.class,
-          style: props.style,
+          style: finalStyle.value,
         },
         sortedItems.value.map(([category, item]) => {
           if (!item) {
@@ -155,9 +187,12 @@ export const Avatar = defineComponent({
 
           const Component = item.Component
 
-          // Convert percentage positions to pixel coordinates
-          const transformX = props.width * item.position.x
-          const transformY = props.height * item.position.y
+          const position =
+            typeof item.position === 'function'
+              ? item.position(actualWidth.value, actualHeight.value)
+              : item.position
+          const transformX = position.x
+          const transformY = position.y
 
           const configColor = props.seed
             ? undefined

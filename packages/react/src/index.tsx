@@ -4,11 +4,7 @@ import type {
   ReactTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import {
-  AVATAR_CATEGORIES,
-  BASE_AVATAR_SIZE,
-  selectItemFromConfig,
-} from '@avatune/utils'
+import { AVATAR_CATEGORIES, selectItemFromConfig } from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> =
@@ -30,8 +26,8 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
  */
 export function Avatar<T extends ReactTheme = ReactTheme>({
   theme,
-  width = BASE_AVATAR_SIZE,
-  height = BASE_AVATAR_SIZE,
+  width = theme.metadata.size,
+  height = theme.metadata.size,
   className,
   style,
   ...config
@@ -54,7 +50,11 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
     [result.selected],
   )
 
-  const scaleFactor = width / BASE_AVATAR_SIZE
+  const scaleFactor = width / theme.metadata.size
+
+  const backgroundColor = theme.metadata.backgroundColor
+  const borderColor = theme.metadata.borderColor
+  const borderWidth = theme.metadata.borderWidth
 
   return (
     <svg
@@ -65,7 +65,15 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
       height={height}
       viewBox={`0 0 ${width} ${height}`}
       className={className}
-      style={style}
+      style={{
+        ...style,
+        backgroundColor,
+        border:
+          borderWidth && borderColor
+            ? `${borderWidth}px solid ${borderColor}`
+            : undefined,
+        borderRadius: '100%',
+      }}
     >
       {sortedItems.map(([category, item]) => {
         if (!item) {
@@ -74,18 +82,19 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
 
         const Component = item.Component
 
-        // Convert percentage positions to pixel coordinates
-        const transformX = width * item.position.x
-        const transformY = height * item.position.y
+        const position =
+          typeof item.position === 'function'
+            ? item.position(width, height)
+            : item.position
 
         const configColor = config.seed
           ? undefined
-          : config[`${category}Color` as `${AvatarPartCategory}Color`]
+          : config[`${category as AvatarPartCategory}Color`]
 
         return (
           <g
             key={category}
-            transform={`translate(${transformX}, ${transformY}) scale(${scaleFactor})`}
+            transform={`translate(${position.x}, ${position.y}) scale(${scaleFactor})`}
             style={{ color: configColor || item.color }}
           >
             <Component />

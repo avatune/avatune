@@ -1,4 +1,4 @@
-import theme from '@avatune/modern-cartoon-theme/vanilla'
+import theme from '@avatune/sketch-black-white-theme/vanilla'
 import { avatar } from '@avatune/vanilla'
 import './index.css'
 
@@ -24,16 +24,15 @@ content.className = 'content'
 
 appendSVG(
   content,
-  'Modern Cartoon Avatar Example',
+  'Custom Avatar Example',
   avatar(theme, {
-    body: 'shirt',
-    ears: 'standard',
-    eyebrows: 'funny',
-    eyes: 'dots',
-    hair: 'short',
+    ears: 'round',
+    eyebrows: 'bold',
+    eyes: 'standard',
+    hair: 'star',
     head: 'oval',
-    mouth: 'smile',
-    noses: 'curve',
+    mouth: 'smirk',
+    noses: 'sharp',
   }),
 )
 

@@ -5,7 +5,7 @@ import type {
   SvelteTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { BASE_AVATAR_SIZE, selectItemFromConfig } from '@avatune/utils'
+import { selectItemFromConfig } from '@avatune/utils'
 
 type Props = TypedAvatarConfig<T> & {
   theme: T
@@ -17,8 +17,8 @@ type Props = TypedAvatarConfig<T> & {
 
 const {
   theme,
-  width = BASE_AVATAR_SIZE,
-  height = BASE_AVATAR_SIZE,
+  width = theme.metadata.size,
+  height = theme.metadata.size,
   class: className,
   style,
   ...config
@@ -32,7 +32,23 @@ const sortedItems = $derived(
   ),
 )
 
-const scaleFactor = $derived(width / BASE_AVATAR_SIZE)
+const scaleFactor = $derived(width / theme.metadata.size)
+
+const backgroundColor = theme.metadata.backgroundColor
+const borderColor = theme.metadata.borderColor
+const borderWidth = theme.metadata.borderWidth
+const finalStyle = $derived(
+  [
+    style,
+    backgroundColor ? `background-color: ${backgroundColor}` : '',
+    borderWidth && borderColor
+      ? `border: ${borderWidth}px solid ${borderColor}`
+      : '',
+    'border-radius: 100%',
+  ]
+    .filter(Boolean)
+    .join('; '),
+)
 </script>
 
 <svg
@@ -43,12 +59,13 @@ const scaleFactor = $derived(width / BASE_AVATAR_SIZE)
   {height}
   viewBox="0 0 {width} {height}"
   class={className}
-  {style}
+  style={finalStyle}
 >
   {#each sortedItems as [category, item]}
     {#if item}
-      {@const transformX = width * item.position.x}
-      {@const transformY = height * item.position.y}
+      {@const position = typeof item.position === 'function' ? item.position(width, height) : item.position}
+      {@const transformX = position.x}
+      {@const transformY = position.y}
       {@const configColor = config.seed ? undefined : config[`${category}Color` as `${AvatarPartCategory}Color`]}
       {@const ItemComponent = item.Component}
       <g

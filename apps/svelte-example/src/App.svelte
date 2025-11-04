@@ -1,20 +1,19 @@
 <script lang="ts">
-import theme from '@avatune/modern-cartoon-theme/svelte'
+import theme from '@avatune/sketch-black-white-theme/svelte'
 import { Avatar } from '@avatune/svelte'
 </script>
 
 <div class="content">
-  <h2>Modern Cartoon Avatar Example</h2>
+  <h2>Custom Avatar Example</h2>
   <Avatar
     {theme}
-    body="shirt"
-    ears="standard"
-    eyebrows="funny"
-    eyes="dots"
-    hair="short"
+    ears="round"
+    eyebrows="bold"
+    eyes="standard"
+    hair="star"
     head="oval"
-    mouth="smile"
-    noses="curve"
+    mouth="smirk"
+    noses="sharp"
   />
 
   <h2>Random Avatar (tag-based)</h2>

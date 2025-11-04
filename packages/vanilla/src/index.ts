@@ -5,12 +5,7 @@ import type {
   VanillaAvatarItem,
   VanillaTheme,
 } from '@avatune/types'
-import {
-  AVATAR_CATEGORIES,
-  BASE_AVATAR_SIZE,
-  seededRandom,
-  selectItem,
-} from '@avatune/utils'
+import { AVATAR_CATEGORIES, seededRandom, selectItem } from '@avatune/utils'
 
 /**
  * Generate avatar SVG code from theme and config
@@ -51,19 +46,22 @@ export function avatar<T extends VanillaTheme = VanillaTheme>(
 
   // Generate SVG
   // Default viewBox and dimensions
-  const width = BASE_AVATAR_SIZE
-  const height = BASE_AVATAR_SIZE
+  const width = theme.metadata.size
+  const height = theme.metadata.size
 
   // Calculate responsive scale factor (base size is 400)
-  const scaleFactor = width / BASE_AVATAR_SIZE
+  const scaleFactor = width / theme.metadata.size
 
   const svgParts: string[] = []
 
   for (const [category, item] of sortedItems) {
     if (item) {
-      // Convert percentage positions to pixel coordinates
-      const transformX = width * item.position.x
-      const transformY = height * item.position.y
+      const position =
+        typeof item.position === 'function'
+          ? item.position(width, height)
+          : item.position
+      const transformX = position.x
+      const transformY = position.y
 
       const configColor =
         'seed' in avatarConfig
@@ -80,7 +78,20 @@ export function avatar<T extends VanillaTheme = VanillaTheme>(
     }
   }
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  const backgroundColor = theme.metadata.backgroundColor
+  const borderColor = theme.metadata.borderColor
+  const borderWidth = theme.metadata.borderWidth
+  const finalStyle = [
+    backgroundColor ? `background-color: ${backgroundColor}` : '',
+    borderWidth && borderColor
+      ? `border: ${borderWidth}px solid ${borderColor}`
+      : '',
+    'border-radius: 100%',
+  ]
+    .filter(Boolean)
+    .join('; ')
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" style="${finalStyle}" viewBox="0 0 ${width} ${height}">
   ${svgParts.join('\n  ')}
 </svg>`
 
