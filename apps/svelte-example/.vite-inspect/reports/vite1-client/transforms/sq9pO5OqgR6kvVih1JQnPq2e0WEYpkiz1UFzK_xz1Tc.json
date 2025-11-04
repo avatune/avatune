@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/array/sortedIndexBy.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isNull } from '../../predicate/isNull.mjs';\nimport { isUndefined } from '../../predicate/isUndefined.mjs';\nimport { identity } from '../function/identity.mjs';\nimport { isNaN } from '../predicate/isNaN.mjs';\nimport { isNil } from '../predicate/isNil.mjs';\nimport { isSymbol } from '../predicate/isSymbol.mjs';\nimport { iteratee } from '../util/iteratee.mjs';\n\nconst MAX_ARRAY_LENGTH = 4294967295;\nconst MAX_ARRAY_INDEX = MAX_ARRAY_LENGTH - 1;\nfunction sortedIndexBy(array, value, iteratee$1 = identity, retHighest) {\n    if (isNil(array) || array.length === 0) {\n        return 0;\n    }\n    let low = 0;\n    let high = array.length;\n    const iterateeFunction = iteratee(iteratee$1);\n    const transformedValue = iterateeFunction(value);\n    const valIsNaN = isNaN(transformedValue);\n    const valIsNull = isNull(transformedValue);\n    const valIsSymbol = isSymbol(transformedValue);\n    const valIsUndefined = isUndefined(transformedValue);\n    while (low < high) {\n        let setLow;\n        const mid = Math.floor((low + high) / 2);\n        const computed = iterateeFunction(array[mid]);\n        const othIsDefined = !isUndefined(computed);\n        const othIsNull = isNull(computed);\n        const othIsReflexive = !isNaN(computed);\n        const othIsSymbol = isSymbol(computed);\n        if (valIsNaN) {\n            setLow = retHighest || othIsReflexive;\n        }\n        else if (valIsUndefined) {\n            setLow = othIsReflexive && (retHighest || othIsDefined);\n        }\n        else if (valIsNull) {\n            setLow = othIsReflexive && othIsDefined && (retHighest || !othIsNull);\n        }\n        else if (valIsSymbol) {\n            setLow = othIsReflexive && othIsDefined && !othIsNull && (retHighest || !othIsSymbol);\n        }\n        else if (othIsNull || othIsSymbol) {\n            setLow = false;\n        }\n        else {\n            setLow = retHighest ? computed <= transformedValue : computed < transformedValue;\n        }\n        if (setLow) {\n            low = mid + 1;\n        }\n        else {\n            high = mid;\n        }\n    }\n    return Math.min(high, MAX_ARRAY_INDEX);\n}\n\nexport { sortedIndexBy };\n",
+      "start": 1762256768011,
+      "end": 1762256768120,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    }
+  ]
+}

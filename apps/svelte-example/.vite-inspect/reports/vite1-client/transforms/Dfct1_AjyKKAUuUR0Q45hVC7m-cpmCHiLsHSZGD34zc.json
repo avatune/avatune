@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/object/clone.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isPrimitive } from '../predicate/isPrimitive.mjs';\nimport { isTypedArray } from '../predicate/isTypedArray.mjs';\n\nfunction clone(obj) {\n    if (isPrimitive(obj)) {\n        return obj;\n    }\n    if (Array.isArray(obj) ||\n        isTypedArray(obj) ||\n        obj instanceof ArrayBuffer ||\n        (typeof SharedArrayBuffer !== 'undefined' && obj instanceof SharedArrayBuffer)) {\n        return obj.slice(0);\n    }\n    const prototype = Object.getPrototypeOf(obj);\n    const Constructor = prototype.constructor;\n    if (obj instanceof Date || obj instanceof Map || obj instanceof Set) {\n        return new Constructor(obj);\n    }\n    if (obj instanceof RegExp) {\n        const newRegExp = new Constructor(obj);\n        newRegExp.lastIndex = obj.lastIndex;\n        return newRegExp;\n    }\n    if (obj instanceof DataView) {\n        return new Constructor(obj.buffer.slice(0));\n    }\n    if (obj instanceof Error) {\n        const newError = new Constructor(obj.message);\n        newError.stack = obj.stack;\n        newError.name = obj.name;\n        newError.cause = obj.cause;\n        return newError;\n    }\n    if (typeof File !== 'undefined' && obj instanceof File) {\n        const newFile = new Constructor([obj], obj.name, { type: obj.type, lastModified: obj.lastModified });\n        return newFile;\n    }\n    if (typeof obj === 'object') {\n        const newObject = Object.create(prototype);\n        return Object.assign(newObject, obj);\n    }\n    return obj;\n}\n\nexport { clone };\n",
+      "start": 1762256768168,
+      "end": 1762256768196,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768196,
+      "end": 1762256768196,
+      "order": "normal"
+    }
+  ]
+}

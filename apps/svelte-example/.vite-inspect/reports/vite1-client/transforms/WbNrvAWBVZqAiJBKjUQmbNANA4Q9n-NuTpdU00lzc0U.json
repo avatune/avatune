@@ -1,0 +1,134 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/runtime/emit-code.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { SourceType, SNIPPET_RENDERED } from 'storybook/internal/docs-tools';\nimport { addons } from 'storybook/internal/preview-api';\nimport { get } from 'es-toolkit/compat';\nconst channel = addons.getChannel();\n/**\n * Given a code string representing the raw source code for the story,\n * and the current, dynamic args\n * this function:\n * 1. Replaces args references in the code with the actual values\n * 2. Emits the final code to Storybook's internal code provider\n * So that it can be shown in source code viewer\n */\nexport const emitCode = (params) => {\n    const { storyContext } = params;\n    if (skipSourceRender(storyContext)) {\n        return;\n    }\n    const codeToEmit = generateCodeToEmit({\n        code: storyContext.parameters.__svelteCsf.rawCode,\n        args: params.args,\n    });\n    // Using setTimeout here to ensure we're emitting after the base @storybook/svelte emits its version of the code\n    // TODO: fix this in @storybook/svelte, don't emit when using stories.svelte files\n    setTimeout(() => {\n        channel.emit(SNIPPET_RENDERED, {\n            id: storyContext.id,\n            args: storyContext.unmappedArgs,\n            source: codeToEmit,\n        });\n    });\n};\n// Copied from @storybook/svelte at https://github.com/storybookjs/storybook/blob/17b7512c60256c739b890b3d85aaac992806dee6/code/renderers/svelte/src/docs/sourceDecorator.ts#L16-L33\nconst skipSourceRender = (context) => {\n    const sourceParams = context?.parameters.docs?.source;\n    const isArgsStory = context?.parameters.__isArgsStory;\n    const rawCode = context?.parameters.__svelteCsf?.rawCode;\n    if (!rawCode) {\n        return true;\n    }\n    // always render if the user forces it\n    if (sourceParams?.type === SourceType.DYNAMIC) {\n        return false;\n    }\n    // never render if the user is forcing the block to render code, or\n    // if the user provides code, or if it's not an args story.\n    return !isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;\n};\nexport const generateCodeToEmit = ({ code, args }) => {\n    const allPropsArray = Object.entries(args ?? {})\n        .map(([argKey, argValue]) => argsToProps(argKey, argValue))\n        .filter((p) => p);\n    let allPropsString = allPropsArray.join(' ');\n    // make the props multiline if the string is longer than 50 chars\n    // TODO: do this at the final stage instead, taking into account the singular args replacements\n    if (allPropsString.length > 50) {\n        // TODO: the indentation only works if it's in the root-level component. In a nested component, the indentation will be too shallow\n        allPropsString = `\\n  ${allPropsArray.join('\\n  ')}\\n`;\n    }\n    let codeToEmit = code\n        .replaceAll('{...args}', allPropsString)\n        // replace single arg references with their actual value,\n        // eg. myProp={args.something} => myProp={\"actual\"}\n        // or <h1>{args.something}</h1> => <h1>\"actual\"</h1>\n        .replace(/args(?:[\\w\\d_$.?[\\]\"'])+/g, (argPath) => {\n        const path = argPath.replaceAll('?', ''); // remove optional chaining character\n        const value = get({ args }, path);\n        return valueToString(value);\n    });\n    return codeToEmit;\n};\nconst getFunctionName = (fn) => {\n    const name = fn.getMockName?.() ?? fn.name;\n    if (name && name !== 'spy') {\n        return name;\n    }\n    return '() => {}';\n};\n/**\n * convert a value to a stringified version\n */\nconst valueToString = (value) => {\n    if (typeof value === 'object' && value[Symbol.for('svelte.snippet')]) {\n        return 'snippet';\n    }\n    if (typeof value === 'function') {\n        return getFunctionName(value);\n    }\n    return (JSON.stringify(value, null, 1)\n        ?.replace(/\\n/g, '')\n        // Find \"}\" or \"]\" at the end of the string, not preceded by a space, and add a space\n        .replace(/(?<!\\s)([}\\]])$/, ' $1'));\n};\n/**\n * convert a {key: value} pair into Svelte attributes, eg. {someKey: \"some string\"} => someKey=\"some string\"\n */\nconst argsToProps = (key, value) => {\n    if (value === undefined || value === null) {\n        return null;\n    }\n    if (value === true) {\n        return key;\n    }\n    const stringValue = valueToString(value);\n    if (typeof value === 'string') {\n        return `${key}=${stringValue}`;\n    }\n    return `${key}={${stringValue}}`;\n};\n",
+      "start": 1762256767889,
+      "end": 1762256767985,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767985,
+      "end": 1762256767985,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "result": "import { SourceType, SNIPPET_RENDERED } from 'storybook/internal/docs-tools';\nconst { addons } = __STORYBOOK_MODULE_PREVIEW_API__;\nimport { get } from 'es-toolkit/compat';\nconst channel = addons.getChannel();\n/**\n * Given a code string representing the raw source code for the story,\n * and the current, dynamic args\n * this function:\n * 1. Replaces args references in the code with the actual values\n * 2. Emits the final code to Storybook's internal code provider\n * So that it can be shown in source code viewer\n */\nexport const emitCode = (params) => {\n    const { storyContext } = params;\n    if (skipSourceRender(storyContext)) {\n        return;\n    }\n    const codeToEmit = generateCodeToEmit({\n        code: storyContext.parameters.__svelteCsf.rawCode,\n        args: params.args,\n    });\n    // Using setTimeout here to ensure we're emitting after the base @storybook/svelte emits its version of the code\n    // TODO: fix this in @storybook/svelte, don't emit when using stories.svelte files\n    setTimeout(() => {\n        channel.emit(SNIPPET_RENDERED, {\n            id: storyContext.id,\n            args: storyContext.unmappedArgs,\n            source: codeToEmit,\n        });\n    });\n};\n// Copied from @storybook/svelte at https://github.com/storybookjs/storybook/blob/17b7512c60256c739b890b3d85aaac992806dee6/code/renderers/svelte/src/docs/sourceDecorator.ts#L16-L33\nconst skipSourceRender = (context) => {\n    const sourceParams = context?.parameters.docs?.source;\n    const isArgsStory = context?.parameters.__isArgsStory;\n    const rawCode = context?.parameters.__svelteCsf?.rawCode;\n    if (!rawCode) {\n        return true;\n    }\n    // always render if the user forces it\n    if (sourceParams?.type === SourceType.DYNAMIC) {\n        return false;\n    }\n    // never render if the user is forcing the block to render code, or\n    // if the user provides code, or if it's not an args story.\n    return !isArgsStory || sourceParams?.code || sourceParams?.type === SourceType.CODE;\n};\nexport const generateCodeToEmit = ({ code, args }) => {\n    const allPropsArray = Object.entries(args ?? {})\n        .map(([argKey, argValue]) => argsToProps(argKey, argValue))\n        .filter((p) => p);\n    let allPropsString = allPropsArray.join(' ');\n    // make the props multiline if the string is longer than 50 chars\n    // TODO: do this at the final stage instead, taking into account the singular args replacements\n    if (allPropsString.length > 50) {\n        // TODO: the indentation only works if it's in the root-level component. In a nested component, the indentation will be too shallow\n        allPropsString = `\\n  ${allPropsArray.join('\\n  ')}\\n`;\n    }\n    let codeToEmit = code\n        .replaceAll('{...args}', allPropsString)\n        // replace single arg references with their actual value,\n        // eg. myProp={args.something} => myProp={\"actual\"}\n        // or <h1>{args.something}</h1> => <h1>\"actual\"</h1>\n        .replace(/args(?:[\\w\\d_$.?[\\]\"'])+/g, (argPath) => {\n        const path = argPath.replaceAll('?', ''); // remove optional chaining character\n        const value = get({ args }, path);\n        return valueToString(value);\n    });\n    return codeToEmit;\n};\nconst getFunctionName = (fn) => {\n    const name = fn.getMockName?.() ?? fn.name;\n    if (name && name !== 'spy') {\n        return name;\n    }\n    return '() => {}';\n};\n/**\n * convert a value to a stringified version\n */\nconst valueToString = (value) => {\n    if (typeof value === 'object' && value[Symbol.for('svelte.snippet')]) {\n        return 'snippet';\n    }\n    if (typeof value === 'function') {\n        return getFunctionName(value);\n    }\n    return (JSON.stringify(value, null, 1)\n        ?.replace(/\\n/g, '')\n        // Find \"}\" or \"]\" at the end of the string, not preceded by a space, and add a space\n        .replace(/(?<!\\s)([}\\]])$/, ' $1'));\n};\n/**\n * convert a {key: value} pair into Svelte attributes, eg. {someKey: \"some string\"} => someKey=\"some string\"\n */\nconst argsToProps = (key, value) => {\n    if (value === undefined || value === null) {\n        return null;\n    }\n    if (value === true) {\n        return key;\n    }\n    const stringValue = valueToString(value);\n    if (typeof value === 'string') {\n        return `${key}=${stringValue}`;\n    }\n    return `${key}={${stringValue}}`;\n};\n",
+      "start": 1762256767985,
+      "end": 1762256767986,
+      "order": "post",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767986,
+      "end": 1762256767986,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767986,
+      "end": 1762256767986,
+      "order": "normal"
+    }
+  ]
+}

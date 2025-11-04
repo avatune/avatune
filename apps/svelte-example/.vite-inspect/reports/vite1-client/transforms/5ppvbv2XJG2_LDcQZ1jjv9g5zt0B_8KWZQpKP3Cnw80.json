@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/reactivity/effects.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { ComponentContext, ComponentContextLegacy, Derived, Effect, TemplateNode, TransitionManager } from '#client' */\nimport {\n\tis_dirty,\n\tactive_effect,\n\tactive_reaction,\n\tupdate_effect,\n\tget,\n\tis_destroying_effect,\n\tremove_reactions,\n\tset_active_reaction,\n\tset_is_destroying_effect,\n\tset_signal_status,\n\tuntrack,\n\tuntracking\n} from '../runtime.js';\nimport {\n\tDIRTY,\n\tBRANCH_EFFECT,\n\tRENDER_EFFECT,\n\tEFFECT,\n\tDESTROYED,\n\tINERT,\n\tEFFECT_RAN,\n\tBLOCK_EFFECT,\n\tROOT_EFFECT,\n\tEFFECT_TRANSPARENT,\n\tDERIVED,\n\tUNOWNED,\n\tCLEAN,\n\tEAGER_EFFECT,\n\tHEAD_EFFECT,\n\tMAYBE_DIRTY,\n\tEFFECT_PRESERVED,\n\tSTALE_REACTION,\n\tUSER_EFFECT,\n\tASYNC\n} from '#client/constants';\nimport * as e from '../errors.js';\nimport { DEV } from 'esm-env';\nimport { define_property } from '../../shared/utils.js';\nimport { get_next_sibling } from '../dom/operations.js';\nimport { component_context, dev_current_component_function, dev_stack } from '../context.js';\nimport { Batch, schedule_effect } from './batch.js';\nimport { flatten } from './async.js';\nimport { without_reactive_context } from '../dom/elements/bindings/shared.js';\n\n/**\n * @param {'$effect' | '$effect.pre' | '$inspect'} rune\n */\nexport function validate_effect(rune) {\n\tif (active_effect === null && active_reaction === null) {\n\t\te.effect_orphan(rune);\n\t}\n\n\tif (active_reaction !== null && (active_reaction.f & UNOWNED) !== 0 && active_effect === null) {\n\t\te.effect_in_unowned_derived();\n\t}\n\n\tif (is_destroying_effect) {\n\t\te.effect_in_teardown(rune);\n\t}\n}\n\n/**\n * @param {Effect} effect\n * @param {Effect} parent_effect\n */\nfunction push_effect(effect, parent_effect) {\n\tvar parent_last = parent_effect.last;\n\tif (parent_last === null) {\n\t\tparent_effect.last = parent_effect.first = effect;\n\t} else {\n\t\tparent_last.next = effect;\n\t\teffect.prev = parent_last;\n\t\tparent_effect.last = effect;\n\t}\n}\n\n/**\n * @param {number} type\n * @param {null | (() => void | (() => void))} fn\n * @param {boolean} sync\n * @param {boolean} push\n * @returns {Effect}\n */\nfunction create_effect(type, fn, sync, push = true) {\n\tvar parent = active_effect;\n\n\tif (DEV) {\n\t\t// Ensure the parent is never an inspect effect\n\t\twhile (parent !== null && (parent.f & EAGER_EFFECT) !== 0) {\n\t\t\tparent = parent.parent;\n\t\t}\n\t}\n\n\tif (parent !== null && (parent.f & INERT) !== 0) {\n\t\ttype |= INERT;\n\t}\n\n\t/** @type {Effect} */\n\tvar effect = {\n\t\tctx: component_context,\n\t\tdeps: null,\n\t\tnodes_start: null,\n\t\tnodes_end: null,\n\t\tf: type | DIRTY,\n\t\tfirst: null,\n\t\tfn,\n\t\tlast: null,\n\t\tnext: null,\n\t\tparent,\n\t\tb: parent && parent.b,\n\t\tprev: null,\n\t\tteardown: null,\n\t\ttransitions: null,\n\t\twv: 0,\n\t\tac: null\n\t};\n\n\tif (DEV) {\n\t\teffect.component_function = dev_current_component_function;\n\t}\n\n\tif (sync) {\n\t\ttry {\n\t\t\tupdate_effect(effect);\n\t\t\teffect.f |= EFFECT_RAN;\n\t\t} catch (e) {\n\t\t\tdestroy_effect(effect);\n\t\t\tthrow e;\n\t\t}\n\t} else if (fn !== null) {\n\t\tschedule_effect(effect);\n\t}\n\n\tif (push) {\n\t\t/** @type {Effect | null} */\n\t\tvar e = effect;\n\n\t\t// if an effect has already ran and doesn't need to be kept in the tree\n\t\t// (because it won't re-run, has no DOM, and has no teardown etc)\n\t\t// then we skip it and go to its child (if any)\n\t\tif (\n\t\t\tsync &&\n\t\t\te.deps === null &&\n\t\t\te.teardown === null &&\n\t\t\te.nodes_start === null &&\n\t\t\te.first === e.last && // either `null`, or a singular child\n\t\t\t(e.f & EFFECT_PRESERVED) === 0\n\t\t) {\n\t\t\te = e.first;\n\t\t\tif ((type & BLOCK_EFFECT) !== 0 && (type & EFFECT_TRANSPARENT) !== 0 && e !== null) {\n\t\t\t\te.f |= EFFECT_TRANSPARENT;\n\t\t\t}\n\t\t}\n\n\t\tif (e !== null) {\n\t\t\te.parent = parent;\n\n\t\t\tif (parent !== null) {\n\t\t\t\tpush_effect(e, parent);\n\t\t\t}\n\n\t\t\t// if we're in a derived, add the effect there too\n\t\t\tif (\n\t\t\t\tactive_reaction !== null &&\n\t\t\t\t(active_reaction.f & DERIVED) !== 0 &&\n\t\t\t\t(type & ROOT_EFFECT) === 0\n\t\t\t) {\n\t\t\t\tvar derived = /** @type {Derived} */ (active_reaction);\n\t\t\t\t(derived.effects ??= []).push(e);\n\t\t\t}\n\t\t}\n\t}\n\n\treturn effect;\n}\n\n/**\n * Internal representation of `$effect.tracking()`\n * @returns {boolean}\n */\nexport function effect_tracking() {\n\treturn active_reaction !== null && !untracking;\n}\n\n/**\n * @param {() => void} fn\n */\nexport function teardown(fn) {\n\tconst effect = create_effect(RENDER_EFFECT, null, false);\n\tset_signal_status(effect, CLEAN);\n\teffect.teardown = fn;\n\treturn effect;\n}\n\n/**\n * Internal representation of `$effect(...)`\n * @param {() => void | (() => void)} fn\n */\nexport function user_effect(fn) {\n\tvalidate_effect('$effect');\n\n\tif (DEV) {\n\t\tdefine_property(fn, 'name', {\n\t\t\tvalue: '$effect'\n\t\t});\n\t}\n\n\t// Non-nested `$effect(...)` in a component should be deferred\n\t// until the component is mounted\n\tvar flags = /** @type {Effect} */ (active_effect).f;\n\tvar defer = !active_reaction && (flags & BRANCH_EFFECT) !== 0 && (flags & EFFECT_RAN) === 0;\n\n\tif (defer) {\n\t\t// Top-level `$effect(...)` in an unmounted component — defer until mount\n\t\tvar context = /** @type {ComponentContext} */ (component_context);\n\t\t(context.e ??= []).push(fn);\n\t} else {\n\t\t// Everything else — create immediately\n\t\treturn create_user_effect(fn);\n\t}\n}\n\n/**\n * @param {() => void | (() => void)} fn\n */\nexport function create_user_effect(fn) {\n\treturn create_effect(EFFECT | USER_EFFECT, fn, false);\n}\n\n/**\n * Internal representation of `$effect.pre(...)`\n * @param {() => void | (() => void)} fn\n * @returns {Effect}\n */\nexport function user_pre_effect(fn) {\n\tvalidate_effect('$effect.pre');\n\tif (DEV) {\n\t\tdefine_property(fn, 'name', {\n\t\t\tvalue: '$effect.pre'\n\t\t});\n\t}\n\treturn create_effect(RENDER_EFFECT | USER_EFFECT, fn, true);\n}\n\n/** @param {() => void | (() => void)} fn */\nexport function eager_effect(fn) {\n\treturn create_effect(EAGER_EFFECT, fn, true);\n}\n\n/**\n * Internal representation of `$effect.root(...)`\n * @param {() => void | (() => void)} fn\n * @returns {() => void}\n */\nexport function effect_root(fn) {\n\tBatch.ensure();\n\tconst effect = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn, true);\n\n\treturn () => {\n\t\tdestroy_effect(effect);\n\t};\n}\n\n/**\n * An effect root whose children can transition out\n * @param {() => void} fn\n * @returns {(options?: { outro?: boolean }) => Promise<void>}\n */\nexport function component_root(fn) {\n\tBatch.ensure();\n\tconst effect = create_effect(ROOT_EFFECT | EFFECT_PRESERVED, fn, true);\n\n\treturn (options = {}) => {\n\t\treturn new Promise((fulfil) => {\n\t\t\tif (options.outro) {\n\t\t\t\tpause_effect(effect, () => {\n\t\t\t\t\tdestroy_effect(effect);\n\t\t\t\t\tfulfil(undefined);\n\t\t\t\t});\n\t\t\t} else {\n\t\t\t\tdestroy_effect(effect);\n\t\t\t\tfulfil(undefined);\n\t\t\t}\n\t\t});\n\t};\n}\n\n/**\n * @param {() => void | (() => void)} fn\n * @returns {Effect}\n */\nexport function effect(fn) {\n\treturn create_effect(EFFECT, fn, false);\n}\n\n/**\n * Internal representation of `$: ..`\n * @param {() => any} deps\n * @param {() => void | (() => void)} fn\n */\nexport function legacy_pre_effect(deps, fn) {\n\tvar context = /** @type {ComponentContextLegacy} */ (component_context);\n\n\t/** @type {{ effect: null | Effect, ran: boolean, deps: () => any }} */\n\tvar token = { effect: null, ran: false, deps };\n\n\tcontext.l.$.push(token);\n\n\ttoken.effect = render_effect(() => {\n\t\tdeps();\n\n\t\t// If this legacy pre effect has already run before the end of the reset, then\n\t\t// bail out to emulate the same behavior.\n\t\tif (token.ran) return;\n\n\t\ttoken.ran = true;\n\t\tuntrack(fn);\n\t});\n}\n\nexport function legacy_pre_effect_reset() {\n\tvar context = /** @type {ComponentContextLegacy} */ (component_context);\n\n\trender_effect(() => {\n\t\t// Run dirty `$:` statements\n\t\tfor (var token of context.l.$) {\n\t\t\ttoken.deps();\n\n\t\t\tvar effect = token.effect;\n\n\t\t\t// If the effect is CLEAN, then make it MAYBE_DIRTY. This ensures we traverse through\n\t\t\t// the effects dependencies and correctly ensure each dependency is up-to-date.\n\t\t\tif ((effect.f & CLEAN) !== 0) {\n\t\t\t\tset_signal_status(effect, MAYBE_DIRTY);\n\t\t\t}\n\n\t\t\tif (is_dirty(effect)) {\n\t\t\t\tupdate_effect(effect);\n\t\t\t}\n\n\t\t\ttoken.ran = false;\n\t\t}\n\t});\n}\n\n/**\n * @param {() => void | (() => void)} fn\n * @returns {Effect}\n */\nexport function async_effect(fn) {\n\treturn create_effect(ASYNC | EFFECT_PRESERVED, fn, true);\n}\n\n/**\n * @param {() => void | (() => void)} fn\n * @returns {Effect}\n */\nexport function render_effect(fn, flags = 0) {\n\treturn create_effect(RENDER_EFFECT | flags, fn, true);\n}\n\n/**\n * @param {(...expressions: any) => void | (() => void)} fn\n * @param {Array<() => any>} sync\n * @param {Array<() => Promise<any>>} async\n * @param {Array<Promise<void>>} blockers\n */\nexport function template_effect(fn, sync = [], async = [], blockers = []) {\n\tflatten(blockers, sync, async, (values) => {\n\t\tcreate_effect(RENDER_EFFECT, () => fn(...values.map(get)), true);\n\t});\n}\n\n/**\n * @param {(() => void)} fn\n * @param {number} flags\n */\nexport function block(fn, flags = 0) {\n\tvar effect = create_effect(BLOCK_EFFECT | flags, fn, true);\n\tif (DEV) {\n\t\teffect.dev_stack = dev_stack;\n\t}\n\treturn effect;\n}\n\n/**\n * @param {(() => void)} fn\n * @param {boolean} [push]\n */\nexport function branch(fn, push = true) {\n\treturn create_effect(BRANCH_EFFECT | EFFECT_PRESERVED, fn, true, push);\n}\n\n/**\n * @param {Effect} effect\n */\nexport function execute_effect_teardown(effect) {\n\tvar teardown = effect.teardown;\n\tif (teardown !== null) {\n\t\tconst previously_destroying_effect = is_destroying_effect;\n\t\tconst previous_reaction = active_reaction;\n\t\tset_is_destroying_effect(true);\n\t\tset_active_reaction(null);\n\t\ttry {\n\t\t\tteardown.call(null);\n\t\t} finally {\n\t\t\tset_is_destroying_effect(previously_destroying_effect);\n\t\t\tset_active_reaction(previous_reaction);\n\t\t}\n\t}\n}\n\n/**\n * @param {Effect} signal\n * @param {boolean} remove_dom\n * @returns {void}\n */\nexport function destroy_effect_children(signal, remove_dom = false) {\n\tvar effect = signal.first;\n\tsignal.first = signal.last = null;\n\n\twhile (effect !== null) {\n\t\tconst controller = effect.ac;\n\n\t\tif (controller !== null) {\n\t\t\twithout_reactive_context(() => {\n\t\t\t\tcontroller.abort(STALE_REACTION);\n\t\t\t});\n\t\t}\n\n\t\tvar next = effect.next;\n\n\t\tif ((effect.f & ROOT_EFFECT) !== 0) {\n\t\t\t// this is now an independent root\n\t\t\teffect.parent = null;\n\t\t} else {\n\t\t\tdestroy_effect(effect, remove_dom);\n\t\t}\n\n\t\teffect = next;\n\t}\n}\n\n/**\n * @param {Effect} signal\n * @returns {void}\n */\nexport function destroy_block_effect_children(signal) {\n\tvar effect = signal.first;\n\n\twhile (effect !== null) {\n\t\tvar next = effect.next;\n\t\tif ((effect.f & BRANCH_EFFECT) === 0) {\n\t\t\tdestroy_effect(effect);\n\t\t}\n\t\teffect = next;\n\t}\n}\n\n/**\n * @param {Effect} effect\n * @param {boolean} [remove_dom]\n * @returns {void}\n */\nexport function destroy_effect(effect, remove_dom = true) {\n\tvar removed = false;\n\n\tif (\n\t\t(remove_dom || (effect.f & HEAD_EFFECT) !== 0) &&\n\t\teffect.nodes_start !== null &&\n\t\teffect.nodes_end !== null\n\t) {\n\t\tremove_effect_dom(effect.nodes_start, /** @type {TemplateNode} */ (effect.nodes_end));\n\t\tremoved = true;\n\t}\n\n\tdestroy_effect_children(effect, remove_dom && !removed);\n\tremove_reactions(effect, 0);\n\tset_signal_status(effect, DESTROYED);\n\n\tvar transitions = effect.transitions;\n\n\tif (transitions !== null) {\n\t\tfor (const transition of transitions) {\n\t\t\ttransition.stop();\n\t\t}\n\t}\n\n\texecute_effect_teardown(effect);\n\n\tvar parent = effect.parent;\n\n\t// If the parent doesn't have any children, then skip this work altogether\n\tif (parent !== null && parent.first !== null) {\n\t\tunlink_effect(effect);\n\t}\n\n\tif (DEV) {\n\t\teffect.component_function = null;\n\t}\n\n\t// `first` and `child` are nulled out in destroy_effect_children\n\t// we don't null out `parent` so that error propagation can work correctly\n\teffect.next =\n\t\teffect.prev =\n\t\teffect.teardown =\n\t\teffect.ctx =\n\t\teffect.deps =\n\t\teffect.fn =\n\t\teffect.nodes_start =\n\t\teffect.nodes_end =\n\t\teffect.ac =\n\t\t\tnull;\n}\n\n/**\n *\n * @param {TemplateNode | null} node\n * @param {TemplateNode} end\n */\nexport function remove_effect_dom(node, end) {\n\twhile (node !== null) {\n\t\t/** @type {TemplateNode | null} */\n\t\tvar next = node === end ? null : /** @type {TemplateNode} */ (get_next_sibling(node));\n\n\t\tnode.remove();\n\t\tnode = next;\n\t}\n}\n\n/**\n * Detach an effect from the effect tree, freeing up memory and\n * reducing the amount of work that happens on subsequent traversals\n * @param {Effect} effect\n */\nexport function unlink_effect(effect) {\n\tvar parent = effect.parent;\n\tvar prev = effect.prev;\n\tvar next = effect.next;\n\n\tif (prev !== null) prev.next = next;\n\tif (next !== null) next.prev = prev;\n\n\tif (parent !== null) {\n\t\tif (parent.first === effect) parent.first = next;\n\t\tif (parent.last === effect) parent.last = prev;\n\t}\n}\n\n/**\n * When a block effect is removed, we don't immediately destroy it or yank it\n * out of the DOM, because it might have transitions. Instead, we 'pause' it.\n * It stays around (in memory, and in the DOM) until outro transitions have\n * completed, and if the state change is reversed then we _resume_ it.\n * A paused effect does not update, and the DOM subtree becomes inert.\n * @param {Effect} effect\n * @param {() => void} [callback]\n * @param {boolean} [destroy]\n */\nexport function pause_effect(effect, callback, destroy = true) {\n\t/** @type {TransitionManager[]} */\n\tvar transitions = [];\n\n\tpause_children(effect, transitions, true);\n\n\trun_out_transitions(transitions, () => {\n\t\tif (destroy) destroy_effect(effect);\n\t\tif (callback) callback();\n\t});\n}\n\n/**\n * @param {TransitionManager[]} transitions\n * @param {() => void} fn\n */\nexport function run_out_transitions(transitions, fn) {\n\tvar remaining = transitions.length;\n\tif (remaining > 0) {\n\t\tvar check = () => --remaining || fn();\n\t\tfor (var transition of transitions) {\n\t\t\ttransition.out(check);\n\t\t}\n\t} else {\n\t\tfn();\n\t}\n}\n\n/**\n * @param {Effect} effect\n * @param {TransitionManager[]} transitions\n * @param {boolean} local\n */\nexport function pause_children(effect, transitions, local) {\n\tif ((effect.f & INERT) !== 0) return;\n\teffect.f ^= INERT;\n\n\tif (effect.transitions !== null) {\n\t\tfor (const transition of effect.transitions) {\n\t\t\tif (transition.is_global || local) {\n\t\t\t\ttransitions.push(transition);\n\t\t\t}\n\t\t}\n\t}\n\n\tvar child = effect.first;\n\n\twhile (child !== null) {\n\t\tvar sibling = child.next;\n\t\tvar transparent =\n\t\t\t(child.f & EFFECT_TRANSPARENT) !== 0 ||\n\t\t\t// If this is a branch effect without a block effect parent,\n\t\t\t// it means the parent block effect was pruned. In that case,\n\t\t\t// transparency information was transferred to the branch effect.\n\t\t\t((child.f & BRANCH_EFFECT) !== 0 && (effect.f & BLOCK_EFFECT) !== 0);\n\t\t// TODO we don't need to call pause_children recursively with a linked list in place\n\t\t// it's slightly more involved though as we have to account for `transparent` changing\n\t\t// through the tree.\n\t\tpause_children(child, transitions, transparent ? local : false);\n\t\tchild = sibling;\n\t}\n}\n\n/**\n * The opposite of `pause_effect`. We call this if (for example)\n * `x` becomes falsy then truthy: `{#if x}...{/if}`\n * @param {Effect} effect\n */\nexport function resume_effect(effect) {\n\tresume_children(effect, true);\n}\n\n/**\n * @param {Effect} effect\n * @param {boolean} local\n */\nfunction resume_children(effect, local) {\n\tif ((effect.f & INERT) === 0) return;\n\teffect.f ^= INERT;\n\n\t// If a dependency of this effect changed while it was paused,\n\t// schedule the effect to update. we don't use `is_dirty`\n\t// here because we don't want to eagerly recompute a derived like\n\t// `{#if foo}{foo.bar()}{/if}` if `foo` is now `undefined\n\tif ((effect.f & CLEAN) === 0) {\n\t\tset_signal_status(effect, DIRTY);\n\t\tschedule_effect(effect);\n\t}\n\n\tvar child = effect.first;\n\n\twhile (child !== null) {\n\t\tvar sibling = child.next;\n\t\tvar transparent = (child.f & EFFECT_TRANSPARENT) !== 0 || (child.f & BRANCH_EFFECT) !== 0;\n\t\t// TODO we don't need to call resume_children recursively with a linked list in place\n\t\t// it's slightly more involved though as we have to account for `transparent` changing\n\t\t// through the tree.\n\t\tresume_children(child, transparent ? local : false);\n\t\tchild = sibling;\n\t}\n\n\tif (effect.transitions !== null) {\n\t\tfor (const transition of effect.transitions) {\n\t\t\tif (transition.is_global || local) {\n\t\t\t\ttransition.in();\n\t\t\t}\n\t\t}\n\t}\n}\n\nexport function aborted(effect = /** @type {Effect} */ (active_effect)) {\n\treturn (effect.f & DESTROYED) !== 0;\n}\n\n/**\n * @param {Effect} effect\n * @param {DocumentFragment} fragment\n */\nexport function move_effect(effect, fragment) {\n\tvar node = effect.nodes_start;\n\tvar end = effect.nodes_end;\n\n\twhile (node !== null) {\n\t\t/** @type {TemplateNode | null} */\n\t\tvar next = node === end ? null : /** @type {TemplateNode} */ (get_next_sibling(node));\n\n\t\tfragment.append(node);\n\t\tnode = next;\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767832,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    }
+  ]
+}

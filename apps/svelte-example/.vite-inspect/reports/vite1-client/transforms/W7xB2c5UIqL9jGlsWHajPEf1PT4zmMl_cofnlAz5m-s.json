@@ -1,0 +1,146 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/static/MockProvider.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script>\n  import { onMount } from 'svelte';\n  import { action } from 'storybook/actions';\n  \n  import { setAfterNavigateArgument } from '@storybook/sveltekit/internal/mocks/app/navigation';\n  import { setAppStoresNavigating, setAppStoresPage, setAppStoresUpdated } from '@storybook/sveltekit/internal/mocks/app/stores';\n\n  const { svelteKitParameters = {}, children } = $props();\n\n  // Set context during component initialization - this happens before any child components\n  setAppStoresPage(svelteKitParameters?.stores?.page);\n  setAppStoresNavigating(svelteKitParameters?.stores?.navigating);\n  setAppStoresUpdated(svelteKitParameters?.stores?.updated);\n  setAfterNavigateArgument(svelteKitParameters?.navigation?.afterNavigate);\n\n  const normalizeHrefConfig = (hrefConfig) => {\n    if (typeof hrefConfig === 'function') {\n      return { callback: hrefConfig, asRegex: false };\n    }\n    return hrefConfig;\n  };\n\n  onMount(() => {\n    const globalClickListener = (e) => {\n      // we add a global click event listener and we check if there's a link in the composedPath\n      const path = e.composedPath();\n      const element = path.findLast((el) => el instanceof HTMLElement && el.tagName === 'A');\n      if (element && element instanceof HTMLAnchorElement) {\n        // if the element is an a-tag we get the href of the element\n        // and compare it to the hrefs-parameter set by the user\n        const to = element.getAttribute('href');\n        if (!to) {\n          return;\n        }\n        e.preventDefault();\n        const defaultActionCallback = () => action('navigate')(to, e);\n        if (!svelteKitParameters.hrefs) {\n          defaultActionCallback();\n          return;\n        }\n\n        let callDefaultCallback = true;\n        // we loop over every href set by the user and check if the href matches\n        // if it does we call the callback provided by the user and disable the default callback\n        Object.entries(svelteKitParameters.hrefs).forEach(([href, hrefConfig]) => {\n          const { callback, asRegex } = normalizeHrefConfig(hrefConfig);\n          const isMatch = asRegex ? new RegExp(href).test(to) : to === href;\n          if (isMatch) {\n            callDefaultCallback = false;\n            callback?.(to, e);\n          }\n        });\n        if (callDefaultCallback) {\n          defaultActionCallback();\n        }\n      }\n    };\n\n    /**\n     * Function that create and add listeners for the event that are emitted by the mocked\n     * functions. The event name is based on the function name\n     *\n     * Eg. storybook:goto, storybook:invalidateAll\n     *\n     * @param baseModule The base module where the function lives (navigation|forms)\n     * @param functions The list of functions in that module that emit events\n     * @param {boolean} [defaultToAction] The list of functions in that module that emit events\n     * @returns A function to remove all the listener added\n     */\n    function createListeners(baseModule, functions, defaultToAction) {\n      // the array of every added listener, we can use this in the return function\n      // to clean them\n      const toRemove = [];\n      functions.forEach((func) => {\n        // we loop over every function and check if the user actually passed\n        // a function in sveltekit_experimental[baseModule][func] eg. sveltekit_experimental.navigation.goto\n        const hasFunction =\n          svelteKitParameters[baseModule]?.[func] &&\n          svelteKitParameters[baseModule][func] instanceof Function;\n        // if we default to an action we still add the listener (this will be the case for goto, invalidate, invalidateAll)\n        if (hasFunction || defaultToAction) {\n          // we create the listener that will just get the detail array from the custom element\n          // and call the user provided function spreading this args in...this will basically call\n          // the function that the user provide with the same arguments the function is invoked to\n\n          // eg. if it calls goto(\"/my-route\") inside the component the function sveltekit_experimental.navigation.goto\n          // it provided to storybook will be called with \"/my-route\"\n          const listener = ({ detail = [] }) => {\n            const args = Array.isArray(detail) ? detail : [];\n            // if it has a function in the parameters we call that function\n            // otherwise we invoke the action\n            const fnToCall = hasFunction\n              ? svelteKitParameters[baseModule][func]\n              : action(func);\n            fnToCall(...args);\n          };\n          const eventType = `storybook:${func}`;\n          toRemove.push({ eventType, listener });\n          // add the listener to window\n          window.addEventListener(eventType, listener);\n        }\n      });\n      return () => {\n        // loop over every listener added and remove them\n        toRemove.forEach(({ eventType, listener }) => {\n          window.removeEventListener(eventType, listener);\n        });\n      };\n    }\n\n    const removeNavigationListeners = createListeners(\n      'navigation',\n      ['goto', 'invalidate', 'invalidateAll', 'pushState', 'replaceState'],\n      true\n    );\n    const removeFormsListeners = createListeners('forms', ['enhance']);\n    window.addEventListener('click', globalClickListener);\n\n    return () => {\n      window.removeEventListener('click', globalClickListener);\n      removeNavigationListeners();\n      removeFormsListeners();\n    };\n  });\n</script>\n\n{@render children()}\n",
+      "start": 1762256767690,
+      "end": 1762256767708,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767708,
+      "end": 1762256767708,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport * as $ from 'svelte/internal/client';\nimport { onMount } from 'svelte';\nimport { action } from 'storybook/actions';\nimport { setAfterNavigateArgument } from '@storybook/sveltekit/internal/mocks/app/navigation';\n\nimport {\n\tsetAppStoresNavigating,\n\tsetAppStoresPage,\n\tsetAppStoresUpdated\n} from '@storybook/sveltekit/internal/mocks/app/stores';\n\nexport default function MockProvider($$anchor, $$props) {\n\t$.push($$props, true);\n\n\tconst svelteKitParameters = $.prop($$props, 'svelteKitParameters', 19, () => ({}));\n\n\t// Set context during component initialization - this happens before any child components\n\tsetAppStoresPage(svelteKitParameters()?.stores?.page);\n\n\tsetAppStoresNavigating(svelteKitParameters()?.stores?.navigating);\n\tsetAppStoresUpdated(svelteKitParameters()?.stores?.updated);\n\tsetAfterNavigateArgument(svelteKitParameters()?.navigation?.afterNavigate);\n\n\tconst normalizeHrefConfig = (hrefConfig) => {\n\t\tif (typeof hrefConfig === 'function') {\n\t\t\treturn { callback: hrefConfig, asRegex: false };\n\t\t}\n\n\t\treturn hrefConfig;\n\t};\n\n\tonMount(() => {\n\t\tconst globalClickListener = (e) => {\n\t\t\t// we add a global click event listener and we check if there's a link in the composedPath\n\t\t\tconst path = e.composedPath();\n\n\t\t\tconst element = path.findLast((el) => el instanceof HTMLElement && el.tagName === 'A');\n\n\t\t\tif (element && element instanceof HTMLAnchorElement) {\n\t\t\t\t// if the element is an a-tag we get the href of the element\n\t\t\t\t// and compare it to the hrefs-parameter set by the user\n\t\t\t\tconst to = element.getAttribute('href');\n\n\t\t\t\tif (!to) {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\te.preventDefault();\n\n\t\t\t\tconst defaultActionCallback = () => action('navigate')(to, e);\n\n\t\t\t\tif (!svelteKitParameters().hrefs) {\n\t\t\t\t\tdefaultActionCallback();\n\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tlet callDefaultCallback = true;\n\n\t\t\t\t// we loop over every href set by the user and check if the href matches\n\t\t\t\t// if it does we call the callback provided by the user and disable the default callback\n\t\t\t\tObject.entries(svelteKitParameters().hrefs).forEach(([href, hrefConfig]) => {\n\t\t\t\t\tconst { callback, asRegex } = normalizeHrefConfig(hrefConfig);\n\t\t\t\t\tconst isMatch = asRegex ? new RegExp(href).test(to) : to === href;\n\n\t\t\t\t\tif (isMatch) {\n\t\t\t\t\t\tcallDefaultCallback = false;\n\t\t\t\t\t\tcallback?.(to, e);\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\tif (callDefaultCallback) {\n\t\t\t\t\tdefaultActionCallback();\n\t\t\t\t}\n\t\t\t}\n\t\t};\n\n\t\t/**\n\t\t * Function that create and add listeners for the event that are emitted by the mocked\n\t\t * functions. The event name is based on the function name\n\t\t *\n\t\t * Eg. storybook:goto, storybook:invalidateAll\n\t\t *\n\t\t * @param baseModule The base module where the function lives (navigation|forms)\n\t\t * @param functions The list of functions in that module that emit events\n\t\t * @param {boolean} [defaultToAction] The list of functions in that module that emit events\n\t\t * @returns A function to remove all the listener added\n\t\t */\n\t\tfunction createListeners(baseModule, functions, defaultToAction) {\n\t\t\t// the array of every added listener, we can use this in the return function\n\t\t\t// to clean them\n\t\t\tconst toRemove = [];\n\n\t\t\tfunctions.forEach((func) => {\n\t\t\t\t// we loop over every function and check if the user actually passed\n\t\t\t\t// a function in sveltekit_experimental[baseModule][func] eg. sveltekit_experimental.navigation.goto\n\t\t\t\tconst hasFunction = svelteKitParameters()[baseModule]?.[func] && svelteKitParameters()[baseModule][func] instanceof Function;\n\n\t\t\t\t// if we default to an action we still add the listener (this will be the case for goto, invalidate, invalidateAll)\n\t\t\t\tif (hasFunction || defaultToAction) {\n\t\t\t\t\t// we create the listener that will just get the detail array from the custom element\n\t\t\t\t\t// and call the user provided function spreading this args in...this will basically call\n\t\t\t\t\t// the function that the user provide with the same arguments the function is invoked to\n\t\t\t\t\t// eg. if it calls goto(\"/my-route\") inside the component the function sveltekit_experimental.navigation.goto\n\t\t\t\t\t// it provided to storybook will be called with \"/my-route\"\n\t\t\t\t\tconst listener = ({ detail = [] }) => {\n\t\t\t\t\t\tconst args = Array.isArray(detail) ? detail : [];\n\n\t\t\t\t\t\t// if it has a function in the parameters we call that function\n\t\t\t\t\t\t// otherwise we invoke the action\n\t\t\t\t\t\tconst fnToCall = hasFunction\n\t\t\t\t\t\t\t? svelteKitParameters()[baseModule][func]\n\t\t\t\t\t\t\t: action(func);\n\n\t\t\t\t\t\tfnToCall(...args);\n\t\t\t\t\t};\n\n\t\t\t\t\tconst eventType = `storybook:${func}`;\n\n\t\t\t\t\ttoRemove.push({ eventType, listener });\n\n\t\t\t\t\t// add the listener to window\n\t\t\t\t\twindow.addEventListener(eventType, listener);\n\t\t\t\t}\n\t\t\t});\n\n\t\t\treturn () => {\n\t\t\t\t// loop over every listener added and remove them\n\t\t\t\ttoRemove.forEach(({ eventType, listener }) => {\n\t\t\t\t\twindow.removeEventListener(eventType, listener);\n\t\t\t\t});\n\t\t\t};\n\t\t}\n\n\t\tconst removeNavigationListeners = createListeners(\n\t\t\t'navigation',\n\t\t\t[\n\t\t\t\t'goto',\n\t\t\t\t'invalidate',\n\t\t\t\t'invalidateAll',\n\t\t\t\t'pushState',\n\t\t\t\t'replaceState'\n\t\t\t],\n\t\t\ttrue\n\t\t);\n\n\t\tconst removeFormsListeners = createListeners('forms', ['enhance']);\n\n\t\twindow.addEventListener('click', globalClickListener);\n\n\t\treturn () => {\n\t\t\twindow.removeEventListener('click', globalClickListener);\n\t\t\tremoveNavigationListeners();\n\t\t\tremoveFormsListeners();\n\t\t};\n\t});\n\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t$.snippet(node, () => $$props.children);\n\t$.append($$anchor, fragment);\n\t$.pop();\n}",
+      "start": 1762256767708,
+      "end": 1762256767720,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "MockProvider.svelte"
+        ],
+        "sourcesContent": [
+          "<script>\n  import { onMount } from 'svelte';\n  import { action } from 'storybook/actions';\n  \n  import { setAfterNavigateArgument } from '@storybook/sveltekit/internal/mocks/app/navigation';\n  import { setAppStoresNavigating, setAppStoresPage, setAppStoresUpdated } from '@storybook/sveltekit/internal/mocks/app/stores';\n\n  const { svelteKitParameters = {}, children } = $props();\n\n  // Set context during component initialization - this happens before any child components\n  setAppStoresPage(svelteKitParameters?.stores?.page);\n  setAppStoresNavigating(svelteKitParameters?.stores?.navigating);\n  setAppStoresUpdated(svelteKitParameters?.stores?.updated);\n  setAfterNavigateArgument(svelteKitParameters?.navigation?.afterNavigate);\n\n  const normalizeHrefConfig = (hrefConfig) => {\n    if (typeof hrefConfig === 'function') {\n      return { callback: hrefConfig, asRegex: false };\n    }\n    return hrefConfig;\n  };\n\n  onMount(() => {\n    const globalClickListener = (e) => {\n      // we add a global click event listener and we check if there's a link in the composedPath\n      const path = e.composedPath();\n      const element = path.findLast((el) => el instanceof HTMLElement && el.tagName === 'A');\n      if (element && element instanceof HTMLAnchorElement) {\n        // if the element is an a-tag we get the href of the element\n        // and compare it to the hrefs-parameter set by the user\n        const to = element.getAttribute('href');\n        if (!to) {\n          return;\n        }\n        e.preventDefault();\n        const defaultActionCallback = () => action('navigate')(to, e);\n        if (!svelteKitParameters.hrefs) {\n          defaultActionCallback();\n          return;\n        }\n\n        let callDefaultCallback = true;\n        // we loop over every href set by the user and check if the href matches\n        // if it does we call the callback provided by the user and disable the default callback\n        Object.entries(svelteKitParameters.hrefs).forEach(([href, hrefConfig]) => {\n          const { callback, asRegex } = normalizeHrefConfig(hrefConfig);\n          const isMatch = asRegex ? new RegExp(href).test(to) : to === href;\n          if (isMatch) {\n            callDefaultCallback = false;\n            callback?.(to, e);\n          }\n        });\n        if (callDefaultCallback) {\n          defaultActionCallback();\n        }\n      }\n    };\n\n    /**\n     * Function that create and add listeners for the event that are emitted by the mocked\n     * functions. The event name is based on the function name\n     *\n     * Eg. storybook:goto, storybook:invalidateAll\n     *\n     * @param baseModule The base module where the function lives (navigation|forms)\n     * @param functions The list of functions in that module that emit events\n     * @param {boolean} [defaultToAction] The list of functions in that module that emit events\n     * @returns A function to remove all the listener added\n     */\n    function createListeners(baseModule, functions, defaultToAction) {\n      // the array of every added listener, we can use this in the return function\n      // to clean them\n      const toRemove = [];\n      functions.forEach((func) => {\n        // we loop over every function and check if the user actually passed\n        // a function in sveltekit_experimental[baseModule][func] eg. sveltekit_experimental.navigation.goto\n        const hasFunction =\n          svelteKitParameters[baseModule]?.[func] &&\n          svelteKitParameters[baseModule][func] instanceof Function;\n        // if we default to an action we still add the listener (this will be the case for goto, invalidate, invalidateAll)\n        if (hasFunction || defaultToAction) {\n          // we create the listener that will just get the detail array from the custom element\n          // and call the user provided function spreading this args in...this will basically call\n          // the function that the user provide with the same arguments the function is invoked to\n\n          // eg. if it calls goto(\"/my-route\") inside the component the function sveltekit_experimental.navigation.goto\n          // it provided to storybook will be called with \"/my-route\"\n          const listener = ({ detail = [] }) => {\n            const args = Array.isArray(detail) ? detail : [];\n            // if it has a function in the parameters we call that function\n            // otherwise we invoke the action\n            const fnToCall = hasFunction\n              ? svelteKitParameters[baseModule][func]\n              : action(func);\n            fnToCall(...args);\n          };\n          const eventType = `storybook:${func}`;\n          toRemove.push({ eventType, listener });\n          // add the listener to window\n          window.addEventListener(eventType, listener);\n        }\n      });\n      return () => {\n        // loop over every listener added and remove them\n        toRemove.forEach(({ eventType, listener }) => {\n          window.removeEventListener(eventType, listener);\n        });\n      };\n    }\n\n    const removeNavigationListeners = createListeners(\n      'navigation',\n      ['goto', 'invalidate', 'invalidateAll', 'pushState', 'replaceState'],\n      true\n    );\n    const removeFormsListeners = createListeners('forms', ['enhance']);\n    window.addEventListener('click', globalClickListener);\n\n    return () => {\n      window.removeEventListener('click', globalClickListener);\n      removeNavigationListeners();\n      removeFormsListeners();\n    };\n  });\n</script>\n\n{@render children()}\n"
+        ],
+        "mappings": "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"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767720,
+      "end": 1762256767720,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "result": "import 'svelte/internal/disclose-version';\nimport * as $ from 'svelte/internal/client';\nimport { onMount } from 'svelte';\nconst { action } = __STORYBOOK_MODULE_ACTIONS__;\nimport { setAfterNavigateArgument } from '@storybook/sveltekit/internal/mocks/app/navigation';\n\nimport {\n\tsetAppStoresNavigating,\n\tsetAppStoresPage,\n\tsetAppStoresUpdated\n} from '@storybook/sveltekit/internal/mocks/app/stores';\n\nexport default function MockProvider($$anchor, $$props) {\n\t$.push($$props, true);\n\n\tconst svelteKitParameters = $.prop($$props, 'svelteKitParameters', 19, () => ({}));\n\n\t// Set context during component initialization - this happens before any child components\n\tsetAppStoresPage(svelteKitParameters()?.stores?.page);\n\n\tsetAppStoresNavigating(svelteKitParameters()?.stores?.navigating);\n\tsetAppStoresUpdated(svelteKitParameters()?.stores?.updated);\n\tsetAfterNavigateArgument(svelteKitParameters()?.navigation?.afterNavigate);\n\n\tconst normalizeHrefConfig = (hrefConfig) => {\n\t\tif (typeof hrefConfig === 'function') {\n\t\t\treturn { callback: hrefConfig, asRegex: false };\n\t\t}\n\n\t\treturn hrefConfig;\n\t};\n\n\tonMount(() => {\n\t\tconst globalClickListener = (e) => {\n\t\t\t// we add a global click event listener and we check if there's a link in the composedPath\n\t\t\tconst path = e.composedPath();\n\n\t\t\tconst element = path.findLast((el) => el instanceof HTMLElement && el.tagName === 'A');\n\n\t\t\tif (element && element instanceof HTMLAnchorElement) {\n\t\t\t\t// if the element is an a-tag we get the href of the element\n\t\t\t\t// and compare it to the hrefs-parameter set by the user\n\t\t\t\tconst to = element.getAttribute('href');\n\n\t\t\t\tif (!to) {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\te.preventDefault();\n\n\t\t\t\tconst defaultActionCallback = () => action('navigate')(to, e);\n\n\t\t\t\tif (!svelteKitParameters().hrefs) {\n\t\t\t\t\tdefaultActionCallback();\n\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\tlet callDefaultCallback = true;\n\n\t\t\t\t// we loop over every href set by the user and check if the href matches\n\t\t\t\t// if it does we call the callback provided by the user and disable the default callback\n\t\t\t\tObject.entries(svelteKitParameters().hrefs).forEach(([href, hrefConfig]) => {\n\t\t\t\t\tconst { callback, asRegex } = normalizeHrefConfig(hrefConfig);\n\t\t\t\t\tconst isMatch = asRegex ? new RegExp(href).test(to) : to === href;\n\n\t\t\t\t\tif (isMatch) {\n\t\t\t\t\t\tcallDefaultCallback = false;\n\t\t\t\t\t\tcallback?.(to, e);\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\tif (callDefaultCallback) {\n\t\t\t\t\tdefaultActionCallback();\n\t\t\t\t}\n\t\t\t}\n\t\t};\n\n\t\t/**\n\t\t * Function that create and add listeners for the event that are emitted by the mocked\n\t\t * functions. The event name is based on the function name\n\t\t *\n\t\t * Eg. storybook:goto, storybook:invalidateAll\n\t\t *\n\t\t * @param baseModule The base module where the function lives (navigation|forms)\n\t\t * @param functions The list of functions in that module that emit events\n\t\t * @param {boolean} [defaultToAction] The list of functions in that module that emit events\n\t\t * @returns A function to remove all the listener added\n\t\t */\n\t\tfunction createListeners(baseModule, functions, defaultToAction) {\n\t\t\t// the array of every added listener, we can use this in the return function\n\t\t\t// to clean them\n\t\t\tconst toRemove = [];\n\n\t\t\tfunctions.forEach((func) => {\n\t\t\t\t// we loop over every function and check if the user actually passed\n\t\t\t\t// a function in sveltekit_experimental[baseModule][func] eg. sveltekit_experimental.navigation.goto\n\t\t\t\tconst hasFunction = svelteKitParameters()[baseModule]?.[func] && svelteKitParameters()[baseModule][func] instanceof Function;\n\n\t\t\t\t// if we default to an action we still add the listener (this will be the case for goto, invalidate, invalidateAll)\n\t\t\t\tif (hasFunction || defaultToAction) {\n\t\t\t\t\t// we create the listener that will just get the detail array from the custom element\n\t\t\t\t\t// and call the user provided function spreading this args in...this will basically call\n\t\t\t\t\t// the function that the user provide with the same arguments the function is invoked to\n\t\t\t\t\t// eg. if it calls goto(\"/my-route\") inside the component the function sveltekit_experimental.navigation.goto\n\t\t\t\t\t// it provided to storybook will be called with \"/my-route\"\n\t\t\t\t\tconst listener = ({ detail = [] }) => {\n\t\t\t\t\t\tconst args = Array.isArray(detail) ? detail : [];\n\n\t\t\t\t\t\t// if it has a function in the parameters we call that function\n\t\t\t\t\t\t// otherwise we invoke the action\n\t\t\t\t\t\tconst fnToCall = hasFunction\n\t\t\t\t\t\t\t? svelteKitParameters()[baseModule][func]\n\t\t\t\t\t\t\t: action(func);\n\n\t\t\t\t\t\tfnToCall(...args);\n\t\t\t\t\t};\n\n\t\t\t\t\tconst eventType = `storybook:${func}`;\n\n\t\t\t\t\ttoRemove.push({ eventType, listener });\n\n\t\t\t\t\t// add the listener to window\n\t\t\t\t\twindow.addEventListener(eventType, listener);\n\t\t\t\t}\n\t\t\t});\n\n\t\t\treturn () => {\n\t\t\t\t// loop over every listener added and remove them\n\t\t\t\ttoRemove.forEach(({ eventType, listener }) => {\n\t\t\t\t\twindow.removeEventListener(eventType, listener);\n\t\t\t\t});\n\t\t\t};\n\t\t}\n\n\t\tconst removeNavigationListeners = createListeners(\n\t\t\t'navigation',\n\t\t\t[\n\t\t\t\t'goto',\n\t\t\t\t'invalidate',\n\t\t\t\t'invalidateAll',\n\t\t\t\t'pushState',\n\t\t\t\t'replaceState'\n\t\t\t],\n\t\t\ttrue\n\t\t);\n\n\t\tconst removeFormsListeners = createListeners('forms', ['enhance']);\n\n\t\twindow.addEventListener('click', globalClickListener);\n\n\t\treturn () => {\n\t\t\twindow.removeEventListener('click', globalClickListener);\n\t\t\tremoveNavigationListeners();\n\t\t\tremoveFormsListeners();\n\t\t};\n\t});\n\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t$.snippet(node, () => $$props.children);\n\t$.append($$anchor, fragment);\n\t$.pop();\n}",
+      "start": 1762256767720,
+      "end": 1762256767721,
+      "order": "post",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767721,
+      "end": 1762256767721,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767721,
+      "end": 1762256767721,
+      "order": "normal"
+    }
+  ]
+}

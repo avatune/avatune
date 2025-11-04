@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/unset.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { get } from './get.mjs';\nimport { isUnsafeProperty } from '../../_internal/isUnsafeProperty.mjs';\nimport { isDeepKey } from '../_internal/isDeepKey.mjs';\nimport { toKey } from '../_internal/toKey.mjs';\nimport { toPath } from '../util/toPath.mjs';\n\nfunction unset(obj, path) {\n    if (obj == null) {\n        return true;\n    }\n    switch (typeof path) {\n        case 'symbol':\n        case 'number':\n        case 'object': {\n            if (Array.isArray(path)) {\n                return unsetWithPath(obj, path);\n            }\n            if (typeof path === 'number') {\n                path = toKey(path);\n            }\n            else if (typeof path === 'object') {\n                if (Object.is(path?.valueOf(), -0)) {\n                    path = '-0';\n                }\n                else {\n                    path = String(path);\n                }\n            }\n            if (isUnsafeProperty(path)) {\n                return false;\n            }\n            if (obj?.[path] === undefined) {\n                return true;\n            }\n            try {\n                delete obj[path];\n                return true;\n            }\n            catch {\n                return false;\n            }\n        }\n        case 'string': {\n            if (obj?.[path] === undefined && isDeepKey(path)) {\n                return unsetWithPath(obj, toPath(path));\n            }\n            if (isUnsafeProperty(path)) {\n                return false;\n            }\n            try {\n                delete obj[path];\n                return true;\n            }\n            catch {\n                return false;\n            }\n        }\n    }\n}\nfunction unsetWithPath(obj, path) {\n    const parent = path.length === 1 ? obj : get(obj, path.slice(0, -1));\n    const lastKey = path[path.length - 1];\n    if (parent?.[lastKey] === undefined) {\n        return true;\n    }\n    if (isUnsafeProperty(lastKey)) {\n        return false;\n    }\n    try {\n        delete parent[lastKey];\n        return true;\n    }\n    catch {\n        return false;\n    }\n}\n\nexport { unset };\n",
+      "start": 1762256768011,
+      "end": 1762256768126,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    }
+  ]
+}

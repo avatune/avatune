@@ -39,7 +39,9 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
   const configDep = AVATAR_CATEGORIES.flatMap((category) => [
     config[category],
     config[`${category}Color`],
-  ]).join(',')
+  ])
+    .concat(config.seed ? [config.seed.toString()] : [])
+    .join(',')
   // biome-ignore lint/correctness/useExhaustiveDependencies: configDep is enough
   const result = useMemo(
     () => selectItemFromConfig(config as AvatarConfig, theme),

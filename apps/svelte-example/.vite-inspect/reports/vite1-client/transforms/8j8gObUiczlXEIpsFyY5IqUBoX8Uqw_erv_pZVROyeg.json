@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/string/template.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { escape } from './escape.mjs';\nimport { attempt } from '../function/attempt.mjs';\nimport { defaults } from '../object/defaults.mjs';\nimport { toString } from '../util/toString.mjs';\n\nconst esTemplateRegExp = /\\$\\{([^\\\\}]*(?:\\\\.[^\\\\}]*)*)\\}/g;\nconst unEscapedRegExp = /['\\n\\r\\u2028\\u2029\\\\]/g;\nconst noMatchExp = /($^)/;\nconst escapeMap = new Map([\n    ['\\\\', '\\\\'],\n    [\"'\", \"'\"],\n    ['\\n', 'n'],\n    ['\\r', 'r'],\n    ['\\u2028', 'u2028'],\n    ['\\u2029', 'u2029'],\n]);\nfunction escapeString(match) {\n    return `\\\\${escapeMap.get(match)}`;\n}\nconst templateSettings = {\n    escape: /<%-([\\s\\S]+?)%>/g,\n    evaluate: /<%([\\s\\S]+?)%>/g,\n    interpolate: /<%=([\\s\\S]+?)%>/g,\n    variable: '',\n    imports: {\n        _: {\n            escape,\n            template,\n        },\n    },\n};\nfunction template(string, options, guard) {\n    string = toString(string);\n    if (guard) {\n        options = templateSettings;\n    }\n    options = defaults({ ...options }, templateSettings);\n    const delimitersRegExp = new RegExp([\n        options.escape?.source ?? noMatchExp.source,\n        options.interpolate?.source ?? noMatchExp.source,\n        options.interpolate ? esTemplateRegExp.source : noMatchExp.source,\n        options.evaluate?.source ?? noMatchExp.source,\n        '$',\n    ].join('|'), 'g');\n    let lastIndex = 0;\n    let isEvaluated = false;\n    let source = `__p += ''`;\n    for (const match of string.matchAll(delimitersRegExp)) {\n        const [fullMatch, escapeValue, interpolateValue, esTemplateValue, evaluateValue] = match;\n        const { index } = match;\n        source += ` + '${string.slice(lastIndex, index).replace(unEscapedRegExp, escapeString)}'`;\n        if (escapeValue) {\n            source += ` + _.escape(${escapeValue})`;\n        }\n        if (interpolateValue) {\n            source += ` + ((${interpolateValue}) == null ? '' : ${interpolateValue})`;\n        }\n        else if (esTemplateValue) {\n            source += ` + ((${esTemplateValue}) == null ? '' : ${esTemplateValue})`;\n        }\n        if (evaluateValue) {\n            source += `;\\n${evaluateValue};\\n __p += ''`;\n            isEvaluated = true;\n        }\n        lastIndex = index + fullMatch.length;\n    }\n    const imports = defaults({ ...options.imports }, templateSettings.imports);\n    const importsKeys = Object.keys(imports);\n    const importValues = Object.values(imports);\n    const sourceURL = `//# sourceURL=${options.sourceURL ? String(options.sourceURL).replace(/[\\r\\n]/g, ' ') : `es-toolkit.templateSource[${Date.now()}]`}\\n`;\n    const compiledFunction = `function(${options.variable || 'obj'}) {\n    let __p = '';\n    ${options.variable ? '' : 'if (obj == null) { obj = {}; }'}\n    ${isEvaluated ? `function print() { __p += Array.prototype.join.call(arguments, ''); }` : ''}\n    ${options.variable ? source : `with(obj) {\\n${source}\\n}`}\n    return __p;\n  }`;\n    const result = attempt(() => new Function(...importsKeys, `${sourceURL}return ${compiledFunction}`)(...importValues));\n    result.source = compiledFunction;\n    if (result instanceof Error) {\n        throw result;\n    }\n    return result;\n}\n\nexport { template, templateSettings };\n",
+      "start": 1762256768011,
+      "end": 1762256768130,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    }
+  ]
+}

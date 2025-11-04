@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/defaultsDeep.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isPlainObject } from '../predicate/isPlainObject.mjs';\n\nfunction defaultsDeep(target, ...sources) {\n    target = Object(target);\n    for (let i = 0; i < sources.length; i++) {\n        const source = sources[i];\n        if (source != null) {\n            defaultsDeepRecursive(target, source, new WeakMap());\n        }\n    }\n    return target;\n}\nfunction defaultsDeepRecursive(target, source, stack) {\n    for (const key in source) {\n        const sourceValue = source[key];\n        const targetValue = target[key];\n        if (targetValue === undefined || !Object.hasOwn(target, key)) {\n            target[key] = handleMissingProperty(sourceValue, stack);\n            continue;\n        }\n        if (stack.get(sourceValue) === targetValue) {\n            continue;\n        }\n        handleExistingProperty(targetValue, sourceValue, stack);\n    }\n}\nfunction handleMissingProperty(sourceValue, stack) {\n    if (stack.has(sourceValue)) {\n        return stack.get(sourceValue);\n    }\n    if (isPlainObject(sourceValue)) {\n        const newObj = {};\n        stack.set(sourceValue, newObj);\n        defaultsDeepRecursive(newObj, sourceValue, stack);\n        return newObj;\n    }\n    return sourceValue;\n}\nfunction handleExistingProperty(targetValue, sourceValue, stack) {\n    if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {\n        stack.set(sourceValue, targetValue);\n        defaultsDeepRecursive(targetValue, sourceValue, stack);\n        return;\n    }\n    if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {\n        stack.set(sourceValue, targetValue);\n        mergeArrays(targetValue, sourceValue, stack);\n    }\n}\nfunction mergeArrays(targetArray, sourceArray, stack) {\n    const minLength = Math.min(sourceArray.length, targetArray.length);\n    for (let i = 0; i < minLength; i++) {\n        if (isPlainObject(targetArray[i]) && isPlainObject(sourceArray[i])) {\n            defaultsDeepRecursive(targetArray[i], sourceArray[i], stack);\n        }\n    }\n    for (let i = minLength; i < sourceArray.length; i++) {\n        targetArray.push(sourceArray[i]);\n    }\n}\n\nexport { defaultsDeep };\n",
+      "start": 1762256768011,
+      "end": 1762256768125,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    }
+  ]
+}

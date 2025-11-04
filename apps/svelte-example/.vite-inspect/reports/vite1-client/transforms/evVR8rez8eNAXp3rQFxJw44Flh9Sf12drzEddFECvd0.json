@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/inspect.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { UNINITIALIZED } from '../../../constants.js';\nimport { snapshot } from '../../shared/clone.js';\nimport { eager_effect, render_effect, validate_effect } from '../reactivity/effects.js';\nimport { untrack } from '../runtime.js';\nimport { get_stack } from './tracing.js';\n\n/**\n * @param {() => any[]} get_value\n * @param {Function} inspector\n * @param {boolean} show_stack\n */\nexport function inspect(get_value, inspector, show_stack = false) {\n\tvalidate_effect('$inspect');\n\n\tlet initial = true;\n\tlet error = /** @type {any} */ (UNINITIALIZED);\n\n\t// Inspect effects runs synchronously so that we can capture useful\n\t// stack traces. As a consequence, reading the value might result\n\t// in an error (an `$inspect(object.property)` will run before the\n\t// `{#if object}...{/if}` that contains it)\n\teager_effect(() => {\n\t\ttry {\n\t\t\tvar value = get_value();\n\t\t} catch (e) {\n\t\t\terror = e;\n\t\t\treturn;\n\t\t}\n\n\t\tvar snap = snapshot(value, true, true);\n\t\tuntrack(() => {\n\t\t\tif (show_stack) {\n\t\t\t\tinspector(...snap);\n\n\t\t\t\tif (!initial) {\n\t\t\t\t\tconst stack = get_stack('$inspect(...)');\n\t\t\t\t\t// eslint-disable-next-line no-console\n\n\t\t\t\t\tif (stack) {\n\t\t\t\t\t\t// eslint-disable-next-line no-console\n\t\t\t\t\t\tconsole.groupCollapsed('stack trace');\n\t\t\t\t\t\t// eslint-disable-next-line no-console\n\t\t\t\t\t\tconsole.log(stack);\n\t\t\t\t\t\t// eslint-disable-next-line no-console\n\t\t\t\t\t\tconsole.groupEnd();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tinspector(initial ? 'init' : 'update', ...snap);\n\t\t\t}\n\t\t});\n\n\t\tinitial = false;\n\t});\n\n\t// If an error occurs, we store it (along with its stack trace).\n\t// If the render effect subsequently runs, we log the error,\n\t// but if it doesn't run it's because the `$inspect` was\n\t// destroyed, meaning we don't need to bother\n\trender_effect(() => {\n\t\ttry {\n\t\t\t// call `get_value` so that this runs alongside the inspect effect\n\t\t\tget_value();\n\t\t} catch {\n\t\t\t// ignore\n\t\t}\n\n\t\tif (error !== UNINITIALIZED) {\n\t\t\t// eslint-disable-next-line no-console\n\t\t\tconsole.error(error);\n\t\t\terror = UNINITIALIZED;\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767819,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    }
+  ]
+}

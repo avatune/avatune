@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/predicate/isMatchWith.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isObject } from './isObject.mjs';\nimport { isPrimitive } from '../../predicate/isPrimitive.mjs';\nimport { eq } from '../util/eq.mjs';\n\nfunction isMatchWith(target, source, compare) {\n    if (typeof compare !== 'function') {\n        return isMatchWith(target, source, () => undefined);\n    }\n    return isMatchWithInternal(target, source, function doesMatch(objValue, srcValue, key, object, source, stack) {\n        const isEqual = compare(objValue, srcValue, key, object, source, stack);\n        if (isEqual !== undefined) {\n            return Boolean(isEqual);\n        }\n        return isMatchWithInternal(objValue, srcValue, doesMatch, stack);\n    }, new Map());\n}\nfunction isMatchWithInternal(target, source, compare, stack) {\n    if (source === target) {\n        return true;\n    }\n    switch (typeof source) {\n        case 'object': {\n            return isObjectMatch(target, source, compare, stack);\n        }\n        case 'function': {\n            const sourceKeys = Object.keys(source);\n            if (sourceKeys.length > 0) {\n                return isMatchWithInternal(target, { ...source }, compare, stack);\n            }\n            return eq(target, source);\n        }\n        default: {\n            if (!isObject(target)) {\n                return eq(target, source);\n            }\n            if (typeof source === 'string') {\n                return source === '';\n            }\n            return true;\n        }\n    }\n}\nfunction isObjectMatch(target, source, compare, stack) {\n    if (source == null) {\n        return true;\n    }\n    if (Array.isArray(source)) {\n        return isArrayMatch(target, source, compare, stack);\n    }\n    if (source instanceof Map) {\n        return isMapMatch(target, source, compare, stack);\n    }\n    if (source instanceof Set) {\n        return isSetMatch(target, source, compare, stack);\n    }\n    const keys = Object.keys(source);\n    if (target == null) {\n        return keys.length === 0;\n    }\n    if (keys.length === 0) {\n        return true;\n    }\n    if (stack?.has(source)) {\n        return stack.get(source) === target;\n    }\n    stack?.set(source, target);\n    try {\n        for (let i = 0; i < keys.length; i++) {\n            const key = keys[i];\n            if (!isPrimitive(target) && !(key in target)) {\n                return false;\n            }\n            if (source[key] === undefined && target[key] !== undefined) {\n                return false;\n            }\n            if (source[key] === null && target[key] !== null) {\n                return false;\n            }\n            const isEqual = compare(target[key], source[key], key, target, source, stack);\n            if (!isEqual) {\n                return false;\n            }\n        }\n        return true;\n    }\n    finally {\n        stack?.delete(source);\n    }\n}\nfunction isMapMatch(target, source, compare, stack) {\n    if (source.size === 0) {\n        return true;\n    }\n    if (!(target instanceof Map)) {\n        return false;\n    }\n    for (const [key, sourceValue] of source.entries()) {\n        const targetValue = target.get(key);\n        const isEqual = compare(targetValue, sourceValue, key, target, source, stack);\n        if (isEqual === false) {\n            return false;\n        }\n    }\n    return true;\n}\nfunction isArrayMatch(target, source, compare, stack) {\n    if (source.length === 0) {\n        return true;\n    }\n    if (!Array.isArray(target)) {\n        return false;\n    }\n    const countedIndex = new Set();\n    for (let i = 0; i < source.length; i++) {\n        const sourceItem = source[i];\n        let found = false;\n        for (let j = 0; j < target.length; j++) {\n            if (countedIndex.has(j)) {\n                continue;\n            }\n            const targetItem = target[j];\n            let matches = false;\n            const isEqual = compare(targetItem, sourceItem, i, target, source, stack);\n            if (isEqual) {\n                matches = true;\n            }\n            if (matches) {\n                countedIndex.add(j);\n                found = true;\n                break;\n            }\n        }\n        if (!found) {\n            return false;\n        }\n    }\n    return true;\n}\nfunction isSetMatch(target, source, compare, stack) {\n    if (source.size === 0) {\n        return true;\n    }\n    if (!(target instanceof Set)) {\n        return false;\n    }\n    return isArrayMatch([...target], [...source], compare, stack);\n}\n\nexport { isMatchWith, isSetMatch };\n",
+      "start": 1762256768011,
+      "end": 1762256768127,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768127,
+      "end": 1762256768127,
+      "order": "normal"
+    }
+  ]
+}

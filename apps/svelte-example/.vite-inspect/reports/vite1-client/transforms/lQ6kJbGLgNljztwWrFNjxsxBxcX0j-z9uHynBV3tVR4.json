@@ -1,0 +1,134 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/_browser-chunks/chunk-FUOHXXZT.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __name\n} from \"./chunk-MM7DTO55.js\";\n\n// ../node_modules/tiny-invariant/dist/esm/tiny-invariant.js\nvar isProduction = process.env.NODE_ENV === \"production\";\nvar prefix = \"Invariant failed\";\nfunction invariant(condition, message) {\n  if (condition) {\n    return;\n  }\n  if (isProduction) {\n    throw new Error(prefix);\n  }\n  var provided = typeof message === \"function\" ? message() : message;\n  var value = provided ? \"\".concat(prefix, \": \").concat(provided) : prefix;\n  throw new Error(value);\n}\n__name(invariant, \"invariant\");\n\nexport {\n  invariant\n};\n",
+      "start": 1762256767098,
+      "end": 1762256767125,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767125,
+      "end": 1762256767125,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767125,
+      "end": 1762256767125,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767125,
+      "end": 1762256767125,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767125,
+      "end": 1762256767125,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767126,
+      "end": 1762256767126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767126,
+      "end": 1762256767126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767126,
+      "end": 1762256767126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767126,
+      "end": 1762256767126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "result": "import {\n  __name\n} from \"./chunk-MM7DTO55.js\";\nvar isProduction = true;\nvar prefix = \"Invariant failed\";\nfunction invariant(condition, message) {\n  if (condition) {\n    return;\n  }\n  if (isProduction) {\n    throw new Error(prefix);\n  }\n  var provided = typeof message === \"function\" ? message() : message;\n  var value = provided ? \"\".concat(prefix, \": \").concat(provided) : prefix;\n  throw new Error(value);\n}\n__name(invariant, \"invariant\");\nexport {\n  invariant\n};\n",
+      "start": 1762256767126,
+      "end": 1762256767688,
+      "order": "normal-normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767688,
+      "end": 1762256767688,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767688,
+      "end": 1762256767688,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767688,
+      "end": 1762256767688,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767689,
+      "end": 1762256767689,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/hmr.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Source, Effect, TemplateNode } from '#client' */\nimport { FILENAME, HMR } from '../../../constants.js';\nimport { EFFECT_TRANSPARENT } from '#client/constants';\nimport { hydrate_node, hydrating } from '../dom/hydration.js';\nimport { block, branch, destroy_effect } from '../reactivity/effects.js';\nimport { source } from '../reactivity/sources.js';\nimport { set_should_intro } from '../render.js';\nimport { get } from '../runtime.js';\n\n/**\n * @template {(anchor: Comment, props: any) => any} Component\n * @param {Component} original\n * @param {() => Source<Component>} get_source\n */\nexport function hmr(original, get_source) {\n\t/**\n\t * @param {TemplateNode} anchor\n\t * @param {any} props\n\t */\n\tfunction wrapper(anchor, props) {\n\t\tlet instance = {};\n\n\t\t/** @type {Effect} */\n\t\tlet effect;\n\n\t\tlet ran = false;\n\n\t\tblock(() => {\n\t\t\tconst source = get_source();\n\t\t\tconst component = get(source);\n\n\t\t\tif (effect) {\n\t\t\t\t// @ts-ignore\n\t\t\t\tfor (var k in instance) delete instance[k];\n\t\t\t\tdestroy_effect(effect);\n\t\t\t}\n\n\t\t\teffect = branch(() => {\n\t\t\t\t// when the component is invalidated, replace it without transitions\n\t\t\t\tif (ran) set_should_intro(false);\n\n\t\t\t\t// preserve getters/setters\n\t\t\t\tObject.defineProperties(\n\t\t\t\t\tinstance,\n\t\t\t\t\tObject.getOwnPropertyDescriptors(\n\t\t\t\t\t\t// @ts-expect-error\n\t\t\t\t\t\tnew.target ? new component(anchor, props) : component(anchor, props)\n\t\t\t\t\t)\n\t\t\t\t);\n\n\t\t\t\tif (ran) set_should_intro(true);\n\t\t\t});\n\t\t}, EFFECT_TRANSPARENT);\n\n\t\tran = true;\n\n\t\tif (hydrating) {\n\t\t\tanchor = hydrate_node;\n\t\t}\n\n\t\treturn instance;\n\t}\n\n\t// @ts-expect-error\n\twrapper[FILENAME] = original[FILENAME];\n\n\t// @ts-ignore\n\twrapper[HMR] = {\n\t\t// When we accept an update, we set the original source to the new component\n\t\toriginal,\n\t\t// The `get_source` parameter reads `wrapper[HMR].source`, but in the `accept`\n\t\t// function we always replace it with `previous[HMR].source`, which in practice\n\t\t// means we only ever update the original\n\t\tsource: source(original)\n\t};\n\n\treturn wrapper;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767819,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    }
+  ]
+}

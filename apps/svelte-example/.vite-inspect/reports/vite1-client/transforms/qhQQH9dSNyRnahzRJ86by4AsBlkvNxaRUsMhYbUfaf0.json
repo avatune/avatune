@@ -1,0 +1,133 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/apps/svelte-example/iframe.html",
+  "transforms": [
+    {
+      "name": "storybook:code-generator-plugin",
+      "result": "<!doctype html>\n<!--suppress HtmlUnknownTarget -->\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <title>Storybook</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n\n    <style>\n      @font-face {\n        font-family: 'Nunito Sans';\n        font-style: normal;\n        font-weight: 400;\n        font-display: swap;\n        src: url('./sb-common-assets/nunito-sans-regular.woff2') format('woff2');\n      }\n\n      @font-face {\n        font-family: 'Nunito Sans';\n        font-style: italic;\n        font-weight: 400;\n        font-display: swap;\n        src: url('./sb-common-assets/nunito-sans-italic.woff2') format('woff2');\n      }\n\n      @font-face {\n        font-family: 'Nunito Sans';\n        font-style: normal;\n        font-weight: 700;\n        font-display: swap;\n        src: url('./sb-common-assets/nunito-sans-bold.woff2') format('woff2');\n      }\n\n      @font-face {\n        font-family: 'Nunito Sans';\n        font-style: italic;\n        font-weight: 700;\n        font-display: swap;\n        src: url('./sb-common-assets/nunito-sans-bold-italic.woff2') format('woff2');\n      }\n    </style>\n\n    <script>\n      window.CONFIG_TYPE = '[CONFIG_TYPE HERE]';\n      window.LOGLEVEL = '[LOGLEVEL HERE]';\n      window.FRAMEWORK_OPTIONS = '[FRAMEWORK_OPTIONS HERE]';\n      window.CHANNEL_OPTIONS = '[CHANNEL_OPTIONS HERE]';\n      window.FEATURES = '[FEATURES HERE]';\n      window.STORIES = '[STORIES HERE]';\n      window.DOCS_OPTIONS = '[DOCS_OPTIONS HERE]';\n      window.TAGS_OPTIONS = '[TAGS_OPTIONS HERE]';\n\n      ('OTHER_GLOBALS HERE');\n\n      // We do this so that \"module && module.hot\" etc. in Storybook source code\n      // doesn't fail (it will simply be disabled)\n      window.module = undefined;\n      window.global = window;\n    </script>\n    <!-- [HEAD HTML SNIPPET HERE] -->\n  </head>\n\n  <body>\n    <!-- [BODY HTML SNIPPET HERE] -->\n    <div id=\"storybook-root\"></div>\n    <div id=\"storybook-docs\"></div>\n    <script>\n      function __onViteAppLoadingError(event) {\n        const hostname = globalThis.location.hostname;\n        if (hostname !== 'localhost' && globalThis.CONFIG_TYPE === 'DEVELOPMENT') {\n          const message = `Failed to load the Storybook preview file 'vite-app.js':\n\nIt looks like you're visiting the Storybook development server on another hostname than localhost: '${hostname}', but you haven't configured the necessary security features to support this.\nPlease re-run your Storybook development server with the '--host ${hostname}' flag, or manually configure your Vite allowedHosts configuration with viteFinal.\n\nSee:`;\n          const docs = [\n            'https://storybook.js.org/docs/api/cli-options#dev',\n            'https://storybook.js.org/docs/api/main-config/main-config-vite-final',\n            'https://vite.dev/config/server-options.html#server-allowedhosts',\n          ];\n          console.error(`${message}\\n${docs.map((doc) => `- ${doc}`).join('\\n')}`);\n\n          document.getElementById('storybook-root').innerHTML =\n            `<p style=\"color: red; max-width: 70ch\">${message.replaceAll(\n              '\\n',\n              '<br/>'\n            )}<ul>${docs.map((doc) => `<li><a href='${doc}' target='_blank'>${doc}</a></li>`).join('')}<ul></p>`;\n          return;\n        }\n      }\n    </script>\n    <script\n      type=\"module\"\n      src=\"virtual:/@storybook/builder-vite/vite-app.js\"\n      onerror=\"__onViteAppLoadingError(event)\"\n    ></script>\n  </body>\n</html>\n",
+      "start": 1762256766987,
+      "end": 1762256766987,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256766988,
+      "end": 1762256766988,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256766988,
+      "end": 1762256766988,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256766988,
+      "end": 1762256766988,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256766989,
+      "end": 1762256766989,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "result": "import \"vite/modulepreload-polyfill\";\n\nimport \"/Users/teimurgasanov/Projects/avatune/apps/svelte-example/iframe.html?html-proxy&inline-css&index=0.css\"\nimport \"virtual:/@storybook/builder-vite/vite-app.js\"",
+      "start": 1762256766989,
+      "end": 1762256767045,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767045,
+      "end": 1762256767045,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767045,
+      "end": 1762256767045,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767047,
+      "end": 1762256767047,
+      "order": "normal"
+    }
+  ]
+}

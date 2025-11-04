@@ -1,0 +1,17 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/_browser-chunks/chunk-ECQ75MKQ.js",
+  "transforms": [
+    {
+      "name": "__load__",
+      "result": "",
+      "start": 1762256767138,
+      "end": 1762256767138
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    }
+  ]
+}

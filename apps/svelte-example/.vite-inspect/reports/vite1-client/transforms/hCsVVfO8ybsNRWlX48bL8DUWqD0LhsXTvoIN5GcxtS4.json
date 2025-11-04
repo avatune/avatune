@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/attachments/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Action, ActionReturn } from '../action/public' */\n/** @import { Attachment } from './public' */\nimport { noop, render_effect } from 'svelte/internal/client';\nimport { ATTACHMENT_KEY } from '../constants.js';\nimport { untrack } from '../index-client.js';\nimport { teardown } from '../internal/client/reactivity/effects.js';\n\n/**\n * Creates an object key that will be recognised as an attachment when the object is spread onto an element,\n * as a programmatic alternative to using `{@attach ...}`. This can be useful for library authors, though\n * is generally not needed when building an app.\n *\n * ```svelte\n * <script>\n * \timport { createAttachmentKey } from 'svelte/attachments';\n *\n * \tconst props = {\n * \t\tclass: 'cool',\n * \t\tonclick: () => alert('clicked'),\n * \t\t[createAttachmentKey()]: (node) => {\n * \t\t\tnode.textContent = 'attached!';\n * \t\t}\n * \t};\n * </script>\n *\n * <button {...props}>click me</button>\n * ```\n * @since 5.29\n */\nexport function createAttachmentKey() {\n\treturn Symbol(ATTACHMENT_KEY);\n}\n\n/**\n * Converts an [action](https://svelte.dev/docs/svelte/use) into an [attachment](https://svelte.dev/docs/svelte/@attach) keeping the same behavior.\n * It's useful if you want to start using attachments on components but you have actions provided by a library.\n *\n * Note that the second argument, if provided, must be a function that _returns_ the argument to the\n * action function, not the argument itself.\n *\n * ```svelte\n * <!-- with an action -->\n * <div use:foo={bar}>...</div>\n *\n * <!-- with an attachment -->\n * <div {@attach fromAction(foo, () => bar)}>...</div>\n * ```\n * @template {EventTarget} E\n * @template {unknown} T\n * @overload\n * @param {Action<E, T> | ((element: E, arg: T) => void | ActionReturn<T>)} action The action function\n * @param {() => T} fn A function that returns the argument for the action\n * @returns {Attachment<E>}\n */\n/**\n * Converts an [action](https://svelte.dev/docs/svelte/use) into an [attachment](https://svelte.dev/docs/svelte/@attach) keeping the same behavior.\n * It's useful if you want to start using attachments on components but you have actions provided by a library.\n *\n * Note that the second argument, if provided, must be a function that _returns_ the argument to the\n * action function, not the argument itself.\n *\n * ```svelte\n * <!-- with an action -->\n * <div use:foo={bar}>...</div>\n *\n * <!-- with an attachment -->\n * <div {@attach fromAction(foo, () => bar)}>...</div>\n * ```\n * @template {EventTarget} E\n * @overload\n * @param {Action<E, void> | ((element: E) => void | ActionReturn<void>)} action The action function\n * @returns {Attachment<E>}\n */\n/**\n * Converts an [action](https://svelte.dev/docs/svelte/use) into an [attachment](https://svelte.dev/docs/svelte/@attach) keeping the same behavior.\n * It's useful if you want to start using attachments on components but you have actions provided by a library.\n *\n * Note that the second argument, if provided, must be a function that _returns_ the argument to the\n * action function, not the argument itself.\n *\n * ```svelte\n * <!-- with an action -->\n * <div use:foo={bar}>...</div>\n *\n * <!-- with an attachment -->\n * <div {@attach fromAction(foo, () => bar)}>...</div>\n * ```\n *\n * @template {EventTarget} E\n * @template {unknown} T\n * @param {Action<E, T> | ((element: E, arg: T) => void | ActionReturn<T>)} action The action function\n * @param {() => T} fn A function that returns the argument for the action\n * @returns {Attachment<E>}\n * @since 5.32\n */\nexport function fromAction(action, fn = /** @type {() => T} */ (noop)) {\n\treturn (element) => {\n\t\tconst { update, destroy } = untrack(() => action(element, fn()) ?? {});\n\n\t\tif (update) {\n\t\t\tvar ran = false;\n\t\t\trender_effect(() => {\n\t\t\t\tconst arg = fn();\n\t\t\t\tif (ran) update(arg);\n\t\t\t});\n\t\t\tran = true;\n\t\t}\n\n\t\tif (destroy) {\n\t\t\tteardown(destroy);\n\t\t}\n\t};\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767819,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    }
+  ]
+}

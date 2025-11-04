@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/attachments.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect } from '#client' */\nimport { block, branch, effect, destroy_effect } from '../../reactivity/effects.js';\n\n// TODO in 6.0 or 7.0, when we remove legacy mode, we can simplify this by\n// getting rid of the block/branch stuff and just letting the effect rip.\n// see https://github.com/sveltejs/svelte/pull/15962\n\n/**\n * @param {Element} node\n * @param {() => (node: Element) => void} get_fn\n */\nexport function attach(node, get_fn) {\n\t/** @type {false | undefined | ((node: Element) => void)} */\n\tvar fn = undefined;\n\n\t/** @type {Effect | null} */\n\tvar e;\n\n\tblock(() => {\n\t\tif (fn !== (fn = get_fn())) {\n\t\t\tif (e) {\n\t\t\t\tdestroy_effect(e);\n\t\t\t\te = null;\n\t\t\t}\n\n\t\t\tif (fn) {\n\t\t\t\te = branch(() => {\n\t\t\t\t\teffect(() => /** @type {(node: Element) => void} */ (fn)(node));\n\t\t\t\t});\n\t\t\t}\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767822,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    }
+  ]
+}

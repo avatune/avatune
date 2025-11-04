@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/this.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { STATE_SYMBOL } from '#client/constants';\nimport { effect, render_effect } from '../../../reactivity/effects.js';\nimport { untrack } from '../../../runtime.js';\nimport { queue_micro_task } from '../../task.js';\n\n/**\n * @param {any} bound_value\n * @param {Element} element_or_component\n * @returns {boolean}\n */\nfunction is_bound_this(bound_value, element_or_component) {\n\treturn (\n\t\tbound_value === element_or_component || bound_value?.[STATE_SYMBOL] === element_or_component\n\t);\n}\n\n/**\n * @param {any} element_or_component\n * @param {(value: unknown, ...parts: unknown[]) => void} update\n * @param {(...parts: unknown[]) => unknown} get_value\n * @param {() => unknown[]} [get_parts] Set if the this binding is used inside an each block,\n * \t\t\t\t\t\t\t\t\t\treturns all the parts of the each block context that are used in the expression\n * @returns {void}\n */\nexport function bind_this(element_or_component = {}, update, get_value, get_parts) {\n\teffect(() => {\n\t\t/** @type {unknown[]} */\n\t\tvar old_parts;\n\n\t\t/** @type {unknown[]} */\n\t\tvar parts;\n\n\t\trender_effect(() => {\n\t\t\told_parts = parts;\n\t\t\t// We only track changes to the parts, not the value itself to avoid unnecessary reruns.\n\t\t\tparts = get_parts?.() || [];\n\n\t\t\tuntrack(() => {\n\t\t\t\tif (element_or_component !== get_value(...parts)) {\n\t\t\t\t\tupdate(element_or_component, ...parts);\n\t\t\t\t\t// If this is an effect rerun (cause: each block context changes), then nullfiy the binding at\n\t\t\t\t\t// the previous position if it isn't already taken over by a different effect.\n\t\t\t\t\tif (old_parts && is_bound_this(get_value(...old_parts), element_or_component)) {\n\t\t\t\t\t\tupdate(null, ...old_parts);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\t\t});\n\n\t\treturn () => {\n\t\t\t// We cannot use effects in the teardown phase, we we use a microtask instead.\n\t\t\tqueue_micro_task(() => {\n\t\t\t\tif (parts && is_bound_this(get_value(...parts), element_or_component)) {\n\t\t\t\t\tupdate(null, ...parts);\n\t\t\t\t}\n\t\t\t});\n\t\t};\n\t});\n\n\treturn element_or_component;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767829,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/media.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { render_effect, effect, teardown } from '../../../reactivity/effects.js';\nimport { listen } from './shared.js';\n\n/** @param {TimeRanges} ranges */\nfunction time_ranges_to_array(ranges) {\n\tvar array = [];\n\n\tfor (var i = 0; i < ranges.length; i += 1) {\n\t\tarray.push({ start: ranges.start(i), end: ranges.end(i) });\n\t}\n\n\treturn array;\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {() => number | undefined} get\n * @param {(value: number) => void} set\n * @returns {void}\n */\nexport function bind_current_time(media, get, set = get) {\n\t/** @type {number} */\n\tvar raf_id;\n\t/** @type {number} */\n\tvar value;\n\n\t// Ideally, listening to timeupdate would be enough, but it fires too infrequently for the currentTime\n\t// binding, which is why we use a raf loop, too. We additionally still listen to timeupdate because\n\t// the user could be scrubbing through the video using the native controls when the media is paused.\n\tvar callback = () => {\n\t\tcancelAnimationFrame(raf_id);\n\n\t\tif (!media.paused) {\n\t\t\traf_id = requestAnimationFrame(callback);\n\t\t}\n\n\t\tvar next_value = media.currentTime;\n\t\tif (value !== next_value) {\n\t\t\tset((value = next_value));\n\t\t}\n\t};\n\n\traf_id = requestAnimationFrame(callback);\n\tmedia.addEventListener('timeupdate', callback);\n\n\trender_effect(() => {\n\t\tvar next_value = Number(get());\n\n\t\tif (value !== next_value && !isNaN(/** @type {any} */ (next_value))) {\n\t\t\tmedia.currentTime = value = next_value;\n\t\t}\n\t});\n\n\tteardown(() => {\n\t\tcancelAnimationFrame(raf_id);\n\t\tmedia.removeEventListener('timeupdate', callback);\n\t});\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(array: Array<{ start: number; end: number }>) => void} set\n */\nexport function bind_buffered(media, set) {\n\t/** @type {{ start: number; end: number; }[]} */\n\tvar current;\n\n\t// `buffered` can update without emitting any event, so we check it on various events.\n\t// By specs, `buffered` always returns a new object, so we have to compare deeply.\n\tlisten(media, ['loadedmetadata', 'progress', 'timeupdate', 'seeking'], () => {\n\t\tvar ranges = media.buffered;\n\n\t\tif (\n\t\t\t!current ||\n\t\t\tcurrent.length !== ranges.length ||\n\t\t\tcurrent.some((range, i) => ranges.start(i) !== range.start || ranges.end(i) !== range.end)\n\t\t) {\n\t\t\tcurrent = time_ranges_to_array(ranges);\n\t\t\tset(current);\n\t\t}\n\t});\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(array: Array<{ start: number; end: number }>) => void} set\n */\nexport function bind_seekable(media, set) {\n\tlisten(media, ['loadedmetadata'], () => set(time_ranges_to_array(media.seekable)));\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(array: Array<{ start: number; end: number }>) => void} set\n */\nexport function bind_played(media, set) {\n\tlisten(media, ['timeupdate'], () => set(time_ranges_to_array(media.played)));\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(seeking: boolean) => void} set\n */\nexport function bind_seeking(media, set) {\n\tlisten(media, ['seeking', 'seeked'], () => set(media.seeking));\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(seeking: boolean) => void} set\n */\nexport function bind_ended(media, set) {\n\tlisten(media, ['timeupdate', 'ended'], () => set(media.ended));\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {(ready_state: number) => void} set\n */\nexport function bind_ready_state(media, set) {\n\tlisten(\n\t\tmedia,\n\t\t['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'waiting', 'emptied'],\n\t\t() => set(media.readyState)\n\t);\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {() => number | undefined} get\n * @param {(playback_rate: number) => void} set\n */\nexport function bind_playback_rate(media, get, set = get) {\n\t// Needs to happen after element is inserted into the dom (which is guaranteed by using effect),\n\t// else playback will be set back to 1 by the browser\n\teffect(() => {\n\t\tvar value = Number(get());\n\n\t\tif (value !== media.playbackRate && !isNaN(value)) {\n\t\t\tmedia.playbackRate = value;\n\t\t}\n\t});\n\n\t// Start listening to ratechange events after the element is inserted into the dom,\n\t// else playback will be set to 1 by the browser\n\teffect(() => {\n\t\tlisten(media, ['ratechange'], () => {\n\t\t\tset(media.playbackRate);\n\t\t});\n\t});\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {() => boolean | undefined} get\n * @param {(paused: boolean) => void} set\n */\nexport function bind_paused(media, get, set = get) {\n\tvar paused = get();\n\n\tvar update = () => {\n\t\tif (paused !== media.paused) {\n\t\t\tset((paused = media.paused));\n\t\t}\n\t};\n\n\t// If someone switches the src while media is playing, the player will pause.\n\t// Listen to the canplay event to get notified of this situation.\n\tlisten(media, ['play', 'pause', 'canplay'], update, paused == null);\n\n\t// Needs to be an effect to ensure media element is mounted: else, if paused is `false` (i.e. should play right away)\n\t// a \"The play() request was interrupted by a new load request\" error would be thrown because the resource isn't loaded yet.\n\teffect(() => {\n\t\tif ((paused = !!get()) !== media.paused) {\n\t\t\tif (paused) {\n\t\t\t\tmedia.pause();\n\t\t\t} else {\n\t\t\t\tmedia.play().catch(() => {\n\t\t\t\t\tset((paused = true));\n\t\t\t\t});\n\t\t\t}\n\t\t}\n\t});\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {() => number | undefined} get\n * @param {(volume: number) => void} set\n */\nexport function bind_volume(media, get, set = get) {\n\tvar callback = () => {\n\t\tset(media.volume);\n\t};\n\n\tif (get() == null) {\n\t\tcallback();\n\t}\n\n\tlisten(media, ['volumechange'], callback, false);\n\n\trender_effect(() => {\n\t\tvar value = Number(get());\n\n\t\tif (value !== media.volume && !isNaN(value)) {\n\t\t\tmedia.volume = value;\n\t\t}\n\t});\n}\n\n/**\n * @param {HTMLVideoElement | HTMLAudioElement} media\n * @param {() => boolean | undefined} get\n * @param {(muted: boolean) => void} set\n */\nexport function bind_muted(media, get, set = get) {\n\tvar callback = () => {\n\t\tset(media.muted);\n\t};\n\n\tif (get() == null) {\n\t\tcallback();\n\t}\n\n\tlisten(media, ['volumechange'], callback, false);\n\n\trender_effect(() => {\n\t\tvar value = !!get();\n\n\t\tif (media.muted !== value) media.muted = value;\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767828,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    }
+  ]
+}

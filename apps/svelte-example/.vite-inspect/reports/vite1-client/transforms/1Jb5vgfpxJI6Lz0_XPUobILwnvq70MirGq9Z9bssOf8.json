@@ -1,0 +1,144 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/runtime/Story.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script\n  lang=\"ts\"\n  generics=\"TArgs extends Record<string, any>, TCmp extends Cmp, TChildren extends Snippet = Snippet\"\n>\n  import type { Snippet } from 'svelte';\n\n  import { useStoriesExtractor } from './contexts/extractor.svelte.js';\n  import { useStoryRenderer } from './contexts/renderer.svelte.js';\n\n  import { storyNameToExportName } from '../utils/identifier-utils.js';\n  import type { Cmp, StoryAnnotations, StoryContext } from '../types.js';\n  import { SVELTE_CSF_V4_TAG } from '../constants.js';\n\n  type Props = Partial<StoryAnnotations<TArgs, TCmp>> & {\n    /**\n     * @deprecated\n     * Use `exportName` instead.\n     */\n    id?: never;\n    /**\n     * Name of the story. Can be omitted if `exportName` is provided.\n     */\n    name?: string;\n    /**\n     * exportName of the story.\n     * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n     * eg. 'My story!' -> 'MyStory'\n     *\n     * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n     * that result in duplicate export names like \"My story\" and \"My story!\".\n     * It's also useful for explicitly defining the export that can be imported in MDX docs.\n     */\n    exportName?: string;\n    /**\n     * @deprecrated\n     * Use `tags={['autodocs']}` instead.\n     * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#story-prop-autodocs-has-been-removed}\n     */\n    autodocs?: never;\n    /**\n     * @deprecated\n     * Use `parameters={{ docs: { source: { code: \"...\" } } }}` instead.\n     * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/next/MIGRATION.md#story-prop-source-has-been-removed}\n     */\n    source?: never;\n  } & (\n      | {\n          /**\n           * exportName of the story.\n           * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n           * eg. 'My story!' -> 'MyStory'\n           *\n           * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n           * that result in duplicate export names like \"My story\" and \"My story!\".\n           * It's also useful for explicitly defining the export that can be imported in MDX docs.\n           */\n          exportName: string;\n        }\n      | {\n          /**\n           * Name of the story. Can be omitted if `exportName` is provided.\n           */\n          name: string;\n        }\n    ) &\n    (\n      | {\n          /**\n           * Children to pass to the story's component\n           * Or if `asChild` is true, the content to render in the story as **static** markup.\n           */\n          children?: TChildren;\n          /**\n           * Make the children the actual story content. This is useful when you want to create a **static story**.\n           */\n          asChild?: boolean;\n          template?: never;\n        }\n      | {\n          children?: never;\n          asChild?: never;\n          /**\n           * The content to render in the story with a snippet taking `args` and `storyContext` as parameters\n           *\n           * NOTE: Can be omitted if a default template is set with [`render`](https://github.com/storybookjs/addon-svelte-csf/blob/main/README.md#default-snippet)\n           */\n          template?: Snippet<[TArgs, StoryContext<TArgs>]>;\n        }\n    );\n  let {\n    children,\n    name,\n    exportName: exportNameProp,\n    play,\n    template,\n    asChild = false,\n    ...restProps\n  }: Props = $props();\n  const exportName = exportNameProp ?? storyNameToExportName(name!);\n\n  let extractor = useStoriesExtractor<TCmp>();\n  let renderer = useStoryRenderer<TCmp>();\n\n  let isCurrentlyViewed = $derived(\n    !extractor.isExtracting && renderer.currentStoryExportName === exportName\n  );\n\n  if (extractor.isExtracting) {\n    extractor.register({ children, name, exportName, play, ...restProps } as Parameters<\n      (typeof extractor)['register']\n    >[0]);\n  }\n\n  function injectIntoPlayFunction(\n    storyContext: typeof renderer.storyContext,\n    playToInject: typeof play\n  ) {\n    if (playToInject && storyContext.playFunction) {\n      storyContext.playFunction.__play = playToInject;\n    }\n  }\n\n  // TODO: Svelte maintainers is still discussing internally if they want to implement official typeguard function.\n  // Keep a pulse on this case and then this can be replaced.\n  function isSnippet<T extends unknown[]>(value: unknown): value is Snippet<T> {\n    return typeof value === 'function';\n  }\n\n  $effect(() => {\n    if (isCurrentlyViewed) {\n      injectIntoPlayFunction(renderer.storyContext, play);\n    }\n  });\n\n  const isLegacyStory = $derived(\n    renderer.storyContext.tags?.some((tag) => tag === SVELTE_CSF_V4_TAG) ?? false\n  );\n</script>\n\n{#if isCurrentlyViewed}\n  {#if isSnippet(template)}\n    {@render template(renderer.args as TArgs, renderer.storyContext as any)}\n  {:else if isSnippet(children)}\n    {#if asChild || isLegacyStory}\n      {@render children()}\n    {:else if renderer.storyContext.component}\n      {/* @ts-ignore */ null}\n      <renderer.storyContext.component {...renderer.args} {children} />\n    {:else}\n      {@render children()}\n    {/if}\n  {:else if renderer.metaRenderSnippet}\n    {@render renderer.metaRenderSnippet(renderer.args, renderer.storyContext)}\n  {:else if renderer.storyContext.component}\n    {/* @ts-ignore */ null}\n    <renderer.storyContext.component {...renderer.args} />\n  {:else}\n    <p>\n      No story rendered. See\n      <a href=\"https://github.com/storybookjs/addon-svelte-csf#defining-stories\" target=\"_blank\"\n        >the docs</a\n      > on how to define stories.\n    </p>\n  {/if}\n{/if}\n",
+      "start": 1762256767788,
+      "end": 1762256767839,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767839,
+      "end": 1762256767839,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport * as $ from 'svelte/internal/client';\nimport { useStoriesExtractor } from './contexts/extractor.svelte.js';\nimport { useStoryRenderer } from './contexts/renderer.svelte.js';\nimport { storyNameToExportName } from '../utils/identifier-utils.js';\nimport { SVELTE_CSF_V4_TAG } from '../constants.js';\n\nvar root_7 = $.from_html(` <!>`, 1);\nvar root_12 = $.from_html(` <!>`, 1);\nvar root_13 = $.from_html(`<p>No story rendered. See <a href=\"https://github.com/storybookjs/addon-svelte-csf#defining-stories\" target=\"_blank\">the docs</a> on how to define stories.</p>`);\n\nexport default function Story($$anchor, $$props) {\n\t$.push($$props, true);\n\n\t/**\n\t * @deprecated\n\t * Use `exportName` instead.\n\t */\n\t/**\n\t * @deprecated\n\t * Use `exportName` instead.\n\t */\n\t/**\n\t * Name of the story. Can be omitted if `exportName` is provided.\n\t */\n\t/**\n\t * exportName of the story.\n\t * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n\t * eg. 'My story!' -> 'MyStory'\n\t *\n\t * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n\t * that result in duplicate export names like \"My story\" and \"My story!\".\n\t * It's also useful for explicitly defining the export that can be imported in MDX docs.\n\t */\n\t/**\n\t * @deprecrated\n\t * Use `tags={['autodocs']}` instead.\n\t * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#story-prop-autodocs-has-been-removed}\n\t */\n\t/**\n\t * @deprecated\n\t * Use `parameters={{ docs: { source: { code: \"...\" } } }}` instead.\n\t * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/next/MIGRATION.md#story-prop-source-has-been-removed}\n\t */\n\t/**\n\t * exportName of the story.\n\t * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n\t * eg. 'My story!' -> 'MyStory'\n\t *\n\t * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n\t * that result in duplicate export names like \"My story\" and \"My story!\".\n\t * It's also useful for explicitly defining the export that can be imported in MDX docs.\n\t */\n\t/**\n\t * exportName of the story.\n\t * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n\t * eg. 'My story!' -> 'MyStory'\n\t *\n\t * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n\t * that result in duplicate export names like \"My story\" and \"My story!\".\n\t * It's also useful for explicitly defining the export that can be imported in MDX docs.\n\t */\n\t/**\n\t * Name of the story. Can be omitted if `exportName` is provided.\n\t */\n\t/**\n\t * Name of the story. Can be omitted if `exportName` is provided.\n\t */\n\t/**\n\t * Children to pass to the story's component\n\t * Or if `asChild` is true, the content to render in the story as **static** markup.\n\t */\n\t/**\n\t * Children to pass to the story's component\n\t * Or if `asChild` is true, the content to render in the story as **static** markup.\n\t */\n\t/**\n\t * Make the children the actual story content. This is useful when you want to create a **static story**.\n\t */\n\t/**\n\t * The content to render in the story with a snippet taking `args` and `storyContext` as parameters\n\t *\n\t * NOTE: Can be omitted if a default template is set with [`render`](https://github.com/storybookjs/addon-svelte-csf/blob/main/README.md#default-snippet)\n\t */\n\tlet asChild = $.prop($$props, 'asChild', 3, false),\n\t\trestProps = $.rest_props($$props, [\n\t\t\t'$$slots',\n\t\t\t'$$events',\n\t\t\t'$$legacy',\n\t\t\t'children',\n\t\t\t'name',\n\t\t\t'exportName',\n\t\t\t'play',\n\t\t\t'template',\n\t\t\t'asChild'\n\t\t]);\n\n\tconst exportName = $$props.exportName ?? storyNameToExportName($$props.name);\n\tlet extractor = useStoriesExtractor();\n\tlet renderer = useStoryRenderer();\n\tlet isCurrentlyViewed = $.derived(() => !extractor.isExtracting && renderer.currentStoryExportName === exportName);\n\n\tif (extractor.isExtracting) {\n\t\textractor.register({\n\t\t\tchildren: $$props.children,\n\t\t\tname: $$props.name,\n\t\t\texportName,\n\t\t\tplay: $$props.play,\n\t\t\t...restProps\n\t\t});\n\t}\n\n\tfunction injectIntoPlayFunction(storyContext, playToInject) {\n\t\tif (playToInject && storyContext.playFunction) {\n\t\t\tstoryContext.playFunction.__play = playToInject;\n\t\t}\n\t}\n\n\t// TODO: Svelte maintainers is still discussing internally if they want to implement official typeguard function.\n\t// Keep a pulse on this case and then this can be replaced.\n\tfunction isSnippet(value) {\n\t\treturn typeof value === 'function';\n\t}\n\n\t$.user_effect(() => {\n\t\tif ($.get(isCurrentlyViewed)) {\n\t\t\tinjectIntoPlayFunction(renderer.storyContext, $$props.play);\n\t\t}\n\t});\n\n\tconst isLegacyStory = $.derived(() => renderer.storyContext.tags?.some((tag) => tag === SVELTE_CSF_V4_TAG) ?? false);\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t{\n\t\tvar consequent_6 = ($$anchor) => {\n\t\t\tvar fragment_1 = $.comment();\n\t\t\tvar node_1 = $.first_child(fragment_1);\n\n\t\t\t{\n\t\t\t\tvar consequent = ($$anchor) => {\n\t\t\t\t\tvar fragment_2 = $.comment();\n\t\t\t\t\tvar node_2 = $.first_child(fragment_2);\n\n\t\t\t\t\t$.snippet(node_2, () => $$props.template, () => renderer.args, () => renderer.storyContext);\n\t\t\t\t\t$.append($$anchor, fragment_2);\n\t\t\t\t};\n\n\t\t\t\tvar alternate_5 = ($$anchor) => {\n\t\t\t\t\tvar fragment_3 = $.comment();\n\t\t\t\t\tvar node_3 = $.first_child(fragment_3);\n\n\t\t\t\t\t{\n\t\t\t\t\t\tvar consequent_3 = ($$anchor) => {\n\t\t\t\t\t\t\tvar fragment_4 = $.comment();\n\t\t\t\t\t\t\tvar node_4 = $.first_child(fragment_4);\n\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tvar consequent_1 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\tvar fragment_5 = $.comment();\n\t\t\t\t\t\t\t\t\tvar node_5 = $.first_child(fragment_5);\n\n\t\t\t\t\t\t\t\t\t$.snippet(node_5, () => $$props.children);\n\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_5);\n\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\tvar alternate_1 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\tvar fragment_6 = $.comment();\n\t\t\t\t\t\t\t\t\tvar node_6 = $.first_child(fragment_6);\n\n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\tvar consequent_2 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\t\t\tvar fragment_7 = root_7();\n\t\t\t\t\t\t\t\t\t\t\tvar text = $.first_child(fragment_7);\n\n\t\t\t\t\t\t\t\t\t\t\ttext.nodeValue = ' ';\n\n\t\t\t\t\t\t\t\t\t\t\tvar node_7 = $.sibling(text);\n\n\t\t\t\t\t\t\t\t\t\t\t$.component(node_7, () => renderer.storyContext.component, ($$anchor, renderer_storyContext_component) => {\n\t\t\t\t\t\t\t\t\t\t\t\trenderer_storyContext_component($$anchor, $.spread_props(() => renderer.args, {\n\t\t\t\t\t\t\t\t\t\t\t\t\tget children() {\n\t\t\t\t\t\t\t\t\t\t\t\t\t\treturn $$props.children;\n\t\t\t\t\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\t\t\t\t}));\n\t\t\t\t\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_7);\n\t\t\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t\t\tvar alternate = ($$anchor) => {\n\t\t\t\t\t\t\t\t\t\t\tvar fragment_8 = $.comment();\n\t\t\t\t\t\t\t\t\t\t\tvar node_8 = $.first_child(fragment_8);\n\n\t\t\t\t\t\t\t\t\t\t\t$.snippet(node_8, () => $$props.children);\n\t\t\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_8);\n\t\t\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t\t\t$.if(\n\t\t\t\t\t\t\t\t\t\t\tnode_6,\n\t\t\t\t\t\t\t\t\t\t\t($$render) => {\n\t\t\t\t\t\t\t\t\t\t\t\tif (renderer.storyContext.component) $$render(consequent_2); else $$render(alternate, false);\n\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\ttrue\n\t\t\t\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_6);\n\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t$.if(node_4, ($$render) => {\n\t\t\t\t\t\t\t\t\tif (asChild() || $.get(isLegacyStory)) $$render(consequent_1); else $$render(alternate_1, false);\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t$.append($$anchor, fragment_4);\n\t\t\t\t\t\t};\n\n\t\t\t\t\t\tvar alternate_4 = ($$anchor) => {\n\t\t\t\t\t\t\tvar fragment_9 = $.comment();\n\t\t\t\t\t\t\tvar node_9 = $.first_child(fragment_9);\n\n\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\tvar consequent_4 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\tvar fragment_10 = $.comment();\n\t\t\t\t\t\t\t\t\tvar node_10 = $.first_child(fragment_10);\n\n\t\t\t\t\t\t\t\t\t$.snippet(node_10, () => renderer.metaRenderSnippet, () => renderer.args, () => renderer.storyContext);\n\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_10);\n\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\tvar alternate_3 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\tvar fragment_11 = $.comment();\n\t\t\t\t\t\t\t\t\tvar node_11 = $.first_child(fragment_11);\n\n\t\t\t\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\t\t\tvar consequent_5 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\t\t\tvar fragment_12 = root_12();\n\t\t\t\t\t\t\t\t\t\t\tvar text_1 = $.first_child(fragment_12);\n\n\t\t\t\t\t\t\t\t\t\t\ttext_1.nodeValue = ' ';\n\n\t\t\t\t\t\t\t\t\t\t\tvar node_12 = $.sibling(text_1);\n\n\t\t\t\t\t\t\t\t\t\t\t$.component(node_12, () => renderer.storyContext.component, ($$anchor, renderer_storyContext_component_1) => {\n\t\t\t\t\t\t\t\t\t\t\t\trenderer_storyContext_component_1($$anchor, $.spread_props(() => renderer.args));\n\t\t\t\t\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_12);\n\t\t\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t\t\tvar alternate_2 = ($$anchor) => {\n\t\t\t\t\t\t\t\t\t\t\tvar p = root_13();\n\n\t\t\t\t\t\t\t\t\t\t\t$.append($$anchor, p);\n\t\t\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t\t\t$.if(\n\t\t\t\t\t\t\t\t\t\t\tnode_11,\n\t\t\t\t\t\t\t\t\t\t\t($$render) => {\n\t\t\t\t\t\t\t\t\t\t\t\tif (renderer.storyContext.component) $$render(consequent_5); else $$render(alternate_2, false);\n\t\t\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\t\t\ttrue\n\t\t\t\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\t\t$.append($$anchor, fragment_11);\n\t\t\t\t\t\t\t\t};\n\n\t\t\t\t\t\t\t\t$.if(\n\t\t\t\t\t\t\t\t\tnode_9,\n\t\t\t\t\t\t\t\t\t($$render) => {\n\t\t\t\t\t\t\t\t\t\tif (renderer.metaRenderSnippet) $$render(consequent_4); else $$render(alternate_3, false);\n\t\t\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\t\t\ttrue\n\t\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t$.append($$anchor, fragment_9);\n\t\t\t\t\t\t};\n\n\t\t\t\t\t\t$.if(\n\t\t\t\t\t\t\tnode_3,\n\t\t\t\t\t\t\t($$render) => {\n\t\t\t\t\t\t\t\tif (isSnippet($$props.children)) $$render(consequent_3); else $$render(alternate_4, false);\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\ttrue\n\t\t\t\t\t\t);\n\t\t\t\t\t}\n\n\t\t\t\t\t$.append($$anchor, fragment_3);\n\t\t\t\t};\n\n\t\t\t\t$.if(node_1, ($$render) => {\n\t\t\t\t\tif (isSnippet($$props.template)) $$render(consequent); else $$render(alternate_5, false);\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t$.append($$anchor, fragment_1);\n\t\t};\n\n\t\t$.if(node, ($$render) => {\n\t\t\tif ($.get(isCurrentlyViewed)) $$render(consequent_6);\n\t\t});\n\t}\n\n\t$.append($$anchor, fragment);\n\t$.pop();\n}",
+      "start": 1762256767839,
+      "end": 1762256767845,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "Story.svelte"
+        ],
+        "sourcesContent": [
+          "<script\n  lang=\"ts\"\n  generics=\"TArgs extends Record<string, any>, TCmp extends Cmp, TChildren extends Snippet = Snippet\"\n>\n  import type { Snippet } from 'svelte';\n\n  import { useStoriesExtractor } from './contexts/extractor.svelte.js';\n  import { useStoryRenderer } from './contexts/renderer.svelte.js';\n\n  import { storyNameToExportName } from '../utils/identifier-utils.js';\n  import type { Cmp, StoryAnnotations, StoryContext } from '../types.js';\n  import { SVELTE_CSF_V4_TAG } from '../constants.js';\n\n  type Props = Partial<StoryAnnotations<TArgs, TCmp>> & {\n    /**\n     * @deprecated\n     * Use `exportName` instead.\n     */\n    id?: never;\n    /**\n     * Name of the story. Can be omitted if `exportName` is provided.\n     */\n    name?: string;\n    /**\n     * exportName of the story.\n     * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n     * eg. 'My story!' -> 'MyStory'\n     *\n     * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n     * that result in duplicate export names like \"My story\" and \"My story!\".\n     * It's also useful for explicitly defining the export that can be imported in MDX docs.\n     */\n    exportName?: string;\n    /**\n     * @deprecrated\n     * Use `tags={['autodocs']}` instead.\n     * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#story-prop-autodocs-has-been-removed}\n     */\n    autodocs?: never;\n    /**\n     * @deprecated\n     * Use `parameters={{ docs: { source: { code: \"...\" } } }}` instead.\n     * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/next/MIGRATION.md#story-prop-source-has-been-removed}\n     */\n    source?: never;\n  } & (\n      | {\n          /**\n           * exportName of the story.\n           * If not provided, it will be generated from the 'name', by converting it to a valid, PascalCased JS variable name.\n           * eg. 'My story!' -> 'MyStory'\n           *\n           * Use this prop to explicitly set the export name of the story. This is useful if you have multiple stories with the names\n           * that result in duplicate export names like \"My story\" and \"My story!\".\n           * It's also useful for explicitly defining the export that can be imported in MDX docs.\n           */\n          exportName: string;\n        }\n      | {\n          /**\n           * Name of the story. Can be omitted if `exportName` is provided.\n           */\n          name: string;\n        }\n    ) &\n    (\n      | {\n          /**\n           * Children to pass to the story's component\n           * Or if `asChild` is true, the content to render in the story as **static** markup.\n           */\n          children?: TChildren;\n          /**\n           * Make the children the actual story content. This is useful when you want to create a **static story**.\n           */\n          asChild?: boolean;\n          template?: never;\n        }\n      | {\n          children?: never;\n          asChild?: never;\n          /**\n           * The content to render in the story with a snippet taking `args` and `storyContext` as parameters\n           *\n           * NOTE: Can be omitted if a default template is set with [`render`](https://github.com/storybookjs/addon-svelte-csf/blob/main/README.md#default-snippet)\n           */\n          template?: Snippet<[TArgs, StoryContext<TArgs>]>;\n        }\n    );\n  let {\n    children,\n    name,\n    exportName: exportNameProp,\n    play,\n    template,\n    asChild = false,\n    ...restProps\n  }: Props = $props();\n  const exportName = exportNameProp ?? storyNameToExportName(name!);\n\n  let extractor = useStoriesExtractor<TCmp>();\n  let renderer = useStoryRenderer<TCmp>();\n\n  let isCurrentlyViewed = $derived(\n    !extractor.isExtracting && renderer.currentStoryExportName === exportName\n  );\n\n  if (extractor.isExtracting) {\n    extractor.register({ children, name, exportName, play, ...restProps } as Parameters<\n      (typeof extractor)['register']\n    >[0]);\n  }\n\n  function injectIntoPlayFunction(\n    storyContext: typeof renderer.storyContext,\n    playToInject: typeof play\n  ) {\n    if (playToInject && storyContext.playFunction) {\n      storyContext.playFunction.__play = playToInject;\n    }\n  }\n\n  // TODO: Svelte maintainers is still discussing internally if they want to implement official typeguard function.\n  // Keep a pulse on this case and then this can be replaced.\n  function isSnippet<T extends unknown[]>(value: unknown): value is Snippet<T> {\n    return typeof value === 'function';\n  }\n\n  $effect(() => {\n    if (isCurrentlyViewed) {\n      injectIntoPlayFunction(renderer.storyContext, play);\n    }\n  });\n\n  const isLegacyStory = $derived(\n    renderer.storyContext.tags?.some((tag) => tag === SVELTE_CSF_V4_TAG) ?? false\n  );\n</script>\n\n{#if isCurrentlyViewed}\n  {#if isSnippet(template)}\n    {@render template(renderer.args as TArgs, renderer.storyContext as any)}\n  {:else if isSnippet(children)}\n    {#if asChild || isLegacyStory}\n      {@render children()}\n    {:else if renderer.storyContext.component}\n      {/* @ts-ignore */ null}\n      <renderer.storyContext.component {...renderer.args} {children} />\n    {:else}\n      {@render children()}\n    {/if}\n  {:else if renderer.metaRenderSnippet}\n    {@render renderer.metaRenderSnippet(renderer.args, renderer.storyContext)}\n  {:else if renderer.storyContext.component}\n    {/* @ts-ignore */ null}\n    <renderer.storyContext.component {...renderer.args} />\n  {:else}\n    <p>\n      No story rendered. See\n      <a href=\"https://github.com/storybookjs/addon-svelte-csf#defining-stories\" target=\"_blank\"\n        >the docs</a\n      > on how to define stories.\n    </p>\n  {/if}\n{/if}\n"
+        ],
+        "mappings": ";;SAMW,mBAAmB,QAAQ,gCAAgC;SAC3D,gBAAgB,QAAQ,+BAA+B;SAEvD,qBAAqB,QAAQ,8BAA8B;SAE3D,iBAAiB,QAAQ,iBAAiB;;;;;;iDAXrD,CAAC;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;KA+FG,OAAO,iCAAG,KAAK;EACZ,SAAS;;;;;;;;;;;;OAER,UAAU,yBAAqB,qBAAqB;KAEtD,SAAS,GAAG,mBAAmB;KAC/B,QAAQ,GAAG,gBAAgB;KAE3B,iBAAiB,oBAClB,SAAS,CAAC,YAAY,IAAI,QAAQ,CAAC,sBAAsB,KAAK,UAAU;;KAGvE,SAAS,CAAC,YAAY,EAAE,CAAC;EAC3B,SAAS,CAAC,QAAQ;GAAG,QAAQ;GAAE,IAAI;GAAE,UAAU;GAAE,IAAI;MAAK,SAAS;;CAGrE,CAAC;;UAEQ,sBAAsB,CAC7B,YAA0C,EAC1C,YAAyB,EACzB,CAAC;MACG,YAAY,IAAI,YAAY,CAAC,YAAY,EAAE,CAAC;GAC9C,YAAY,CAAC,YAAY,CAAC,MAAM,GAAG,YAAY;EACjD,CAAC;CACH,CAAC;;;;UAIQ,SAAS,CAAsB,KAAc,EAAuB,CAAC;gBAC9D,KAAK,KAAK,UAAU;CACpC,CAAC;;CAED,aAAO,OAAO,CAAC;YACT,iBAAiB,GAAE,CAAC;GACtB,sBAAsB,CAAC,QAAQ,CAAC,YAAY;EAC9C,CAAC;CACH,CAAC;;OAEK,aAAa,mBACjB,QAAQ,CAAC,YAAY,CAAC,IAAI,EAAE,IAAI,EAAE,GAAG,KAAK,GAAG,KAAK,iBAAiB,KAAK,KAAK;;;;;;;;;;;;;;qDAM3D,QAAQ,CAAC,IAAI,QAAW,QAAQ,CAAC,YAAY;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2EAMxB,QAAQ,CAAC,IAAI;;;;;;;;;;;;;;;;;;;;;gBAF1C,QAAQ,CAAC,YAAY,CAAC,SAAS;;;;;;;;;;aAFpC,OAAO,YAAI,aAAa;;;;;;;;;;;;;;;;kCASpB,QAAQ,CAAC,iBAAiB,QAAC,QAAQ,CAAC,IAAI,QAAE,QAAQ,CAAC,YAAY;;;;;;;;;;;;;;;;;;6EAGnC,QAAQ,CAAC,IAAI;;;;;;;;;;;;;;;gBAF1C,QAAQ,CAAC,YAAY,CAAC,SAAS;;;;;;;;;;;;cAF/B,QAAQ,CAAC,iBAAiB;;;;;;;;;;;;YAT1B,SAAS;;;;;;;;;;SAFd,SAAS;;;;;;;;aADX,iBAAiB;;;;;;AAFvB,CAAC"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767845,
+      "end": 1762256767845,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/ownership.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @typedef {{ file: string, line: number, column: number }} Location */\n\nimport { get_descriptor } from '../../shared/utils.js';\nimport { LEGACY_PROPS, STATE_SYMBOL } from '#client/constants';\nimport { FILENAME } from '../../../constants.js';\nimport { component_context } from '../context.js';\nimport * as w from '../warnings.js';\nimport { sanitize_location } from '../../../utils.js';\n\n/**\n * Sets up a validator that\n * - traverses the path of a prop to find out if it is allowed to be mutated\n * - checks that the binding chain is not interrupted\n * @param {Record<string, any>} props\n */\nexport function create_ownership_validator(props) {\n\tconst component = component_context?.function;\n\tconst parent = component_context?.p?.function;\n\n\treturn {\n\t\t/**\n\t\t * @param {string} prop\n\t\t * @param {any[]} path\n\t\t * @param {any} result\n\t\t * @param {number} line\n\t\t * @param {number} column\n\t\t */\n\t\tmutation: (prop, path, result, line, column) => {\n\t\t\tconst name = path[0];\n\t\t\tif (is_bound_or_unset(props, name) || !parent) {\n\t\t\t\treturn result;\n\t\t\t}\n\n\t\t\t/** @type {any} */\n\t\t\tlet value = props;\n\n\t\t\tfor (let i = 0; i < path.length - 1; i++) {\n\t\t\t\tvalue = value[path[i]];\n\t\t\t\tif (!value?.[STATE_SYMBOL]) {\n\t\t\t\t\treturn result;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tconst location = sanitize_location(`${component[FILENAME]}:${line}:${column}`);\n\n\t\t\tw.ownership_invalid_mutation(name, location, prop, parent[FILENAME]);\n\n\t\t\treturn result;\n\t\t},\n\t\t/**\n\t\t * @param {any} key\n\t\t * @param {any} child_component\n\t\t * @param {() => any} value\n\t\t */\n\t\tbinding: (key, child_component, value) => {\n\t\t\tif (!is_bound_or_unset(props, key) && parent && value()?.[STATE_SYMBOL]) {\n\t\t\t\tw.ownership_invalid_binding(\n\t\t\t\t\tcomponent[FILENAME],\n\t\t\t\t\tkey,\n\t\t\t\t\tchild_component[FILENAME],\n\t\t\t\t\tparent[FILENAME]\n\t\t\t\t);\n\t\t\t}\n\t\t}\n\t};\n}\n\n/**\n * @param {Record<string, any>} props\n * @param {string} prop_name\n */\nfunction is_bound_or_unset(props, prop_name) {\n\t// Can be the case when someone does `mount(Component, props)` with `let props = $state({...})`\n\t// or `createClassComponent(Component, props)`\n\tconst is_entry_props = STATE_SYMBOL in props || LEGACY_PROPS in props;\n\treturn (\n\t\t!!get_descriptor(props, prop_name)?.set ||\n\t\t(is_entry_props && prop_name in props) ||\n\t\t!(prop_name in props)\n\t);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767819,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767819,
+      "end": 1762256767819,
+      "order": "normal"
+    }
+  ]
+}

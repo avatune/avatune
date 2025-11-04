@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/utils/identifier-utils.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { sanitize } from '@storybook/csf';\n/**\n * @example storyIdToExportName('some-story') => 'SomeStory'\n */\nexport const storyIdToExportName = (storyId) => storyId\n    .split('-')\n    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))\n    .join('');\n/**\n * @example exportNameToStoryId('SomeStory') => 'some-story'\n */\nexport const exportNameToStoryId = (exportName) => exportName.replace(/([a-z0–9])([A-Z])/g, '$1-$2').toLowerCase();\n/**\n * @example storyNameToId('Some Long Story Name!') => 'some-long-story-name'\n */\nexport const storyNameToId = (name) => \n// add a space before all caps and use utility from @storybook/csf to sanitize the resulting string\nsanitize(name.replace(/([A-Z])/g, ' $1').trim());\n/**\n * @example storyNameToExportName('Some Long Story Name!') => 'SomeLongStoryName'\n */\nexport const storyNameToExportName = (name) => storyIdToExportName(storyNameToId(name));\n/**\n * Check if a string is a valid JavaScript variable name\n * @example isValidVariableName('SomeStory') => true\n * @example isValidVariableName('Some_Story') => true\n * @example isValidVariableName('Some Story') => false\n * @example isValidVariableName('Some-Story') => false\n * @example isValidVariableName('default') => false\n *\n * @see https://github.com/shinnn/is-var-name\n */\nexport const isValidVariableName = (str) => {\n    if (typeof str !== 'string') {\n        return false;\n    }\n    if (str.trim() !== str) {\n        return false;\n    }\n    try {\n        new Function(str, 'var ' + str);\n    }\n    catch (_) {\n        return false;\n    }\n    return true;\n};\n/**\n * Function to convert a non valid string template name to a valid identifier preventing\n * clashing with other templates with similar names.\n *\n * Stolen with 🧡 from the svelte codebase by @paoloricciuti\n *\n * @param str the template name\n * @returns a hash based on the content of the initial string which is a valid identifier\n */\nexport function hashTemplateName(str) {\n    if (isValidVariableName(str))\n        return str;\n    str = str.replace(/\\r/g, '');\n    let hash = 5381;\n    let i = str.length;\n    while (i--)\n        hash = ((hash << 5) - hash) ^ str.charCodeAt(i);\n    return `template_${(hash >>> 0).toString(36)}`;\n}\n",
+      "start": 1762256767888,
+      "end": 1762256767896,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767896,
+      "end": 1762256767896,
+      "order": "normal"
+    }
+  ]
+}

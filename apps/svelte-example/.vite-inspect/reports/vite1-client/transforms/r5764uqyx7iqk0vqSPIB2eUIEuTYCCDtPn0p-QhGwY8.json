@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/blocks/if.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { TemplateNode } from '#client' */\nimport { EFFECT_TRANSPARENT } from '#client/constants';\nimport {\n\thydrate_next,\n\thydrating,\n\tread_hydration_instruction,\n\tskip_nodes,\n\tset_hydrate_node,\n\tset_hydrating\n} from '../hydration.js';\nimport { block } from '../../reactivity/effects.js';\nimport { HYDRATION_START_ELSE } from '../../../../constants.js';\nimport { BranchManager } from './branches.js';\n\n// TODO reinstate https://github.com/sveltejs/svelte/pull/15250\n\n/**\n * @param {TemplateNode} node\n * @param {(branch: (fn: (anchor: Node) => void, flag?: boolean) => void) => void} fn\n * @param {boolean} [elseif] True if this is an `{:else if ...}` block rather than an `{#if ...}`, as that affects which transitions are considered 'local'\n * @returns {void}\n */\nexport function if_block(node, fn, elseif = false) {\n\tif (hydrating) {\n\t\thydrate_next();\n\t}\n\n\tvar branches = new BranchManager(node);\n\tvar flags = elseif ? EFFECT_TRANSPARENT : 0;\n\n\t/**\n\t * @param {boolean} condition,\n\t * @param {null | ((anchor: Node) => void)} fn\n\t */\n\tfunction update_branch(condition, fn) {\n\t\tif (hydrating) {\n\t\t\tconst is_else = read_hydration_instruction(node) === HYDRATION_START_ELSE;\n\n\t\t\tif (condition === is_else) {\n\t\t\t\t// Hydration mismatch: remove everything inside the anchor and start fresh.\n\t\t\t\t// This could happen with `{#if browser}...{/if}`, for example\n\t\t\t\tvar anchor = skip_nodes();\n\n\t\t\t\tset_hydrate_node(anchor);\n\t\t\t\tbranches.anchor = anchor;\n\n\t\t\t\tset_hydrating(false);\n\t\t\t\tbranches.ensure(condition, fn);\n\t\t\t\tset_hydrating(true);\n\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\n\t\tbranches.ensure(condition, fn);\n\t}\n\n\tblock(() => {\n\t\tvar has_branch = false;\n\n\t\tfn((fn, flag = true) => {\n\t\t\thas_branch = true;\n\t\t\tupdate_branch(flag, fn);\n\t\t});\n\n\t\tif (!has_branch) {\n\t\t\tupdate_branch(false, null);\n\t\t}\n\t}, flags);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767820,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767820,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    }
+  ]
+}

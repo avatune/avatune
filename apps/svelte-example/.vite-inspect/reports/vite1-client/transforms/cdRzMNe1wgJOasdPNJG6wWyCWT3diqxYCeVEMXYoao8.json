@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/equality.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import * as w from '../warnings.js';\nimport { get_proxied_value } from '../proxy.js';\n\nexport function init_array_prototype_warnings() {\n\tconst array_prototype = Array.prototype;\n\t// The REPL ends up here over and over, and this prevents it from adding more and more patches\n\t// of the same kind to the prototype, which would slow down everything over time.\n\t// @ts-expect-error\n\tconst cleanup = Array.__svelte_cleanup;\n\tif (cleanup) {\n\t\tcleanup();\n\t}\n\n\tconst { indexOf, lastIndexOf, includes } = array_prototype;\n\n\tarray_prototype.indexOf = function (item, from_index) {\n\t\tconst index = indexOf.call(this, item, from_index);\n\n\t\tif (index === -1) {\n\t\t\tfor (let i = from_index ?? 0; i < this.length; i += 1) {\n\t\t\t\tif (get_proxied_value(this[i]) === item) {\n\t\t\t\t\tw.state_proxy_equality_mismatch('array.indexOf(...)');\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\treturn index;\n\t};\n\n\tarray_prototype.lastIndexOf = function (item, from_index) {\n\t\t// we need to specify this.length - 1 because it's probably using something like\n\t\t// `arguments` inside so passing undefined is different from not passing anything\n\t\tconst index = lastIndexOf.call(this, item, from_index ?? this.length - 1);\n\n\t\tif (index === -1) {\n\t\t\tfor (let i = 0; i <= (from_index ?? this.length - 1); i += 1) {\n\t\t\t\tif (get_proxied_value(this[i]) === item) {\n\t\t\t\t\tw.state_proxy_equality_mismatch('array.lastIndexOf(...)');\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\treturn index;\n\t};\n\n\tarray_prototype.includes = function (item, from_index) {\n\t\tconst has = includes.call(this, item, from_index);\n\n\t\tif (!has) {\n\t\t\tfor (let i = 0; i < this.length; i += 1) {\n\t\t\t\tif (get_proxied_value(this[i]) === item) {\n\t\t\t\t\tw.state_proxy_equality_mismatch('array.includes(...)');\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\treturn has;\n\t};\n\n\t// @ts-expect-error\n\tArray.__svelte_cleanup = () => {\n\t\tarray_prototype.indexOf = indexOf;\n\t\tarray_prototype.lastIndexOf = lastIndexOf;\n\t\tarray_prototype.includes = includes;\n\t};\n}\n\n/**\n * @param {any} a\n * @param {any} b\n * @param {boolean} equal\n * @returns {boolean}\n */\nexport function strict_equals(a, b, equal = true) {\n\t// try-catch needed because this tries to read properties of `a` and `b`,\n\t// which could be disallowed for example in a secure context\n\ttry {\n\t\tif ((a === b) !== (get_proxied_value(a) === get_proxied_value(b))) {\n\t\t\tw.state_proxy_equality_mismatch(equal ? '===' : '!==');\n\t\t}\n\t} catch {}\n\n\treturn (a === b) === equal;\n}\n\n/**\n * @param {any} a\n * @param {any} b\n * @param {boolean} equal\n * @returns {boolean}\n */\nexport function equals(a, b, equal = true) {\n\tif ((a == b) !== (get_proxied_value(a) == get_proxied_value(b))) {\n\t\tw.state_proxy_equality_mismatch(equal ? '==' : '!=');\n\t}\n\n\treturn (a == b) === equal;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767837,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    }
+  ]
+}

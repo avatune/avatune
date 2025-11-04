@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/array/orderBy.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { compareValues } from '../_internal/compareValues.mjs';\nimport { isKey } from '../_internal/isKey.mjs';\nimport { toPath } from '../util/toPath.mjs';\n\nfunction orderBy(collection, criteria, orders, guard) {\n    if (collection == null) {\n        return [];\n    }\n    orders = guard ? undefined : orders;\n    if (!Array.isArray(collection)) {\n        collection = Object.values(collection);\n    }\n    if (!Array.isArray(criteria)) {\n        criteria = criteria == null ? [null] : [criteria];\n    }\n    if (criteria.length === 0) {\n        criteria = [null];\n    }\n    if (!Array.isArray(orders)) {\n        orders = orders == null ? [] : [orders];\n    }\n    orders = orders.map(order => String(order));\n    const getValueByNestedPath = (object, path) => {\n        let target = object;\n        for (let i = 0; i < path.length && target != null; ++i) {\n            target = target[path[i]];\n        }\n        return target;\n    };\n    const getValueByCriterion = (criterion, object) => {\n        if (object == null || criterion == null) {\n            return object;\n        }\n        if (typeof criterion === 'object' && 'key' in criterion) {\n            if (Object.hasOwn(object, criterion.key)) {\n                return object[criterion.key];\n            }\n            return getValueByNestedPath(object, criterion.path);\n        }\n        if (typeof criterion === 'function') {\n            return criterion(object);\n        }\n        if (Array.isArray(criterion)) {\n            return getValueByNestedPath(object, criterion);\n        }\n        if (typeof object === 'object') {\n            return object[criterion];\n        }\n        return object;\n    };\n    const preparedCriteria = criteria.map((criterion) => {\n        if (Array.isArray(criterion) && criterion.length === 1) {\n            criterion = criterion[0];\n        }\n        if (criterion == null || typeof criterion === 'function' || Array.isArray(criterion) || isKey(criterion)) {\n            return criterion;\n        }\n        return { key: criterion, path: toPath(criterion) };\n    });\n    const preparedCollection = collection.map(item => ({\n        original: item,\n        criteria: preparedCriteria.map((criterion) => getValueByCriterion(criterion, item)),\n    }));\n    return preparedCollection\n        .slice()\n        .sort((a, b) => {\n        for (let i = 0; i < preparedCriteria.length; i++) {\n            const comparedResult = compareValues(a.criteria[i], b.criteria[i], orders[i]);\n            if (comparedResult !== 0) {\n                return comparedResult;\n            }\n        }\n        return 0;\n    })\n        .map(item => item.original);\n}\n\nexport { orderBy };\n",
+      "start": 1762256768011,
+      "end": 1762256768119,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768119,
+      "end": 1762256768119,
+      "order": "normal"
+    }
+  ]
+}

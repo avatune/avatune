@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/string/words.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { toString } from '../util/toString.mjs';\n\nconst rNonCharLatin = '\\\\x00-\\\\x2f\\\\x3a-\\\\x40\\\\x5b-\\\\x60\\\\x7b-\\\\xbf\\\\xd7\\\\xf7';\nconst rUnicodeUpper = '\\\\p{Lu}';\nconst rUnicodeLower = '\\\\p{Ll}';\nconst rMisc = '(?:[\\\\p{Lm}\\\\p{Lo}]\\\\p{M}*)';\nconst rNumber = '\\\\d';\nconst rUnicodeOptContrLower = \"(?:['\\u2019](?:d|ll|m|re|s|t|ve))?\";\nconst rUnicodeOptContrUpper = \"(?:['\\u2019](?:D|LL|M|RE|S|T|VE))?\";\nconst rUnicodeBreak = `[\\\\p{Z}\\\\p{P}${rNonCharLatin}]`;\nconst rUnicodeMiscUpper = `(?:${rUnicodeUpper}|${rMisc})`;\nconst rUnicodeMiscLower = `(?:${rUnicodeLower}|${rMisc})`;\nconst rUnicodeWord = RegExp([\n    `${rUnicodeUpper}?${rUnicodeLower}+${rUnicodeOptContrLower}(?=${rUnicodeBreak}|${rUnicodeUpper}|$)`,\n    `${rUnicodeMiscUpper}+${rUnicodeOptContrUpper}(?=${rUnicodeBreak}|${rUnicodeUpper}${rUnicodeMiscLower}|$)`,\n    `${rUnicodeUpper}?${rUnicodeMiscLower}+${rUnicodeOptContrLower}`,\n    `${rUnicodeUpper}+${rUnicodeOptContrUpper}`,\n    `${rNumber}*(?:1ST|2ND|3RD|(?![123])${rNumber}TH)(?=\\\\b|[a-z_])`,\n    `${rNumber}*(?:1st|2nd|3rd|(?![123])${rNumber}th)(?=\\\\b|[A-Z_])`,\n    `${rNumber}+`,\n    '\\\\p{Emoji_Presentation}',\n    '\\\\p{Extended_Pictographic}',\n].join('|'), 'gu');\nfunction words(str, pattern = rUnicodeWord, guard) {\n    const input = toString(str);\n    if (guard) {\n        pattern = rUnicodeWord;\n    }\n    if (typeof pattern === 'number') {\n        pattern = pattern.toString();\n    }\n    const words = Array.from(input.match(pattern) ?? []);\n    return words.filter(x => x !== '');\n}\n\nexport { words };\n",
+      "start": 1762256768011,
+      "end": 1762256768130,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768130,
+      "end": 1762256768130,
+      "order": "normal"
+    }
+  ]
+}

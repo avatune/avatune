@@ -1,0 +1,144 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/runtime/LegacyTemplate.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<!--\n@component\nThis component is to support deprecated legacy component - `Template`,\nand this component functionality is just a \"mock\".\nE.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into Svelte v5 snippet block.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#template-component-removed}\n-->\n<script lang=\"ts\">\n  import type { Slots, TemplateProps } from '../legacy-types.d.ts';\n\n  export let id: string = 'default';\n  // silents the Svelte warning about 'id' being unused. It's only here for typing purposes.\n  const silentWarningAboutId = id;\n\n  type $$Props = TemplateProps;\n  type $$Slots = Slots;\n\n  let args: $$Slots['default']['args'];\n  let context: $$Slots['default']['context'];\n</script>\n\n<slot {context} {args} />\n",
+      "start": 1762256767788,
+      "end": 1762256767853,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767853,
+      "end": 1762256767853,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport 'svelte/internal/flags/legacy';\nimport * as $ from 'svelte/internal/client';\n\nexport default function LegacyTemplate($$anchor, $$props) {\n\tlet id = $.prop($$props, 'id', 8, 'default');\n\n\t// silents the Svelte warning about 'id' being unused. It's only here for typing purposes.\n\tconst silentWarningAboutId = id();\n\n\tlet args;\n\tlet context;\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t$.slot(\n\t\tnode,\n\t\t$$props,\n\t\t'default',\n\t\t{\n\t\t\tget context() {\n\t\t\t\treturn context;\n\t\t\t},\n\n\t\t\tget args() {\n\t\t\t\treturn args;\n\t\t\t}\n\t\t},\n\t\tnull\n\t);\n\n\t$.append($$anchor, fragment);\n}",
+      "start": 1762256767853,
+      "end": 1762256767854,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "LegacyTemplate.svelte"
+        ],
+        "sourcesContent": [
+          "<!--\n@component\nThis component is to support deprecated legacy component - `Template`,\nand this component functionality is just a \"mock\".\nE.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into Svelte v5 snippet block.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#template-component-removed}\n-->\n<script lang=\"ts\">\n  import type { Slots, TemplateProps } from '../legacy-types.d.ts';\n\n  export let id: string = 'default';\n  // silents the Svelte warning about 'id' being unused. It's only here for typing purposes.\n  const silentWarningAboutId = id;\n\n  type $$Props = TemplateProps;\n  type $$Slots = Slots;\n\n  let args: $$Slots['default']['args'];\n  let context: $$Slots['default']['context'];\n</script>\n\n<slot {context} {args} />\n"
+        ],
+        "mappings": ";;;;0DAAA,CAAC;KAaY,EAAU,4BAAG,SAAS;;;OAE3B,oBAAoB,GAAG,EAAE;;KAK3B,IAAgC;KAChC,OAAsC;;;;;;;;;;;;;;;;;;;;;AAC7C,CAAC"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767854,
+      "end": 1762256767854,
+      "order": "normal"
+    }
+  ]
+}

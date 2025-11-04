@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/css.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @type {Map<String, Set<HTMLStyleElement>>} */\nvar all_styles = new Map();\n\n/**\n * @param {String} hash\n * @param {HTMLStyleElement} style\n */\nexport function register_style(hash, style) {\n\tvar styles = all_styles.get(hash);\n\n\tif (!styles) {\n\t\tstyles = new Set();\n\t\tall_styles.set(hash, styles);\n\t}\n\n\tstyles.add(style);\n}\n\n/**\n * @param {String} hash\n */\nexport function cleanup_styles(hash) {\n\tvar styles = all_styles.get(hash);\n\tif (!styles) return;\n\n\tfor (const style of styles) {\n\t\tstyle.remove();\n\t}\n\n\tall_styles.delete(hash);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767820,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    }
+  ]
+}

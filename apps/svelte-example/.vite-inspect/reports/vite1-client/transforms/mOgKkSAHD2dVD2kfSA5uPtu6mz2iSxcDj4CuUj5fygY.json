@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/validate.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { dev_current_component_function } from './context.js';\nimport { is_array } from '../shared/utils.js';\nimport * as e from './errors.js';\nimport { FILENAME } from '../../constants.js';\nimport { render_effect } from './reactivity/effects.js';\nimport * as w from './warnings.js';\nimport { capture_store_binding } from './reactivity/store.js';\n\n/**\n * @param {() => any} collection\n * @param {(item: any, index: number) => string} key_fn\n * @returns {void}\n */\nexport function validate_each_keys(collection, key_fn) {\n\trender_effect(() => {\n\t\tconst keys = new Map();\n\t\tconst maybe_array = collection();\n\t\tconst array = is_array(maybe_array)\n\t\t\t? maybe_array\n\t\t\t: maybe_array == null\n\t\t\t\t? []\n\t\t\t\t: Array.from(maybe_array);\n\t\tconst length = array.length;\n\t\tfor (let i = 0; i < length; i++) {\n\t\t\tconst key = key_fn(array[i], i);\n\t\t\tif (keys.has(key)) {\n\t\t\t\tconst a = String(keys.get(key));\n\t\t\t\tconst b = String(i);\n\n\t\t\t\t/** @type {string | null} */\n\t\t\t\tlet k = String(key);\n\t\t\t\tif (k.startsWith('[object ')) k = null;\n\n\t\t\t\te.each_key_duplicate(a, b, k);\n\t\t\t}\n\t\t\tkeys.set(key, i);\n\t\t}\n\t});\n}\n\n/**\n * @param {string} binding\n * @param {() => Record<string, any>} get_object\n * @param {() => string} get_property\n * @param {number} line\n * @param {number} column\n */\nexport function validate_binding(binding, get_object, get_property, line, column) {\n\tvar warned = false;\n\n\tvar filename = dev_current_component_function?.[FILENAME];\n\n\trender_effect(() => {\n\t\tif (warned) return;\n\n\t\tvar [object, is_store_sub] = capture_store_binding(get_object);\n\n\t\tif (is_store_sub) return;\n\n\t\tvar property = get_property();\n\n\t\tvar ran = false;\n\n\t\t// by making the (possibly false, but it would be an extreme edge case) assumption\n\t\t// that a getter has a corresponding setter, we can determine if a property is\n\t\t// reactive by seeing if this effect has dependencies\n\t\tvar effect = render_effect(() => {\n\t\t\tif (ran) return;\n\n\t\t\t// eslint-disable-next-line @typescript-eslint/no-unused-expressions\n\t\t\tobject[property];\n\t\t});\n\n\t\tran = true;\n\n\t\tif (effect.deps === null) {\n\t\t\tvar location = `${filename}:${line}:${column}`;\n\t\t\tw.binding_property_non_reactive(binding, location);\n\n\t\t\twarned = true;\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767834,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    }
+  ]
+}

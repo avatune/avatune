@@ -1,0 +1,12 @@
+{
+  "resolvedId": "\u0000virtual:/@storybook/builder-vite/vite-app.js",
+  "transforms": [
+    {
+      "name": "storybook:code-generator-plugin",
+      "result": "import { setup } from 'storybook/internal/preview/runtime';\n\nimport 'virtual:/@storybook/builder-vite/setup-addons.js';\n\nsetup();\n\nimport { composeConfigs, PreviewWeb } from 'storybook/preview-api';\nimport { isPreview } from 'storybook/internal/csf';\nimport { importFn } from 'virtual:/@storybook/builder-vite/storybook-stories.js';\n\nimport * as entry_preview_9049 from \"/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/dist/entry-preview.js\";\nimport * as preview_8770 from \"/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/preview.js\";\nimport * as preview_7902 from \"/Users/teimurgasanov/Projects/avatune/apps/svelte-example/.storybook/preview.ts\";\nconst getProjectAnnotations = (hmrPreviewAnnotationModules = []) => {\n  const configs = [\n    hmrPreviewAnnotationModules[0] ?? entry_preview_9049,\n    hmrPreviewAnnotationModules[1] ?? preview_8770,\n    hmrPreviewAnnotationModules[2] ?? preview_7902\n  ]\n  return composeConfigs(configs);\n}\n\nwindow.__STORYBOOK_PREVIEW__ = window.__STORYBOOK_PREVIEW__ || new PreviewWeb(importFn, getProjectAnnotations);\n\nwindow.__STORYBOOK_STORY_STORE__ = window.__STORYBOOK_STORY_STORE__ || window.__STORYBOOK_PREVIEW__.storyStore;\n\nif (import.meta.hot) {\n  import.meta.hot.on('vite:afterUpdate', () => {\n    window.__STORYBOOK_PREVIEW__.channel.emit('storyHotUpdated');\n  });\n\n  import.meta.hot.accept('virtual:/@storybook/builder-vite/storybook-stories.js', (newModule) => {\n    // importFn has changed so we need to patch the new one in\n    window.__STORYBOOK_PREVIEW__.onStoriesChanged({ importFn: newModule.importFn });\n  });\n\n  import.meta.hot.accept([\"/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/dist/entry-preview.js\",\"/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/preview.js\",\"/Users/teimurgasanov/Projects/avatune/apps/svelte-example/.storybook/preview.ts\"], (previewAnnotationModules) => {\n    // getProjectAnnotations has changed so we need to patch the new one in\n    window.__STORYBOOK_PREVIEW__.onGetProjectAnnotationsChanged({ getProjectAnnotations: () => getProjectAnnotations(previewAnnotationModules) });\n  });\n};",
+      "start": 1762256767008,
+      "end": 1762256767032,
+      "sourcemaps": null
+    }
+  ]
+}

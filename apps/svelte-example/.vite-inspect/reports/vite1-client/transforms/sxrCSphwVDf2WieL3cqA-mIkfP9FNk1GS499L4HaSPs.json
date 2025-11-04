@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/class.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { to_class } from '../../../shared/attributes.js';\nimport { hydrating } from '../hydration.js';\n\n/**\n * @param {Element} dom\n * @param {boolean | number} is_html\n * @param {string | null} value\n * @param {string} [hash]\n * @param {Record<string, any>} [prev_classes]\n * @param {Record<string, any>} [next_classes]\n * @returns {Record<string, boolean> | undefined}\n */\nexport function set_class(dom, is_html, value, hash, prev_classes, next_classes) {\n\t// @ts-expect-error need to add __className to patched prototype\n\tvar prev = dom.__className;\n\n\tif (\n\t\thydrating ||\n\t\tprev !== value ||\n\t\tprev === undefined // for edge case of `class={undefined}`\n\t) {\n\t\tvar next_class_name = to_class(value, hash, next_classes);\n\n\t\tif (!hydrating || next_class_name !== dom.getAttribute('class')) {\n\t\t\t// Removing the attribute when the value is only an empty string causes\n\t\t\t// performance issues vs simply making the className an empty string. So\n\t\t\t// we should only remove the class if the value is nullish\n\t\t\t// and there no hash/directives :\n\t\t\tif (next_class_name == null) {\n\t\t\t\tdom.removeAttribute('class');\n\t\t\t} else if (is_html) {\n\t\t\t\tdom.className = next_class_name;\n\t\t\t} else {\n\t\t\t\tdom.setAttribute('class', next_class_name);\n\t\t\t}\n\t\t}\n\n\t\t// @ts-expect-error need to add __className to patched prototype\n\t\tdom.__className = value;\n\t} else if (next_classes && prev_classes !== next_classes) {\n\t\tfor (var key in next_classes) {\n\t\t\tvar is_present = !!next_classes[key];\n\n\t\t\tif (prev_classes == null || is_present !== !!prev_classes[key]) {\n\t\t\t\tdom.classList.toggle(key, is_present);\n\t\t\t}\n\t\t}\n\t}\n\n\treturn next_classes;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767822,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    }
+  ]
+}

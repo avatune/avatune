@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/_browser-chunks/chunk-LYCSRYYR.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __name\n} from \"./chunk-MM7DTO55.js\";\n\n// src/preview-api/modules/preview-web/render/animation-utils.ts\nvar ANIMATION_TIMEOUT = 5e3;\nfunction isTestEnvironment() {\n  try {\n    return (\n      // @ts-expect-error This property exists in Vitest browser mode\n      !!globalThis.__vitest_browser__ || !!globalThis.window?.navigator?.userAgent?.match(/StorybookTestRunner/)\n    );\n  } catch {\n    return false;\n  }\n}\n__name(isTestEnvironment, \"isTestEnvironment\");\nfunction pauseAnimations(atEnd = true) {\n  if (!(\"document\" in globalThis && \"createElement\" in globalThis.document)) {\n    return () => {\n    };\n  }\n  const disableStyle = document.createElement(\"style\");\n  disableStyle.textContent = `*, *:before, *:after {\n    animation: none !important;\n  }`;\n  document.head.appendChild(disableStyle);\n  const pauseStyle = document.createElement(\"style\");\n  pauseStyle.textContent = `*, *:before, *:after {\n    animation-delay: 0s !important;\n    animation-direction: ${atEnd ? \"reverse\" : \"normal\"} !important;\n    animation-play-state: paused !important;\n    transition: none !important;\n  }`;\n  document.head.appendChild(pauseStyle);\n  document.body.clientHeight;\n  document.head.removeChild(disableStyle);\n  return () => {\n    pauseStyle.parentNode?.removeChild(pauseStyle);\n  };\n}\n__name(pauseAnimations, \"pauseAnimations\");\nasync function waitForAnimations(signal) {\n  if (!(\"document\" in globalThis && \"getAnimations\" in globalThis.document && \"querySelectorAll\" in globalThis.document)) {\n    return;\n  }\n  let timedOut = false;\n  await Promise.race([\n    // After 50ms, retrieve any running animations and wait for them to finish\n    // If new animations are created while waiting, we'll wait for them too\n    new Promise((resolve) => {\n      setTimeout(() => {\n        const animationRoots = [globalThis.document, ...getShadowRoots(globalThis.document)];\n        const checkAnimationsFinished = /* @__PURE__ */ __name(async () => {\n          if (timedOut || signal?.aborted) {\n            return;\n          }\n          const runningAnimations = animationRoots.flatMap((el) => el?.getAnimations?.() || []).filter((a) => a.playState === \"running\" && !isInfiniteAnimation(a));\n          if (runningAnimations.length > 0) {\n            await Promise.all(runningAnimations.map((a) => a.finished));\n            await checkAnimationsFinished();\n          }\n        }, \"checkAnimationsFinished\");\n        checkAnimationsFinished().then(resolve);\n      }, 100);\n    }),\n    // If animations don't finish within the timeout, continue without waiting\n    new Promise(\n      (resolve) => setTimeout(() => {\n        timedOut = true;\n        resolve(void 0);\n      }, ANIMATION_TIMEOUT)\n    )\n  ]);\n}\n__name(waitForAnimations, \"waitForAnimations\");\nfunction getShadowRoots(doc) {\n  return [doc, ...doc.querySelectorAll(\"*\")].reduce((acc, el) => {\n    if (\"shadowRoot\" in el && el.shadowRoot) {\n      acc.push(el.shadowRoot, ...getShadowRoots(el.shadowRoot));\n    }\n    return acc;\n  }, []);\n}\n__name(getShadowRoots, \"getShadowRoots\");\nfunction isInfiniteAnimation(anim) {\n  if (anim instanceof CSSAnimation && anim.effect instanceof KeyframeEffect && anim.effect.target) {\n    const style = getComputedStyle(anim.effect.target, anim.effect.pseudoElement);\n    const index = style.animationName?.split(\", \").indexOf(anim.animationName);\n    const iterations = style.animationIterationCount.split(\", \")[index];\n    return iterations === \"infinite\";\n  }\n  return false;\n}\n__name(isInfiniteAnimation, \"isInfiniteAnimation\");\n\nexport {\n  isTestEnvironment,\n  pauseAnimations,\n  waitForAnimations\n};\n",
+      "start": 1762256767098,
+      "end": 1762256767116,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767116,
+      "end": 1762256767116,
+      "order": "normal"
+    }
+  ]
+}

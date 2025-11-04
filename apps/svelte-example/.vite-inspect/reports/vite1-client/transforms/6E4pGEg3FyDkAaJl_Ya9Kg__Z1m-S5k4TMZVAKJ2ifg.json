@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/actions.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { ActionPayload } from '#client' */\nimport { effect, render_effect } from '../../reactivity/effects.js';\nimport { safe_not_equal } from '../../reactivity/equality.js';\nimport { deep_read_state, untrack } from '../../runtime.js';\n\n/**\n * @template P\n * @param {Element} dom\n * @param {(dom: Element, value?: P) => ActionPayload<P>} action\n * @param {() => P} [get_value]\n * @returns {void}\n */\nexport function action(dom, action, get_value) {\n\teffect(() => {\n\t\tvar payload = untrack(() => action(dom, get_value?.()) || {});\n\n\t\tif (get_value && payload?.update) {\n\t\t\tvar inited = false;\n\t\t\t/** @type {P} */\n\t\t\tvar prev = /** @type {any} */ ({}); // initialize with something so it's never equal on first run\n\n\t\t\trender_effect(() => {\n\t\t\t\tvar value = get_value();\n\n\t\t\t\t// Action's update method is coarse-grained, i.e. when anything in the passed value changes, update.\n\t\t\t\t// This works in legacy mode because of mutable_source being updated as a whole, but when using $state\n\t\t\t\t// together with actions and mutation, it wouldn't notice the change without a deep read.\n\t\t\t\tdeep_read_state(value);\n\n\t\t\t\tif (inited && safe_not_equal(prev, value)) {\n\t\t\t\t\tprev = value;\n\t\t\t\t\t/** @type {Function} */ (payload.update)(value);\n\t\t\t\t}\n\t\t\t});\n\n\t\t\tinited = true;\n\t\t}\n\n\t\tif (payload?.destroy) {\n\t\t\treturn () => /** @type {Function} */ (payload.destroy)();\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767822,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    }
+  ]
+}

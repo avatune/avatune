@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/error-handling.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Derived, Effect } from '#client' */\n/** @import { Boundary } from './dom/blocks/boundary.js' */\nimport { DEV } from 'esm-env';\nimport { FILENAME } from '../../constants.js';\nimport { is_firefox } from './dom/operations.js';\nimport { ERROR_VALUE, BOUNDARY_EFFECT, EFFECT_RAN } from './constants.js';\nimport { define_property, get_descriptor } from '../shared/utils.js';\nimport { active_effect, active_reaction } from './runtime.js';\n\nconst adjustments = new WeakMap();\n\n/**\n * @param {unknown} error\n */\nexport function handle_error(error) {\n\tvar effect = active_effect;\n\n\t// for unowned deriveds, don't throw until we read the value\n\tif (effect === null) {\n\t\t/** @type {Derived} */ (active_reaction).f |= ERROR_VALUE;\n\t\treturn error;\n\t}\n\n\tif (DEV && error instanceof Error && !adjustments.has(error)) {\n\t\tadjustments.set(error, get_adjustments(error, effect));\n\t}\n\n\tif ((effect.f & EFFECT_RAN) === 0) {\n\t\t// if the error occurred while creating this subtree, we let it\n\t\t// bubble up until it hits a boundary that can handle it\n\t\tif ((effect.f & BOUNDARY_EFFECT) === 0) {\n\t\t\tif (DEV && !effect.parent && error instanceof Error) {\n\t\t\t\tapply_adjustments(error);\n\t\t\t}\n\n\t\t\tthrow error;\n\t\t}\n\n\t\t/** @type {Boundary} */ (effect.b).error(error);\n\t} else {\n\t\t// otherwise we bubble up the effect tree ourselves\n\t\tinvoke_error_boundary(error, effect);\n\t}\n}\n\n/**\n * @param {unknown} error\n * @param {Effect | null} effect\n */\nexport function invoke_error_boundary(error, effect) {\n\twhile (effect !== null) {\n\t\tif ((effect.f & BOUNDARY_EFFECT) !== 0) {\n\t\t\ttry {\n\t\t\t\t/** @type {Boundary} */ (effect.b).error(error);\n\t\t\t\treturn;\n\t\t\t} catch (e) {\n\t\t\t\terror = e;\n\t\t\t}\n\t\t}\n\n\t\teffect = effect.parent;\n\t}\n\n\tif (DEV && error instanceof Error) {\n\t\tapply_adjustments(error);\n\t}\n\n\tthrow error;\n}\n\n/**\n * Add useful information to the error message/stack in development\n * @param {Error} error\n * @param {Effect} effect\n */\nfunction get_adjustments(error, effect) {\n\tconst message_descriptor = get_descriptor(error, 'message');\n\n\t// if the message was already changed and it's not configurable we can't change it\n\t// or it will throw a different error swallowing the original error\n\tif (message_descriptor && !message_descriptor.configurable) return;\n\n\tvar indent = is_firefox ? '  ' : '\\t';\n\tvar component_stack = `\\n${indent}in ${effect.fn?.name || '<unknown>'}`;\n\tvar context = effect.ctx;\n\n\twhile (context !== null) {\n\t\tcomponent_stack += `\\n${indent}in ${context.function?.[FILENAME].split('/').pop()}`;\n\t\tcontext = context.p;\n\t}\n\n\treturn {\n\t\tmessage: error.message + `\\n${component_stack}\\n`,\n\t\tstack: error.stack\n\t\t\t?.split('\\n')\n\t\t\t.filter((line) => !line.includes('svelte/src/internal'))\n\t\t\t.join('\\n')\n\t};\n}\n\n/**\n * @param {Error} error\n */\nfunction apply_adjustments(error) {\n\tconst adjusted = adjustments.get(error);\n\n\tif (adjusted) {\n\t\tdefine_property(error, 'message', {\n\t\t\tvalue: adjusted.message\n\t\t});\n\n\t\tdefine_property(error, 'stack', {\n\t\t\tvalue: adjusted.stack\n\t\t});\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767835,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "resolvedId": "\u0000virtual:/@storybook/builder-vite/storybook-stories.js",
+  "transforms": [
+    {
+      "name": "storybook:code-generator-plugin",
+      "result": "const importers = {\n  \"./src/stories/Avatar.stories.svelte\": () => import(\"/Users/teimurgasanov/Projects/avatune/apps/svelte-example/src/stories/Avatar.stories.svelte\")\n};\n\nexport async function importFn(path) {\n  return await importers[path]();\n}",
+      "start": 1762256767049,
+      "end": 1762256767067,
+      "sourcemaps": null
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/runtime/LegacyMeta.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<!--\n@component\nThis component is to support deprecated legacy component - `Meta`,\nand this component functionality is just a \"mock\".\ne.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into `defineMeta` and inserted into script module tag.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#meta-component-removed-in-favor-of-definemeta}\n-->\n<script lang=\"ts\">\n  import type { MetaProps, Slots } from '../legacy-types.d.ts';\n\n  type $$Props = MetaProps;\n</script>\n",
+      "start": 1762256767788,
+      "end": 1762256767836,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport 'svelte/internal/flags/legacy';\nimport * as $ from 'svelte/internal/client';\n\nexport default function LegacyMeta($$anchor) {}",
+      "start": 1762256767836,
+      "end": 1762256767837,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "LegacyMeta.svelte"
+        ],
+        "sourcesContent": [
+          "<!--\n@component\nThis component is to support deprecated legacy component - `Meta`,\nand this component functionality is just a \"mock\".\ne.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into `defineMeta` and inserted into script module tag.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#meta-component-removed-in-favor-of-definemeta}\n-->\n<script lang=\"ts\">\n  import type { MetaProps, Slots } from '../legacy-types.d.ts';\n\n  type $$Props = MetaProps;\n</script>\n"
+        ],
+        "mappings": ";;;;6CAAA,CAAC,AAcF,CAAC"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767837,
+      "end": 1762256767837,
+      "order": "normal"
+    }
+  ]
+}

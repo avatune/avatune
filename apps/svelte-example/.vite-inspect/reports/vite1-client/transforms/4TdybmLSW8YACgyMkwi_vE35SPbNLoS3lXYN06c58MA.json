@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-svelte-csf/dist/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/* eslint-disable @typescript-eslint/no-explicit-any */\nimport StoryComponent from './runtime/Story.svelte';\n// TODO: Remove in next major release\nimport LegacyMetaComponent from './runtime/LegacyMeta.svelte';\n// TODO: Remove in next major release\nimport LegacyStoryComponent from './runtime/LegacyStory.svelte';\n// TODO: Remove in next major release\nimport LegacyTemplateComponent from './runtime/LegacyTemplate.svelte';\nexport function defineMeta(_meta) {\n    return {\n        Story: StoryComponent,\n    };\n}\n// TODO: Remove in next major release\nexport { \n/**\n * @deprecated Use `defineMeta` instead\n * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#meta-component-removed-in-favor-of-definemeta}\n */\nLegacyMetaComponent as Meta, \n/**\n * @deprecated Use `Story` component returned from `defineMeta` instead\n * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#export-meta-removed-in-favor-of-definemeta}\n */\nLegacyStoryComponent as Story, \n/**\n * @deprecated Use snippets instead\n * @see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#template-component-removed}\n */\nLegacyTemplateComponent as Template, };\n",
+      "start": 1762256767738,
+      "end": 1762256767777,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    }
+  ]
+}

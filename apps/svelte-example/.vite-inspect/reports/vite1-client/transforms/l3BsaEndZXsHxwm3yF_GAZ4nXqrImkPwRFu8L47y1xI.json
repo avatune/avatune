@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/array/pullAt.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { flattenDepth } from './flattenDepth.mjs';\nimport { isIndex } from '../_internal/isIndex.mjs';\nimport { isKey } from '../_internal/isKey.mjs';\nimport { toKey } from '../_internal/toKey.mjs';\nimport { at } from '../object/at.mjs';\nimport { unset } from '../object/unset.mjs';\nimport { isArray } from '../predicate/isArray.mjs';\nimport { toPath } from '../util/toPath.mjs';\n\nfunction pullAt(array, ..._indices) {\n    const indices = flattenDepth(_indices, 1);\n    if (!array) {\n        return Array(indices.length);\n    }\n    const result = at(array, indices);\n    const indicesToPull = indices\n        .map(index => (isIndex(index, array.length) ? Number(index) : index))\n        .sort((a, b) => b - a);\n    for (const index of new Set(indicesToPull)) {\n        if (isIndex(index, array.length)) {\n            Array.prototype.splice.call(array, index, 1);\n            continue;\n        }\n        if (isKey(index, array)) {\n            delete array[toKey(index)];\n            continue;\n        }\n        const path = isArray(index) ? index : toPath(index);\n        unset(array, path);\n    }\n    return result;\n}\n\nexport { pullAt };\n",
+      "start": 1762256768011,
+      "end": 1762256768120,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    }
+  ]
+}

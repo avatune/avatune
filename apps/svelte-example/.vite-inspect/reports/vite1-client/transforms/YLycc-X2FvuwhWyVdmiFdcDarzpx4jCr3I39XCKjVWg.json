@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/render.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { ComponentContext, Effect, TemplateNode } from '#client' */\n/** @import { Component, ComponentType, SvelteComponent, MountOptions } from '../../index.js' */\nimport { DEV } from 'esm-env';\nimport {\n\tclear_text_content,\n\tcreate_text,\n\tget_first_child,\n\tget_next_sibling,\n\tinit_operations\n} from './dom/operations.js';\nimport { HYDRATION_END, HYDRATION_ERROR, HYDRATION_START } from '../../constants.js';\nimport { active_effect } from './runtime.js';\nimport { push, pop, component_context } from './context.js';\nimport { component_root } from './reactivity/effects.js';\nimport { hydrate_node, hydrating, set_hydrate_node, set_hydrating } from './dom/hydration.js';\nimport { array_from } from '../shared/utils.js';\nimport {\n\tall_registered_events,\n\thandle_event_propagation,\n\troot_event_handles\n} from './dom/elements/events.js';\nimport * as w from './warnings.js';\nimport * as e from './errors.js';\nimport { assign_nodes } from './dom/template.js';\nimport { is_passive_event } from '../../utils.js';\nimport { COMMENT_NODE, STATE_SYMBOL } from './constants.js';\nimport { boundary } from './dom/blocks/boundary.js';\n\n/**\n * This is normally true — block effects should run their intro transitions —\n * but is false during hydration (unless `options.intro` is `true`) and\n * when creating the children of a `<svelte:element>` that just changed tag\n */\nexport let should_intro = true;\n\n/** @param {boolean} value */\nexport function set_should_intro(value) {\n\tshould_intro = value;\n}\n\n/**\n * @param {Element} text\n * @param {string} value\n * @returns {void}\n */\nexport function set_text(text, value) {\n\t// For objects, we apply string coercion (which might make things like $state array references in the template reactive) before diffing\n\tvar str = value == null ? '' : typeof value === 'object' ? value + '' : value;\n\t// @ts-expect-error\n\tif (str !== (text.__t ??= text.nodeValue)) {\n\t\t// @ts-expect-error\n\t\ttext.__t = str;\n\t\ttext.nodeValue = str + '';\n\t}\n}\n\n/**\n * Mounts a component to the given target and returns the exports and potentially the props (if compiled with `accessors: true`) of the component.\n * Transitions will play during the initial render unless the `intro` option is set to `false`.\n *\n * @template {Record<string, any>} Props\n * @template {Record<string, any>} Exports\n * @param {ComponentType<SvelteComponent<Props>> | Component<Props, Exports, any>} component\n * @param {MountOptions<Props>} options\n * @returns {Exports}\n */\nexport function mount(component, options) {\n\treturn _mount(component, options);\n}\n\n/**\n * Hydrates a component on the given target and returns the exports and potentially the props (if compiled with `accessors: true`) of the component\n *\n * @template {Record<string, any>} Props\n * @template {Record<string, any>} Exports\n * @param {ComponentType<SvelteComponent<Props>> | Component<Props, Exports, any>} component\n * @param {{} extends Props ? {\n * \t\ttarget: Document | Element | ShadowRoot;\n * \t\tprops?: Props;\n * \t\tevents?: Record<string, (e: any) => any>;\n *  \tcontext?: Map<any, any>;\n * \t\tintro?: boolean;\n * \t\trecover?: boolean;\n * \t} : {\n * \t\ttarget: Document | Element | ShadowRoot;\n * \t\tprops: Props;\n * \t\tevents?: Record<string, (e: any) => any>;\n *  \tcontext?: Map<any, any>;\n * \t\tintro?: boolean;\n * \t\trecover?: boolean;\n * \t}} options\n * @returns {Exports}\n */\nexport function hydrate(component, options) {\n\tinit_operations();\n\toptions.intro = options.intro ?? false;\n\tconst target = options.target;\n\tconst was_hydrating = hydrating;\n\tconst previous_hydrate_node = hydrate_node;\n\n\ttry {\n\t\tvar anchor = /** @type {TemplateNode} */ (get_first_child(target));\n\t\twhile (\n\t\t\tanchor &&\n\t\t\t(anchor.nodeType !== COMMENT_NODE || /** @type {Comment} */ (anchor).data !== HYDRATION_START)\n\t\t) {\n\t\t\tanchor = /** @type {TemplateNode} */ (get_next_sibling(anchor));\n\t\t}\n\n\t\tif (!anchor) {\n\t\t\tthrow HYDRATION_ERROR;\n\t\t}\n\n\t\tset_hydrating(true);\n\t\tset_hydrate_node(/** @type {Comment} */ (anchor));\n\n\t\tconst instance = _mount(component, { ...options, anchor });\n\n\t\tset_hydrating(false);\n\n\t\treturn /**  @type {Exports} */ (instance);\n\t} catch (error) {\n\t\t// re-throw Svelte errors - they are certainly not related to hydration\n\t\tif (\n\t\t\terror instanceof Error &&\n\t\t\terror.message.split('\\n').some((line) => line.startsWith('https://svelte.dev/e/'))\n\t\t) {\n\t\t\tthrow error;\n\t\t}\n\t\tif (error !== HYDRATION_ERROR) {\n\t\t\t// eslint-disable-next-line no-console\n\t\t\tconsole.warn('Failed to hydrate: ', error);\n\t\t}\n\n\t\tif (options.recover === false) {\n\t\t\te.hydration_failed();\n\t\t}\n\n\t\t// If an error occurred above, the operations might not yet have been initialised.\n\t\tinit_operations();\n\t\tclear_text_content(target);\n\n\t\tset_hydrating(false);\n\t\treturn mount(component, options);\n\t} finally {\n\t\tset_hydrating(was_hydrating);\n\t\tset_hydrate_node(previous_hydrate_node);\n\t}\n}\n\n/** @type {Map<string, number>} */\nconst document_listeners = new Map();\n\n/**\n * @template {Record<string, any>} Exports\n * @param {ComponentType<SvelteComponent<any>> | Component<any>} Component\n * @param {MountOptions} options\n * @returns {Exports}\n */\nfunction _mount(Component, { target, anchor, props = {}, events, context, intro = true }) {\n\tinit_operations();\n\n\t/** @type {Set<string>} */\n\tvar registered_events = new Set();\n\n\t/** @param {Array<string>} events */\n\tvar event_handle = (events) => {\n\t\tfor (var i = 0; i < events.length; i++) {\n\t\t\tvar event_name = events[i];\n\n\t\t\tif (registered_events.has(event_name)) continue;\n\t\t\tregistered_events.add(event_name);\n\n\t\t\tvar passive = is_passive_event(event_name);\n\n\t\t\t// Add the event listener to both the container and the document.\n\t\t\t// The container listener ensures we catch events from within in case\n\t\t\t// the outer content stops propagation of the event.\n\t\t\ttarget.addEventListener(event_name, handle_event_propagation, { passive });\n\n\t\t\tvar n = document_listeners.get(event_name);\n\n\t\t\tif (n === undefined) {\n\t\t\t\t// The document listener ensures we catch events that originate from elements that were\n\t\t\t\t// manually moved outside of the container (e.g. via manual portals).\n\t\t\t\tdocument.addEventListener(event_name, handle_event_propagation, { passive });\n\t\t\t\tdocument_listeners.set(event_name, 1);\n\t\t\t} else {\n\t\t\t\tdocument_listeners.set(event_name, n + 1);\n\t\t\t}\n\t\t}\n\t};\n\n\tevent_handle(array_from(all_registered_events));\n\troot_event_handles.add(event_handle);\n\n\t/** @type {Exports} */\n\t// @ts-expect-error will be defined because the render effect runs synchronously\n\tvar component = undefined;\n\n\tvar unmount = component_root(() => {\n\t\tvar anchor_node = anchor ?? target.appendChild(create_text());\n\n\t\tboundary(\n\t\t\t/** @type {TemplateNode} */ (anchor_node),\n\t\t\t{\n\t\t\t\tpending: () => {}\n\t\t\t},\n\t\t\t(anchor_node) => {\n\t\t\t\tif (context) {\n\t\t\t\t\tpush({});\n\t\t\t\t\tvar ctx = /** @type {ComponentContext} */ (component_context);\n\t\t\t\t\tctx.c = context;\n\t\t\t\t}\n\n\t\t\t\tif (events) {\n\t\t\t\t\t// We can't spread the object or else we'd lose the state proxy stuff, if it is one\n\t\t\t\t\t/** @type {any} */ (props).$$events = events;\n\t\t\t\t}\n\n\t\t\t\tif (hydrating) {\n\t\t\t\t\tassign_nodes(/** @type {TemplateNode} */ (anchor_node), null);\n\t\t\t\t}\n\n\t\t\t\tshould_intro = intro;\n\t\t\t\t// @ts-expect-error the public typings are not what the actual function looks like\n\t\t\t\tcomponent = Component(anchor_node, props) || {};\n\t\t\t\tshould_intro = true;\n\n\t\t\t\tif (hydrating) {\n\t\t\t\t\t/** @type {Effect} */ (active_effect).nodes_end = hydrate_node;\n\n\t\t\t\t\tif (\n\t\t\t\t\t\thydrate_node === null ||\n\t\t\t\t\t\thydrate_node.nodeType !== COMMENT_NODE ||\n\t\t\t\t\t\t/** @type {Comment} */ (hydrate_node).data !== HYDRATION_END\n\t\t\t\t\t) {\n\t\t\t\t\t\tw.hydration_mismatch();\n\t\t\t\t\t\tthrow HYDRATION_ERROR;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tif (context) {\n\t\t\t\t\tpop();\n\t\t\t\t}\n\t\t\t}\n\t\t);\n\n\t\treturn () => {\n\t\t\tfor (var event_name of registered_events) {\n\t\t\t\ttarget.removeEventListener(event_name, handle_event_propagation);\n\n\t\t\t\tvar n = /** @type {number} */ (document_listeners.get(event_name));\n\n\t\t\t\tif (--n === 0) {\n\t\t\t\t\tdocument.removeEventListener(event_name, handle_event_propagation);\n\t\t\t\t\tdocument_listeners.delete(event_name);\n\t\t\t\t} else {\n\t\t\t\t\tdocument_listeners.set(event_name, n);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\troot_event_handles.delete(event_handle);\n\n\t\t\tif (anchor_node !== anchor) {\n\t\t\t\tanchor_node.parentNode?.removeChild(anchor_node);\n\t\t\t}\n\t\t};\n\t});\n\n\tmounted_components.set(component, unmount);\n\treturn component;\n}\n\n/**\n * References of the components that were mounted or hydrated.\n * Uses a `WeakMap` to avoid memory leaks.\n */\nlet mounted_components = new WeakMap();\n\n/**\n * Unmounts a component that was previously mounted using `mount` or `hydrate`.\n *\n * Since 5.13.0, if `options.outro` is `true`, [transitions](https://svelte.dev/docs/svelte/transition) will play before the component is removed from the DOM.\n *\n * Returns a `Promise` that resolves after transitions have completed if `options.outro` is true, or immediately otherwise (prior to 5.13.0, returns `void`).\n *\n * ```js\n * import { mount, unmount } from 'svelte';\n * import App from './App.svelte';\n *\n * const app = mount(App, { target: document.body });\n *\n * // later...\n * unmount(app, { outro: true });\n * ```\n * @param {Record<string, any>} component\n * @param {{ outro?: boolean }} [options]\n * @returns {Promise<void>}\n */\nexport function unmount(component, options) {\n\tconst fn = mounted_components.get(component);\n\n\tif (fn) {\n\t\tmounted_components.delete(component);\n\t\treturn fn(options);\n\t}\n\n\tif (DEV) {\n\t\tif (STATE_SYMBOL in component) {\n\t\t\tw.state_proxy_unmount();\n\t\t} else {\n\t\t\tw.lifecycle_double_unmount();\n\t\t}\n\t}\n\n\treturn Promise.resolve();\n}\n",
+      "start": 1762256767745,
+      "end": 1762256767789,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767789,
+      "end": 1762256767789,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    }
+  ]
+}

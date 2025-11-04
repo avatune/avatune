@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/custom-element.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { createClassComponent } from '../../../../legacy/legacy-client.js';\nimport { effect_root, render_effect } from '../../reactivity/effects.js';\nimport { append } from '../template.js';\nimport { define_property, get_descriptor, object_keys } from '../../../shared/utils.js';\n\n/**\n * @typedef {Object} CustomElementPropDefinition\n * @property {string} [attribute]\n * @property {boolean} [reflect]\n * @property {'String'|'Boolean'|'Number'|'Array'|'Object'} [type]\n */\n\n/** @type {any} */\nlet SvelteElement;\n\nif (typeof HTMLElement === 'function') {\n\tSvelteElement = class extends HTMLElement {\n\t\t/** The Svelte component constructor */\n\t\t$$ctor;\n\t\t/** Slots */\n\t\t$$s;\n\t\t/** @type {any} The Svelte component instance */\n\t\t$$c;\n\t\t/** Whether or not the custom element is connected */\n\t\t$$cn = false;\n\t\t/** @type {Record<string, any>} Component props data */\n\t\t$$d = {};\n\t\t/** `true` if currently in the process of reflecting component props back to attributes */\n\t\t$$r = false;\n\t\t/** @type {Record<string, CustomElementPropDefinition>} Props definition (name, reflected, type etc) */\n\t\t$$p_d = {};\n\t\t/** @type {Record<string, EventListenerOrEventListenerObject[]>} Event listeners */\n\t\t$$l = {};\n\t\t/** @type {Map<EventListenerOrEventListenerObject, Function>} Event listener unsubscribe functions */\n\t\t$$l_u = new Map();\n\t\t/** @type {any} The managed render effect for reflecting attributes */\n\t\t$$me;\n\n\t\t/**\n\t\t * @param {*} $$componentCtor\n\t\t * @param {*} $$slots\n\t\t * @param {*} use_shadow_dom\n\t\t */\n\t\tconstructor($$componentCtor, $$slots, use_shadow_dom) {\n\t\t\tsuper();\n\t\t\tthis.$$ctor = $$componentCtor;\n\t\t\tthis.$$s = $$slots;\n\t\t\tif (use_shadow_dom) {\n\t\t\t\tthis.attachShadow({ mode: 'open' });\n\t\t\t}\n\t\t}\n\n\t\t/**\n\t\t * @param {string} type\n\t\t * @param {EventListenerOrEventListenerObject} listener\n\t\t * @param {boolean | AddEventListenerOptions} [options]\n\t\t */\n\t\taddEventListener(type, listener, options) {\n\t\t\t// We can't determine upfront if the event is a custom event or not, so we have to\n\t\t\t// listen to both. If someone uses a custom event with the same name as a regular\n\t\t\t// browser event, this fires twice - we can't avoid that.\n\t\t\tthis.$$l[type] = this.$$l[type] || [];\n\t\t\tthis.$$l[type].push(listener);\n\t\t\tif (this.$$c) {\n\t\t\t\tconst unsub = this.$$c.$on(type, listener);\n\t\t\t\tthis.$$l_u.set(listener, unsub);\n\t\t\t}\n\t\t\tsuper.addEventListener(type, listener, options);\n\t\t}\n\n\t\t/**\n\t\t * @param {string} type\n\t\t * @param {EventListenerOrEventListenerObject} listener\n\t\t * @param {boolean | AddEventListenerOptions} [options]\n\t\t */\n\t\tremoveEventListener(type, listener, options) {\n\t\t\tsuper.removeEventListener(type, listener, options);\n\t\t\tif (this.$$c) {\n\t\t\t\tconst unsub = this.$$l_u.get(listener);\n\t\t\t\tif (unsub) {\n\t\t\t\t\tunsub();\n\t\t\t\t\tthis.$$l_u.delete(listener);\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tasync connectedCallback() {\n\t\t\tthis.$$cn = true;\n\t\t\tif (!this.$$c) {\n\t\t\t\t// We wait one tick to let possible child slot elements be created/mounted\n\t\t\t\tawait Promise.resolve();\n\t\t\t\tif (!this.$$cn || this.$$c) {\n\t\t\t\t\treturn;\n\t\t\t\t}\n\t\t\t\t/** @param {string} name */\n\t\t\t\tfunction create_slot(name) {\n\t\t\t\t\t/**\n\t\t\t\t\t * @param {Element} anchor\n\t\t\t\t\t */\n\t\t\t\t\treturn (anchor) => {\n\t\t\t\t\t\tconst slot = document.createElement('slot');\n\t\t\t\t\t\tif (name !== 'default') slot.name = name;\n\n\t\t\t\t\t\tappend(anchor, slot);\n\t\t\t\t\t};\n\t\t\t\t}\n\t\t\t\t/** @type {Record<string, any>} */\n\t\t\t\tconst $$slots = {};\n\t\t\t\tconst existing_slots = get_custom_elements_slots(this);\n\t\t\t\tfor (const name of this.$$s) {\n\t\t\t\t\tif (name in existing_slots) {\n\t\t\t\t\t\tif (name === 'default' && !this.$$d.children) {\n\t\t\t\t\t\t\tthis.$$d.children = create_slot(name);\n\t\t\t\t\t\t\t$$slots.default = true;\n\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t$$slots[name] = create_slot(name);\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tfor (const attribute of this.attributes) {\n\t\t\t\t\t// this.$$data takes precedence over this.attributes\n\t\t\t\t\tconst name = this.$$g_p(attribute.name);\n\t\t\t\t\tif (!(name in this.$$d)) {\n\t\t\t\t\t\tthis.$$d[name] = get_custom_element_value(name, attribute.value, this.$$p_d, 'toProp');\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t// Port over props that were set programmatically before ce was initialized\n\t\t\t\tfor (const key in this.$$p_d) {\n\t\t\t\t\t// @ts-expect-error\n\t\t\t\t\tif (!(key in this.$$d) && this[key] !== undefined) {\n\t\t\t\t\t\t// @ts-expect-error\n\t\t\t\t\t\tthis.$$d[key] = this[key]; // don't transform, these were set through JavaScript\n\t\t\t\t\t\t// @ts-expect-error\n\t\t\t\t\t\tdelete this[key]; // remove the property that shadows the getter/setter\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tthis.$$c = createClassComponent({\n\t\t\t\t\tcomponent: this.$$ctor,\n\t\t\t\t\ttarget: this.shadowRoot || this,\n\t\t\t\t\tprops: {\n\t\t\t\t\t\t...this.$$d,\n\t\t\t\t\t\t$$slots,\n\t\t\t\t\t\t$$host: this\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\t// Reflect component props as attributes\n\t\t\t\tthis.$$me = effect_root(() => {\n\t\t\t\t\trender_effect(() => {\n\t\t\t\t\t\tthis.$$r = true;\n\t\t\t\t\t\tfor (const key of object_keys(this.$$c)) {\n\t\t\t\t\t\t\tif (!this.$$p_d[key]?.reflect) continue;\n\t\t\t\t\t\t\tthis.$$d[key] = this.$$c[key];\n\t\t\t\t\t\t\tconst attribute_value = get_custom_element_value(\n\t\t\t\t\t\t\t\tkey,\n\t\t\t\t\t\t\t\tthis.$$d[key],\n\t\t\t\t\t\t\t\tthis.$$p_d,\n\t\t\t\t\t\t\t\t'toAttribute'\n\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\tif (attribute_value == null) {\n\t\t\t\t\t\t\t\tthis.removeAttribute(this.$$p_d[key].attribute || key);\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\tthis.setAttribute(this.$$p_d[key].attribute || key, attribute_value);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t\tthis.$$r = false;\n\t\t\t\t\t});\n\t\t\t\t});\n\n\t\t\t\tfor (const type in this.$$l) {\n\t\t\t\t\tfor (const listener of this.$$l[type]) {\n\t\t\t\t\t\tconst unsub = this.$$c.$on(type, listener);\n\t\t\t\t\t\tthis.$$l_u.set(listener, unsub);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tthis.$$l = {};\n\t\t\t}\n\t\t}\n\n\t\t// We don't need this when working within Svelte code, but for compatibility of people using this outside of Svelte\n\t\t// and setting attributes through setAttribute etc, this is helpful\n\n\t\t/**\n\t\t * @param {string} attr\n\t\t * @param {string} _oldValue\n\t\t * @param {string} newValue\n\t\t */\n\t\tattributeChangedCallback(attr, _oldValue, newValue) {\n\t\t\tif (this.$$r) return;\n\t\t\tattr = this.$$g_p(attr);\n\t\t\tthis.$$d[attr] = get_custom_element_value(attr, newValue, this.$$p_d, 'toProp');\n\t\t\tthis.$$c?.$set({ [attr]: this.$$d[attr] });\n\t\t}\n\n\t\tdisconnectedCallback() {\n\t\t\tthis.$$cn = false;\n\t\t\t// In a microtask, because this could be a move within the DOM\n\t\t\tPromise.resolve().then(() => {\n\t\t\t\tif (!this.$$cn && this.$$c) {\n\t\t\t\t\tthis.$$c.$destroy();\n\t\t\t\t\tthis.$$me();\n\t\t\t\t\tthis.$$c = undefined;\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\n\t\t/**\n\t\t * @param {string} attribute_name\n\t\t */\n\t\t$$g_p(attribute_name) {\n\t\t\treturn (\n\t\t\t\tobject_keys(this.$$p_d).find(\n\t\t\t\t\t(key) =>\n\t\t\t\t\t\tthis.$$p_d[key].attribute === attribute_name ||\n\t\t\t\t\t\t(!this.$$p_d[key].attribute && key.toLowerCase() === attribute_name)\n\t\t\t\t) || attribute_name\n\t\t\t);\n\t\t}\n\t};\n}\n\n/**\n * @param {string} prop\n * @param {any} value\n * @param {Record<string, CustomElementPropDefinition>} props_definition\n * @param {'toAttribute' | 'toProp'} [transform]\n */\nfunction get_custom_element_value(prop, value, props_definition, transform) {\n\tconst type = props_definition[prop]?.type;\n\tvalue = type === 'Boolean' && typeof value !== 'boolean' ? value != null : value;\n\tif (!transform || !props_definition[prop]) {\n\t\treturn value;\n\t} else if (transform === 'toAttribute') {\n\t\tswitch (type) {\n\t\t\tcase 'Object':\n\t\t\tcase 'Array':\n\t\t\t\treturn value == null ? null : JSON.stringify(value);\n\t\t\tcase 'Boolean':\n\t\t\t\treturn value ? '' : null;\n\t\t\tcase 'Number':\n\t\t\t\treturn value == null ? null : value;\n\t\t\tdefault:\n\t\t\t\treturn value;\n\t\t}\n\t} else {\n\t\tswitch (type) {\n\t\t\tcase 'Object':\n\t\t\tcase 'Array':\n\t\t\t\treturn value && JSON.parse(value);\n\t\t\tcase 'Boolean':\n\t\t\t\treturn value; // conversion already handled above\n\t\t\tcase 'Number':\n\t\t\t\treturn value != null ? +value : value;\n\t\t\tdefault:\n\t\t\t\treturn value;\n\t\t}\n\t}\n}\n\n/**\n * @param {HTMLElement} element\n */\nfunction get_custom_elements_slots(element) {\n\t/** @type {Record<string, true>} */\n\tconst result = {};\n\telement.childNodes.forEach((node) => {\n\t\tresult[/** @type {Element} node */ (node).slot || 'default'] = true;\n\t});\n\treturn result;\n}\n\n/**\n * @internal\n *\n * Turn a Svelte component into a custom element.\n * @param {any} Component  A Svelte component function\n * @param {Record<string, CustomElementPropDefinition>} props_definition  The props to observe\n * @param {string[]} slots  The slots to create\n * @param {string[]} exports  Explicitly exported values, other than props\n * @param {boolean} use_shadow_dom  Whether to use shadow DOM\n * @param {(ce: new () => HTMLElement) => new () => HTMLElement} [extend]\n */\nexport function create_custom_element(\n\tComponent,\n\tprops_definition,\n\tslots,\n\texports,\n\tuse_shadow_dom,\n\textend\n) {\n\tlet Class = class extends SvelteElement {\n\t\tconstructor() {\n\t\t\tsuper(Component, slots, use_shadow_dom);\n\t\t\tthis.$$p_d = props_definition;\n\t\t}\n\t\tstatic get observedAttributes() {\n\t\t\treturn object_keys(props_definition).map((key) =>\n\t\t\t\t(props_definition[key].attribute || key).toLowerCase()\n\t\t\t);\n\t\t}\n\t};\n\tobject_keys(props_definition).forEach((prop) => {\n\t\tdefine_property(Class.prototype, prop, {\n\t\t\tget() {\n\t\t\t\treturn this.$$c && prop in this.$$c ? this.$$c[prop] : this.$$d[prop];\n\t\t\t},\n\t\t\tset(value) {\n\t\t\t\tvalue = get_custom_element_value(prop, value, props_definition);\n\t\t\t\tthis.$$d[prop] = value;\n\t\t\t\tvar component = this.$$c;\n\n\t\t\t\tif (component) {\n\t\t\t\t\t// // If the instance has an accessor, use that instead\n\t\t\t\t\tvar setter = get_descriptor(component, prop)?.get;\n\n\t\t\t\t\tif (setter) {\n\t\t\t\t\t\tcomponent[prop] = value;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tcomponent.$set({ [prop]: value });\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t});\n\t});\n\texports.forEach((property) => {\n\t\tdefine_property(Class.prototype, property, {\n\t\t\tget() {\n\t\t\t\treturn this.$$c?.[property];\n\t\t\t}\n\t\t});\n\t});\n\tif (extend) {\n\t\t// @ts-expect-error - assigning here is fine\n\t\tClass = extend(Class);\n\t}\n\tComponent.element = /** @type {any} */ Class;\n\treturn Class;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767836,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    }
+  ]
+}

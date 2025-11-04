@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/reactivity/deriveds.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Derived, Effect, Source } from '#client' */\n/** @import { Batch } from './batch.js'; */\nimport { DEV } from 'esm-env';\nimport {\n\tERROR_VALUE,\n\tCLEAN,\n\tDERIVED,\n\tDIRTY,\n\tEFFECT_PRESERVED,\n\tMAYBE_DIRTY,\n\tSTALE_REACTION,\n\tUNOWNED,\n\tASYNC,\n\tWAS_MARKED\n} from '#client/constants';\nimport {\n\tactive_reaction,\n\tactive_effect,\n\tset_signal_status,\n\tskip_reaction,\n\tupdate_reaction,\n\tincrement_write_version,\n\tset_active_effect,\n\tpush_reaction_value,\n\tis_destroying_effect\n} from '../runtime.js';\nimport { equals, safe_equals } from './equality.js';\nimport * as e from '../errors.js';\nimport * as w from '../warnings.js';\nimport { async_effect, destroy_effect, teardown } from './effects.js';\nimport { eager_effects, internal_set, set_eager_effects, source } from './sources.js';\nimport { get_stack } from '../dev/tracing.js';\nimport { async_mode_flag, tracing_mode_flag } from '../../flags/index.js';\nimport { Boundary } from '../dom/blocks/boundary.js';\nimport { component_context } from '../context.js';\nimport { UNINITIALIZED } from '../../../constants.js';\nimport { batch_values, current_batch } from './batch.js';\nimport { unset_context } from './async.js';\nimport { deferred } from '../../shared/utils.js';\n\n/** @type {Effect | null} */\nexport let current_async_effect = null;\n\n/** @param {Effect | null} v */\nexport function set_from_async_derived(v) {\n\tcurrent_async_effect = v;\n}\n\nexport const recent_async_deriveds = new Set();\n\n/**\n * @template V\n * @param {() => V} fn\n * @returns {Derived<V>}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function derived(fn) {\n\tvar flags = DERIVED | DIRTY;\n\tvar parent_derived =\n\t\tactive_reaction !== null && (active_reaction.f & DERIVED) !== 0\n\t\t\t? /** @type {Derived} */ (active_reaction)\n\t\t\t: null;\n\n\tif (active_effect === null || (parent_derived !== null && (parent_derived.f & UNOWNED) !== 0)) {\n\t\tflags |= UNOWNED;\n\t} else {\n\t\t// Since deriveds are evaluated lazily, any effects created inside them are\n\t\t// created too late to ensure that the parent effect is added to the tree\n\t\tactive_effect.f |= EFFECT_PRESERVED;\n\t}\n\n\t/** @type {Derived<V>} */\n\tconst signal = {\n\t\tctx: component_context,\n\t\tdeps: null,\n\t\teffects: null,\n\t\tequals,\n\t\tf: flags,\n\t\tfn,\n\t\treactions: null,\n\t\trv: 0,\n\t\tv: /** @type {V} */ (UNINITIALIZED),\n\t\twv: 0,\n\t\tparent: parent_derived ?? active_effect,\n\t\tac: null\n\t};\n\n\tif (DEV && tracing_mode_flag) {\n\t\tsignal.created = get_stack('created at');\n\t}\n\n\treturn signal;\n}\n\n/**\n * @template V\n * @param {() => V | Promise<V>} fn\n * @param {string} [location] If provided, print a warning if the value is not read immediately after update\n * @returns {Promise<Source<V>>}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function async_derived(fn, location) {\n\tlet parent = /** @type {Effect | null} */ (active_effect);\n\n\tif (parent === null) {\n\t\te.async_derived_orphan();\n\t}\n\n\tvar boundary = /** @type {Boundary} */ (parent.b);\n\n\tvar promise = /** @type {Promise<V>} */ (/** @type {unknown} */ (undefined));\n\tvar signal = source(/** @type {V} */ (UNINITIALIZED));\n\n\t// only suspend in async deriveds created on initialisation\n\tvar should_suspend = !active_reaction;\n\n\t/** @type {Map<Batch, ReturnType<typeof deferred<V>>>} */\n\tvar deferreds = new Map();\n\n\tasync_effect(() => {\n\t\tif (DEV) current_async_effect = active_effect;\n\n\t\t/** @type {ReturnType<typeof deferred<V>>} */\n\t\tvar d = deferred();\n\t\tpromise = d.promise;\n\n\t\ttry {\n\t\t\t// If this code is changed at some point, make sure to still access the then property\n\t\t\t// of fn() to read any signals it might access, so that we track them as dependencies.\n\t\t\t// We call `unset_context` to undo any `save` calls that happen inside `fn()`\n\t\t\tPromise.resolve(fn())\n\t\t\t\t.then(d.resolve, d.reject)\n\t\t\t\t.then(() => {\n\t\t\t\t\tif (batch === current_batch && batch.committed) {\n\t\t\t\t\t\t// if the batch was rejected as stale, we need to cleanup\n\t\t\t\t\t\t// after any `$.save(...)` calls inside `fn()`\n\t\t\t\t\t\tbatch.deactivate();\n\t\t\t\t\t}\n\n\t\t\t\t\tunset_context();\n\t\t\t\t});\n\t\t} catch (error) {\n\t\t\td.reject(error);\n\t\t\tunset_context();\n\t\t}\n\n\t\tif (DEV) current_async_effect = null;\n\n\t\tvar batch = /** @type {Batch} */ (current_batch);\n\n\t\tif (should_suspend) {\n\t\t\tvar blocking = !boundary.is_pending();\n\n\t\t\tboundary.update_pending_count(1);\n\t\t\tbatch.increment(blocking);\n\n\t\t\tdeferreds.get(batch)?.reject(STALE_REACTION);\n\t\t\tdeferreds.delete(batch); // delete to ensure correct order in Map iteration below\n\t\t\tdeferreds.set(batch, d);\n\t\t}\n\n\t\t/**\n\t\t * @param {any} value\n\t\t * @param {unknown} error\n\t\t */\n\t\tconst handler = (value, error = undefined) => {\n\t\t\tcurrent_async_effect = null;\n\n\t\t\tbatch.activate();\n\n\t\t\tif (error) {\n\t\t\t\tif (error !== STALE_REACTION) {\n\t\t\t\t\tsignal.f |= ERROR_VALUE;\n\n\t\t\t\t\t// @ts-expect-error the error is the wrong type, but we don't care\n\t\t\t\t\tinternal_set(signal, error);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif ((signal.f & ERROR_VALUE) !== 0) {\n\t\t\t\t\tsignal.f ^= ERROR_VALUE;\n\t\t\t\t}\n\n\t\t\t\tinternal_set(signal, value);\n\n\t\t\t\t// All prior async derived runs are now stale\n\t\t\t\tfor (const [b, d] of deferreds) {\n\t\t\t\t\tdeferreds.delete(b);\n\t\t\t\t\tif (b === batch) break;\n\t\t\t\t\td.reject(STALE_REACTION);\n\t\t\t\t}\n\n\t\t\t\tif (DEV && location !== undefined) {\n\t\t\t\t\trecent_async_deriveds.add(signal);\n\n\t\t\t\t\tsetTimeout(() => {\n\t\t\t\t\t\tif (recent_async_deriveds.has(signal)) {\n\t\t\t\t\t\t\tw.await_waterfall(/** @type {string} */ (signal.label), location);\n\t\t\t\t\t\t\trecent_async_deriveds.delete(signal);\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (should_suspend) {\n\t\t\t\tboundary.update_pending_count(-1);\n\t\t\t\tbatch.decrement(blocking);\n\t\t\t}\n\t\t};\n\n\t\td.promise.then(handler, (e) => handler(null, e || 'unknown'));\n\t});\n\n\tteardown(() => {\n\t\tfor (const d of deferreds.values()) {\n\t\t\td.reject(STALE_REACTION);\n\t\t}\n\t});\n\n\tif (DEV) {\n\t\t// add a flag that lets this be printed as a derived\n\t\t// when using `$inspect.trace()`\n\t\tsignal.f |= ASYNC;\n\t}\n\n\treturn new Promise((fulfil) => {\n\t\t/** @param {Promise<V>} p */\n\t\tfunction next(p) {\n\t\t\tfunction go() {\n\t\t\t\tif (p === promise) {\n\t\t\t\t\tfulfil(signal);\n\t\t\t\t} else {\n\t\t\t\t\t// if the effect re-runs before the initial promise\n\t\t\t\t\t// resolves, delay resolution until we have a value\n\t\t\t\t\tnext(promise);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tp.then(go, go);\n\t\t}\n\n\t\tnext(promise);\n\t});\n}\n\n/**\n * @template V\n * @param {() => V} fn\n * @returns {Derived<V>}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function user_derived(fn) {\n\tconst d = derived(fn);\n\n\tif (!async_mode_flag) push_reaction_value(d);\n\n\treturn d;\n}\n\n/**\n * @template V\n * @param {() => V} fn\n * @returns {Derived<V>}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function derived_safe_equal(fn) {\n\tconst signal = derived(fn);\n\tsignal.equals = safe_equals;\n\treturn signal;\n}\n\n/**\n * @param {Derived} derived\n * @returns {void}\n */\nexport function destroy_derived_effects(derived) {\n\tvar effects = derived.effects;\n\n\tif (effects !== null) {\n\t\tderived.effects = null;\n\n\t\tfor (var i = 0; i < effects.length; i += 1) {\n\t\t\tdestroy_effect(/** @type {Effect} */ (effects[i]));\n\t\t}\n\t}\n}\n\n/**\n * The currently updating deriveds, used to detect infinite recursion\n * in dev mode and provide a nicer error than 'too much recursion'\n * @type {Derived[]}\n */\nlet stack = [];\n\n/**\n * @param {Derived} derived\n * @returns {Effect | null}\n */\nfunction get_derived_parent_effect(derived) {\n\tvar parent = derived.parent;\n\twhile (parent !== null) {\n\t\tif ((parent.f & DERIVED) === 0) {\n\t\t\treturn /** @type {Effect} */ (parent);\n\t\t}\n\t\tparent = parent.parent;\n\t}\n\treturn null;\n}\n\n/**\n * @template T\n * @param {Derived} derived\n * @returns {T}\n */\nexport function execute_derived(derived) {\n\tvar value;\n\tvar prev_active_effect = active_effect;\n\n\tset_active_effect(get_derived_parent_effect(derived));\n\n\tif (DEV) {\n\t\tlet prev_eager_effects = eager_effects;\n\t\tset_eager_effects(new Set());\n\t\ttry {\n\t\t\tif (stack.includes(derived)) {\n\t\t\t\te.derived_references_self();\n\t\t\t}\n\n\t\t\tstack.push(derived);\n\n\t\t\tderived.f &= ~WAS_MARKED;\n\t\t\tdestroy_derived_effects(derived);\n\t\t\tvalue = update_reaction(derived);\n\t\t} finally {\n\t\t\tset_active_effect(prev_active_effect);\n\t\t\tset_eager_effects(prev_eager_effects);\n\t\t\tstack.pop();\n\t\t}\n\t} else {\n\t\ttry {\n\t\t\tderived.f &= ~WAS_MARKED;\n\t\t\tdestroy_derived_effects(derived);\n\t\t\tvalue = update_reaction(derived);\n\t\t} finally {\n\t\t\tset_active_effect(prev_active_effect);\n\t\t}\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {Derived} derived\n * @returns {void}\n */\nexport function update_derived(derived) {\n\tvar value = execute_derived(derived);\n\n\tif (!derived.equals(value)) {\n\t\t// TODO can we avoid setting `derived.v` when `batch_values !== null`,\n\t\t// without causing the value to be stale later?\n\t\tderived.v = value;\n\t\tderived.wv = increment_write_version();\n\t}\n\n\t// don't mark derived clean if we're reading it inside a\n\t// cleanup function, or it will cache a stale value\n\tif (is_destroying_effect) {\n\t\treturn;\n\t}\n\n\tif (batch_values !== null) {\n\t\tbatch_values.set(derived, derived.v);\n\t} else {\n\t\tvar status =\n\t\t\t(skip_reaction || (derived.f & UNOWNED) !== 0) && derived.deps !== null ? MAYBE_DIRTY : CLEAN;\n\n\t\tset_signal_status(derived, status);\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767832,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/proxy.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Source } from '#client' */\nimport { DEV } from 'esm-env';\nimport {\n\tget,\n\tactive_effect,\n\tupdate_version,\n\tactive_reaction,\n\tset_update_version,\n\tset_active_reaction\n} from './runtime.js';\nimport {\n\tarray_prototype,\n\tget_descriptor,\n\tget_prototype_of,\n\tis_array,\n\tobject_prototype\n} from '../shared/utils.js';\nimport {\n\tstate as source,\n\tset,\n\tincrement,\n\tflush_eager_effects,\n\tset_eager_effects_deferred\n} from './reactivity/sources.js';\nimport { PROXY_PATH_SYMBOL, STATE_SYMBOL } from '#client/constants';\nimport { UNINITIALIZED } from '../../constants.js';\nimport * as e from './errors.js';\nimport { get_stack, tag } from './dev/tracing.js';\nimport { tracing_mode_flag } from '../flags/index.js';\n\n// TODO move all regexes into shared module?\nconst regex_is_valid_identifier = /^[a-zA-Z_$][a-zA-Z_$0-9]*$/;\n\n/**\n * @template T\n * @param {T} value\n * @returns {T}\n */\nexport function proxy(value) {\n\t// if non-proxyable, or is already a proxy, return `value`\n\tif (typeof value !== 'object' || value === null || STATE_SYMBOL in value) {\n\t\treturn value;\n\t}\n\n\tconst prototype = get_prototype_of(value);\n\n\tif (prototype !== object_prototype && prototype !== array_prototype) {\n\t\treturn value;\n\t}\n\n\t/** @type {Map<any, Source<any>>} */\n\tvar sources = new Map();\n\tvar is_proxied_array = is_array(value);\n\tvar version = source(0);\n\n\tvar stack = DEV && tracing_mode_flag ? get_stack('created at') : null;\n\tvar parent_version = update_version;\n\n\t/**\n\t * Executes the proxy in the context of the reaction it was originally created in, if any\n\t * @template T\n\t * @param {() => T} fn\n\t */\n\tvar with_parent = (fn) => {\n\t\tif (update_version === parent_version) {\n\t\t\treturn fn();\n\t\t}\n\n\t\t// child source is being created after the initial proxy —\n\t\t// prevent it from being associated with the current reaction\n\t\tvar reaction = active_reaction;\n\t\tvar version = update_version;\n\n\t\tset_active_reaction(null);\n\t\tset_update_version(parent_version);\n\n\t\tvar result = fn();\n\n\t\tset_active_reaction(reaction);\n\t\tset_update_version(version);\n\n\t\treturn result;\n\t};\n\n\tif (is_proxied_array) {\n\t\t// We need to create the length source eagerly to ensure that\n\t\t// mutations to the array are properly synced with our proxy\n\t\tsources.set('length', source(/** @type {any[]} */ (value).length, stack));\n\t\tif (DEV) {\n\t\t\tvalue = /** @type {any} */ (inspectable_array(/** @type {any[]} */ (value)));\n\t\t}\n\t}\n\n\t/** Used in dev for $inspect.trace() */\n\tvar path = '';\n\tlet updating = false;\n\t/** @param {string} new_path */\n\tfunction update_path(new_path) {\n\t\tif (updating) return;\n\t\tupdating = true;\n\t\tpath = new_path;\n\n\t\ttag(version, `${path} version`);\n\n\t\t// rename all child sources and child proxies\n\t\tfor (const [prop, source] of sources) {\n\t\t\ttag(source, get_label(path, prop));\n\t\t}\n\t\tupdating = false;\n\t}\n\n\treturn new Proxy(/** @type {any} */ (value), {\n\t\tdefineProperty(_, prop, descriptor) {\n\t\t\tif (\n\t\t\t\t!('value' in descriptor) ||\n\t\t\t\tdescriptor.configurable === false ||\n\t\t\t\tdescriptor.enumerable === false ||\n\t\t\t\tdescriptor.writable === false\n\t\t\t) {\n\t\t\t\t// we disallow non-basic descriptors, because unless they are applied to the\n\t\t\t\t// target object — which we avoid, so that state can be forked — we will run\n\t\t\t\t// afoul of the various invariants\n\t\t\t\t// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/getOwnPropertyDescriptor#invariants\n\t\t\t\te.state_descriptors_fixed();\n\t\t\t}\n\t\t\tvar s = sources.get(prop);\n\t\t\tif (s === undefined) {\n\t\t\t\ts = with_parent(() => {\n\t\t\t\t\tvar s = source(descriptor.value, stack);\n\t\t\t\t\tsources.set(prop, s);\n\t\t\t\t\tif (DEV && typeof prop === 'string') {\n\t\t\t\t\t\ttag(s, get_label(path, prop));\n\t\t\t\t\t}\n\t\t\t\t\treturn s;\n\t\t\t\t});\n\t\t\t} else {\n\t\t\t\tset(s, descriptor.value, true);\n\t\t\t}\n\n\t\t\treturn true;\n\t\t},\n\n\t\tdeleteProperty(target, prop) {\n\t\t\tvar s = sources.get(prop);\n\n\t\t\tif (s === undefined) {\n\t\t\t\tif (prop in target) {\n\t\t\t\t\tconst s = with_parent(() => source(UNINITIALIZED, stack));\n\t\t\t\t\tsources.set(prop, s);\n\t\t\t\t\tincrement(version);\n\n\t\t\t\t\tif (DEV) {\n\t\t\t\t\t\ttag(s, get_label(path, prop));\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tset(s, UNINITIALIZED);\n\t\t\t\tincrement(version);\n\t\t\t}\n\n\t\t\treturn true;\n\t\t},\n\n\t\tget(target, prop, receiver) {\n\t\t\tif (prop === STATE_SYMBOL) {\n\t\t\t\treturn value;\n\t\t\t}\n\n\t\t\tif (DEV && prop === PROXY_PATH_SYMBOL) {\n\t\t\t\treturn update_path;\n\t\t\t}\n\n\t\t\tvar s = sources.get(prop);\n\t\t\tvar exists = prop in target;\n\n\t\t\t// create a source, but only if it's an own property and not a prototype property\n\t\t\tif (s === undefined && (!exists || get_descriptor(target, prop)?.writable)) {\n\t\t\t\ts = with_parent(() => {\n\t\t\t\t\tvar p = proxy(exists ? target[prop] : UNINITIALIZED);\n\t\t\t\t\tvar s = source(p, stack);\n\n\t\t\t\t\tif (DEV) {\n\t\t\t\t\t\ttag(s, get_label(path, prop));\n\t\t\t\t\t}\n\n\t\t\t\t\treturn s;\n\t\t\t\t});\n\n\t\t\t\tsources.set(prop, s);\n\t\t\t}\n\n\t\t\tif (s !== undefined) {\n\t\t\t\tvar v = get(s);\n\t\t\t\treturn v === UNINITIALIZED ? undefined : v;\n\t\t\t}\n\n\t\t\treturn Reflect.get(target, prop, receiver);\n\t\t},\n\n\t\tgetOwnPropertyDescriptor(target, prop) {\n\t\t\tvar descriptor = Reflect.getOwnPropertyDescriptor(target, prop);\n\n\t\t\tif (descriptor && 'value' in descriptor) {\n\t\t\t\tvar s = sources.get(prop);\n\t\t\t\tif (s) descriptor.value = get(s);\n\t\t\t} else if (descriptor === undefined) {\n\t\t\t\tvar source = sources.get(prop);\n\t\t\t\tvar value = source?.v;\n\n\t\t\t\tif (source !== undefined && value !== UNINITIALIZED) {\n\t\t\t\t\treturn {\n\t\t\t\t\t\tenumerable: true,\n\t\t\t\t\t\tconfigurable: true,\n\t\t\t\t\t\tvalue,\n\t\t\t\t\t\twritable: true\n\t\t\t\t\t};\n\t\t\t\t}\n\t\t\t}\n\n\t\t\treturn descriptor;\n\t\t},\n\n\t\thas(target, prop) {\n\t\t\tif (prop === STATE_SYMBOL) {\n\t\t\t\treturn true;\n\t\t\t}\n\n\t\t\tvar s = sources.get(prop);\n\t\t\tvar has = (s !== undefined && s.v !== UNINITIALIZED) || Reflect.has(target, prop);\n\n\t\t\tif (\n\t\t\t\ts !== undefined ||\n\t\t\t\t(active_effect !== null && (!has || get_descriptor(target, prop)?.writable))\n\t\t\t) {\n\t\t\t\tif (s === undefined) {\n\t\t\t\t\ts = with_parent(() => {\n\t\t\t\t\t\tvar p = has ? proxy(target[prop]) : UNINITIALIZED;\n\t\t\t\t\t\tvar s = source(p, stack);\n\n\t\t\t\t\t\tif (DEV) {\n\t\t\t\t\t\t\ttag(s, get_label(path, prop));\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\treturn s;\n\t\t\t\t\t});\n\n\t\t\t\t\tsources.set(prop, s);\n\t\t\t\t}\n\n\t\t\t\tvar value = get(s);\n\t\t\t\tif (value === UNINITIALIZED) {\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\treturn has;\n\t\t},\n\n\t\tset(target, prop, value, receiver) {\n\t\t\tvar s = sources.get(prop);\n\t\t\tvar has = prop in target;\n\n\t\t\t// variable.length = value -> clear all signals with index >= value\n\t\t\tif (is_proxied_array && prop === 'length') {\n\t\t\t\tfor (var i = value; i < /** @type {Source<number>} */ (s).v; i += 1) {\n\t\t\t\t\tvar other_s = sources.get(i + '');\n\t\t\t\t\tif (other_s !== undefined) {\n\t\t\t\t\t\tset(other_s, UNINITIALIZED);\n\t\t\t\t\t} else if (i in target) {\n\t\t\t\t\t\t// If the item exists in the original, we need to create an uninitialized source,\n\t\t\t\t\t\t// else a later read of the property would result in a source being created with\n\t\t\t\t\t\t// the value of the original item at that index.\n\t\t\t\t\t\tother_s = with_parent(() => source(UNINITIALIZED, stack));\n\t\t\t\t\t\tsources.set(i + '', other_s);\n\n\t\t\t\t\t\tif (DEV) {\n\t\t\t\t\t\t\ttag(other_s, get_label(path, i));\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t// If we haven't yet created a source for this property, we need to ensure\n\t\t\t// we do so otherwise if we read it later, then the write won't be tracked and\n\t\t\t// the heuristics of effects will be different vs if we had read the proxied\n\t\t\t// object property before writing to that property.\n\t\t\tif (s === undefined) {\n\t\t\t\tif (!has || get_descriptor(target, prop)?.writable) {\n\t\t\t\t\ts = with_parent(() => source(undefined, stack));\n\n\t\t\t\t\tif (DEV) {\n\t\t\t\t\t\ttag(s, get_label(path, prop));\n\t\t\t\t\t}\n\t\t\t\t\tset(s, proxy(value));\n\n\t\t\t\t\tsources.set(prop, s);\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\thas = s.v !== UNINITIALIZED;\n\n\t\t\t\tvar p = with_parent(() => proxy(value));\n\t\t\t\tset(s, p);\n\t\t\t}\n\n\t\t\tvar descriptor = Reflect.getOwnPropertyDescriptor(target, prop);\n\n\t\t\t// Set the new value before updating any signals so that any listeners get the new value\n\t\t\tif (descriptor?.set) {\n\t\t\t\tdescriptor.set.call(receiver, value);\n\t\t\t}\n\n\t\t\tif (!has) {\n\t\t\t\t// If we have mutated an array directly, we might need to\n\t\t\t\t// signal that length has also changed. Do it before updating metadata\n\t\t\t\t// to ensure that iterating over the array as a result of a metadata update\n\t\t\t\t// will not cause the length to be out of sync.\n\t\t\t\tif (is_proxied_array && typeof prop === 'string') {\n\t\t\t\t\tvar ls = /** @type {Source<number>} */ (sources.get('length'));\n\t\t\t\t\tvar n = Number(prop);\n\n\t\t\t\t\tif (Number.isInteger(n) && n >= ls.v) {\n\t\t\t\t\t\tset(ls, n + 1);\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tincrement(version);\n\t\t\t}\n\n\t\t\treturn true;\n\t\t},\n\n\t\townKeys(target) {\n\t\t\tget(version);\n\n\t\t\tvar own_keys = Reflect.ownKeys(target).filter((key) => {\n\t\t\t\tvar source = sources.get(key);\n\t\t\t\treturn source === undefined || source.v !== UNINITIALIZED;\n\t\t\t});\n\n\t\t\tfor (var [key, source] of sources) {\n\t\t\t\tif (source.v !== UNINITIALIZED && !(key in target)) {\n\t\t\t\t\town_keys.push(key);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\treturn own_keys;\n\t\t},\n\n\t\tsetPrototypeOf() {\n\t\t\te.state_prototype_fixed();\n\t\t}\n\t});\n}\n\n/**\n * @param {string} path\n * @param {string | symbol} prop\n */\nfunction get_label(path, prop) {\n\tif (typeof prop === 'symbol') return `${path}[Symbol(${prop.description ?? ''})]`;\n\tif (regex_is_valid_identifier.test(prop)) return `${path}.${prop}`;\n\treturn /^\\d+$/.test(prop) ? `${path}[${prop}]` : `${path}['${prop}']`;\n}\n\n/**\n * @param {any} value\n */\nexport function get_proxied_value(value) {\n\ttry {\n\t\tif (value !== null && typeof value === 'object' && STATE_SYMBOL in value) {\n\t\t\treturn value[STATE_SYMBOL];\n\t\t}\n\t} catch {\n\t\t// the above if check can throw an error if the value in question\n\t\t// is the contentWindow of an iframe on another domain, in which\n\t\t// case we want to just return the value (because it's definitely\n\t\t// not a proxied value) so we don't break any JavaScript interacting\n\t\t// with that iframe (such as various payment companies client side\n\t\t// JavaScript libraries interacting with their iframes on the same\n\t\t// domain)\n\t}\n\n\treturn value;\n}\n\n/**\n * @param {any} a\n * @param {any} b\n */\nexport function is(a, b) {\n\treturn Object.is(get_proxied_value(a), get_proxied_value(b));\n}\n\nconst ARRAY_MUTATING_METHODS = new Set([\n\t'copyWithin',\n\t'fill',\n\t'pop',\n\t'push',\n\t'reverse',\n\t'shift',\n\t'sort',\n\t'splice',\n\t'unshift'\n]);\n\n/**\n * Wrap array mutating methods so $inspect is triggered only once and\n * to prevent logging an array in intermediate state (e.g. with an empty slot)\n * @param {any[]} array\n */\nfunction inspectable_array(array) {\n\treturn new Proxy(array, {\n\t\tget(target, prop, receiver) {\n\t\t\tvar value = Reflect.get(target, prop, receiver);\n\t\t\tif (!ARRAY_MUTATING_METHODS.has(/** @type {string} */ (prop))) {\n\t\t\t\treturn value;\n\t\t\t}\n\n\t\t\t/**\n\t\t\t * @this {any[]}\n\t\t\t * @param {any[]} args\n\t\t\t */\n\t\t\treturn function (...args) {\n\t\t\t\tset_eager_effects_deferred();\n\t\t\t\tvar result = value.apply(this, args);\n\t\t\t\tflush_eager_effects();\n\t\t\t\treturn result;\n\t\t\t};\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767834,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    }
+  ]
+}

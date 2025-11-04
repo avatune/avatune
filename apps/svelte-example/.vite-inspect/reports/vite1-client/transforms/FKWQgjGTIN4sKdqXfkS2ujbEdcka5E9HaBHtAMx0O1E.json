@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/reactivity/async.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect, TemplateNode, Value } from '#client' */\nimport { DESTROYED, STALE_REACTION } from '#client/constants';\nimport { DEV } from 'esm-env';\nimport {\n\tcomponent_context,\n\tdev_stack,\n\tis_runes,\n\tset_component_context,\n\tset_dev_stack\n} from '../context.js';\nimport { get_boundary } from '../dom/blocks/boundary.js';\nimport { invoke_error_boundary } from '../error-handling.js';\nimport {\n\tactive_effect,\n\tactive_reaction,\n\tset_active_effect,\n\tset_active_reaction\n} from '../runtime.js';\nimport { Batch, current_batch } from './batch.js';\nimport {\n\tasync_derived,\n\tcurrent_async_effect,\n\tderived,\n\tderived_safe_equal,\n\tset_from_async_derived\n} from './deriveds.js';\nimport { aborted } from './effects.js';\nimport { hydrate_next, hydrating, set_hydrate_node, skip_nodes } from '../dom/hydration.js';\n\n/**\n * @param {Array<Promise<void>>} blockers\n * @param {Array<() => any>} sync\n * @param {Array<() => Promise<any>>} async\n * @param {(values: Value[]) => any} fn\n */\nexport function flatten(blockers, sync, async, fn) {\n\tconst d = is_runes() ? derived : derived_safe_equal;\n\n\tif (async.length === 0 && blockers.length === 0) {\n\t\tfn(sync.map(d));\n\t\treturn;\n\t}\n\n\tvar batch = current_batch;\n\tvar parent = /** @type {Effect} */ (active_effect);\n\n\tvar restore = capture();\n\n\tfunction run() {\n\t\tPromise.all(async.map((expression) => async_derived(expression)))\n\t\t\t.then((result) => {\n\t\t\t\trestore();\n\n\t\t\t\ttry {\n\t\t\t\t\tfn([...sync.map(d), ...result]);\n\t\t\t\t} catch (error) {\n\t\t\t\t\t// ignore errors in blocks that have already been destroyed\n\t\t\t\t\tif ((parent.f & DESTROYED) === 0) {\n\t\t\t\t\t\tinvoke_error_boundary(error, parent);\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tbatch?.deactivate();\n\t\t\t\tunset_context();\n\t\t\t})\n\t\t\t.catch((error) => {\n\t\t\t\tinvoke_error_boundary(error, parent);\n\t\t\t});\n\t}\n\n\tif (blockers.length > 0) {\n\t\tPromise.all(blockers).then(() => {\n\t\t\trestore();\n\n\t\t\ttry {\n\t\t\t\treturn run();\n\t\t\t} finally {\n\t\t\t\tbatch?.deactivate();\n\t\t\t\tunset_context();\n\t\t\t}\n\t\t});\n\t} else {\n\t\trun();\n\t}\n}\n\n/**\n * Captures the current effect context so that we can restore it after\n * some asynchronous work has happened (so that e.g. `await a + b`\n * causes `b` to be registered as a dependency).\n */\nexport function capture() {\n\tvar previous_effect = active_effect;\n\tvar previous_reaction = active_reaction;\n\tvar previous_component_context = component_context;\n\tvar previous_batch = current_batch;\n\n\tif (DEV) {\n\t\tvar previous_dev_stack = dev_stack;\n\t}\n\n\treturn function restore(activate_batch = true) {\n\t\tset_active_effect(previous_effect);\n\t\tset_active_reaction(previous_reaction);\n\t\tset_component_context(previous_component_context);\n\t\tif (activate_batch) previous_batch?.activate();\n\n\t\tif (DEV) {\n\t\t\tset_from_async_derived(null);\n\t\t\tset_dev_stack(previous_dev_stack);\n\t\t}\n\t};\n}\n\n/**\n * Wraps an `await` expression in such a way that the effect context that was\n * active before the expression evaluated can be reapplied afterwards —\n * `await a + b` becomes `(await $.save(a))() + b`\n * @template T\n * @param {Promise<T>} promise\n * @returns {Promise<() => T>}\n */\nexport async function save(promise) {\n\tvar restore = capture();\n\tvar value = await promise;\n\n\treturn () => {\n\t\trestore();\n\t\treturn value;\n\t};\n}\n\n/**\n * Reset `current_async_effect` after the `promise` resolves, so\n * that we can emit `await_reactivity_loss` warnings\n * @template T\n * @param {Promise<T>} promise\n * @returns {Promise<() => T>}\n */\nexport async function track_reactivity_loss(promise) {\n\tvar previous_async_effect = current_async_effect;\n\tvar value = await promise;\n\n\treturn () => {\n\t\tset_from_async_derived(previous_async_effect);\n\t\treturn value;\n\t};\n}\n\n/**\n * Used in `for await` loops in DEV, so\n * that we can emit `await_reactivity_loss` warnings\n * after each `async_iterator` result resolves and\n * after the `async_iterator` return resolves (if it runs)\n * @template T\n * @template TReturn\n * @param {Iterable<T> | AsyncIterable<T>} iterable\n * @returns {AsyncGenerator<T, TReturn | undefined>}\n */\nexport async function* for_await_track_reactivity_loss(iterable) {\n\t// This is based on the algorithms described in ECMA-262:\n\t// ForIn/OfBodyEvaluation\n\t// https://tc39.es/ecma262/multipage/ecmascript-language-statements-and-declarations.html#sec-runtime-semantics-forin-div-ofbodyevaluation-lhs-stmt-iterator-lhskind-labelset\n\t// AsyncIteratorClose\n\t// https://tc39.es/ecma262/multipage/abstract-operations.html#sec-asynciteratorclose\n\n\t/** @type {AsyncIterator<T, TReturn>} */\n\t// @ts-ignore\n\tconst iterator = iterable[Symbol.asyncIterator]?.() ?? iterable[Symbol.iterator]?.();\n\n\tif (iterator === undefined) {\n\t\tthrow new TypeError('value is not async iterable');\n\t}\n\n\t/** Whether the completion of the iterator was \"normal\", meaning it wasn't ended via `break` or a similar method */\n\tlet normal_completion = false;\n\ttry {\n\t\twhile (true) {\n\t\t\tconst { done, value } = (await track_reactivity_loss(iterator.next()))();\n\t\t\tif (done) {\n\t\t\t\tnormal_completion = true;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\tyield value;\n\t\t}\n\t} finally {\n\t\t// If the iterator had a normal completion and `return` is defined on the iterator, call it and return the value\n\t\tif (normal_completion && iterator.return !== undefined) {\n\t\t\t// eslint-disable-next-line no-unsafe-finally\n\t\t\treturn /** @type {TReturn} */ ((await track_reactivity_loss(iterator.return()))().value);\n\t\t}\n\t}\n}\n\nexport function unset_context() {\n\tset_active_effect(null);\n\tset_active_reaction(null);\n\tset_component_context(null);\n\n\tif (DEV) {\n\t\tset_from_async_derived(null);\n\t\tset_dev_stack(null);\n\t}\n}\n\n/**\n * @param {TemplateNode} anchor\n * @param {(target: TemplateNode) => Promise<void>} fn\n */\nexport async function async_body(anchor, fn) {\n\tvar boundary = get_boundary();\n\tvar batch = /** @type {Batch} */ (current_batch);\n\tvar blocking = !boundary.is_pending();\n\n\tboundary.update_pending_count(1);\n\tbatch.increment(blocking);\n\n\tvar active = /** @type {Effect} */ (active_effect);\n\n\tvar was_hydrating = hydrating;\n\tvar next_hydrate_node = undefined;\n\n\tif (was_hydrating) {\n\t\thydrate_next();\n\t\tnext_hydrate_node = skip_nodes(false);\n\t}\n\n\ttry {\n\t\tvar promise = fn(anchor);\n\t} finally {\n\t\tif (next_hydrate_node) {\n\t\t\tset_hydrate_node(next_hydrate_node);\n\t\t\thydrate_next();\n\t\t}\n\t}\n\n\ttry {\n\t\tawait promise;\n\t} catch (error) {\n\t\tif (!aborted(active)) {\n\t\t\tinvoke_error_boundary(error, active);\n\t\t}\n\t} finally {\n\t\tboundary.update_pending_count(-1);\n\t\tbatch.decrement(blocking);\n\n\t\tunset_context();\n\t}\n}\n\n/**\n * @param {Array<() => void | Promise<void>>} thunks\n */\nexport function run(thunks) {\n\tconst restore = capture();\n\n\tvar boundary = get_boundary();\n\tvar batch = /** @type {Batch} */ (current_batch);\n\tvar blocking = !boundary.is_pending();\n\n\tboundary.update_pending_count(1);\n\tbatch.increment(blocking);\n\n\tvar active = /** @type {Effect} */ (active_effect);\n\n\t/** @type {null | { error: any }} */\n\tvar errored = null;\n\n\t/** @param {any} error */\n\tconst handle_error = (error) => {\n\t\terrored = { error }; // wrap in object in case a promise rejects with a falsy value\n\n\t\tif (!aborted(active)) {\n\t\t\tinvoke_error_boundary(error, active);\n\t\t}\n\t};\n\n\tvar promise = Promise.resolve(thunks[0]()).catch(handle_error);\n\n\tvar promises = [promise];\n\n\tfor (const fn of thunks.slice(1)) {\n\t\tpromise = promise\n\t\t\t.then(() => {\n\t\t\t\tif (errored) {\n\t\t\t\t\tthrow errored.error;\n\t\t\t\t}\n\n\t\t\t\tif (aborted(active)) {\n\t\t\t\t\tthrow STALE_REACTION;\n\t\t\t\t}\n\n\t\t\t\ttry {\n\t\t\t\t\trestore();\n\t\t\t\t\treturn fn();\n\t\t\t\t} finally {\n\t\t\t\t\t// TODO do we need it here as well as below?\n\t\t\t\t\tunset_context();\n\t\t\t\t}\n\t\t\t})\n\t\t\t.catch(handle_error)\n\t\t\t.finally(() => {\n\t\t\t\tunset_context();\n\t\t\t});\n\n\t\tpromises.push(promise);\n\t}\n\n\tpromise\n\t\t// wait one more tick, so that template effects are\n\t\t// guaranteed to run before `$effect(...)`\n\t\t.then(() => Promise.resolve())\n\t\t.finally(() => {\n\t\t\tboundary.update_pending_count(-1);\n\t\t\tbatch.decrement(blocking);\n\t\t});\n\n\treturn promises;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767830,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal"
+    }
+  ]
+}

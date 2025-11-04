@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/attributes.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect } from '#client' */\nimport { DEV } from 'esm-env';\nimport { hydrating, set_hydrating } from '../hydration.js';\nimport { get_descriptors, get_prototype_of } from '../../../shared/utils.js';\nimport { create_event, delegate } from './events.js';\nimport { add_form_reset_listener, autofocus } from './misc.js';\nimport * as w from '../../warnings.js';\nimport { LOADING_ATTR_SYMBOL } from '#client/constants';\nimport { queue_micro_task } from '../task.js';\nimport { is_capture_event, can_delegate_event, normalize_attribute } from '../../../../utils.js';\nimport {\n\tactive_effect,\n\tactive_reaction,\n\tget,\n\tset_active_effect,\n\tset_active_reaction\n} from '../../runtime.js';\nimport { attach } from './attachments.js';\nimport { clsx } from '../../../shared/attributes.js';\nimport { set_class } from './class.js';\nimport { set_style } from './style.js';\nimport { ATTACHMENT_KEY, NAMESPACE_HTML, UNINITIALIZED } from '../../../../constants.js';\nimport { block, branch, destroy_effect, effect } from '../../reactivity/effects.js';\nimport { init_select, select_option } from './bindings/select.js';\nimport { flatten } from '../../reactivity/async.js';\n\nexport const CLASS = Symbol('class');\nexport const STYLE = Symbol('style');\n\nconst IS_CUSTOM_ELEMENT = Symbol('is custom element');\nconst IS_HTML = Symbol('is html');\n\n/**\n * The value/checked attribute in the template actually corresponds to the defaultValue property, so we need\n * to remove it upon hydration to avoid a bug when someone resets the form value.\n * @param {HTMLInputElement} input\n * @returns {void}\n */\nexport function remove_input_defaults(input) {\n\tif (!hydrating) return;\n\n\tvar already_removed = false;\n\n\t// We try and remove the default attributes later, rather than sync during hydration.\n\t// Doing it sync during hydration has a negative impact on performance, but deferring the\n\t// work in an idle task alleviates this greatly. If a form reset event comes in before\n\t// the idle callback, then we ensure the input defaults are cleared just before.\n\tvar remove_defaults = () => {\n\t\tif (already_removed) return;\n\t\talready_removed = true;\n\n\t\t// Remove the attributes but preserve the values\n\t\tif (input.hasAttribute('value')) {\n\t\t\tvar value = input.value;\n\t\t\tset_attribute(input, 'value', null);\n\t\t\tinput.value = value;\n\t\t}\n\n\t\tif (input.hasAttribute('checked')) {\n\t\t\tvar checked = input.checked;\n\t\t\tset_attribute(input, 'checked', null);\n\t\t\tinput.checked = checked;\n\t\t}\n\t};\n\n\t// @ts-expect-error\n\tinput.__on_r = remove_defaults;\n\tqueue_micro_task(remove_defaults);\n\tadd_form_reset_listener();\n}\n\n/**\n * @param {Element} element\n * @param {any} value\n */\nexport function set_value(element, value) {\n\tvar attributes = get_attributes(element);\n\n\tif (\n\t\tattributes.value ===\n\t\t\t(attributes.value =\n\t\t\t\t// treat null and undefined the same for the initial value\n\t\t\t\tvalue ?? undefined) ||\n\t\t// @ts-expect-error\n\t\t// `progress` elements always need their value set when it's `0`\n\t\t(element.value === value && (value !== 0 || element.nodeName !== 'PROGRESS'))\n\t) {\n\t\treturn;\n\t}\n\n\t// @ts-expect-error\n\telement.value = value ?? '';\n}\n\n/**\n * @param {Element} element\n * @param {boolean} checked\n */\nexport function set_checked(element, checked) {\n\tvar attributes = get_attributes(element);\n\n\tif (\n\t\tattributes.checked ===\n\t\t(attributes.checked =\n\t\t\t// treat null and undefined the same for the initial value\n\t\t\tchecked ?? undefined)\n\t) {\n\t\treturn;\n\t}\n\n\t// @ts-expect-error\n\telement.checked = checked;\n}\n\n/**\n * Sets the `selected` attribute on an `option` element.\n * Not set through the property because that doesn't reflect to the DOM,\n * which means it wouldn't be taken into account when a form is reset.\n * @param {HTMLOptionElement} element\n * @param {boolean} selected\n */\nexport function set_selected(element, selected) {\n\tif (selected) {\n\t\t// The selected option could've changed via user selection, and\n\t\t// setting the value without this check would set it back.\n\t\tif (!element.hasAttribute('selected')) {\n\t\t\telement.setAttribute('selected', '');\n\t\t}\n\t} else {\n\t\telement.removeAttribute('selected');\n\t}\n}\n\n/**\n * Applies the default checked property without influencing the current checked property.\n * @param {HTMLInputElement} element\n * @param {boolean} checked\n */\nexport function set_default_checked(element, checked) {\n\tconst existing_value = element.checked;\n\telement.defaultChecked = checked;\n\telement.checked = existing_value;\n}\n\n/**\n * Applies the default value property without influencing the current value property.\n * @param {HTMLInputElement | HTMLTextAreaElement} element\n * @param {string} value\n */\nexport function set_default_value(element, value) {\n\tconst existing_value = element.value;\n\telement.defaultValue = value;\n\telement.value = existing_value;\n}\n\n/**\n * @param {Element} element\n * @param {string} attribute\n * @param {string | null} value\n * @param {boolean} [skip_warning]\n */\nexport function set_attribute(element, attribute, value, skip_warning) {\n\tvar attributes = get_attributes(element);\n\n\tif (hydrating) {\n\t\tattributes[attribute] = element.getAttribute(attribute);\n\n\t\tif (\n\t\t\tattribute === 'src' ||\n\t\t\tattribute === 'srcset' ||\n\t\t\t(attribute === 'href' && element.nodeName === 'LINK')\n\t\t) {\n\t\t\tif (!skip_warning) {\n\t\t\t\tcheck_src_in_dev_hydration(element, attribute, value ?? '');\n\t\t\t}\n\n\t\t\t// If we reset these attributes, they would result in another network request, which we want to avoid.\n\t\t\t// We assume they are the same between client and server as checking if they are equal is expensive\n\t\t\t// (we can't just compare the strings as they can be different between client and server but result in the\n\t\t\t// same url, so we would need to create hidden anchor elements to compare them)\n\t\t\treturn;\n\t\t}\n\t}\n\n\tif (attributes[attribute] === (attributes[attribute] = value)) return;\n\n\tif (attribute === 'loading') {\n\t\t// @ts-expect-error\n\t\telement[LOADING_ATTR_SYMBOL] = value;\n\t}\n\n\tif (value == null) {\n\t\telement.removeAttribute(attribute);\n\t} else if (typeof value !== 'string' && get_setters(element).includes(attribute)) {\n\t\t// @ts-ignore\n\t\telement[attribute] = value;\n\t} else {\n\t\telement.setAttribute(attribute, value);\n\t}\n}\n\n/**\n * @param {Element} dom\n * @param {string} attribute\n * @param {string} value\n */\nexport function set_xlink_attribute(dom, attribute, value) {\n\tdom.setAttributeNS('http://www.w3.org/1999/xlink', attribute, value);\n}\n\n/**\n * @param {HTMLElement} node\n * @param {string} prop\n * @param {any} value\n */\nexport function set_custom_element_data(node, prop, value) {\n\t// We need to ensure that setting custom element props, which can\n\t// invoke lifecycle methods on other custom elements, does not also\n\t// associate those lifecycle methods with the current active reaction\n\t// or effect\n\tvar previous_reaction = active_reaction;\n\tvar previous_effect = active_effect;\n\n\t// If we're hydrating but the custom element is from Svelte, and it already scaffolded,\n\t// then it might run block logic in hydration mode, which we have to prevent.\n\tlet was_hydrating = hydrating;\n\tif (hydrating) {\n\t\tset_hydrating(false);\n\t}\n\n\tset_active_reaction(null);\n\tset_active_effect(null);\n\n\ttry {\n\t\tif (\n\t\t\t// `style` should use `set_attribute` rather than the setter\n\t\t\tprop !== 'style' &&\n\t\t\t// Don't compute setters for custom elements while they aren't registered yet,\n\t\t\t// because during their upgrade/instantiation they might add more setters.\n\t\t\t// Instead, fall back to a simple \"an object, then set as property\" heuristic.\n\t\t\t(setters_cache.has(node.getAttribute('is') || node.nodeName) ||\n\t\t\t// customElements may not be available in browser extension contexts\n\t\t\t!customElements ||\n\t\t\tcustomElements.get(node.getAttribute('is') || node.tagName.toLowerCase())\n\t\t\t\t? get_setters(node).includes(prop)\n\t\t\t\t: value && typeof value === 'object')\n\t\t) {\n\t\t\t// @ts-expect-error\n\t\t\tnode[prop] = value;\n\t\t} else {\n\t\t\t// We did getters etc checks already, stringify before passing to set_attribute\n\t\t\t// to ensure it doesn't invoke the same logic again, and potentially populating\n\t\t\t// the setters cache too early.\n\t\t\tset_attribute(node, prop, value == null ? value : String(value));\n\t\t}\n\t} finally {\n\t\tset_active_reaction(previous_reaction);\n\t\tset_active_effect(previous_effect);\n\t\tif (was_hydrating) {\n\t\t\tset_hydrating(true);\n\t\t}\n\t}\n}\n\n/**\n * Spreads attributes onto a DOM element, taking into account the currently set attributes\n * @param {Element & ElementCSSInlineStyle} element\n * @param {Record<string | symbol, any> | undefined} prev\n * @param {Record<string | symbol, any>} next New attributes - this function mutates this object\n * @param {string} [css_hash]\n * @param {boolean} [should_remove_defaults]\n * @param {boolean} [skip_warning]\n * @returns {Record<string, any>}\n */\nfunction set_attributes(\n\telement,\n\tprev,\n\tnext,\n\tcss_hash,\n\tshould_remove_defaults = false,\n\tskip_warning = false\n) {\n\tif (hydrating && should_remove_defaults && element.tagName === 'INPUT') {\n\t\tvar input = /** @type {HTMLInputElement} */ (element);\n\t\tvar attribute = input.type === 'checkbox' ? 'defaultChecked' : 'defaultValue';\n\n\t\tif (!(attribute in next)) {\n\t\t\tremove_input_defaults(input);\n\t\t}\n\t}\n\n\tvar attributes = get_attributes(element);\n\n\tvar is_custom_element = attributes[IS_CUSTOM_ELEMENT];\n\tvar preserve_attribute_case = !attributes[IS_HTML];\n\n\t// If we're hydrating but the custom element is from Svelte, and it already scaffolded,\n\t// then it might run block logic in hydration mode, which we have to prevent.\n\tlet is_hydrating_custom_element = hydrating && is_custom_element;\n\tif (is_hydrating_custom_element) {\n\t\tset_hydrating(false);\n\t}\n\n\tvar current = prev || {};\n\tvar is_option_element = element.tagName === 'OPTION';\n\n\tfor (var key in prev) {\n\t\tif (!(key in next)) {\n\t\t\tnext[key] = null;\n\t\t}\n\t}\n\n\tif (next.class) {\n\t\tnext.class = clsx(next.class);\n\t} else if (css_hash || next[CLASS]) {\n\t\tnext.class = null; /* force call to set_class() */\n\t}\n\n\tif (next[STYLE]) {\n\t\tnext.style ??= null; /* force call to set_style() */\n\t}\n\n\tvar setters = get_setters(element);\n\n\t// since key is captured we use const\n\tfor (const key in next) {\n\t\t// let instead of var because referenced in a closure\n\t\tlet value = next[key];\n\n\t\t// Up here because we want to do this for the initial value, too, even if it's undefined,\n\t\t// and this wouldn't be reached in case of undefined because of the equality check below\n\t\tif (is_option_element && key === 'value' && value == null) {\n\t\t\t// The <option> element is a special case because removing the value attribute means\n\t\t\t// the value is set to the text content of the option element, and setting the value\n\t\t\t// to null or undefined means the value is set to the string \"null\" or \"undefined\".\n\t\t\t// To align with how we handle this case in non-spread-scenarios, this logic is needed.\n\t\t\t// There's a super-edge-case bug here that is left in in favor of smaller code size:\n\t\t\t// Because of the \"set missing props to null\" logic above, we can't differentiate\n\t\t\t// between a missing value and an explicitly set value of null or undefined. That means\n\t\t\t// that once set, the value attribute of an <option> element can't be removed. This is\n\t\t\t// a very rare edge case, and removing the attribute altogether isn't possible either\n\t\t\t// for the <option value={undefined}> case, so we're not losing any functionality here.\n\t\t\t// @ts-ignore\n\t\t\telement.value = element.__value = '';\n\t\t\tcurrent[key] = value;\n\t\t\tcontinue;\n\t\t}\n\n\t\tif (key === 'class') {\n\t\t\tvar is_html = element.namespaceURI === 'http://www.w3.org/1999/xhtml';\n\t\t\tset_class(element, is_html, value, css_hash, prev?.[CLASS], next[CLASS]);\n\t\t\tcurrent[key] = value;\n\t\t\tcurrent[CLASS] = next[CLASS];\n\t\t\tcontinue;\n\t\t}\n\n\t\tif (key === 'style') {\n\t\t\tset_style(element, value, prev?.[STYLE], next[STYLE]);\n\t\t\tcurrent[key] = value;\n\t\t\tcurrent[STYLE] = next[STYLE];\n\t\t\tcontinue;\n\t\t}\n\n\t\tvar prev_value = current[key];\n\n\t\t// Skip if value is unchanged, unless it's `undefined` and the element still has the attribute\n\t\tif (value === prev_value && !(value === undefined && element.hasAttribute(key))) {\n\t\t\tcontinue;\n\t\t}\n\n\t\tcurrent[key] = value;\n\n\t\tvar prefix = key[0] + key[1]; // this is faster than key.slice(0, 2)\n\t\tif (prefix === '$$') continue;\n\n\t\tif (prefix === 'on') {\n\t\t\t/** @type {{ capture?: true }} */\n\t\t\tconst opts = {};\n\t\t\tconst event_handle_key = '$$' + key;\n\t\t\tlet event_name = key.slice(2);\n\t\t\tvar delegated = can_delegate_event(event_name);\n\n\t\t\tif (is_capture_event(event_name)) {\n\t\t\t\tevent_name = event_name.slice(0, -7);\n\t\t\t\topts.capture = true;\n\t\t\t}\n\n\t\t\tif (!delegated && prev_value) {\n\t\t\t\t// Listening to same event but different handler -> our handle function below takes care of this\n\t\t\t\t// If we were to remove and add listeners in this case, it could happen that the event is \"swallowed\"\n\t\t\t\t// (the browser seems to not know yet that a new one exists now) and doesn't reach the handler\n\t\t\t\t// https://github.com/sveltejs/svelte/issues/11903\n\t\t\t\tif (value != null) continue;\n\n\t\t\t\telement.removeEventListener(event_name, current[event_handle_key], opts);\n\t\t\t\tcurrent[event_handle_key] = null;\n\t\t\t}\n\n\t\t\tif (value != null) {\n\t\t\t\tif (!delegated) {\n\t\t\t\t\t/**\n\t\t\t\t\t * @this {any}\n\t\t\t\t\t * @param {Event} evt\n\t\t\t\t\t */\n\t\t\t\t\tfunction handle(evt) {\n\t\t\t\t\t\tcurrent[key].call(this, evt);\n\t\t\t\t\t}\n\n\t\t\t\t\tcurrent[event_handle_key] = create_event(event_name, element, handle, opts);\n\t\t\t\t} else {\n\t\t\t\t\t// @ts-ignore\n\t\t\t\t\telement[`__${event_name}`] = value;\n\t\t\t\t\tdelegate([event_name]);\n\t\t\t\t}\n\t\t\t} else if (delegated) {\n\t\t\t\t// @ts-ignore\n\t\t\t\telement[`__${event_name}`] = undefined;\n\t\t\t}\n\t\t} else if (key === 'style') {\n\t\t\t// avoid using the setter\n\t\t\tset_attribute(element, key, value);\n\t\t} else if (key === 'autofocus') {\n\t\t\tautofocus(/** @type {HTMLElement} */ (element), Boolean(value));\n\t\t} else if (!is_custom_element && (key === '__value' || (key === 'value' && value != null))) {\n\t\t\t// @ts-ignore We're not running this for custom elements because __value is actually\n\t\t\t// how Lit stores the current value on the element, and messing with that would break things.\n\t\t\telement.value = element.__value = value;\n\t\t} else if (key === 'selected' && is_option_element) {\n\t\t\tset_selected(/** @type {HTMLOptionElement} */ (element), value);\n\t\t} else {\n\t\t\tvar name = key;\n\t\t\tif (!preserve_attribute_case) {\n\t\t\t\tname = normalize_attribute(name);\n\t\t\t}\n\n\t\t\tvar is_default = name === 'defaultValue' || name === 'defaultChecked';\n\n\t\t\tif (value == null && !is_custom_element && !is_default) {\n\t\t\t\tattributes[key] = null;\n\n\t\t\t\tif (name === 'value' || name === 'checked') {\n\t\t\t\t\t// removing value/checked also removes defaultValue/defaultChecked — preserve\n\t\t\t\t\tlet input = /** @type {HTMLInputElement} */ (element);\n\t\t\t\t\tconst use_default = prev === undefined;\n\t\t\t\t\tif (name === 'value') {\n\t\t\t\t\t\tlet previous = input.defaultValue;\n\t\t\t\t\t\tinput.removeAttribute(name);\n\t\t\t\t\t\tinput.defaultValue = previous;\n\t\t\t\t\t\t// @ts-ignore\n\t\t\t\t\t\tinput.value = input.__value = use_default ? previous : null;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tlet previous = input.defaultChecked;\n\t\t\t\t\t\tinput.removeAttribute(name);\n\t\t\t\t\t\tinput.defaultChecked = previous;\n\t\t\t\t\t\tinput.checked = use_default ? previous : false;\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\telement.removeAttribute(key);\n\t\t\t\t}\n\t\t\t} else if (\n\t\t\t\tis_default ||\n\t\t\t\t(setters.includes(name) && (is_custom_element || typeof value !== 'string'))\n\t\t\t) {\n\t\t\t\t// @ts-ignore\n\t\t\t\telement[name] = value;\n\t\t\t\t// remove it from attributes's cache\n\t\t\t\tif (name in attributes) attributes[name] = UNINITIALIZED;\n\t\t\t} else if (typeof value !== 'function') {\n\t\t\t\tset_attribute(element, name, value, skip_warning);\n\t\t\t}\n\t\t}\n\t}\n\n\tif (is_hydrating_custom_element) {\n\t\tset_hydrating(true);\n\t}\n\n\treturn current;\n}\n\n/**\n * @param {Element & ElementCSSInlineStyle} element\n * @param {(...expressions: any) => Record<string | symbol, any>} fn\n * @param {Array<() => any>} sync\n * @param {Array<() => Promise<any>>} async\n * @param {Array<Promise<void>>} blockers\n * @param {string} [css_hash]\n * @param {boolean} [should_remove_defaults]\n * @param {boolean} [skip_warning]\n */\nexport function attribute_effect(\n\telement,\n\tfn,\n\tsync = [],\n\tasync = [],\n\tblockers = [],\n\tcss_hash,\n\tshould_remove_defaults = false,\n\tskip_warning = false\n) {\n\tflatten(blockers, sync, async, (values) => {\n\t\t/** @type {Record<string | symbol, any> | undefined} */\n\t\tvar prev = undefined;\n\n\t\t/** @type {Record<symbol, Effect>} */\n\t\tvar effects = {};\n\n\t\tvar is_select = element.nodeName === 'SELECT';\n\t\tvar inited = false;\n\n\t\tblock(() => {\n\t\t\tvar next = fn(...values.map(get));\n\t\t\t/** @type {Record<string | symbol, any>} */\n\t\t\tvar current = set_attributes(\n\t\t\t\telement,\n\t\t\t\tprev,\n\t\t\t\tnext,\n\t\t\t\tcss_hash,\n\t\t\t\tshould_remove_defaults,\n\t\t\t\tskip_warning\n\t\t\t);\n\n\t\t\tif (inited && is_select && 'value' in next) {\n\t\t\t\tselect_option(/** @type {HTMLSelectElement} */ (element), next.value);\n\t\t\t}\n\n\t\t\tfor (let symbol of Object.getOwnPropertySymbols(effects)) {\n\t\t\t\tif (!next[symbol]) destroy_effect(effects[symbol]);\n\t\t\t}\n\n\t\t\tfor (let symbol of Object.getOwnPropertySymbols(next)) {\n\t\t\t\tvar n = next[symbol];\n\n\t\t\t\tif (symbol.description === ATTACHMENT_KEY && (!prev || n !== prev[symbol])) {\n\t\t\t\t\tif (effects[symbol]) destroy_effect(effects[symbol]);\n\t\t\t\t\teffects[symbol] = branch(() => attach(element, () => n));\n\t\t\t\t}\n\n\t\t\t\tcurrent[symbol] = n;\n\t\t\t}\n\n\t\t\tprev = current;\n\t\t});\n\n\t\tif (is_select) {\n\t\t\tvar select = /** @type {HTMLSelectElement} */ (element);\n\n\t\t\teffect(() => {\n\t\t\t\tselect_option(select, /** @type {Record<string | symbol, any>} */ (prev).value, true);\n\t\t\t\tinit_select(select);\n\t\t\t});\n\t\t}\n\n\t\tinited = true;\n\t});\n}\n\n/**\n *\n * @param {Element} element\n */\nfunction get_attributes(element) {\n\treturn /** @type {Record<string | symbol, unknown>} **/ (\n\t\t// @ts-expect-error\n\t\telement.__attributes ??= {\n\t\t\t[IS_CUSTOM_ELEMENT]: element.nodeName.includes('-'),\n\t\t\t[IS_HTML]: element.namespaceURI === NAMESPACE_HTML\n\t\t}\n\t);\n}\n\n/** @type {Map<string, string[]>} */\nvar setters_cache = new Map();\n\n/** @param {Element} element */\nfunction get_setters(element) {\n\tvar cache_key = element.getAttribute('is') || element.nodeName;\n\tvar setters = setters_cache.get(cache_key);\n\tif (setters) return setters;\n\tsetters_cache.set(cache_key, (setters = []));\n\n\tvar descriptors;\n\tvar proto = element; // In the case of custom elements there might be setters on the instance\n\tvar element_proto = Element.prototype;\n\n\t// Stop at Element, from there on there's only unnecessary setters we're not interested in\n\t// Do not use contructor.name here as that's unreliable in some browser environments\n\twhile (element_proto !== proto) {\n\t\tdescriptors = get_descriptors(proto);\n\n\t\tfor (var key in descriptors) {\n\t\t\tif (descriptors[key].set) {\n\t\t\t\tsetters.push(key);\n\t\t\t}\n\t\t}\n\n\t\tproto = get_prototype_of(proto);\n\t}\n\n\treturn setters;\n}\n\n/**\n * @param {any} element\n * @param {string} attribute\n * @param {string} value\n */\nfunction check_src_in_dev_hydration(element, attribute, value) {\n\tif (!DEV) return;\n\tif (attribute === 'srcset' && srcset_url_equal(element, value)) return;\n\tif (src_url_equal(element.getAttribute(attribute) ?? '', value)) return;\n\n\tw.hydration_attribute_changed(\n\t\tattribute,\n\t\telement.outerHTML.replace(element.innerHTML, element.innerHTML && '...'),\n\t\tString(value)\n\t);\n}\n\n/**\n * @param {string} element_src\n * @param {string} url\n * @returns {boolean}\n */\nfunction src_url_equal(element_src, url) {\n\tif (element_src === url) return true;\n\treturn new URL(element_src, document.baseURI).href === new URL(url, document.baseURI).href;\n}\n\n/** @param {string} srcset */\nfunction split_srcset(srcset) {\n\treturn srcset.split(',').map((src) => src.trim().split(' ').filter(Boolean));\n}\n\n/**\n * @param {HTMLSourceElement | HTMLImageElement} element\n * @param {string} srcset\n * @returns {boolean}\n */\nfunction srcset_url_equal(element, srcset) {\n\tvar element_urls = split_srcset(element.srcset);\n\tvar urls = split_srcset(srcset);\n\n\treturn (\n\t\turls.length === element_urls.length &&\n\t\turls.every(\n\t\t\t([url, width], i) =>\n\t\t\t\twidth === element_urls[i][1] &&\n\t\t\t\t// We need to test both ways because Vite will create an a full URL with\n\t\t\t\t// `new URL(asset, import.meta.url).href` for the client when `base: './'`, and the\n\t\t\t\t// relative URLs inside srcset are not automatically resolved to absolute URLs by\n\t\t\t\t// browsers (in contrast to img.src). This means both SSR and DOM code could\n\t\t\t\t// contain relative or absolute URLs.\n\t\t\t\t(src_url_equal(element_urls[i][0], url) || src_url_equal(url, element_urls[i][0]))\n\t\t)\n\t);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767823,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767823,
+      "end": 1762256767823,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767823,
+      "end": 1762256767826,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767826,
+      "end": 1762256767826,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767826,
+      "end": 1762256767826,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767826,
+      "end": 1762256767826,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767826,
+      "end": 1762256767826,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767826,
+      "end": 1762256767826,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767826,
+      "end": 1762256767827,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal"
+    }
+  ]
+}

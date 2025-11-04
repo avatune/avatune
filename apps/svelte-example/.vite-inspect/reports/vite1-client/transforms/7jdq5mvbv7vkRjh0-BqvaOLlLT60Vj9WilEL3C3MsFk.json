@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/blocks/key.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { TemplateNode } from '#client' */\nimport { is_runes } from '../../context.js';\nimport { block } from '../../reactivity/effects.js';\nimport { hydrate_next, hydrating } from '../hydration.js';\nimport { BranchManager } from './branches.js';\n\n/**\n * @template V\n * @param {TemplateNode} node\n * @param {() => V} get_key\n * @param {(anchor: Node) => TemplateNode | void} render_fn\n * @returns {void}\n */\nexport function key(node, get_key, render_fn) {\n\tif (hydrating) {\n\t\thydrate_next();\n\t}\n\n\tvar branches = new BranchManager(node);\n\n\tvar legacy = !is_runes();\n\n\tblock(() => {\n\t\tvar key = get_key();\n\n\t\t// key blocks in Svelte <5 had stupid semantics\n\t\tif (legacy && key !== null && typeof key === 'object') {\n\t\t\tkey = /** @type {V} */ ({});\n\t\t}\n\n\t\tbranches.ensure(key, render_fn);\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767820,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    }
+  ]
+}

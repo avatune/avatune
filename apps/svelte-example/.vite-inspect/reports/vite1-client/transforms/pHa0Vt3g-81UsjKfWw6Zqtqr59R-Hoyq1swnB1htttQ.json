@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@vitest/mocker/dist/chunk-registry.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "class MockerRegistry {\n\tregistryByUrl = new Map();\n\tregistryById = new Map();\n\tclear() {\n\t\tthis.registryByUrl.clear();\n\t\tthis.registryById.clear();\n\t}\n\tkeys() {\n\t\treturn this.registryByUrl.keys();\n\t}\n\tadd(mock) {\n\t\tthis.registryByUrl.set(mock.url, mock);\n\t\tthis.registryById.set(mock.id, mock);\n\t}\n\tregister(typeOrEvent, raw, id, url, factoryOrRedirect) {\n\t\tconst type = typeof typeOrEvent === \"object\" ? typeOrEvent.type : typeOrEvent;\n\t\tif (typeof typeOrEvent === \"object\") {\n\t\t\tconst event = typeOrEvent;\n\t\t\tif (event instanceof AutomockedModule || event instanceof AutospiedModule || event instanceof ManualMockedModule || event instanceof RedirectedModule) {\n\t\t\t\tthrow new TypeError(`[vitest] Cannot register a mock that is already defined. ` + `Expected a JSON representation from \\`MockedModule.toJSON\\`, instead got \"${event.type}\". ` + `Use \"registry.add()\" to update a mock instead.`);\n\t\t\t}\n\t\t\tif (event.type === \"automock\") {\n\t\t\t\tconst module = AutomockedModule.fromJSON(event);\n\t\t\t\tthis.add(module);\n\t\t\t\treturn module;\n\t\t\t} else if (event.type === \"autospy\") {\n\t\t\t\tconst module = AutospiedModule.fromJSON(event);\n\t\t\t\tthis.add(module);\n\t\t\t\treturn module;\n\t\t\t} else if (event.type === \"redirect\") {\n\t\t\t\tconst module = RedirectedModule.fromJSON(event);\n\t\t\t\tthis.add(module);\n\t\t\t\treturn module;\n\t\t\t} else if (event.type === \"manual\") {\n\t\t\t\tthrow new Error(`Cannot set serialized manual mock. Define a factory function manually with \\`ManualMockedModule.fromJSON()\\`.`);\n\t\t\t} else {\n\t\t\t\tthrow new Error(`Unknown mock type: ${event.type}`);\n\t\t\t}\n\t\t}\n\t\tif (typeof raw !== \"string\") {\n\t\t\tthrow new TypeError(\"[vitest] Mocks require a raw string.\");\n\t\t}\n\t\tif (typeof url !== \"string\") {\n\t\t\tthrow new TypeError(\"[vitest] Mocks require a url string.\");\n\t\t}\n\t\tif (typeof id !== \"string\") {\n\t\t\tthrow new TypeError(\"[vitest] Mocks require an id string.\");\n\t\t}\n\t\tif (type === \"manual\") {\n\t\t\tif (typeof factoryOrRedirect !== \"function\") {\n\t\t\t\tthrow new TypeError(\"[vitest] Manual mocks require a factory function.\");\n\t\t\t}\n\t\t\tconst mock = new ManualMockedModule(raw, id, url, factoryOrRedirect);\n\t\t\tthis.add(mock);\n\t\t\treturn mock;\n\t\t} else if (type === \"automock\" || type === \"autospy\") {\n\t\t\tconst mock = type === \"automock\" ? new AutomockedModule(raw, id, url) : new AutospiedModule(raw, id, url);\n\t\t\tthis.add(mock);\n\t\t\treturn mock;\n\t\t} else if (type === \"redirect\") {\n\t\t\tif (typeof factoryOrRedirect !== \"string\") {\n\t\t\t\tthrow new TypeError(\"[vitest] Redirect mocks require a redirect string.\");\n\t\t\t}\n\t\t\tconst mock = new RedirectedModule(raw, id, url, factoryOrRedirect);\n\t\t\tthis.add(mock);\n\t\t\treturn mock;\n\t\t} else {\n\t\t\tthrow new Error(`[vitest] Unknown mock type: ${type}`);\n\t\t}\n\t}\n\tdelete(id) {\n\t\tthis.registryByUrl.delete(id);\n\t}\n\tget(id) {\n\t\treturn this.registryByUrl.get(id);\n\t}\n\tgetById(id) {\n\t\treturn this.registryById.get(id);\n\t}\n\thas(id) {\n\t\treturn this.registryByUrl.has(id);\n\t}\n}\nclass AutomockedModule {\n\ttype = \"automock\";\n\tconstructor(raw, id, url) {\n\t\tthis.raw = raw;\n\t\tthis.id = id;\n\t\tthis.url = url;\n\t}\n\tstatic fromJSON(data) {\n\t\treturn new AutospiedModule(data.raw, data.id, data.url);\n\t}\n\ttoJSON() {\n\t\treturn {\n\t\t\ttype: this.type,\n\t\t\turl: this.url,\n\t\t\traw: this.raw,\n\t\t\tid: this.id\n\t\t};\n\t}\n}\nclass AutospiedModule {\n\ttype = \"autospy\";\n\tconstructor(raw, id, url) {\n\t\tthis.raw = raw;\n\t\tthis.id = id;\n\t\tthis.url = url;\n\t}\n\tstatic fromJSON(data) {\n\t\treturn new AutospiedModule(data.raw, data.id, data.url);\n\t}\n\ttoJSON() {\n\t\treturn {\n\t\t\ttype: this.type,\n\t\t\turl: this.url,\n\t\t\tid: this.id,\n\t\t\traw: this.raw\n\t\t};\n\t}\n}\nclass RedirectedModule {\n\ttype = \"redirect\";\n\tconstructor(raw, id, url, redirect) {\n\t\tthis.raw = raw;\n\t\tthis.id = id;\n\t\tthis.url = url;\n\t\tthis.redirect = redirect;\n\t}\n\tstatic fromJSON(data) {\n\t\treturn new RedirectedModule(data.raw, data.id, data.url, data.redirect);\n\t}\n\ttoJSON() {\n\t\treturn {\n\t\t\ttype: this.type,\n\t\t\turl: this.url,\n\t\t\traw: this.raw,\n\t\t\tid: this.id,\n\t\t\tredirect: this.redirect\n\t\t};\n\t}\n}\nclass ManualMockedModule {\n\tcache;\n\ttype = \"manual\";\n\tconstructor(raw, id, url, factory) {\n\t\tthis.raw = raw;\n\t\tthis.id = id;\n\t\tthis.url = url;\n\t\tthis.factory = factory;\n\t}\n\tasync resolve() {\n\t\tif (this.cache) {\n\t\t\treturn this.cache;\n\t\t}\n\t\tlet exports;\n\t\ttry {\n\t\t\texports = await this.factory();\n\t\t} catch (err) {\n\t\t\tconst vitestError = new Error(\"[vitest] There was an error when mocking a module. \" + \"If you are using \\\"vi.mock\\\" factory, make sure there are no top level variables inside, since this call is hoisted to top of the file. \" + \"Read more: https://vitest.dev/api/vi.html#vi-mock\");\n\t\t\tvitestError.cause = err;\n\t\t\tthrow vitestError;\n\t\t}\n\t\tif (exports === null || typeof exports !== \"object\" || Array.isArray(exports)) {\n\t\t\tthrow new TypeError(`[vitest] vi.mock(\"${this.raw}\", factory?: () => unknown) is not returning an object. Did you mean to return an object with a \"default\" key?`);\n\t\t}\n\t\treturn this.cache = exports;\n\t}\n\tstatic fromJSON(data, factory) {\n\t\treturn new ManualMockedModule(data.raw, data.id, data.url, factory);\n\t}\n\ttoJSON() {\n\t\treturn {\n\t\t\ttype: this.type,\n\t\t\turl: this.url,\n\t\t\tid: this.id,\n\t\t\traw: this.raw\n\t\t};\n\t}\n}\n\nexport { AutomockedModule as A, MockerRegistry as M, RedirectedModule as R, ManualMockedModule as a, AutospiedModule as b };\n",
+      "start": 1762256767039,
+      "end": 1762256767054,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767054,
+      "end": 1762256767054,
+      "order": "normal"
+    }
+  ]
+}

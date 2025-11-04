@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/misc.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { hydrating } from '../hydration.js';\nimport { clear_text_content, get_first_child } from '../operations.js';\nimport { queue_micro_task } from '../task.js';\n\n/**\n * @param {HTMLElement} dom\n * @param {boolean} value\n * @returns {void}\n */\nexport function autofocus(dom, value) {\n\tif (value) {\n\t\tconst body = document.body;\n\t\tdom.autofocus = true;\n\n\t\tqueue_micro_task(() => {\n\t\t\tif (document.activeElement === body) {\n\t\t\t\tdom.focus();\n\t\t\t}\n\t\t});\n\t}\n}\n\n/**\n * The child of a textarea actually corresponds to the defaultValue property, so we need\n * to remove it upon hydration to avoid a bug when someone resets the form value.\n * @param {HTMLTextAreaElement} dom\n * @returns {void}\n */\nexport function remove_textarea_child(dom) {\n\tif (hydrating && get_first_child(dom) !== null) {\n\t\tclear_text_content(dom);\n\t}\n}\n\nlet listening_to_form_reset = false;\n\nexport function add_form_reset_listener() {\n\tif (!listening_to_form_reset) {\n\t\tlistening_to_form_reset = true;\n\t\tdocument.addEventListener(\n\t\t\t'reset',\n\t\t\t(evt) => {\n\t\t\t\t// Needs to happen one tick later or else the dom properties of the form\n\t\t\t\t// elements have not updated to their reset values yet\n\t\t\t\tPromise.resolve().then(() => {\n\t\t\t\t\tif (!evt.defaultPrevented) {\n\t\t\t\t\t\tfor (const e of /**@type {HTMLFormElement} */ (evt.target).elements) {\n\t\t\t\t\t\t\t// @ts-expect-error\n\t\t\t\t\t\t\te.__on_r?.();\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t},\n\t\t\t// In the capture phase to guarantee we get noticed of it (no possiblity of stopPropagation)\n\t\t\t{ capture: true }\n\t\t);\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767822,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767822,
+      "end": 1762256767822,
+      "order": "normal"
+    }
+  ]
+}

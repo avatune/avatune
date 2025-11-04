@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/docs-tools/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  ADDON_ID,\n  MAX_DEFAULT_VALUE_SUMMARY_LENGTH,\n  MAX_TYPE_SUMMARY_LENGTH,\n  PANEL_ID,\n  PARAM_KEY,\n  SNIPPET_RENDERED,\n  SourceType,\n  TypeSystem,\n  convert,\n  createSummaryValue,\n  enhanceArgTypes,\n  extractComponentDescription,\n  extractComponentProps,\n  extractComponentSectionArray,\n  extractComponentSectionObject,\n  getDocgenDescription,\n  getDocgenSection,\n  hasDocgen,\n  isDefaultValueBlacklisted,\n  isTooLongForDefaultValueSummary,\n  isTooLongForTypeSummary,\n  isValidDocgenSection,\n  normalizeNewlines,\n  parseJsDoc,\n  str\n} from \"../_browser-chunks/chunk-B4A3ADP3.js\";\nimport \"../_browser-chunks/chunk-ZNRFDIVA.js\";\nimport \"../_browser-chunks/chunk-AB7OOPUX.js\";\nimport \"../_browser-chunks/chunk-UTNZYD2N.js\";\nimport \"../_browser-chunks/chunk-FSBVR7H5.js\";\nimport \"../_browser-chunks/chunk-MM7DTO55.js\";\nexport {\n  ADDON_ID,\n  MAX_DEFAULT_VALUE_SUMMARY_LENGTH,\n  MAX_TYPE_SUMMARY_LENGTH,\n  PANEL_ID,\n  PARAM_KEY,\n  SNIPPET_RENDERED,\n  SourceType,\n  TypeSystem,\n  convert,\n  createSummaryValue,\n  enhanceArgTypes,\n  extractComponentDescription,\n  extractComponentProps,\n  extractComponentSectionArray,\n  extractComponentSectionObject,\n  getDocgenDescription,\n  getDocgenSection,\n  hasDocgen,\n  isDefaultValueBlacklisted,\n  isTooLongForDefaultValueSummary,\n  isTooLongForTypeSummary,\n  isValidDocgenSection,\n  normalizeNewlines,\n  parseJsDoc,\n  str\n};\n",
+      "start": 1762256767691,
+      "end": 1762256767730,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal"
+    }
+  ]
+}

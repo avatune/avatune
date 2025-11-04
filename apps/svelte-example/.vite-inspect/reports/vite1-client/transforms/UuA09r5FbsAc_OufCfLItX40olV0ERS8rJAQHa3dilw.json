@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/select.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { effect, teardown } from '../../../reactivity/effects.js';\nimport { listen_to_event_and_reset_event } from './shared.js';\nimport { is } from '../../../proxy.js';\nimport { is_array } from '../../../../shared/utils.js';\nimport * as w from '../../../warnings.js';\nimport { Batch, current_batch, previous_batch } from '../../../reactivity/batch.js';\n\n/**\n * Selects the correct option(s) (depending on whether this is a multiple select)\n * @template V\n * @param {HTMLSelectElement} select\n * @param {V} value\n * @param {boolean} mounting\n */\nexport function select_option(select, value, mounting = false) {\n\tif (select.multiple) {\n\t\t// If value is null or undefined, keep the selection as is\n\t\tif (value == undefined) {\n\t\t\treturn;\n\t\t}\n\n\t\t// If not an array, warn and keep the selection as is\n\t\tif (!is_array(value)) {\n\t\t\treturn w.select_multiple_invalid_value();\n\t\t}\n\n\t\t// Otherwise, update the selection\n\t\tfor (var option of select.options) {\n\t\t\toption.selected = value.includes(get_option_value(option));\n\t\t}\n\n\t\treturn;\n\t}\n\n\tfor (option of select.options) {\n\t\tvar option_value = get_option_value(option);\n\t\tif (is(option_value, value)) {\n\t\t\toption.selected = true;\n\t\t\treturn;\n\t\t}\n\t}\n\n\tif (!mounting || value !== undefined) {\n\t\tselect.selectedIndex = -1; // no option should be selected\n\t}\n}\n\n/**\n * Selects the correct option(s) if `value` is given,\n * and then sets up a mutation observer to sync the\n * current selection to the dom when it changes. Such\n * changes could for example occur when options are\n * inside an `#each` block.\n * @param {HTMLSelectElement} select\n */\nexport function init_select(select) {\n\tvar observer = new MutationObserver(() => {\n\t\t// @ts-ignore\n\t\tselect_option(select, select.__value);\n\t\t// Deliberately don't update the potential binding value,\n\t\t// the model should be preserved unless explicitly changed\n\t});\n\n\tobserver.observe(select, {\n\t\t// Listen to option element changes\n\t\tchildList: true,\n\t\tsubtree: true, // because of <optgroup>\n\t\t// Listen to option element value attribute changes\n\t\t// (doesn't get notified of select value changes,\n\t\t// because that property is not reflected as an attribute)\n\t\tattributes: true,\n\t\tattributeFilter: ['value']\n\t});\n\n\tteardown(() => {\n\t\tobserver.disconnect();\n\t});\n}\n\n/**\n * @param {HTMLSelectElement} select\n * @param {() => unknown} get\n * @param {(value: unknown) => void} set\n * @returns {void}\n */\nexport function bind_select_value(select, get, set = get) {\n\tvar batches = new WeakSet();\n\tvar mounting = true;\n\n\tlisten_to_event_and_reset_event(select, 'change', (is_reset) => {\n\t\tvar query = is_reset ? '[selected]' : ':checked';\n\t\t/** @type {unknown} */\n\t\tvar value;\n\n\t\tif (select.multiple) {\n\t\t\tvalue = [].map.call(select.querySelectorAll(query), get_option_value);\n\t\t} else {\n\t\t\t/** @type {HTMLOptionElement | null} */\n\t\t\tvar selected_option =\n\t\t\t\tselect.querySelector(query) ??\n\t\t\t\t// will fall back to first non-disabled option if no option is selected\n\t\t\t\tselect.querySelector('option:not([disabled])');\n\t\t\tvalue = selected_option && get_option_value(selected_option);\n\t\t}\n\n\t\tset(value);\n\n\t\tif (current_batch !== null) {\n\t\t\tbatches.add(current_batch);\n\t\t}\n\t});\n\n\t// Needs to be an effect, not a render_effect, so that in case of each loops the logic runs after the each block has updated\n\teffect(() => {\n\t\tvar value = get();\n\n\t\tif (select === document.activeElement) {\n\t\t\t// we need both, because in non-async mode, render effects run before previous_batch is set\n\t\t\tvar batch = /** @type {Batch} */ (previous_batch ?? current_batch);\n\n\t\t\t// Don't update the <select> if it is focused. We can get here if, for example,\n\t\t\t// an update is deferred because of async work depending on the select:\n\t\t\t//\n\t\t\t// <select bind:value={selected}>...</select>\n\t\t\t// <p>{await find(selected)}</p>\n\t\t\tif (batches.has(batch)) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\n\t\tselect_option(select, value, mounting);\n\n\t\t// Mounting and value undefined -> take selection from dom\n\t\tif (mounting && value === undefined) {\n\t\t\t/** @type {HTMLOptionElement | null} */\n\t\t\tvar selected_option = select.querySelector(':checked');\n\t\t\tif (selected_option !== null) {\n\t\t\t\tvalue = get_option_value(selected_option);\n\t\t\t\tset(value);\n\t\t\t}\n\t\t}\n\n\t\t// @ts-ignore\n\t\tselect.__value = value;\n\t\tmounting = false;\n\t});\n\n\tinit_select(select);\n}\n\n/** @param {HTMLOptionElement} option */\nfunction get_option_value(option) {\n\t// __value only exists if the <option> has a value attribute\n\tif ('__value' in option) {\n\t\treturn option.__value;\n\t} else {\n\t\treturn option.value;\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767829,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    }
+  ]
+}

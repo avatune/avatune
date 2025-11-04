@@ -1,0 +1,144 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/static/PreviewRender.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script>\n  import DecoratorHandler from './DecoratorHandler.svelte';\n  import { dedent } from 'ts-dedent';\n\n  const { name, title, storyFn, showError } = $props();\n\n  let {\n    /** @type {import('svelte').SvelteComponent} */\n    Component,\n    props = {},\n  } = $derived.by(() => {\n    return storyFn();\n  });\n\n  $effect(() => {\n    if (!Component) {\n      showError({\n        title: `Expecting a Svelte component from the story: \"${name}\" of \"${title}\".`,\n        description: dedent`\n        Did you forget to return the Svelte component configuration from the story?\n        Use \"() => ({ Component: YourComponent, props: {} })\"\n        when defining the story.\n      `,\n      });\n    }\n  });\n</script>\n\n<svelte:boundary>\n  {#snippet pending()}\n    <div id=\"sb-pending-async-component-notice\">Pending async component...</div>\n  {/snippet}\n  <DecoratorHandler {Component} {props} />\n</svelte:boundary>\n",
+      "start": 1762256767691,
+      "end": 1762256767733,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport * as $ from 'svelte/internal/client';\nimport DecoratorHandler from './DecoratorHandler.svelte';\nimport { dedent } from 'ts-dedent';\n\nvar root_1 = $.from_html(`<div id=\"sb-pending-async-component-notice\">Pending async component...</div>`);\n\nexport default function PreviewRender($$anchor, $$props) {\n\t$.push($$props, true);\n\n\tlet $$d = $.derived(\n\t\t\t/** @type {import('svelte').SvelteComponent} */\n\t\t\t() => {\n\t\t\t\treturn $$props.storyFn();\n\t\t\t}\n\t\t),\n\t\tComponent = $.derived(() => $.get($$d).Component),\n\t\tprops = $.derived(() => $.fallback($.get($$d).props, () => ({}), true));\n\n\t$.user_effect(() => {\n\t\tif (!$.get(Component)) {\n\t\t\t$$props.showError({\n\t\t\t\ttitle: `Expecting a Svelte component from the story: \"${$$props.name}\" of \"${$$props.title}\".`,\n\n\t\t\t\tdescription: dedent`\n        Did you forget to return the Svelte component configuration from the story?\n        Use \"() => ({ Component: YourComponent, props: {} })\"\n        when defining the story.\n      `\n\t\t\t});\n\t\t}\n\t});\n\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t{\n\t\tconst pending = ($$anchor) => {\n\t\t\tvar div = root_1();\n\n\t\t\t$.append($$anchor, div);\n\t\t};\n\n\t\t$.boundary(node, { pending }, ($$anchor) => {\n\t\t\tDecoratorHandler($$anchor, {\n\t\t\t\tget Component() {\n\t\t\t\t\treturn $.get(Component);\n\t\t\t\t},\n\n\t\t\t\tget props() {\n\t\t\t\t\treturn $.get(props);\n\t\t\t\t}\n\t\t\t});\n\t\t});\n\t}\n\n\t$.append($$anchor, fragment);\n\t$.pop();\n}",
+      "start": 1762256767733,
+      "end": 1762256767737,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "PreviewRender.svelte"
+        ],
+        "sourcesContent": [
+          "<script>\n  import DecoratorHandler from './DecoratorHandler.svelte';\n  import { dedent } from 'ts-dedent';\n\n  const { name, title, storyFn, showError } = $props();\n\n  let {\n    /** @type {import('svelte').SvelteComponent} */\n    Component,\n    props = {},\n  } = $derived.by(() => {\n    return storyFn();\n  });\n\n  $effect(() => {\n    if (!Component) {\n      showError({\n        title: `Expecting a Svelte component from the story: \"${name}\" of \"${title}\".`,\n        description: dedent`\n        Did you forget to return the Svelte component configuration from the story?\n        Use \"() => ({ Component: YourComponent, props: {} })\"\n        when defining the story.\n      `,\n      });\n    }\n  });\n</script>\n\n<svelte:boundary>\n  {#snippet pending()}\n    <div id=\"sb-pending-async-component-notice\">Pending async component...</div>\n  {/snippet}\n  <DecoratorHandler {Component} {props} />\n</svelte:boundary>\n"
+        ],
+        "mappings": ";;OACS,gBAAgB,MAAM,2BAA2B;SAC/C,MAAM,QAAQ,WAAW;;;;yDAFpC,CAAC;;;;;SAUuB,CAAC;;GAEvB,CAAC;;EAJC,SAAS,8BAAT,SAAS;EACT,KAAK,yCAAL,KAAK;;CAKP,aAAO,OAAO,CAAC;aACR,SAAS,GAAE,CAAC;;IAEb,KAAK;;IACL,WAAW,EAAE,MAAM;;;;;;EAMvB,CAAC;CACH,CAAC;;;;;;;;;;;;;;;;;;;;;;;;;;;AACJ,CAAC"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767737,
+      "end": 1762256767737,
+      "order": "normal"
+    }
+  ]
+}

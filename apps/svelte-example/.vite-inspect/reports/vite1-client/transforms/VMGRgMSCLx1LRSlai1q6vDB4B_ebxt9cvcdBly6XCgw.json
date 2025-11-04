@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/mergeWith.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { cloneDeep } from './cloneDeep.mjs';\nimport { isUnsafeProperty } from '../../_internal/isUnsafeProperty.mjs';\nimport { clone } from '../../object/clone.mjs';\nimport { isPrimitive } from '../../predicate/isPrimitive.mjs';\nimport { getSymbols } from '../_internal/getSymbols.mjs';\nimport { isArguments } from '../predicate/isArguments.mjs';\nimport { isObjectLike } from '../predicate/isObjectLike.mjs';\nimport { isPlainObject } from '../predicate/isPlainObject.mjs';\nimport { isTypedArray } from '../predicate/isTypedArray.mjs';\n\nfunction mergeWith(object, ...otherArgs) {\n    const sources = otherArgs.slice(0, -1);\n    const merge = otherArgs[otherArgs.length - 1];\n    let result = object;\n    for (let i = 0; i < sources.length; i++) {\n        const source = sources[i];\n        result = mergeWithDeep(result, source, merge, new Map());\n    }\n    return result;\n}\nfunction mergeWithDeep(target, source, merge, stack) {\n    if (isPrimitive(target)) {\n        target = Object(target);\n    }\n    if (source == null || typeof source !== 'object') {\n        return target;\n    }\n    if (stack.has(source)) {\n        return clone(stack.get(source));\n    }\n    stack.set(source, target);\n    if (Array.isArray(source)) {\n        source = source.slice();\n        for (let i = 0; i < source.length; i++) {\n            source[i] = source[i] ?? undefined;\n        }\n    }\n    const sourceKeys = [...Object.keys(source), ...getSymbols(source)];\n    for (let i = 0; i < sourceKeys.length; i++) {\n        const key = sourceKeys[i];\n        if (isUnsafeProperty(key)) {\n            continue;\n        }\n        let sourceValue = source[key];\n        let targetValue = target[key];\n        if (isArguments(sourceValue)) {\n            sourceValue = { ...sourceValue };\n        }\n        if (isArguments(targetValue)) {\n            targetValue = { ...targetValue };\n        }\n        if (typeof Buffer !== 'undefined' && Buffer.isBuffer(sourceValue)) {\n            sourceValue = cloneDeep(sourceValue);\n        }\n        if (Array.isArray(sourceValue)) {\n            if (typeof targetValue === 'object' && targetValue != null) {\n                const cloned = [];\n                const targetKeys = Reflect.ownKeys(targetValue);\n                for (let i = 0; i < targetKeys.length; i++) {\n                    const targetKey = targetKeys[i];\n                    cloned[targetKey] = targetValue[targetKey];\n                }\n                targetValue = cloned;\n            }\n            else {\n                targetValue = [];\n            }\n        }\n        const merged = merge(targetValue, sourceValue, key, target, source, stack);\n        if (merged !== undefined) {\n            target[key] = merged;\n        }\n        else if (Array.isArray(sourceValue)) {\n            target[key] = mergeWithDeep(targetValue, sourceValue, merge, stack);\n        }\n        else if (isObjectLike(targetValue) && isObjectLike(sourceValue)) {\n            target[key] = mergeWithDeep(targetValue, sourceValue, merge, stack);\n        }\n        else if (targetValue == null && isPlainObject(sourceValue)) {\n            target[key] = mergeWithDeep({}, sourceValue, merge, stack);\n        }\n        else if (targetValue == null && isTypedArray(sourceValue)) {\n            target[key] = cloneDeep(sourceValue);\n        }\n        else if (targetValue === undefined || sourceValue !== undefined) {\n            target[key] = sourceValue;\n        }\n    }\n    return target;\n}\n\nexport { mergeWith };\n",
+      "start": 1762256768011,
+      "end": 1762256768126,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    }
+  ]
+}

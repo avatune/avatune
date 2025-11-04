@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/loop.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { TaskCallback, Task, TaskEntry } from '#client' */\nimport { raf } from './timing.js';\n\n// TODO move this into timing.js where it probably belongs\n\n/**\n * @returns {void}\n */\nfunction run_tasks() {\n\t// use `raf.now()` instead of the `requestAnimationFrame` callback argument, because\n\t// otherwise things can get wonky https://github.com/sveltejs/svelte/pull/14541\n\tconst now = raf.now();\n\n\traf.tasks.forEach((task) => {\n\t\tif (!task.c(now)) {\n\t\t\traf.tasks.delete(task);\n\t\t\ttask.f();\n\t\t}\n\t});\n\n\tif (raf.tasks.size !== 0) {\n\t\traf.tick(run_tasks);\n\t}\n}\n\n/**\n * Creates a new task that runs on each raf frame\n * until it returns a falsy value or is aborted\n * @param {TaskCallback} callback\n * @returns {Task}\n */\nexport function loop(callback) {\n\t/** @type {TaskEntry} */\n\tlet task;\n\n\tif (raf.tasks.size === 0) {\n\t\traf.tick(run_tasks);\n\t}\n\n\treturn {\n\t\tpromise: new Promise((fulfill) => {\n\t\t\traf.tasks.add((task = { c: callback, f: fulfill }));\n\t\t}),\n\t\tabort() {\n\t\t\traf.tasks.delete(task);\n\t\t}\n\t};\n}\n",
+      "start": 1762256767868,
+      "end": 1762256767895,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/transitions.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { AnimateFn, Animation, AnimationConfig, EachItem, Effect, TransitionFn, TransitionManager } from '#client' */\nimport { noop, is_function } from '../../../shared/utils.js';\nimport { effect } from '../../reactivity/effects.js';\nimport {\n\tactive_effect,\n\tactive_reaction,\n\tset_active_effect,\n\tset_active_reaction,\n\tuntrack\n} from '../../runtime.js';\nimport { loop } from '../../loop.js';\nimport { should_intro } from '../../render.js';\nimport { current_each_item } from '../blocks/each.js';\nimport { TRANSITION_GLOBAL, TRANSITION_IN, TRANSITION_OUT } from '../../../../constants.js';\nimport { BLOCK_EFFECT, EFFECT_RAN, EFFECT_TRANSPARENT } from '#client/constants';\nimport { queue_micro_task } from '../task.js';\nimport { without_reactive_context } from './bindings/shared.js';\n\n/**\n * @param {Element} element\n * @param {'introstart' | 'introend' | 'outrostart' | 'outroend'} type\n * @returns {void}\n */\nfunction dispatch_event(element, type) {\n\twithout_reactive_context(() => {\n\t\telement.dispatchEvent(new CustomEvent(type));\n\t});\n}\n\n/**\n * Converts a property to the camel-case format expected by Element.animate(), KeyframeEffect(), and KeyframeEffect.setKeyframes().\n * @param {string} style\n * @returns {string}\n */\nfunction css_property_to_camelcase(style) {\n\t// in compliance with spec\n\tif (style === 'float') return 'cssFloat';\n\tif (style === 'offset') return 'cssOffset';\n\n\t// do not rename custom @properties\n\tif (style.startsWith('--')) return style;\n\n\tconst parts = style.split('-');\n\tif (parts.length === 1) return parts[0];\n\treturn (\n\t\tparts[0] +\n\t\tparts\n\t\t\t.slice(1)\n\t\t\t.map(/** @param {any} word */ (word) => word[0].toUpperCase() + word.slice(1))\n\t\t\t.join('')\n\t);\n}\n\n/**\n * @param {string} css\n * @returns {Keyframe}\n */\nfunction css_to_keyframe(css) {\n\t/** @type {Keyframe} */\n\tconst keyframe = {};\n\tconst parts = css.split(';');\n\tfor (const part of parts) {\n\t\tconst [property, value] = part.split(':');\n\t\tif (!property || value === undefined) break;\n\n\t\tconst formatted_property = css_property_to_camelcase(property.trim());\n\t\tkeyframe[formatted_property] = value.trim();\n\t}\n\treturn keyframe;\n}\n\n/** @param {number} t */\nconst linear = (t) => t;\n\n/**\n * Called inside keyed `{#each ...}` blocks (as `$.animation(...)`). This creates an animation manager\n * and attaches it to the block, so that moves can be animated following reconciliation.\n * @template P\n * @param {Element} element\n * @param {() => AnimateFn<P | undefined>} get_fn\n * @param {(() => P) | null} get_params\n */\nexport function animation(element, get_fn, get_params) {\n\tvar item = /** @type {EachItem} */ (current_each_item);\n\n\t/** @type {DOMRect} */\n\tvar from;\n\n\t/** @type {DOMRect} */\n\tvar to;\n\n\t/** @type {Animation | undefined} */\n\tvar animation;\n\n\t/** @type {null | { position: string, width: string, height: string, transform: string }} */\n\tvar original_styles = null;\n\n\titem.a ??= {\n\t\telement,\n\t\tmeasure() {\n\t\t\tfrom = this.element.getBoundingClientRect();\n\t\t},\n\t\tapply() {\n\t\t\tanimation?.abort();\n\n\t\t\tto = this.element.getBoundingClientRect();\n\n\t\t\tif (\n\t\t\t\tfrom.left !== to.left ||\n\t\t\t\tfrom.right !== to.right ||\n\t\t\t\tfrom.top !== to.top ||\n\t\t\t\tfrom.bottom !== to.bottom\n\t\t\t) {\n\t\t\t\tconst options = get_fn()(this.element, { from, to }, get_params?.());\n\n\t\t\t\tanimation = animate(this.element, options, undefined, 1, () => {\n\t\t\t\t\tanimation?.abort();\n\t\t\t\t\tanimation = undefined;\n\t\t\t\t});\n\t\t\t}\n\t\t},\n\t\tfix() {\n\t\t\t// If an animation is already running, transforming the element is likely to fail,\n\t\t\t// because the styles applied by the animation take precedence. In the case of crossfade,\n\t\t\t// that means the `translate(...)` of the crossfade transition overrules the `translate(...)`\n\t\t\t// we would apply below, leading to the element jumping somewhere to the top left.\n\t\t\tif (element.getAnimations().length) return;\n\n\t\t\t// It's important to destructure these to get fixed values - the object itself has getters,\n\t\t\t// and changing the style to 'absolute' can for example influence the width.\n\t\t\tvar { position, width, height } = getComputedStyle(element);\n\n\t\t\tif (position !== 'absolute' && position !== 'fixed') {\n\t\t\t\tvar style = /** @type {HTMLElement | SVGElement} */ (element).style;\n\n\t\t\t\toriginal_styles = {\n\t\t\t\t\tposition: style.position,\n\t\t\t\t\twidth: style.width,\n\t\t\t\t\theight: style.height,\n\t\t\t\t\ttransform: style.transform\n\t\t\t\t};\n\n\t\t\t\tstyle.position = 'absolute';\n\t\t\t\tstyle.width = width;\n\t\t\t\tstyle.height = height;\n\t\t\t\tvar to = element.getBoundingClientRect();\n\n\t\t\t\tif (from.left !== to.left || from.top !== to.top) {\n\t\t\t\t\tvar transform = `translate(${from.left - to.left}px, ${from.top - to.top}px)`;\n\t\t\t\t\tstyle.transform = style.transform ? `${style.transform} ${transform}` : transform;\n\t\t\t\t}\n\t\t\t}\n\t\t},\n\t\tunfix() {\n\t\t\tif (original_styles) {\n\t\t\t\tvar style = /** @type {HTMLElement | SVGElement} */ (element).style;\n\n\t\t\t\tstyle.position = original_styles.position;\n\t\t\t\tstyle.width = original_styles.width;\n\t\t\t\tstyle.height = original_styles.height;\n\t\t\t\tstyle.transform = original_styles.transform;\n\t\t\t}\n\t\t}\n\t};\n\n\t// in the case of a `<svelte:element>`, it's possible for `$.animation(...)` to be called\n\t// when an animation manager already exists, if the tag changes. in that case, we need to\n\t// swap out the element rather than creating a new manager, in case it happened at the same\n\t// moment as a reconciliation\n\titem.a.element = element;\n}\n\n/**\n * Called inside block effects as `$.transition(...)`. This creates a transition manager and\n * attaches it to the current effect — later, inside `pause_effect` and `resume_effect`, we\n * use this to create `intro` and `outro` transitions.\n * @template P\n * @param {number} flags\n * @param {HTMLElement} element\n * @param {() => TransitionFn<P | undefined>} get_fn\n * @param {(() => P) | null} get_params\n * @returns {void}\n */\nexport function transition(flags, element, get_fn, get_params) {\n\tvar is_intro = (flags & TRANSITION_IN) !== 0;\n\tvar is_outro = (flags & TRANSITION_OUT) !== 0;\n\tvar is_both = is_intro && is_outro;\n\tvar is_global = (flags & TRANSITION_GLOBAL) !== 0;\n\n\t/** @type {'in' | 'out' | 'both'} */\n\tvar direction = is_both ? 'both' : is_intro ? 'in' : 'out';\n\n\t/** @type {AnimationConfig | ((opts: { direction: 'in' | 'out' }) => AnimationConfig) | undefined} */\n\tvar current_options;\n\n\tvar inert = element.inert;\n\n\t/**\n\t * The default overflow style, stashed so we can revert changes during the transition\n\t * that are necessary to work around a Safari <18 bug\n\t * TODO 6.0 remove this, if older versions of Safari have died out enough\n\t */\n\tvar overflow = element.style.overflow;\n\n\t/** @type {Animation | undefined} */\n\tvar intro;\n\n\t/** @type {Animation | undefined} */\n\tvar outro;\n\n\tfunction get_options() {\n\t\treturn without_reactive_context(() => {\n\t\t\t// If a transition is still ongoing, we use the existing options rather than generating\n\t\t\t// new ones. This ensures that reversible transitions reverse smoothly, rather than\n\t\t\t// jumping to a new spot because (for example) a different `duration` was used\n\t\t\treturn (current_options ??= get_fn()(element, get_params?.() ?? /** @type {P} */ ({}), {\n\t\t\t\tdirection\n\t\t\t}));\n\t\t});\n\t}\n\n\t/** @type {TransitionManager} */\n\tvar transition = {\n\t\tis_global,\n\t\tin() {\n\t\t\telement.inert = inert;\n\n\t\t\tif (!is_intro) {\n\t\t\t\toutro?.abort();\n\t\t\t\toutro?.reset?.();\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tif (!is_outro) {\n\t\t\t\t// if we intro then outro then intro again, we want to abort the first intro,\n\t\t\t\t// if it's not a bidirectional transition\n\t\t\t\tintro?.abort();\n\t\t\t}\n\n\t\t\tdispatch_event(element, 'introstart');\n\n\t\t\tintro = animate(element, get_options(), outro, 1, () => {\n\t\t\t\tdispatch_event(element, 'introend');\n\n\t\t\t\t// Ensure we cancel the animation to prevent leaking\n\t\t\t\tintro?.abort();\n\t\t\t\tintro = current_options = undefined;\n\n\t\t\t\telement.style.overflow = overflow;\n\t\t\t});\n\t\t},\n\t\tout(fn) {\n\t\t\tif (!is_outro) {\n\t\t\t\tfn?.();\n\t\t\t\tcurrent_options = undefined;\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\telement.inert = true;\n\n\t\t\tdispatch_event(element, 'outrostart');\n\n\t\t\toutro = animate(element, get_options(), intro, 0, () => {\n\t\t\t\tdispatch_event(element, 'outroend');\n\t\t\t\tfn?.();\n\t\t\t});\n\t\t},\n\t\tstop: () => {\n\t\t\tintro?.abort();\n\t\t\toutro?.abort();\n\t\t}\n\t};\n\n\tvar e = /** @type {Effect} */ (active_effect);\n\n\t(e.transitions ??= []).push(transition);\n\n\t// if this is a local transition, we only want to run it if the parent (branch) effect's\n\t// parent (block) effect is where the state change happened. we can determine that by\n\t// looking at whether the block effect is currently initializing\n\tif (is_intro && should_intro) {\n\t\tvar run = is_global;\n\n\t\tif (!run) {\n\t\t\tvar block = /** @type {Effect | null} */ (e.parent);\n\n\t\t\t// skip over transparent blocks (e.g. snippets, else-if blocks)\n\t\t\twhile (block && (block.f & EFFECT_TRANSPARENT) !== 0) {\n\t\t\t\twhile ((block = block.parent)) {\n\t\t\t\t\tif ((block.f & BLOCK_EFFECT) !== 0) break;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\trun = !block || (block.f & EFFECT_RAN) !== 0;\n\t\t}\n\n\t\tif (run) {\n\t\t\teffect(() => {\n\t\t\t\tuntrack(() => transition.in());\n\t\t\t});\n\t\t}\n\t}\n}\n\n/**\n * Animates an element, according to the provided configuration\n * @param {Element} element\n * @param {AnimationConfig | ((opts: { direction: 'in' | 'out' }) => AnimationConfig)} options\n * @param {Animation | undefined} counterpart The corresponding intro/outro to this outro/intro\n * @param {number} t2 The target `t` value — `1` for intro, `0` for outro\n * @param {(() => void)} on_finish Called after successfully completing the animation\n * @returns {Animation}\n */\nfunction animate(element, options, counterpart, t2, on_finish) {\n\tvar is_intro = t2 === 1;\n\n\tif (is_function(options)) {\n\t\t// In the case of a deferred transition (such as `crossfade`), `option` will be\n\t\t// a function rather than an `AnimationConfig`. We need to call this function\n\t\t// once the DOM has been updated...\n\t\t/** @type {Animation} */\n\t\tvar a;\n\t\tvar aborted = false;\n\n\t\tqueue_micro_task(() => {\n\t\t\tif (aborted) return;\n\t\t\tvar o = options({ direction: is_intro ? 'in' : 'out' });\n\t\t\ta = animate(element, o, counterpart, t2, on_finish);\n\t\t});\n\n\t\t// ...but we want to do so without using `async`/`await` everywhere, so\n\t\t// we return a facade that allows everything to remain synchronous\n\t\treturn {\n\t\t\tabort: () => {\n\t\t\t\taborted = true;\n\t\t\t\ta?.abort();\n\t\t\t},\n\t\t\tdeactivate: () => a.deactivate(),\n\t\t\treset: () => a.reset(),\n\t\t\tt: () => a.t()\n\t\t};\n\t}\n\n\tcounterpart?.deactivate();\n\n\tif (!options?.duration) {\n\t\ton_finish();\n\n\t\treturn {\n\t\t\tabort: noop,\n\t\t\tdeactivate: noop,\n\t\t\treset: noop,\n\t\t\tt: () => t2\n\t\t};\n\t}\n\n\tconst { delay = 0, css, tick, easing = linear } = options;\n\n\tvar keyframes = [];\n\n\tif (is_intro && counterpart === undefined) {\n\t\tif (tick) {\n\t\t\ttick(0, 1); // TODO put in nested effect, to avoid interleaved reads/writes?\n\t\t}\n\n\t\tif (css) {\n\t\t\tvar styles = css_to_keyframe(css(0, 1));\n\t\t\tkeyframes.push(styles, styles);\n\t\t}\n\t}\n\n\tvar get_t = () => 1 - t2;\n\n\t// create a dummy animation that lasts as long as the delay (but with whatever devtools\n\t// multiplier is in effect). in the common case that it is `0`, we keep it anyway so that\n\t// the CSS keyframes aren't created until the DOM is updated\n\t//\n\t// fill forwards to prevent the element from rendering without styles applied\n\t// see https://github.com/sveltejs/svelte/issues/14732\n\tvar animation = element.animate(keyframes, { duration: delay, fill: 'forwards' });\n\n\tanimation.onfinish = () => {\n\t\t// remove dummy animation from the stack to prevent conflict with main animation\n\t\tanimation.cancel();\n\n\t\t// for bidirectional transitions, we start from the current position,\n\t\t// rather than doing a full intro/outro\n\t\tvar t1 = counterpart?.t() ?? 1 - t2;\n\t\tcounterpart?.abort();\n\n\t\tvar delta = t2 - t1;\n\t\tvar duration = /** @type {number} */ (options.duration) * Math.abs(delta);\n\t\tvar keyframes = [];\n\n\t\tif (duration > 0) {\n\t\t\t/**\n\t\t\t * Whether or not the CSS includes `overflow: hidden`, in which case we need to\n\t\t\t * add it as an inline style to work around a Safari <18 bug\n\t\t\t * TODO 6.0 remove this, if possible\n\t\t\t */\n\t\t\tvar needs_overflow_hidden = false;\n\n\t\t\tif (css) {\n\t\t\t\tvar n = Math.ceil(duration / (1000 / 60)); // `n` must be an integer, or we risk missing the `t2` value\n\n\t\t\t\tfor (var i = 0; i <= n; i += 1) {\n\t\t\t\t\tvar t = t1 + delta * easing(i / n);\n\t\t\t\t\tvar styles = css_to_keyframe(css(t, 1 - t));\n\t\t\t\t\tkeyframes.push(styles);\n\n\t\t\t\t\tneeds_overflow_hidden ||= styles.overflow === 'hidden';\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (needs_overflow_hidden) {\n\t\t\t\t/** @type {HTMLElement} */ (element).style.overflow = 'hidden';\n\t\t\t}\n\n\t\t\tget_t = () => {\n\t\t\t\tvar time = /** @type {number} */ (\n\t\t\t\t\t/** @type {globalThis.Animation} */ (animation).currentTime\n\t\t\t\t);\n\n\t\t\t\treturn t1 + delta * easing(time / duration);\n\t\t\t};\n\n\t\t\tif (tick) {\n\t\t\t\tloop(() => {\n\t\t\t\t\tif (animation.playState !== 'running') return false;\n\n\t\t\t\t\tvar t = get_t();\n\t\t\t\t\ttick(t, 1 - t);\n\n\t\t\t\t\treturn true;\n\t\t\t\t});\n\t\t\t}\n\t\t}\n\n\t\tanimation = element.animate(keyframes, { duration, fill: 'forwards' });\n\n\t\tanimation.onfinish = () => {\n\t\t\tget_t = () => t2;\n\t\t\ttick?.(t2, 1 - t2);\n\t\t\ton_finish();\n\t\t};\n\t};\n\n\treturn {\n\t\tabort: () => {\n\t\t\tif (animation) {\n\t\t\t\tanimation.cancel();\n\t\t\t\t// This prevents memory leaks in Chromium\n\t\t\t\tanimation.effect = null;\n\t\t\t\t// This prevents onfinish to be launched after cancel(),\n\t\t\t\t// which can happen in some rare cases\n\t\t\t\t// see https://github.com/sveltejs/svelte/issues/13681\n\t\t\t\tanimation.onfinish = noop;\n\t\t\t}\n\t\t},\n\t\tdeactivate: () => {\n\t\t\ton_finish = noop;\n\t\t},\n\t\treset: () => {\n\t\t\tif (t2 === 0) {\n\t\t\t\ttick?.(1, 0);\n\t\t\t}\n\t\t},\n\t\tt: () => get_t()\n\t};\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767827,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767827,
+      "end": 1762256767827,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767828,
+      "end": 1762256767828,
+      "order": "normal"
+    }
+  ]
+}

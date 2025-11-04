@@ -1,0 +1,134 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/dist/_browser-chunks/chunk-4ZGG6PUN.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __export,\n  __name\n} from \"./chunk-JFJ5UJ7Q.js\";\n\n// src/entry-preview.ts\nvar entry_preview_exports = {};\n__export(entry_preview_exports, {\n  applyDecorators: () => decorateStory,\n  argTypesEnhancers: () => argTypesEnhancers,\n  mount: () => mount2,\n  parameters: () => parameters,\n  render: () => render,\n  renderToCanvas: () => renderToCanvas\n});\nimport { enhanceArgTypes } from \"storybook/internal/docs-tools\";\n\n// src/extractArgTypes.ts\nimport { logger } from \"storybook/internal/client-logger\";\nfunction hasKeyword(keyword, keywords) {\n  return keywords ? keywords.find((k) => k.name === keyword) != null : false;\n}\n__name(hasKeyword, \"hasKeyword\");\nvar extractArgTypes = /* @__PURE__ */ __name((component) => {\n  try {\n    const docgen = component.__docgen;\n    if (docgen) {\n      return createArgTypes(docgen);\n    }\n  } catch (err) {\n    logger.log(`Error extracting argTypes: ${err}`);\n  }\n  return {};\n}, \"extractArgTypes\");\nvar createArgTypes = /* @__PURE__ */ __name((docgen) => {\n  const results = {};\n  if (docgen.data) {\n    docgen.data.forEach((item) => {\n      results[item.name] = {\n        ...parseTypeToControl(item.type),\n        name: item.name,\n        description: item.description || void 0,\n        type: {\n          required: hasKeyword(\"required\", item.keywords || []),\n          name: item.type?.text === \"{}\" ? \"object\" : item.type?.text\n        },\n        table: {\n          type: {\n            summary: item.type?.text\n          },\n          defaultValue: {\n            summary: item.defaultValue\n          },\n          category: \"properties\"\n        }\n      };\n    });\n  }\n  if (docgen.events) {\n    docgen.events.forEach((item) => {\n      results[`event_${item.name}`] = {\n        name: item.name,\n        action: item.name,\n        control: false,\n        ...item.description ? { description: item.description } : {},\n        table: {\n          category: \"events\"\n        }\n      };\n    });\n  }\n  if (docgen.slots) {\n    docgen.slots.forEach((item) => {\n      results[`slot_${item.name}`] = {\n        name: item.name,\n        control: false,\n        description: [item.description, item.params?.map((p) => `\\`${p.name}\\``).join(\" \")].filter((p) => p).join(\"\\n\\n\"),\n        table: {\n          category: \"slots\"\n        }\n      };\n    });\n  }\n  return results;\n}, \"createArgTypes\");\nvar parseTypeToControl = /* @__PURE__ */ __name((type) => {\n  if (!type) {\n    return null;\n  }\n  if (type.kind === \"type\") {\n    switch (type.type) {\n      case \"string\":\n        return { control: { type: \"text\" } };\n      case \"any\":\n        return { control: { type: \"object\" } };\n      default:\n        return { control: { type: type.type } };\n    }\n  } else if (type.kind === \"union\") {\n    if (Array.isArray(type.type) && !type.type.some(\n      (t) => t.kind !== \"const\" || ![\"string\", \"number\", \"null\", \"undefined\"].includes(t.type)\n    )) {\n      const options = type.type.map((t) => t.value);\n      return {\n        control: {\n          type: \"radio\"\n        },\n        options\n      };\n    }\n  } else if (type.kind === \"function\") {\n    return { control: null };\n  }\n  return null;\n}, \"parseTypeToControl\");\n\n// src/extractComponentDescription.ts\nfunction extractComponentDescription(component) {\n  return component?.__docgen?.description || \"\";\n}\n__name(extractComponentDescription, \"extractComponentDescription\");\n\n// src/render.ts\nimport { RESET_STORY_ARGS } from \"storybook/internal/core-events\";\nimport PreviewRender from \"@storybook/svelte/internal/PreviewRender.svelte\";\nimport { createReactiveProps } from \"@storybook/svelte/internal/createReactiveProps\";\nimport { addons } from \"storybook/preview-api\";\nimport * as svelte from \"svelte\";\nvar storyIdsToRemountFromResetArgsEvent = /* @__PURE__ */ new Set();\naddons.getChannel().on(RESET_STORY_ARGS, ({ storyId }) => {\n  storyIdsToRemountFromResetArgsEvent.add(storyId);\n});\nvar componentsByDomElement = /* @__PURE__ */ new Map();\nasync function renderToCanvas({\n  storyFn,\n  title,\n  name,\n  showMain,\n  showError,\n  storyContext,\n  forceRemount\n}, canvasElement) {\n  function unmount2(canvasElementToUnmount) {\n    const { mountedComponent } = componentsByDomElement.get(canvasElementToUnmount) ?? {};\n    if (!mountedComponent) {\n      return;\n    }\n    svelte.unmount(mountedComponent);\n    componentsByDomElement.delete(canvasElementToUnmount);\n  }\n  __name(unmount2, \"unmount\");\n  const existingComponent = componentsByDomElement.get(canvasElement);\n  let remount = forceRemount;\n  if (storyIdsToRemountFromResetArgsEvent.has(storyContext.id)) {\n    remount = true;\n    storyIdsToRemountFromResetArgsEvent.delete(storyContext.id);\n  }\n  if (remount) {\n    unmount2(canvasElement);\n  }\n  if (!existingComponent || remount) {\n    const props = createReactiveProps({\n      storyFn,\n      storyContext,\n      name,\n      title,\n      showError\n    });\n    const mountedComponent = svelte.mount(PreviewRender, {\n      target: canvasElement,\n      props\n    });\n    componentsByDomElement.set(canvasElement, { mountedComponent, props });\n    await svelte.tick();\n  } else {\n    Object.assign(existingComponent.props, {\n      storyFn,\n      storyContext,\n      name,\n      title,\n      showError\n    });\n    await svelte.tick();\n  }\n  showMain();\n  return () => {\n    unmount2(canvasElement);\n  };\n}\n__name(renderToCanvas, \"renderToCanvas\");\nvar render = /* @__PURE__ */ __name((args, context) => {\n  const { id, component: Component } = context;\n  if (!Component) {\n    throw new Error(\n      `Unable to render story ${id} as the component annotation is missing from the default export`\n    );\n  }\n  return { Component, props: args };\n}, \"render\");\n\n// src/decorators.ts\nimport DecoratorHandler from \"@storybook/svelte/internal/DecoratorHandler.svelte\";\nimport { sanitizeStoryContextUpdate } from \"storybook/preview-api\";\nfunction unWrap(obj) {\n  return obj && typeof obj === \"object\" && \"default\" in obj ? obj.default : obj;\n}\n__name(unWrap, \"unWrap\");\nfunction prepareStory(context, rawStory, rawInnerStory) {\n  const story = unWrap(rawStory);\n  const innerStory = rawInnerStory && unWrap(rawInnerStory);\n  let preparedStory;\n  if (!story || Object.keys(story).length === 0) {\n    preparedStory = {\n      Component: context.component\n    };\n  } else if (story.Component) {\n    preparedStory = story;\n  } else {\n    preparedStory = {\n      Component: story\n    };\n  }\n  if (innerStory) {\n    return {\n      Component: DecoratorHandler,\n      props: {\n        // inner stories will already have been prepared, keep as is\n        ...innerStory,\n        decorator: preparedStory\n      }\n    };\n  }\n  return { ...preparedStory, argTypes: context.argTypes };\n}\n__name(prepareStory, \"prepareStory\");\nfunction decorateStory(storyFn, decorators) {\n  return decorators.reduce(\n    (decorated, decorator) => (context) => {\n      let story;\n      const decoratedStory = decorator((update) => {\n        story = decorated({\n          ...context,\n          ...sanitizeStoryContextUpdate(update)\n        });\n        return story;\n      }, context);\n      if (!story) {\n        story = decorated(context);\n      }\n      if (decoratedStory === story) {\n        return story;\n      }\n      return prepareStory(context, decoratedStory, story);\n    },\n    (context) => prepareStory(context, storyFn(context))\n  );\n}\n__name(decorateStory, \"decorateStory\");\n\n// src/mount.ts\nvar mount2 = /* @__PURE__ */ __name((context) => {\n  return async (Component, options) => {\n    if (Component) {\n      context.originalStoryFn = () => ({\n        Component,\n        props: options && \"props\" in options ? options?.props : options\n      });\n    }\n    await context.renderToCanvas();\n    return context.canvas;\n  };\n}, \"mount\");\n\n// src/entry-preview.ts\nvar parameters = {\n  renderer: \"svelte\",\n  docs: {\n    story: { inline: true },\n    extractArgTypes,\n    extractComponentDescription\n  }\n};\nvar argTypesEnhancers = [enhanceArgTypes];\n\nexport {\n  renderToCanvas,\n  render,\n  decorateStory,\n  mount2 as mount,\n  parameters,\n  argTypesEnhancers,\n  entry_preview_exports\n};\n",
+      "start": 1762256767099,
+      "end": 1762256767140,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767140,
+      "end": 1762256767140,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767140,
+      "end": 1762256767141,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "result": "import {\n  __export,\n  __name\n} from \"./chunk-JFJ5UJ7Q.js\";\n\n// src/entry-preview.ts\nvar entry_preview_exports = {};\n__export(entry_preview_exports, {\n  applyDecorators: () => decorateStory,\n  argTypesEnhancers: () => argTypesEnhancers,\n  mount: () => mount2,\n  parameters: () => parameters,\n  render: () => render,\n  renderToCanvas: () => renderToCanvas\n});\nimport { enhanceArgTypes } from \"storybook/internal/docs-tools\";\n\n// src/extractArgTypes.ts\nconst { logger } = __STORYBOOK_MODULE_CLIENT_LOGGER__;\nfunction hasKeyword(keyword, keywords) {\n  return keywords ? keywords.find((k) => k.name === keyword) != null : false;\n}\n__name(hasKeyword, \"hasKeyword\");\nvar extractArgTypes = /* @__PURE__ */ __name((component) => {\n  try {\n    const docgen = component.__docgen;\n    if (docgen) {\n      return createArgTypes(docgen);\n    }\n  } catch (err) {\n    logger.log(`Error extracting argTypes: ${err}`);\n  }\n  return {};\n}, \"extractArgTypes\");\nvar createArgTypes = /* @__PURE__ */ __name((docgen) => {\n  const results = {};\n  if (docgen.data) {\n    docgen.data.forEach((item) => {\n      results[item.name] = {\n        ...parseTypeToControl(item.type),\n        name: item.name,\n        description: item.description || void 0,\n        type: {\n          required: hasKeyword(\"required\", item.keywords || []),\n          name: item.type?.text === \"{}\" ? \"object\" : item.type?.text\n        },\n        table: {\n          type: {\n            summary: item.type?.text\n          },\n          defaultValue: {\n            summary: item.defaultValue\n          },\n          category: \"properties\"\n        }\n      };\n    });\n  }\n  if (docgen.events) {\n    docgen.events.forEach((item) => {\n      results[`event_${item.name}`] = {\n        name: item.name,\n        action: item.name,\n        control: false,\n        ...item.description ? { description: item.description } : {},\n        table: {\n          category: \"events\"\n        }\n      };\n    });\n  }\n  if (docgen.slots) {\n    docgen.slots.forEach((item) => {\n      results[`slot_${item.name}`] = {\n        name: item.name,\n        control: false,\n        description: [item.description, item.params?.map((p) => `\\`${p.name}\\``).join(\" \")].filter((p) => p).join(\"\\n\\n\"),\n        table: {\n          category: \"slots\"\n        }\n      };\n    });\n  }\n  return results;\n}, \"createArgTypes\");\nvar parseTypeToControl = /* @__PURE__ */ __name((type) => {\n  if (!type) {\n    return null;\n  }\n  if (type.kind === \"type\") {\n    switch (type.type) {\n      case \"string\":\n        return { control: { type: \"text\" } };\n      case \"any\":\n        return { control: { type: \"object\" } };\n      default:\n        return { control: { type: type.type } };\n    }\n  } else if (type.kind === \"union\") {\n    if (Array.isArray(type.type) && !type.type.some(\n      (t) => t.kind !== \"const\" || ![\"string\", \"number\", \"null\", \"undefined\"].includes(t.type)\n    )) {\n      const options = type.type.map((t) => t.value);\n      return {\n        control: {\n          type: \"radio\"\n        },\n        options\n      };\n    }\n  } else if (type.kind === \"function\") {\n    return { control: null };\n  }\n  return null;\n}, \"parseTypeToControl\");\n\n// src/extractComponentDescription.ts\nfunction extractComponentDescription(component) {\n  return component?.__docgen?.description || \"\";\n}\n__name(extractComponentDescription, \"extractComponentDescription\");\n\n// src/render.ts\nconst { RESET_STORY_ARGS } = __STORYBOOK_MODULE_CORE_EVENTS__;\nimport PreviewRender from \"@storybook/svelte/internal/PreviewRender.svelte\";\nimport { createReactiveProps } from \"@storybook/svelte/internal/createReactiveProps\";\nconst { addons } = __STORYBOOK_MODULE_PREVIEW_API__;\nimport * as svelte from \"svelte\";\nvar storyIdsToRemountFromResetArgsEvent = /* @__PURE__ */ new Set();\naddons.getChannel().on(RESET_STORY_ARGS, ({ storyId }) => {\n  storyIdsToRemountFromResetArgsEvent.add(storyId);\n});\nvar componentsByDomElement = /* @__PURE__ */ new Map();\nasync function renderToCanvas({\n  storyFn,\n  title,\n  name,\n  showMain,\n  showError,\n  storyContext,\n  forceRemount\n}, canvasElement) {\n  function unmount2(canvasElementToUnmount) {\n    const { mountedComponent } = componentsByDomElement.get(canvasElementToUnmount) ?? {};\n    if (!mountedComponent) {\n      return;\n    }\n    svelte.unmount(mountedComponent);\n    componentsByDomElement.delete(canvasElementToUnmount);\n  }\n  __name(unmount2, \"unmount\");\n  const existingComponent = componentsByDomElement.get(canvasElement);\n  let remount = forceRemount;\n  if (storyIdsToRemountFromResetArgsEvent.has(storyContext.id)) {\n    remount = true;\n    storyIdsToRemountFromResetArgsEvent.delete(storyContext.id);\n  }\n  if (remount) {\n    unmount2(canvasElement);\n  }\n  if (!existingComponent || remount) {\n    const props = createReactiveProps({\n      storyFn,\n      storyContext,\n      name,\n      title,\n      showError\n    });\n    const mountedComponent = svelte.mount(PreviewRender, {\n      target: canvasElement,\n      props\n    });\n    componentsByDomElement.set(canvasElement, { mountedComponent, props });\n    await svelte.tick();\n  } else {\n    Object.assign(existingComponent.props, {\n      storyFn,\n      storyContext,\n      name,\n      title,\n      showError\n    });\n    await svelte.tick();\n  }\n  showMain();\n  return () => {\n    unmount2(canvasElement);\n  };\n}\n__name(renderToCanvas, \"renderToCanvas\");\nvar render = /* @__PURE__ */ __name((args, context) => {\n  const { id, component: Component } = context;\n  if (!Component) {\n    throw new Error(\n      `Unable to render story ${id} as the component annotation is missing from the default export`\n    );\n  }\n  return { Component, props: args };\n}, \"render\");\n\n// src/decorators.ts\nimport DecoratorHandler from \"@storybook/svelte/internal/DecoratorHandler.svelte\";\nconst { sanitizeStoryContextUpdate } = __STORYBOOK_MODULE_PREVIEW_API__;\nfunction unWrap(obj) {\n  return obj && typeof obj === \"object\" && \"default\" in obj ? obj.default : obj;\n}\n__name(unWrap, \"unWrap\");\nfunction prepareStory(context, rawStory, rawInnerStory) {\n  const story = unWrap(rawStory);\n  const innerStory = rawInnerStory && unWrap(rawInnerStory);\n  let preparedStory;\n  if (!story || Object.keys(story).length === 0) {\n    preparedStory = {\n      Component: context.component\n    };\n  } else if (story.Component) {\n    preparedStory = story;\n  } else {\n    preparedStory = {\n      Component: story\n    };\n  }\n  if (innerStory) {\n    return {\n      Component: DecoratorHandler,\n      props: {\n        // inner stories will already have been prepared, keep as is\n        ...innerStory,\n        decorator: preparedStory\n      }\n    };\n  }\n  return { ...preparedStory, argTypes: context.argTypes };\n}\n__name(prepareStory, \"prepareStory\");\nfunction decorateStory(storyFn, decorators) {\n  return decorators.reduce(\n    (decorated, decorator) => (context) => {\n      let story;\n      const decoratedStory = decorator((update) => {\n        story = decorated({\n          ...context,\n          ...sanitizeStoryContextUpdate(update)\n        });\n        return story;\n      }, context);\n      if (!story) {\n        story = decorated(context);\n      }\n      if (decoratedStory === story) {\n        return story;\n      }\n      return prepareStory(context, decoratedStory, story);\n    },\n    (context) => prepareStory(context, storyFn(context))\n  );\n}\n__name(decorateStory, \"decorateStory\");\n\n// src/mount.ts\nvar mount2 = /* @__PURE__ */ __name((context) => {\n  return async (Component, options) => {\n    if (Component) {\n      context.originalStoryFn = () => ({\n        Component,\n        props: options && \"props\" in options ? options?.props : options\n      });\n    }\n    await context.renderToCanvas();\n    return context.canvas;\n  };\n}, \"mount\");\n\n// src/entry-preview.ts\nvar parameters = {\n  renderer: \"svelte\",\n  docs: {\n    story: { inline: true },\n    extractArgTypes,\n    extractComponentDescription\n  }\n};\nvar argTypesEnhancers = [enhanceArgTypes];\n\nexport {\n  renderToCanvas,\n  render,\n  decorateStory,\n  mount2 as mount,\n  parameters,\n  argTypesEnhancers,\n  entry_preview_exports\n};\n",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "post",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767141,
+      "end": 1762256767141,
+      "order": "normal"
+    }
+  ]
+}

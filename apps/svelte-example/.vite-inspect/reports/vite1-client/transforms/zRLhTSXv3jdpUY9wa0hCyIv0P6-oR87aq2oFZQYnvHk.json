@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/_browser-chunks/chunk-FSBVR7H5.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __name\n} from \"./chunk-MM7DTO55.js\";\n\n// ../node_modules/es-toolkit/dist/predicate/isPlainObject.mjs\nfunction isPlainObject(value) {\n  if (!value || typeof value !== \"object\") {\n    return false;\n  }\n  const proto = Object.getPrototypeOf(value);\n  const hasObjectPrototype = proto === null || proto === Object.prototype || Object.getPrototypeOf(proto) === null;\n  if (!hasObjectPrototype) {\n    return false;\n  }\n  return Object.prototype.toString.call(value) === \"[object Object]\";\n}\n__name(isPlainObject, \"isPlainObject\");\n\n// ../node_modules/es-toolkit/dist/predicate/isPrimitive.mjs\nfunction isPrimitive(value) {\n  return value == null || typeof value !== \"object\" && typeof value !== \"function\";\n}\n__name(isPrimitive, \"isPrimitive\");\n\n// ../node_modules/es-toolkit/dist/predicate/isTypedArray.mjs\nfunction isTypedArray(x) {\n  return ArrayBuffer.isView(x) && !(x instanceof DataView);\n}\n__name(isTypedArray, \"isTypedArray\");\n\n// ../node_modules/es-toolkit/dist/compat/_internal/getSymbols.mjs\nfunction getSymbols(object) {\n  return Object.getOwnPropertySymbols(object).filter((symbol) => Object.prototype.propertyIsEnumerable.call(object, symbol));\n}\n__name(getSymbols, \"getSymbols\");\n\n// ../node_modules/es-toolkit/dist/compat/_internal/getTag.mjs\nfunction getTag(value) {\n  if (value == null) {\n    return value === void 0 ? \"[object Undefined]\" : \"[object Null]\";\n  }\n  return Object.prototype.toString.call(value);\n}\n__name(getTag, \"getTag\");\n\n// ../node_modules/es-toolkit/dist/compat/_internal/tags.mjs\nvar regexpTag = \"[object RegExp]\";\nvar stringTag = \"[object String]\";\nvar numberTag = \"[object Number]\";\nvar booleanTag = \"[object Boolean]\";\nvar argumentsTag = \"[object Arguments]\";\nvar symbolTag = \"[object Symbol]\";\nvar dateTag = \"[object Date]\";\nvar mapTag = \"[object Map]\";\nvar setTag = \"[object Set]\";\nvar arrayTag = \"[object Array]\";\nvar functionTag = \"[object Function]\";\nvar arrayBufferTag = \"[object ArrayBuffer]\";\nvar objectTag = \"[object Object]\";\nvar errorTag = \"[object Error]\";\nvar dataViewTag = \"[object DataView]\";\nvar uint8ArrayTag = \"[object Uint8Array]\";\nvar uint8ClampedArrayTag = \"[object Uint8ClampedArray]\";\nvar uint16ArrayTag = \"[object Uint16Array]\";\nvar uint32ArrayTag = \"[object Uint32Array]\";\nvar bigUint64ArrayTag = \"[object BigUint64Array]\";\nvar int8ArrayTag = \"[object Int8Array]\";\nvar int16ArrayTag = \"[object Int16Array]\";\nvar int32ArrayTag = \"[object Int32Array]\";\nvar bigInt64ArrayTag = \"[object BigInt64Array]\";\nvar float32ArrayTag = \"[object Float32Array]\";\nvar float64ArrayTag = \"[object Float64Array]\";\n\nexport {\n  isPrimitive,\n  isTypedArray,\n  getSymbols,\n  getTag,\n  regexpTag,\n  stringTag,\n  numberTag,\n  booleanTag,\n  argumentsTag,\n  symbolTag,\n  dateTag,\n  mapTag,\n  setTag,\n  arrayTag,\n  functionTag,\n  arrayBufferTag,\n  objectTag,\n  errorTag,\n  dataViewTag,\n  uint8ArrayTag,\n  uint8ClampedArrayTag,\n  uint16ArrayTag,\n  uint32ArrayTag,\n  bigUint64ArrayTag,\n  int8ArrayTag,\n  int16ArrayTag,\n  int32ArrayTag,\n  bigInt64ArrayTag,\n  float32ArrayTag,\n  float64ArrayTag,\n  isPlainObject\n};\n",
+      "start": 1762256767098,
+      "end": 1762256767137,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767137,
+      "end": 1762256767137,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/mocks/app/stores.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __name\n} from \"../../_browser-chunks/chunk-JFJ5UJ7Q.js\";\n\n// src/mocks/app/stores.ts\nimport { getContext, setContext } from \"svelte\";\nfunction createMockedStore(contextName) {\n  return [\n    {\n      subscribe(runner) {\n        const page2 = getContext(contextName);\n        runner(page2);\n        return () => {\n        };\n      }\n    },\n    (value) => {\n      setContext(contextName, value);\n    }\n  ];\n}\n__name(createMockedStore, \"createMockedStore\");\nvar [page, setAppStoresPage] = createMockedStore(\"page-ctx\");\nvar [navigating, setAppStoresNavigating] = createMockedStore(\"navigating-ctx\");\nvar [updated, setAppStoresUpdated] = createMockedStore(\"updated-ctx\");\nupdated.check = () => {\n};\nfunction getStores() {\n  return {\n    page,\n    navigating,\n    updated\n  };\n}\n__name(getStores, \"getStores\");\nexport {\n  getStores,\n  navigating,\n  page,\n  setAppStoresNavigating,\n  setAppStoresPage,\n  setAppStoresUpdated,\n  updated\n};\n",
+      "start": 1762256767740,
+      "end": 1762256767779,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    }
+  ]
+}

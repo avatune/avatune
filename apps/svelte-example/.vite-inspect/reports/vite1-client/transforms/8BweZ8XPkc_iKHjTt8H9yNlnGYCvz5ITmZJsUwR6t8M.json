@@ -1,0 +1,134 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@vitest/mocker/dist/browser.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export { M as ModuleMocker, c as createCompilerHints } from './chunk-mocker.js';\nimport { M as MockerRegistry } from './chunk-registry.js';\nimport { c as createManualModuleSource, a as cleanUrl } from './chunk-utils.js';\nexport { M as ModuleMockerServerInterceptor } from './chunk-interceptor-native.js';\nimport './index.js';\nimport './chunk-pathe.M-eThtNZ.js';\n\nclass ModuleMockerMSWInterceptor {\n\tmocks = new MockerRegistry();\n\tstartPromise;\n\tworker;\n\tconstructor(options = {}) {\n\t\tthis.options = options;\n\t\tif (!options.globalThisAccessor) {\n\t\t\toptions.globalThisAccessor = \"\\\"__vitest_mocker__\\\"\";\n\t\t}\n\t}\n\tasync register(module) {\n\t\tawait this.init();\n\t\tthis.mocks.add(module);\n\t}\n\tasync delete(url) {\n\t\tawait this.init();\n\t\tthis.mocks.delete(url);\n\t}\n\tasync invalidate() {\n\t\tthis.mocks.clear();\n\t}\n\tasync resolveManualMock(mock) {\n\t\tconst exports = Object.keys(await mock.resolve());\n\t\tconst text = createManualModuleSource(mock.url, exports, this.options.globalThisAccessor);\n\t\treturn new Response(text, { headers: { \"Content-Type\": \"application/javascript\" } });\n\t}\n\tasync init() {\n\t\tif (this.worker) {\n\t\t\treturn this.worker;\n\t\t}\n\t\tif (this.startPromise) {\n\t\t\treturn this.startPromise;\n\t\t}\n\t\tconst worker = this.options.mswWorker;\n\t\tthis.startPromise = Promise.all([worker ? { setupWorker(handler) {\n\t\t\tworker.use(handler);\n\t\t\treturn worker;\n\t\t} } : import('msw/browser'), import('msw/core/http')]).then(([{ setupWorker }, { http }]) => {\n\t\t\tconst worker = setupWorker(http.get(/.+/, async ({ request }) => {\n\t\t\t\tconst path = cleanQuery(request.url.slice(location.origin.length));\n\t\t\t\tif (!this.mocks.has(path)) {\n\t\t\t\t\treturn passthrough();\n\t\t\t\t}\n\t\t\t\tconst mock = this.mocks.get(path);\n\t\t\t\tswitch (mock.type) {\n\t\t\t\t\tcase \"manual\": return this.resolveManualMock(mock);\n\t\t\t\t\tcase \"automock\":\n\t\t\t\t\tcase \"autospy\": return Response.redirect(injectQuery(path, `mock=${mock.type}`));\n\t\t\t\t\tcase \"redirect\": return Response.redirect(mock.redirect);\n\t\t\t\t\tdefault: throw new Error(`Unknown mock type: ${mock.type}`);\n\t\t\t\t}\n\t\t\t}));\n\t\t\treturn worker.start(this.options.mswOptions).then(() => worker);\n\t\t}).finally(() => {\n\t\t\tthis.worker = worker;\n\t\t\tthis.startPromise = undefined;\n\t\t});\n\t\treturn await this.startPromise;\n\t}\n}\nconst trailingSeparatorRE = /[?&]$/;\nconst timestampRE = /\\bt=\\d{13}&?\\b/;\nconst versionRE = /\\bv=\\w{8}&?\\b/;\nfunction cleanQuery(url) {\n\treturn url.replace(timestampRE, \"\").replace(versionRE, \"\").replace(trailingSeparatorRE, \"\");\n}\nfunction passthrough() {\n\treturn new Response(null, {\n\t\tstatus: 302,\n\t\tstatusText: \"Passthrough\",\n\t\theaders: { \"x-msw-intention\": \"passthrough\" }\n\t});\n}\nconst replacePercentageRE = /%/g;\nfunction injectQuery(url, queryToInject) {\n\t// encode percents for consistent behavior with pathToFileURL\n\t// see #2614 for details\n\tconst resolvedUrl = new URL(url.replace(replacePercentageRE, \"%25\"), location.href);\n\tconst { search, hash } = resolvedUrl;\n\tconst pathname = cleanUrl(url);\n\treturn `${pathname}?${queryToInject}${search ? `&${search.slice(1)}` : \"\"}${hash ?? \"\"}`;\n}\n\nexport { ModuleMockerMSWInterceptor };\n",
+      "start": 1762256767011,
+      "end": 1762256767034,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767035,
+      "end": 1762256767035,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "result": "import { __vitePreload } from \"\u0000vite/preload-helper.js\";export { M as ModuleMocker, c as createCompilerHints } from './chunk-mocker.js';\nimport { M as MockerRegistry } from './chunk-registry.js';\nimport { c as createManualModuleSource, a as cleanUrl } from './chunk-utils.js';\nexport { M as ModuleMockerServerInterceptor } from './chunk-interceptor-native.js';\nimport './index.js';\nimport './chunk-pathe.M-eThtNZ.js';\n\nclass ModuleMockerMSWInterceptor {\n\tmocks = new MockerRegistry();\n\tstartPromise;\n\tworker;\n\tconstructor(options = {}) {\n\t\tthis.options = options;\n\t\tif (!options.globalThisAccessor) {\n\t\t\toptions.globalThisAccessor = \"\\\"__vitest_mocker__\\\"\";\n\t\t}\n\t}\n\tasync register(module) {\n\t\tawait this.init();\n\t\tthis.mocks.add(module);\n\t}\n\tasync delete(url) {\n\t\tawait this.init();\n\t\tthis.mocks.delete(url);\n\t}\n\tasync invalidate() {\n\t\tthis.mocks.clear();\n\t}\n\tasync resolveManualMock(mock) {\n\t\tconst exports = Object.keys(await mock.resolve());\n\t\tconst text = createManualModuleSource(mock.url, exports, this.options.globalThisAccessor);\n\t\treturn new Response(text, { headers: { \"Content-Type\": \"application/javascript\" } });\n\t}\n\tasync init() {\n\t\tif (this.worker) {\n\t\t\treturn this.worker;\n\t\t}\n\t\tif (this.startPromise) {\n\t\t\treturn this.startPromise;\n\t\t}\n\t\tconst worker = this.options.mswWorker;\n\t\tthis.startPromise = Promise.all([worker ? { setupWorker(handler) {\n\t\t\tworker.use(handler);\n\t\t\treturn worker;\n\t\t} } : __vitePreload(() => import('msw/browser'),__VITE_IS_MODERN__?__VITE_PRELOAD__:void 0,import.meta.url), __vitePreload(() => import('msw/core/http'),__VITE_IS_MODERN__?__VITE_PRELOAD__:void 0,import.meta.url)]).then(([{ setupWorker }, { http }]) => {\n\t\t\tconst worker = setupWorker(http.get(/.+/, async ({ request }) => {\n\t\t\t\tconst path = cleanQuery(request.url.slice(location.origin.length));\n\t\t\t\tif (!this.mocks.has(path)) {\n\t\t\t\t\treturn passthrough();\n\t\t\t\t}\n\t\t\t\tconst mock = this.mocks.get(path);\n\t\t\t\tswitch (mock.type) {\n\t\t\t\t\tcase \"manual\": return this.resolveManualMock(mock);\n\t\t\t\t\tcase \"automock\":\n\t\t\t\t\tcase \"autospy\": return Response.redirect(injectQuery(path, `mock=${mock.type}`));\n\t\t\t\t\tcase \"redirect\": return Response.redirect(mock.redirect);\n\t\t\t\t\tdefault: throw new Error(`Unknown mock type: ${mock.type}`);\n\t\t\t\t}\n\t\t\t}));\n\t\t\treturn worker.start(this.options.mswOptions).then(() => worker);\n\t\t}).finally(() => {\n\t\t\tthis.worker = worker;\n\t\t\tthis.startPromise = undefined;\n\t\t});\n\t\treturn await this.startPromise;\n\t}\n}\nconst trailingSeparatorRE = /[?&]$/;\nconst timestampRE = /\\bt=\\d{13}&?\\b/;\nconst versionRE = /\\bv=\\w{8}&?\\b/;\nfunction cleanQuery(url) {\n\treturn url.replace(timestampRE, \"\").replace(versionRE, \"\").replace(trailingSeparatorRE, \"\");\n}\nfunction passthrough() {\n\treturn new Response(null, {\n\t\tstatus: 302,\n\t\tstatusText: \"Passthrough\",\n\t\theaders: { \"x-msw-intention\": \"passthrough\" }\n\t});\n}\nconst replacePercentageRE = /%/g;\nfunction injectQuery(url, queryToInject) {\n\t// encode percents for consistent behavior with pathToFileURL\n\t// see #2614 for details\n\tconst resolvedUrl = new URL(url.replace(replacePercentageRE, \"%25\"), location.href);\n\tconst { search, hash } = resolvedUrl;\n\tconst pathname = cleanUrl(url);\n\treturn `${pathname}?${queryToInject}${search ? `&${search.slice(1)}` : \"\"}${hash ?? \"\"}`;\n}\n\nexport { ModuleMockerMSWInterceptor };\n",
+      "start": 1762256767035,
+      "end": 1762256767036,
+      "order": "normal-normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767036,
+      "end": 1762256767036,
+      "order": "normal"
+    }
+  ]
+}

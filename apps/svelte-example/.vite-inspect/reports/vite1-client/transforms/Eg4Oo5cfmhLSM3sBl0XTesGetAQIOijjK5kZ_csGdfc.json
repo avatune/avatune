@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@vitest/mocker/dist/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export { A as AutomockedModule, b as AutospiedModule, a as ManualMockedModule, M as MockerRegistry, R as RedirectedModule } from './chunk-registry.js';\n\nfunction mockObject(options, object, mockExports = {}) {\n\tconst finalizers = new Array();\n\tconst refs = new RefTracker();\n\tconst define = (container, key, value) => {\n\t\ttry {\n\t\t\tcontainer[key] = value;\n\t\t\treturn true;\n\t\t} catch {\n\t\t\treturn false;\n\t\t}\n\t};\n\tconst mockPropertiesOf = (container, newContainer) => {\n\t\tconst containerType = getType(container);\n\t\tconst isModule = containerType === \"Module\" || !!container.__esModule;\n\t\tfor (const { key: property, descriptor } of getAllMockableProperties(container, isModule, options.globalConstructors)) {\n\t\t\t// Modules define their exports as getters. We want to process those.\n\t\t\tif (!isModule && descriptor.get) {\n\t\t\t\ttry {\n\t\t\t\t\tObject.defineProperty(newContainer, property, descriptor);\n\t\t\t\t} catch {}\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\t// Skip special read-only props, we don't want to mess with those.\n\t\t\tif (isSpecialProp(property, containerType)) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tconst value = container[property];\n\t\t\t// Special handling of references we've seen before to prevent infinite\n\t\t\t// recursion in circular objects.\n\t\t\tconst refId = refs.getId(value);\n\t\t\tif (refId !== undefined) {\n\t\t\t\tfinalizers.push(() => define(newContainer, property, refs.getMockedValue(refId)));\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tconst type = getType(value);\n\t\t\tif (Array.isArray(value)) {\n\t\t\t\tdefine(newContainer, property, []);\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tconst isFunction = type.includes(\"Function\") && typeof value === \"function\";\n\t\t\tif ((!isFunction || value._isMockFunction) && type !== \"Object\" && type !== \"Module\") {\n\t\t\t\tdefine(newContainer, property, value);\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\t// Sometimes this assignment fails for some unknown reason. If it does,\n\t\t\t// just move along.\n\t\t\tif (!define(newContainer, property, isFunction ? value : {})) {\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t\tif (isFunction) {\n\t\t\t\tif (!options.spyOn) {\n\t\t\t\t\tthrow new Error(\"[@vitest/mocker] `spyOn` is not defined. This is a Vitest error. Please open a new issue with reproduction.\");\n\t\t\t\t}\n\t\t\t\tconst spyOn = options.spyOn;\n\t\t\t\tfunction mockFunction() {\n\t\t\t\t\t// detect constructor call and mock each instance's methods\n\t\t\t\t\t// so that mock states between prototype/instances don't affect each other\n\t\t\t\t\t// (jest reference https://github.com/jestjs/jest/blob/2c3d2409879952157433de215ae0eee5188a4384/packages/jest-mock/src/index.ts#L678-L691)\n\t\t\t\t\tif (this instanceof newContainer[property]) {\n\t\t\t\t\t\tfor (const { key, descriptor } of getAllMockableProperties(this, false, options.globalConstructors)) {\n\t\t\t\t\t\t\t// skip getter since it's not mocked on prototype as well\n\t\t\t\t\t\t\tif (descriptor.get) {\n\t\t\t\t\t\t\t\tcontinue;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tconst value = this[key];\n\t\t\t\t\t\t\tconst type = getType(value);\n\t\t\t\t\t\t\tconst isFunction = type.includes(\"Function\") && typeof value === \"function\";\n\t\t\t\t\t\t\tif (isFunction) {\n\t\t\t\t\t\t\t\t// mock and delegate calls to original prototype method, which should be also mocked already\n\t\t\t\t\t\t\t\tconst original = this[key];\n\t\t\t\t\t\t\t\tconst mock = spyOn(this, key).mockImplementation(original);\n\t\t\t\t\t\t\t\tconst origMockReset = mock.mockReset;\n\t\t\t\t\t\t\t\tmock.mockRestore = mock.mockReset = () => {\n\t\t\t\t\t\t\t\t\torigMockReset.call(mock);\n\t\t\t\t\t\t\t\t\tmock.mockImplementation(original);\n\t\t\t\t\t\t\t\t\treturn mock;\n\t\t\t\t\t\t\t\t};\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tconst mock = spyOn(newContainer, property);\n\t\t\t\tif (options.type === \"automock\") {\n\t\t\t\t\tmock.mockImplementation(mockFunction);\n\t\t\t\t\tconst origMockReset = mock.mockReset;\n\t\t\t\t\tmock.mockRestore = mock.mockReset = () => {\n\t\t\t\t\t\torigMockReset.call(mock);\n\t\t\t\t\t\tmock.mockImplementation(mockFunction);\n\t\t\t\t\t\treturn mock;\n\t\t\t\t\t};\n\t\t\t\t}\n\t\t\t\t// tinyspy retains length, but jest doesn't.\n\t\t\t\tObject.defineProperty(newContainer[property], \"length\", { value: 0 });\n\t\t\t}\n\t\t\trefs.track(value, newContainer[property]);\n\t\t\tmockPropertiesOf(value, newContainer[property]);\n\t\t}\n\t};\n\tconst mockedObject = mockExports;\n\tmockPropertiesOf(object, mockedObject);\n\t// Plug together refs\n\tfor (const finalizer of finalizers) {\n\t\tfinalizer();\n\t}\n\treturn mockedObject;\n}\nclass RefTracker {\n\tidMap = new Map();\n\tmockedValueMap = new Map();\n\tgetId(value) {\n\t\treturn this.idMap.get(value);\n\t}\n\tgetMockedValue(id) {\n\t\treturn this.mockedValueMap.get(id);\n\t}\n\ttrack(originalValue, mockedValue) {\n\t\tconst newId = this.idMap.size;\n\t\tthis.idMap.set(originalValue, newId);\n\t\tthis.mockedValueMap.set(newId, mockedValue);\n\t\treturn newId;\n\t}\n}\nfunction getType(value) {\n\treturn Object.prototype.toString.apply(value).slice(8, -1);\n}\nfunction isSpecialProp(prop, parentType) {\n\treturn parentType.includes(\"Function\") && typeof prop === \"string\" && [\n\t\t\"arguments\",\n\t\t\"callee\",\n\t\t\"caller\",\n\t\t\"length\",\n\t\t\"name\"\n\t].includes(prop);\n}\nfunction getAllMockableProperties(obj, isModule, constructors) {\n\tconst { Map, Object, Function, RegExp, Array } = constructors;\n\tconst allProps = new Map();\n\tlet curr = obj;\n\tdo {\n\t\t// we don't need properties from these\n\t\tif (curr === Object.prototype || curr === Function.prototype || curr === RegExp.prototype) {\n\t\t\tbreak;\n\t\t}\n\t\tcollectOwnProperties(curr, (key) => {\n\t\t\tconst descriptor = Object.getOwnPropertyDescriptor(curr, key);\n\t\t\tif (descriptor) {\n\t\t\t\tallProps.set(key, {\n\t\t\t\t\tkey,\n\t\t\t\t\tdescriptor\n\t\t\t\t});\n\t\t\t}\n\t\t});\n\t} while (curr = Object.getPrototypeOf(curr));\n\t// default is not specified in ownKeys, if module is interoped\n\tif (isModule && !allProps.has(\"default\") && \"default\" in obj) {\n\t\tconst descriptor = Object.getOwnPropertyDescriptor(obj, \"default\");\n\t\tif (descriptor) {\n\t\t\tallProps.set(\"default\", {\n\t\t\t\tkey: \"default\",\n\t\t\t\tdescriptor\n\t\t\t});\n\t\t}\n\t}\n\treturn Array.from(allProps.values());\n}\nfunction collectOwnProperties(obj, collector) {\n\tconst collect = typeof collector === \"function\" ? collector : (key) => collector.add(key);\n\tObject.getOwnPropertyNames(obj).forEach(collect);\n\tObject.getOwnPropertySymbols(obj).forEach(collect);\n}\n\nexport { mockObject };\n",
+      "start": 1762256767011,
+      "end": 1762256767033,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767033,
+      "end": 1762256767033,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767034,
+      "end": 1762256767034,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/window.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { effect, render_effect, teardown } from '../../../reactivity/effects.js';\nimport { listen, without_reactive_context } from './shared.js';\n\n/**\n * @param {'x' | 'y'} type\n * @param {() => number} get\n * @param {(value: number) => void} set\n * @returns {void}\n */\nexport function bind_window_scroll(type, get, set = get) {\n\tvar is_scrolling_x = type === 'x';\n\n\tvar target_handler = () =>\n\t\twithout_reactive_context(() => {\n\t\t\tscrolling = true;\n\t\t\tclearTimeout(timeout);\n\t\t\ttimeout = setTimeout(clear, 100); // TODO use scrollend event if supported (or when supported everywhere?)\n\n\t\t\tset(window[is_scrolling_x ? 'scrollX' : 'scrollY']);\n\t\t});\n\n\taddEventListener('scroll', target_handler, {\n\t\tpassive: true\n\t});\n\n\tvar scrolling = false;\n\n\t/** @type {ReturnType<typeof setTimeout>} */\n\tvar timeout;\n\tvar clear = () => {\n\t\tscrolling = false;\n\t};\n\tvar first = true;\n\n\trender_effect(() => {\n\t\tvar latest_value = get();\n\t\t// Don't scroll to the initial value for accessibility reasons\n\t\tif (first) {\n\t\t\tfirst = false;\n\t\t} else if (!scrolling && latest_value != null) {\n\t\t\tscrolling = true;\n\t\t\tclearTimeout(timeout);\n\t\t\tif (is_scrolling_x) {\n\t\t\t\tscrollTo(latest_value, window.scrollY);\n\t\t\t} else {\n\t\t\t\tscrollTo(window.scrollX, latest_value);\n\t\t\t}\n\t\t\ttimeout = setTimeout(clear, 100);\n\t\t}\n\t});\n\n\t// Browsers don't fire the scroll event for the initial scroll position when scroll style isn't set to smooth\n\teffect(target_handler);\n\n\tteardown(() => {\n\t\tremoveEventListener('scroll', target_handler);\n\t});\n}\n\n/**\n * @param {'innerWidth' | 'innerHeight' | 'outerWidth' | 'outerHeight'} type\n * @param {(size: number) => void} set\n */\nexport function bind_window_size(type, set) {\n\tlisten(window, ['resize'], () => without_reactive_context(() => set(window[type])));\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767829,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    }
+  ]
+}

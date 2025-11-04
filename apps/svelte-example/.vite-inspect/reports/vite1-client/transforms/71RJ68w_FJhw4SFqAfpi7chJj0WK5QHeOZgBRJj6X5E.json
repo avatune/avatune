@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/array/findLast.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { identity } from '../../function/identity.mjs';\nimport { iteratee } from '../util/iteratee.mjs';\nimport { toInteger } from '../util/toInteger.mjs';\n\nfunction findLast(source, _doesMatch = identity, fromIndex) {\n    if (!source) {\n        return undefined;\n    }\n    const length = Array.isArray(source) ? source.length : Object.keys(source).length;\n    fromIndex = toInteger(fromIndex ?? length - 1);\n    if (fromIndex < 0) {\n        fromIndex = Math.max(length + fromIndex, 0);\n    }\n    else {\n        fromIndex = Math.min(fromIndex, length - 1);\n    }\n    const doesMatch = iteratee(_doesMatch);\n    if (!Array.isArray(source)) {\n        const keys = Object.keys(source);\n        for (let i = fromIndex; i >= 0; i--) {\n            const key = keys[i];\n            const value = source[key];\n            if (doesMatch(value, key, source)) {\n                return value;\n            }\n        }\n        return undefined;\n    }\n    return source.slice(0, fromIndex + 1).findLast(doesMatch);\n}\n\nexport { findLast };\n",
+      "start": 1762256768011,
+      "end": 1762256768118,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768118,
+      "end": 1762256768118,
+      "order": "normal"
+    }
+  ]
+}

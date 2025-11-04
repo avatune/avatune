@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/shared.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { teardown } from '../../../reactivity/effects.js';\nimport {\n\tactive_effect,\n\tactive_reaction,\n\tset_active_effect,\n\tset_active_reaction\n} from '../../../runtime.js';\nimport { add_form_reset_listener } from '../misc.js';\n\n/**\n * Fires the handler once immediately (unless corresponding arg is set to `false`),\n * then listens to the given events until the render effect context is destroyed\n * @param {EventTarget} target\n * @param {Array<string>} events\n * @param {(event?: Event) => void} handler\n * @param {any} call_handler_immediately\n */\nexport function listen(target, events, handler, call_handler_immediately = true) {\n\tif (call_handler_immediately) {\n\t\thandler();\n\t}\n\n\tfor (var name of events) {\n\t\ttarget.addEventListener(name, handler);\n\t}\n\n\tteardown(() => {\n\t\tfor (var name of events) {\n\t\t\ttarget.removeEventListener(name, handler);\n\t\t}\n\t});\n}\n\n/**\n * @template T\n * @param {() => T} fn\n */\nexport function without_reactive_context(fn) {\n\tvar previous_reaction = active_reaction;\n\tvar previous_effect = active_effect;\n\tset_active_reaction(null);\n\tset_active_effect(null);\n\ttry {\n\t\treturn fn();\n\t} finally {\n\t\tset_active_reaction(previous_reaction);\n\t\tset_active_effect(previous_effect);\n\t}\n}\n\n/**\n * Listen to the given event, and then instantiate a global form reset listener if not already done,\n * to notify all bindings when the form is reset\n * @param {HTMLElement} element\n * @param {string} event\n * @param {(is_reset?: true) => void} handler\n * @param {(is_reset?: true) => void} [on_reset]\n */\nexport function listen_to_event_and_reset_event(element, event, handler, on_reset = handler) {\n\telement.addEventListener(event, () => without_reactive_context(handler));\n\t// @ts-expect-error\n\tconst prev = element.__on_r;\n\tif (prev) {\n\t\t// special case for checkbox that can have multiple binds (group & checked)\n\t\t// @ts-expect-error\n\t\telement.__on_r = () => {\n\t\t\tprev();\n\t\t\ton_reset(true);\n\t\t};\n\t} else {\n\t\t// @ts-expect-error\n\t\telement.__on_r = () => on_reset(true);\n\t}\n\n\tadd_form_reset_listener();\n}\n",
+      "start": 1762256767800,
+      "end": 1762256767885,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767885,
+      "end": 1762256767885,
+      "order": "normal"
+    }
+  ]
+}

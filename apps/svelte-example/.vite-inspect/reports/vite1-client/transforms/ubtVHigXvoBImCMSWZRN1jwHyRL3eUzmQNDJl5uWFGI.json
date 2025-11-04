@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/ts-dedent/esm/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export function dedent(templ) {\n    var values = [];\n    for (var _i = 1; _i < arguments.length; _i++) {\n        values[_i - 1] = arguments[_i];\n    }\n    var strings = Array.from(typeof templ === 'string' ? [templ] : templ);\n    strings[strings.length - 1] = strings[strings.length - 1].replace(/\\r?\\n([\\t ]*)$/, '');\n    var indentLengths = strings.reduce(function (arr, str) {\n        var matches = str.match(/\\n([\\t ]+|(?!\\s).)/g);\n        if (matches) {\n            return arr.concat(matches.map(function (match) { var _a, _b; return (_b = (_a = match.match(/[\\t ]/g)) === null || _a === void 0 ? void 0 : _a.length) !== null && _b !== void 0 ? _b : 0; }));\n        }\n        return arr;\n    }, []);\n    if (indentLengths.length) {\n        var pattern_1 = new RegExp(\"\\n[\\t ]{\" + Math.min.apply(Math, indentLengths) + \"}\", 'g');\n        strings = strings.map(function (str) { return str.replace(pattern_1, '\\n'); });\n    }\n    strings[0] = strings[0].replace(/^\\r?\\n/, '');\n    var string = strings[0];\n    values.forEach(function (value, i) {\n        var endentations = string.match(/(?:^|\\n)( *)$/);\n        var endentation = endentations ? endentations[1] : '';\n        var indentedValue = value;\n        if (typeof value === 'string' && value.includes('\\n')) {\n            indentedValue = String(value)\n                .split('\\n')\n                .map(function (str, i) {\n                return i === 0 ? str : \"\" + endentation + str;\n            })\n                .join('\\n');\n        }\n        string += indentedValue + strings[i + 1];\n    });\n    return string;\n}\nexport default dedent;\n//# sourceMappingURL=index.js.map",
+      "start": 1762256767742,
+      "end": 1762256767779,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767779,
+      "end": 1762256767779,
+      "order": "normal"
+    }
+  ]
+}

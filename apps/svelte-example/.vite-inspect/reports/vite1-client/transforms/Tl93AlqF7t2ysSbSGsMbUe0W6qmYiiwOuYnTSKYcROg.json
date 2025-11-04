@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/keysIn.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isBuffer } from '../../predicate/isBuffer.mjs';\nimport { isPrototype } from '../_internal/isPrototype.mjs';\nimport { isArrayLike } from '../predicate/isArrayLike.mjs';\nimport { isTypedArray } from '../predicate/isTypedArray.mjs';\nimport { times } from '../util/times.mjs';\n\nfunction keysIn(object) {\n    if (object == null) {\n        return [];\n    }\n    switch (typeof object) {\n        case 'object':\n        case 'function': {\n            if (isArrayLike(object)) {\n                return arrayLikeKeysIn(object);\n            }\n            if (isPrototype(object)) {\n                return prototypeKeysIn(object);\n            }\n            return keysInImpl(object);\n        }\n        default: {\n            return keysInImpl(Object(object));\n        }\n    }\n}\nfunction keysInImpl(object) {\n    const result = [];\n    for (const key in object) {\n        result.push(key);\n    }\n    return result;\n}\nfunction prototypeKeysIn(object) {\n    const keys = keysInImpl(object);\n    return keys.filter(key => key !== 'constructor');\n}\nfunction arrayLikeKeysIn(object) {\n    const indices = times(object.length, index => `${index}`);\n    const filteredKeys = new Set(indices);\n    if (isBuffer(object)) {\n        filteredKeys.add('offset');\n        filteredKeys.add('parent');\n    }\n    if (isTypedArray(object)) {\n        filteredKeys.add('buffer');\n        filteredKeys.add('byteLength');\n        filteredKeys.add('byteOffset');\n    }\n    return [...indices, ...keysInImpl(object).filter(key => !filteredKeys.has(key))];\n}\n\nexport { keysIn };\n",
+      "start": 1762256768011,
+      "end": 1762256768126,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    }
+  ]
+}

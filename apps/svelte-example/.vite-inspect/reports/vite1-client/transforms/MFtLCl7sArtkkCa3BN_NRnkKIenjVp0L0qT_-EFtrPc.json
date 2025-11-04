@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/elements/bindings/universal.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { render_effect, teardown } from '../../../reactivity/effects.js';\nimport { listen } from './shared.js';\n\n/**\n * @param {'innerHTML' | 'textContent' | 'innerText'} property\n * @param {HTMLElement} element\n * @param {() => unknown} get\n * @param {(value: unknown) => void} set\n * @returns {void}\n */\nexport function bind_content_editable(property, element, get, set = get) {\n\telement.addEventListener('input', () => {\n\t\t// @ts-ignore\n\t\tset(element[property]);\n\t});\n\n\trender_effect(() => {\n\t\tvar value = get();\n\n\t\tif (element[property] !== value) {\n\t\t\tif (value == null) {\n\t\t\t\t// @ts-ignore\n\t\t\t\tvar non_null_value = element[property];\n\t\t\t\tset(non_null_value);\n\t\t\t} else {\n\t\t\t\t// @ts-ignore\n\t\t\t\telement[property] = value + '';\n\t\t\t}\n\t\t}\n\t});\n}\n\n/**\n * @param {string} property\n * @param {string} event_name\n * @param {Element} element\n * @param {(value: unknown) => void} set\n * @param {() => unknown} [get]\n * @returns {void}\n */\nexport function bind_property(property, event_name, element, set, get) {\n\tvar handler = () => {\n\t\t// @ts-ignore\n\t\tset(element[property]);\n\t};\n\n\telement.addEventListener(event_name, handler);\n\n\tif (get) {\n\t\trender_effect(() => {\n\t\t\t// @ts-ignore\n\t\t\telement[property] = get();\n\t\t});\n\t} else {\n\t\thandler();\n\t}\n\n\t// @ts-ignore\n\tif (element === document.body || element === window || element === document) {\n\t\tteardown(() => {\n\t\t\telement.removeEventListener(event_name, handler);\n\t\t});\n\t}\n}\n\n/**\n * @param {HTMLElement} element\n * @param {(value: unknown) => void} set\n * @returns {void}\n */\nexport function bind_focused(element, set) {\n\tlisten(element, ['focus', 'blur'], () => {\n\t\tset(element === document.activeElement);\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767829,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767829,
+      "end": 1762256767829,
+      "order": "normal"
+    }
+  ]
+}

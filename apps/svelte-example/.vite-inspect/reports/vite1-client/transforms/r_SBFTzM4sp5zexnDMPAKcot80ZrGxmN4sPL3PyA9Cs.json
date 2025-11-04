@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/assets/server/mocker-runtime.template.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { MockerRegistry } from '@vitest/mocker';\nimport { ModuleMocker, createCompilerHints } from '@vitest/mocker/browser';\n\n/** An interceptor for module mocking. */\nexport class ModuleMockerInterceptor {\n  // A registry for runtime mocks (e.g., `sb.mock('path', () => ({}))`)\n  mocks = new MockerRegistry();\n\n  constructor() {}\n\n  /**\n   * Called by ModuleMocker when `sb.mock()` is executed. We just store the mock in our registry.\n   * The dynamic MSW handler will pick it up on the next relevant network request. Currently, we\n   * don't use this.mocks in any way. Mocks will be registered in the user's preview file and live\n   * until the end. There is no way to invalidate or delete them.\n   */\n  async register(module) {\n    this.mocks.add(module);\n  }\n\n  async delete(url) {\n    this.mocks.delete(url);\n  }\n\n  async invalidate() {\n    this.mocks.clear();\n  }\n}\n\n// Dummy implementation of the RPC interface, since it is not used in build mode.\nconst rpc = (method) => {\n  switch (method) {\n    case 'resolveId':\n      return Promise.resolve({\n        id: '',\n        url: '',\n        optimized: false,\n      });\n    case 'resolveMock':\n      return Promise.resolve({\n        mockType: 'dummy',\n        resolvedId: '',\n        resolvedUrl: '',\n        redirectUrl: '',\n        needsInterop: false,\n      });\n    case 'invalidate':\n      return Promise.resolve();\n  }\n};\n\n// In build mode, we don't need runtime handling of mocks.\n// Everything is handled at build time and via the MSW interceptor.\nclass BuildModuleMocker extends ModuleMocker {\n  queueMock() {\n    // noop\n  }\n}\n\nfunction registerModuleMocker(interceptor) {\n  const mocker = new BuildModuleMocker(\n    interceptor('__vitest_mocker__'),\n    {\n      resolveId(id, importer) {\n        return rpc('resolveId', { id, importer });\n      },\n      resolveMock(id, importer, options) {\n        return rpc('resolveMock', { id, importer, options });\n      },\n      async invalidate(ids) {\n        return rpc('invalidate', { ids });\n      },\n    },\n    (...args) => {\n      return globalThis.__STORYBOOK_MODULE_TEST__.spyOn(...args);\n    },\n    {\n      root: '',\n    }\n  );\n\n  globalThis['__vitest_mocker__'] = mocker;\n\n  return createCompilerHints({\n    globalThisKey: '__vitest_mocker__',\n  });\n}\n\nglobalThis.__STORYBOOK_MOCKER__ = registerModuleMocker(() => new ModuleMockerInterceptor());\n",
+      "start": 1762256766989,
+      "end": 1762256766990,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256766990,
+      "end": 1762256766990,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256766990,
+      "end": 1762256766990,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256766990,
+      "end": 1762256766991,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256766991,
+      "end": 1762256766991,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256766995,
+      "end": 1762256766995,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256766995,
+      "end": 1762256766996,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256766996,
+      "end": 1762256766996,
+      "order": "normal"
+    }
+  ]
+}

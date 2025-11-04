@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/mocks/app/navigation.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  __name\n} from \"../../_browser-chunks/chunk-JFJ5UJ7Q.js\";\n\n// src/mocks/app/navigation.ts\nimport { getContext, onMount, setContext } from \"svelte\";\nasync function goto(...args) {\n  const event = new CustomEvent(\"storybook:goto\", {\n    detail: args\n  });\n  window.dispatchEvent(event);\n}\n__name(goto, \"goto\");\nfunction setAfterNavigateArgument(afterNavigateArgs) {\n  setContext(\"after-navigate-args\", afterNavigateArgs);\n}\n__name(setAfterNavigateArgument, \"setAfterNavigateArgument\");\nfunction afterNavigate(cb) {\n  const argument = getContext(\"after-navigate-args\");\n  onMount(() => {\n    if (cb && cb instanceof Function) {\n      cb(argument);\n    }\n  });\n}\n__name(afterNavigate, \"afterNavigate\");\nfunction onNavigate() {\n}\n__name(onNavigate, \"onNavigate\");\nfunction beforeNavigate() {\n}\n__name(beforeNavigate, \"beforeNavigate\");\nfunction disableScrollHandling() {\n}\n__name(disableScrollHandling, \"disableScrollHandling\");\nasync function invalidate(...args) {\n  const event = new CustomEvent(\"storybook:invalidate\", {\n    detail: args\n  });\n  window.dispatchEvent(event);\n}\n__name(invalidate, \"invalidate\");\nasync function invalidateAll() {\n  const event = new CustomEvent(\"storybook:invalidateAll\");\n  window.dispatchEvent(event);\n}\n__name(invalidateAll, \"invalidateAll\");\nfunction preloadCode() {\n}\n__name(preloadCode, \"preloadCode\");\nfunction preloadData() {\n}\n__name(preloadData, \"preloadData\");\nasync function pushState(...args) {\n  const event = new CustomEvent(\"storybook:pushState\", {\n    detail: args\n  });\n  window.dispatchEvent(event);\n}\n__name(pushState, \"pushState\");\nasync function replaceState(...args) {\n  const event = new CustomEvent(\"storybook:replaceState\", {\n    detail: args\n  });\n  window.dispatchEvent(event);\n}\n__name(replaceState, \"replaceState\");\nexport {\n  afterNavigate,\n  beforeNavigate,\n  disableScrollHandling,\n  goto,\n  invalidate,\n  invalidateAll,\n  onNavigate,\n  preloadCode,\n  preloadData,\n  pushState,\n  replaceState,\n  setAfterNavigateArgument\n};\n",
+      "start": 1762256767740,
+      "end": 1762256767777,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    }
+  ]
+}

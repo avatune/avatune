@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/function/partialRight.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "function partialRight(func, ...partialArgs) {\n    return partialRightImpl(func, placeholderSymbol, ...partialArgs);\n}\nfunction partialRightImpl(func, placeholder, ...partialArgs) {\n    const partialedRight = function (...providedArgs) {\n        const placeholderLength = partialArgs.filter(arg => arg === placeholder).length;\n        const rangeLength = Math.max(providedArgs.length - placeholderLength, 0);\n        const remainingArgs = providedArgs.slice(0, rangeLength);\n        let providedArgsIndex = rangeLength;\n        const substitutedArgs = partialArgs\n            .slice()\n            .map(arg => (arg === placeholder ? providedArgs[providedArgsIndex++] : arg));\n        return func.apply(this, remainingArgs.concat(substitutedArgs));\n    };\n    if (func.prototype) {\n        partialedRight.prototype = Object.create(func.prototype);\n    }\n    return partialedRight;\n}\nconst placeholderSymbol = Symbol('partialRight.placeholder');\npartialRight.placeholder = placeholderSymbol;\n\nexport { partialRight, partialRightImpl };\n",
+      "start": 1762256768160,
+      "end": 1762256768194,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768194,
+      "end": 1762256768194,
+      "order": "normal"
+    }
+  ]
+}

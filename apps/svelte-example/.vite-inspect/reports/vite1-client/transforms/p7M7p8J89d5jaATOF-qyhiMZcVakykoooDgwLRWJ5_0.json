@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/blocks/await.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Source, TemplateNode } from '#client' */\nimport { is_promise } from '../../../shared/utils.js';\nimport { block } from '../../reactivity/effects.js';\nimport { internal_set, mutable_source, source } from '../../reactivity/sources.js';\nimport {\n\thydrate_next,\n\thydrating,\n\tskip_nodes,\n\tset_hydrate_node,\n\tset_hydrating\n} from '../hydration.js';\nimport { queue_micro_task } from '../task.js';\nimport { HYDRATION_START_ELSE, UNINITIALIZED } from '../../../../constants.js';\nimport { is_runes } from '../../context.js';\nimport { Batch, flushSync, is_flushing_sync } from '../../reactivity/batch.js';\nimport { BranchManager } from './branches.js';\nimport { capture, unset_context } from '../../reactivity/async.js';\n\nconst PENDING = 0;\nconst THEN = 1;\nconst CATCH = 2;\n\n/** @typedef {typeof PENDING | typeof THEN | typeof CATCH} AwaitState */\n\n/**\n * @template V\n * @param {TemplateNode} node\n * @param {(() => any)} get_input\n * @param {null | ((anchor: Node) => void)} pending_fn\n * @param {null | ((anchor: Node, value: Source<V>) => void)} then_fn\n * @param {null | ((anchor: Node, error: unknown) => void)} catch_fn\n * @returns {void}\n */\nexport function await_block(node, get_input, pending_fn, then_fn, catch_fn) {\n\tif (hydrating) {\n\t\thydrate_next();\n\t}\n\n\tvar runes = is_runes();\n\n\tvar v = /** @type {V} */ (UNINITIALIZED);\n\tvar value = runes ? source(v) : mutable_source(v, false, false);\n\tvar error = runes ? source(v) : mutable_source(v, false, false);\n\n\tvar branches = new BranchManager(node);\n\n\tblock(() => {\n\t\tvar input = get_input();\n\t\tvar destroyed = false;\n\n\t\t/** Whether or not there was a hydration mismatch. Needs to be a `let` or else it isn't treeshaken out */\n\t\t// @ts-ignore coercing `node` to a `Comment` causes TypeScript and Prettier to fight\n\t\tlet mismatch = hydrating && is_promise(input) === (node.data === HYDRATION_START_ELSE);\n\n\t\tif (mismatch) {\n\t\t\t// Hydration mismatch: remove everything inside the anchor and start fresh\n\t\t\tset_hydrate_node(skip_nodes());\n\t\t\tset_hydrating(false);\n\t\t}\n\n\t\tif (is_promise(input)) {\n\t\t\tvar restore = capture();\n\t\t\tvar resolved = false;\n\n\t\t\t/**\n\t\t\t * @param {() => void} fn\n\t\t\t */\n\t\t\tconst resolve = (fn) => {\n\t\t\t\tif (destroyed) return;\n\n\t\t\t\tresolved = true;\n\t\t\t\t// We don't want to restore the previous batch here; {#await} blocks don't follow the async logic\n\t\t\t\t// we have elsewhere, instead pending/resolve/fail states are each their own batch so to speak.\n\t\t\t\trestore(false);\n\t\t\t\t// Make sure we have a batch, since the branch manager expects one to exist\n\t\t\t\tBatch.ensure();\n\n\t\t\t\tif (hydrating) {\n\t\t\t\t\t// `restore()` could set `hydrating` to `true`, which we very much\n\t\t\t\t\t// don't want — we want to restore everything _except_ this\n\t\t\t\t\tset_hydrating(false);\n\t\t\t\t}\n\n\t\t\t\ttry {\n\t\t\t\t\tfn();\n\t\t\t\t} finally {\n\t\t\t\t\tunset_context();\n\n\t\t\t\t\t// without this, the DOM does not update until two ticks after the promise\n\t\t\t\t\t// resolves, which is unexpected behaviour (and somewhat irksome to test)\n\t\t\t\t\tif (!is_flushing_sync) flushSync();\n\t\t\t\t}\n\t\t\t};\n\n\t\t\tinput.then(\n\t\t\t\t(v) => {\n\t\t\t\t\tresolve(() => {\n\t\t\t\t\t\tinternal_set(value, v);\n\t\t\t\t\t\tbranches.ensure(THEN, then_fn && ((target) => then_fn(target, value)));\n\t\t\t\t\t});\n\t\t\t\t},\n\t\t\t\t(e) => {\n\t\t\t\t\tresolve(() => {\n\t\t\t\t\t\tinternal_set(error, e);\n\t\t\t\t\t\tbranches.ensure(THEN, catch_fn && ((target) => catch_fn(target, error)));\n\n\t\t\t\t\t\tif (!catch_fn) {\n\t\t\t\t\t\t\t// Rethrow the error if no catch block exists\n\t\t\t\t\t\t\tthrow error.v;\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t}\n\t\t\t);\n\n\t\t\tif (hydrating) {\n\t\t\t\tbranches.ensure(PENDING, pending_fn);\n\t\t\t} else {\n\t\t\t\t// Wait a microtask before checking if we should show the pending state as\n\t\t\t\t// the promise might have resolved by then\n\t\t\t\tqueue_micro_task(() => {\n\t\t\t\t\tif (!resolved) {\n\t\t\t\t\t\tresolve(() => {\n\t\t\t\t\t\t\tbranches.ensure(PENDING, pending_fn);\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t} else {\n\t\t\tinternal_set(value, input);\n\t\t\tbranches.ensure(THEN, then_fn && ((target) => then_fn(target, value)));\n\t\t}\n\n\t\tif (mismatch) {\n\t\t\t// continue in hydration mode\n\t\t\tset_hydrating(true);\n\t\t}\n\n\t\treturn () => {\n\t\t\tdestroyed = true;\n\t\t};\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767820,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767820,
+      "end": 1762256767820,
+      "order": "normal"
+    }
+  ]
+}

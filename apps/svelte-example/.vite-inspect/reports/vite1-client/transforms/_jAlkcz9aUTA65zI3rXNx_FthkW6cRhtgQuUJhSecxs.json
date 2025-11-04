@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/shared/validate.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { is_void } from '../../utils.js';\nimport * as w from './warnings.js';\nimport * as e from './errors.js';\n\nexport { invalid_default_snippet } from './errors.js';\n\n/**\n * @param {() => string} tag_fn\n * @returns {void}\n */\nexport function validate_void_dynamic_element(tag_fn) {\n\tconst tag = tag_fn();\n\tif (tag && is_void(tag)) {\n\t\tw.dynamic_void_element_content(tag);\n\t}\n}\n\n/** @param {() => unknown} tag_fn */\nexport function validate_dynamic_element_tag(tag_fn) {\n\tconst tag = tag_fn();\n\tconst is_string = typeof tag === 'string';\n\tif (tag && !is_string) {\n\t\te.svelte_element_invalid_this_value();\n\t}\n}\n\n/**\n * @param {any} store\n * @param {string} name\n */\nexport function validate_store(store, name) {\n\tif (store != null && typeof store.subscribe !== 'function') {\n\t\te.store_invalid_shape(name);\n\t}\n}\n\n/**\n * @template {(...args: any[]) => unknown} T\n * @param {T} fn\n */\nexport function prevent_snippet_stringification(fn) {\n\tfn.toString = () => {\n\t\te.snippet_without_render_tag();\n\t\treturn '';\n\t};\n\treturn fn;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767835,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    }
+  ]
+}

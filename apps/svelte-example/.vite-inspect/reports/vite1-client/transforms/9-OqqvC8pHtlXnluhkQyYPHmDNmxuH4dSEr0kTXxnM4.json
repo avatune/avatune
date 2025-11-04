@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/packages/utils/dist/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "const AVATAR_CATEGORIES = [\n    'body',\n    'ears',\n    'eyebrows',\n    'eyes',\n    'hair',\n    'head',\n    'mouth',\n    'noses'\n];\nfunction hashString(str) {\n    let hash = 0;\n    for(let i = 0; i < str.length; i++){\n        const char = str.charCodeAt(i);\n        hash = (hash << 5) - hash + char;\n        hash &= hash;\n    }\n    return Math.abs(hash);\n}\nfunction seededRandom(seed) {\n    let value = 'number' == typeof seed ? seed : hashString(seed);\n    return ()=>{\n        value = (9301 * value + 49297) % 233280;\n        return value / 233280;\n    };\n}\nfunction selectItem(collection, identifier, tags, random) {\n    if (identifier && collection[identifier]) return {\n        key: identifier,\n        item: collection[identifier]\n    };\n    let candidates = Object.entries(collection);\n    if (tags && tags.length > 0) candidates = candidates.filter(([, item])=>tags.every((tag)=>item.tags.includes(tag)));\n    if (0 === candidates.length) return null;\n    const index = random ? Math.floor(random() * candidates.length) : 0;\n    const selected = candidates[index];\n    if (!selected) return null;\n    const [key, item] = selected;\n    return {\n        key,\n        item\n    };\n}\nfunction selectItemFromConfig(config, theme) {\n    const random = void 0 !== config.seed ? seededRandom(config.seed) : Math.random;\n    const selected = {};\n    const identifiers = {};\n    for (const category of AVATAR_CATEGORIES){\n        const value = config[category];\n        const identifier = 'string' == typeof value ? value : void 0;\n        const tags = Array.isArray(value) ? value : void 0;\n        const result = selectItem(theme[category], identifier, tags, random);\n        if (result) {\n            selected[category] = result.item;\n            identifiers[category] = result.key;\n        }\n    }\n    return {\n        selected,\n        identifiers\n    };\n}\nexport { AVATAR_CATEGORIES, hashString, seededRandom, selectItem, selectItemFromConfig };\n",
+      "start": 1762256767846,
+      "end": 1762256767895,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767895,
+      "end": 1762256767895,
+      "order": "normal"
+    }
+  ]
+}

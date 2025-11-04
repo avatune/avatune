@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/blocks/boundary.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect, Source, TemplateNode, } from '#client' */\nimport {\n\tBOUNDARY_EFFECT,\n\tCOMMENT_NODE,\n\tEFFECT_PRESERVED,\n\tEFFECT_TRANSPARENT\n} from '#client/constants';\nimport { HYDRATION_START_ELSE } from '../../../../constants.js';\nimport { component_context, set_component_context } from '../../context.js';\nimport { handle_error, invoke_error_boundary } from '../../error-handling.js';\nimport {\n\tblock,\n\tbranch,\n\tdestroy_effect,\n\tmove_effect,\n\tpause_effect\n} from '../../reactivity/effects.js';\nimport {\n\tactive_effect,\n\tactive_reaction,\n\tget,\n\tset_active_effect,\n\tset_active_reaction\n} from '../../runtime.js';\nimport {\n\thydrate_next,\n\thydrate_node,\n\thydrating,\n\tnext,\n\tskip_nodes,\n\tset_hydrate_node\n} from '../hydration.js';\nimport { queue_micro_task } from '../task.js';\nimport * as e from '../../errors.js';\nimport * as w from '../../warnings.js';\nimport { DEV } from 'esm-env';\nimport { Batch } from '../../reactivity/batch.js';\nimport { internal_set, source } from '../../reactivity/sources.js';\nimport { tag } from '../../dev/tracing.js';\nimport { createSubscriber } from '../../../../reactivity/create-subscriber.js';\nimport { create_text } from '../operations.js';\n\n/**\n * @typedef {{\n * \t onerror?: (error: unknown, reset: () => void) => void;\n *   failed?: (anchor: Node, error: () => unknown, reset: () => () => void) => void;\n *   pending?: (anchor: Node) => void;\n * }} BoundaryProps\n */\n\nvar flags = EFFECT_TRANSPARENT | EFFECT_PRESERVED | BOUNDARY_EFFECT;\n\n/**\n * @param {TemplateNode} node\n * @param {BoundaryProps} props\n * @param {((anchor: Node) => void)} children\n * @returns {void}\n */\nexport function boundary(node, props, children) {\n\tnew Boundary(node, props, children);\n}\n\nexport class Boundary {\n\t/** @type {Boundary | null} */\n\tparent;\n\n\t#pending = false;\n\n\t/** @type {TemplateNode} */\n\t#anchor;\n\n\t/** @type {TemplateNode | null} */\n\t#hydrate_open = hydrating ? hydrate_node : null;\n\n\t/** @type {BoundaryProps} */\n\t#props;\n\n\t/** @type {((anchor: Node) => void)} */\n\t#children;\n\n\t/** @type {Effect} */\n\t#effect;\n\n\t/** @type {Effect | null} */\n\t#main_effect = null;\n\n\t/** @type {Effect | null} */\n\t#pending_effect = null;\n\n\t/** @type {Effect | null} */\n\t#failed_effect = null;\n\n\t/** @type {DocumentFragment | null} */\n\t#offscreen_fragment = null;\n\n\t/** @type {TemplateNode | null} */\n\t#pending_anchor = null;\n\n\t#local_pending_count = 0;\n\t#pending_count = 0;\n\n\t#is_creating_fallback = false;\n\n\t/**\n\t * A source containing the number of pending async deriveds/expressions.\n\t * Only created if `$effect.pending()` is used inside the boundary,\n\t * otherwise updating the source results in needless `Batch.ensure()`\n\t * calls followed by no-op flushes\n\t * @type {Source<number> | null}\n\t */\n\t#effect_pending = null;\n\n\t#effect_pending_subscriber = createSubscriber(() => {\n\t\tthis.#effect_pending = source(this.#local_pending_count);\n\n\t\tif (DEV) {\n\t\t\ttag(this.#effect_pending, '$effect.pending()');\n\t\t}\n\n\t\treturn () => {\n\t\t\tthis.#effect_pending = null;\n\t\t};\n\t});\n\n\t/**\n\t * @param {TemplateNode} node\n\t * @param {BoundaryProps} props\n\t * @param {((anchor: Node) => void)} children\n\t */\n\tconstructor(node, props, children) {\n\t\tthis.#anchor = node;\n\t\tthis.#props = props;\n\t\tthis.#children = children;\n\n\t\tthis.parent = /** @type {Effect} */ (active_effect).b;\n\n\t\tthis.#pending = !!this.#props.pending;\n\n\t\tthis.#effect = block(() => {\n\t\t\t/** @type {Effect} */ (active_effect).b = this;\n\n\t\t\tif (hydrating) {\n\t\t\t\tconst comment = this.#hydrate_open;\n\t\t\t\thydrate_next();\n\n\t\t\t\tconst server_rendered_pending =\n\t\t\t\t\t/** @type {Comment} */ (comment).nodeType === COMMENT_NODE &&\n\t\t\t\t\t/** @type {Comment} */ (comment).data === HYDRATION_START_ELSE;\n\n\t\t\t\tif (server_rendered_pending) {\n\t\t\t\t\tthis.#hydrate_pending_content();\n\t\t\t\t} else {\n\t\t\t\t\tthis.#hydrate_resolved_content();\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tvar anchor = this.#get_anchor();\n\n\t\t\t\ttry {\n\t\t\t\t\tthis.#main_effect = branch(() => children(anchor));\n\t\t\t\t} catch (error) {\n\t\t\t\t\tthis.error(error);\n\t\t\t\t}\n\n\t\t\t\tif (this.#pending_count > 0) {\n\t\t\t\t\tthis.#show_pending_snippet();\n\t\t\t\t} else {\n\t\t\t\t\tthis.#pending = false;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\treturn () => {\n\t\t\t\tthis.#pending_anchor?.remove();\n\t\t\t};\n\t\t}, flags);\n\n\t\tif (hydrating) {\n\t\t\tthis.#anchor = hydrate_node;\n\t\t}\n\t}\n\n\t#hydrate_resolved_content() {\n\t\ttry {\n\t\t\tthis.#main_effect = branch(() => this.#children(this.#anchor));\n\t\t} catch (error) {\n\t\t\tthis.error(error);\n\t\t}\n\n\t\t// Since server rendered resolved content, we never show pending state\n\t\t// Even if client-side async operations are still running, the content is already displayed\n\t\tthis.#pending = false;\n\t}\n\n\t#hydrate_pending_content() {\n\t\tconst pending = this.#props.pending;\n\t\tif (!pending) {\n\t\t\treturn;\n\t\t}\n\t\tthis.#pending_effect = branch(() => pending(this.#anchor));\n\n\t\tBatch.enqueue(() => {\n\t\t\tvar anchor = this.#get_anchor();\n\n\t\t\tthis.#main_effect = this.#run(() => {\n\t\t\t\tBatch.ensure();\n\t\t\t\treturn branch(() => this.#children(anchor));\n\t\t\t});\n\n\t\t\tif (this.#pending_count > 0) {\n\t\t\t\tthis.#show_pending_snippet();\n\t\t\t} else {\n\t\t\t\tpause_effect(/** @type {Effect} */ (this.#pending_effect), () => {\n\t\t\t\t\tthis.#pending_effect = null;\n\t\t\t\t});\n\n\t\t\t\tthis.#pending = false;\n\t\t\t}\n\t\t});\n\t}\n\n\t#get_anchor() {\n\t\tvar anchor = this.#anchor;\n\n\t\tif (this.#pending) {\n\t\t\tthis.#pending_anchor = create_text();\n\t\t\tthis.#anchor.before(this.#pending_anchor);\n\n\t\t\tanchor = this.#pending_anchor;\n\t\t}\n\n\t\treturn anchor;\n\t}\n\n\t/**\n\t * Returns `true` if the effect exists inside a boundary whose pending snippet is shown\n\t * @returns {boolean}\n\t */\n\tis_pending() {\n\t\treturn this.#pending || (!!this.parent && this.parent.is_pending());\n\t}\n\n\thas_pending_snippet() {\n\t\treturn !!this.#props.pending;\n\t}\n\n\t/**\n\t * @param {() => Effect | null} fn\n\t */\n\t#run(fn) {\n\t\tvar previous_effect = active_effect;\n\t\tvar previous_reaction = active_reaction;\n\t\tvar previous_ctx = component_context;\n\n\t\tset_active_effect(this.#effect);\n\t\tset_active_reaction(this.#effect);\n\t\tset_component_context(this.#effect.ctx);\n\n\t\ttry {\n\t\t\treturn fn();\n\t\t} catch (e) {\n\t\t\thandle_error(e);\n\t\t\treturn null;\n\t\t} finally {\n\t\t\tset_active_effect(previous_effect);\n\t\t\tset_active_reaction(previous_reaction);\n\t\t\tset_component_context(previous_ctx);\n\t\t}\n\t}\n\n\t#show_pending_snippet() {\n\t\tconst pending = /** @type {(anchor: Node) => void} */ (this.#props.pending);\n\n\t\tif (this.#main_effect !== null) {\n\t\t\tthis.#offscreen_fragment = document.createDocumentFragment();\n\t\t\tthis.#offscreen_fragment.append(/** @type {TemplateNode} */ (this.#pending_anchor));\n\t\t\tmove_effect(this.#main_effect, this.#offscreen_fragment);\n\t\t}\n\n\t\tif (this.#pending_effect === null) {\n\t\t\tthis.#pending_effect = branch(() => pending(this.#anchor));\n\t\t}\n\t}\n\n\t/**\n\t * Updates the pending count associated with the currently visible pending snippet,\n\t * if any, such that we can replace the snippet with content once work is done\n\t * @param {1 | -1} d\n\t */\n\t#update_pending_count(d) {\n\t\tif (!this.has_pending_snippet()) {\n\t\t\tif (this.parent) {\n\t\t\t\tthis.parent.#update_pending_count(d);\n\t\t\t}\n\n\t\t\t// if there's no parent, we're in a scope with no pending snippet\n\t\t\treturn;\n\t\t}\n\n\t\tthis.#pending_count += d;\n\n\t\tif (this.#pending_count === 0) {\n\t\t\tthis.#pending = false;\n\n\t\t\tif (this.#pending_effect) {\n\t\t\t\tpause_effect(this.#pending_effect, () => {\n\t\t\t\t\tthis.#pending_effect = null;\n\t\t\t\t});\n\t\t\t}\n\n\t\t\tif (this.#offscreen_fragment) {\n\t\t\t\tthis.#anchor.before(this.#offscreen_fragment);\n\t\t\t\tthis.#offscreen_fragment = null;\n\t\t\t}\n\t\t}\n\t}\n\n\t/**\n\t * Update the source that powers `$effect.pending()` inside this boundary,\n\t * and controls when the current `pending` snippet (if any) is removed.\n\t * Do not call from inside the class\n\t * @param {1 | -1} d\n\t */\n\tupdate_pending_count(d) {\n\t\tthis.#update_pending_count(d);\n\n\t\tthis.#local_pending_count += d;\n\n\t\tif (this.#effect_pending) {\n\t\t\tinternal_set(this.#effect_pending, this.#local_pending_count);\n\t\t}\n\t}\n\n\tget_effect_pending() {\n\t\tthis.#effect_pending_subscriber();\n\t\treturn get(/** @type {Source<number>} */ (this.#effect_pending));\n\t}\n\n\t/** @param {unknown} error */\n\terror(error) {\n\t\tvar onerror = this.#props.onerror;\n\t\tlet failed = this.#props.failed;\n\n\t\t// If we have nothing to capture the error, or if we hit an error while\n\t\t// rendering the fallback, re-throw for another boundary to handle\n\t\tif (this.#is_creating_fallback || (!onerror && !failed)) {\n\t\t\tthrow error;\n\t\t}\n\n\t\tif (this.#main_effect) {\n\t\t\tdestroy_effect(this.#main_effect);\n\t\t\tthis.#main_effect = null;\n\t\t}\n\n\t\tif (this.#pending_effect) {\n\t\t\tdestroy_effect(this.#pending_effect);\n\t\t\tthis.#pending_effect = null;\n\t\t}\n\n\t\tif (this.#failed_effect) {\n\t\t\tdestroy_effect(this.#failed_effect);\n\t\t\tthis.#failed_effect = null;\n\t\t}\n\n\t\tif (hydrating) {\n\t\t\tset_hydrate_node(/** @type {TemplateNode} */ (this.#hydrate_open));\n\t\t\tnext();\n\t\t\tset_hydrate_node(skip_nodes());\n\t\t}\n\n\t\tvar did_reset = false;\n\t\tvar calling_on_error = false;\n\n\t\tconst reset = () => {\n\t\t\tif (did_reset) {\n\t\t\t\tw.svelte_boundary_reset_noop();\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tdid_reset = true;\n\n\t\t\tif (calling_on_error) {\n\t\t\t\te.svelte_boundary_reset_onerror();\n\t\t\t}\n\n\t\t\t// If the failure happened while flushing effects, current_batch can be null\n\t\t\tBatch.ensure();\n\n\t\t\tthis.#local_pending_count = 0;\n\n\t\t\tif (this.#failed_effect !== null) {\n\t\t\t\tpause_effect(this.#failed_effect, () => {\n\t\t\t\t\tthis.#failed_effect = null;\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t// we intentionally do not try to find the nearest pending boundary. If this boundary has one, we'll render it on reset\n\t\t\t// but it would be really weird to show the parent's boundary on a child reset.\n\t\t\tthis.#pending = this.has_pending_snippet();\n\n\t\t\tthis.#main_effect = this.#run(() => {\n\t\t\t\tthis.#is_creating_fallback = false;\n\t\t\t\treturn branch(() => this.#children(this.#anchor));\n\t\t\t});\n\n\t\t\tif (this.#pending_count > 0) {\n\t\t\t\tthis.#show_pending_snippet();\n\t\t\t} else {\n\t\t\t\tthis.#pending = false;\n\t\t\t}\n\t\t};\n\n\t\tvar previous_reaction = active_reaction;\n\n\t\ttry {\n\t\t\tset_active_reaction(null);\n\t\t\tcalling_on_error = true;\n\t\t\tonerror?.(error, reset);\n\t\t\tcalling_on_error = false;\n\t\t} catch (error) {\n\t\t\tinvoke_error_boundary(error, this.#effect && this.#effect.parent);\n\t\t} finally {\n\t\t\tset_active_reaction(previous_reaction);\n\t\t}\n\n\t\tif (failed) {\n\t\t\tqueue_micro_task(() => {\n\t\t\t\tthis.#failed_effect = this.#run(() => {\n\t\t\t\t\tBatch.ensure();\n\t\t\t\t\tthis.#is_creating_fallback = true;\n\n\t\t\t\t\ttry {\n\t\t\t\t\t\treturn branch(() => {\n\t\t\t\t\t\t\tfailed(\n\t\t\t\t\t\t\t\tthis.#anchor,\n\t\t\t\t\t\t\t\t() => error,\n\t\t\t\t\t\t\t\t() => reset\n\t\t\t\t\t\t\t);\n\t\t\t\t\t\t});\n\t\t\t\t\t} catch (error) {\n\t\t\t\t\t\tinvoke_error_boundary(error, /** @type {Effect} */ (this.#effect.parent));\n\t\t\t\t\t\treturn null;\n\t\t\t\t\t} finally {\n\t\t\t\t\t\tthis.#is_creating_fallback = false;\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t});\n\t\t}\n\t}\n}\n\nexport function get_boundary() {\n\treturn /** @type {Boundary} */ (/** @type {Effect} */ (active_effect).b);\n}\n\nexport function pending() {\n\tif (active_effect === null) {\n\t\te.effect_pending_outside_reaction();\n\t}\n\n\tvar boundary = active_effect.b;\n\n\tif (boundary === null) {\n\t\treturn 0; // TODO eventually we will need this to be global\n\t}\n\n\treturn boundary.get_effect_pending();\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767834,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767834,
+      "end": 1762256767834,
+      "order": "normal"
+    }
+  ]
+}

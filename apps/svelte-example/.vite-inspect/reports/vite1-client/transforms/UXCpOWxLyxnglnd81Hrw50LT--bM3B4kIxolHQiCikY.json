@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/omit.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { cloneDeepWith } from './cloneDeepWith.mjs';\nimport { keysIn } from './keysIn.mjs';\nimport { unset } from './unset.mjs';\nimport { getSymbolsIn } from '../_internal/getSymbolsIn.mjs';\nimport { isDeepKey } from '../_internal/isDeepKey.mjs';\nimport { flatten } from '../array/flatten.mjs';\nimport { isPlainObject } from '../predicate/isPlainObject.mjs';\n\nfunction omit(obj, ...keysArr) {\n    if (obj == null) {\n        return {};\n    }\n    keysArr = flatten(keysArr);\n    const result = cloneInOmit(obj, keysArr);\n    for (let i = 0; i < keysArr.length; i++) {\n        let keys = keysArr[i];\n        switch (typeof keys) {\n            case 'object': {\n                if (!Array.isArray(keys)) {\n                    keys = Array.from(keys);\n                }\n                for (let j = 0; j < keys.length; j++) {\n                    const key = keys[j];\n                    unset(result, key);\n                }\n                break;\n            }\n            case 'string':\n            case 'symbol':\n            case 'number': {\n                unset(result, keys);\n                break;\n            }\n        }\n    }\n    return result;\n}\nfunction cloneInOmit(obj, keys) {\n    const hasDeepKey = keys.some(key => Array.isArray(key) || isDeepKey(key));\n    if (hasDeepKey) {\n        return deepCloneInOmit(obj);\n    }\n    return shallowCloneInOmit(obj);\n}\nfunction shallowCloneInOmit(obj) {\n    const result = {};\n    const keysToCopy = [...keysIn(obj), ...getSymbolsIn(obj)];\n    for (let i = 0; i < keysToCopy.length; i++) {\n        const key = keysToCopy[i];\n        result[key] = obj[key];\n    }\n    return result;\n}\nfunction deepCloneInOmit(obj) {\n    const result = {};\n    const keysToCopy = [...keysIn(obj), ...getSymbolsIn(obj)];\n    for (let i = 0; i < keysToCopy.length; i++) {\n        const key = keysToCopy[i];\n        result[key] = cloneDeepWith(obj[key], valueToClone => {\n            if (isPlainObject(valueToClone)) {\n                return undefined;\n            }\n            return valueToClone;\n        });\n    }\n    return result;\n}\n\nexport { omit };\n",
+      "start": 1762256768011,
+      "end": 1762256768126,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768126,
+      "end": 1762256768126,
+      "order": "normal"
+    }
+  ]
+}

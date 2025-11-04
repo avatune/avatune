@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/template.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect, TemplateNode } from '#client' */\n/** @import { TemplateStructure } from './types' */\nimport { hydrate_next, hydrate_node, hydrating, set_hydrate_node } from './hydration.js';\nimport {\n\tcreate_text,\n\tget_first_child,\n\tis_firefox,\n\tcreate_element,\n\tcreate_fragment,\n\tcreate_comment,\n\tset_attribute\n} from './operations.js';\nimport { create_fragment_from_html } from './reconciler.js';\nimport { active_effect } from '../runtime.js';\nimport {\n\tNAMESPACE_MATHML,\n\tNAMESPACE_SVG,\n\tTEMPLATE_FRAGMENT,\n\tTEMPLATE_USE_IMPORT_NODE,\n\tTEMPLATE_USE_MATHML,\n\tTEMPLATE_USE_SVG\n} from '../../../constants.js';\nimport { COMMENT_NODE, DOCUMENT_FRAGMENT_NODE, TEXT_NODE } from '#client/constants';\n\n/**\n * @param {TemplateNode} start\n * @param {TemplateNode | null} end\n */\nexport function assign_nodes(start, end) {\n\tvar effect = /** @type {Effect} */ (active_effect);\n\tif (effect.nodes_start === null) {\n\t\teffect.nodes_start = start;\n\t\teffect.nodes_end = end;\n\t}\n}\n\n/**\n * @param {string} content\n * @param {number} flags\n * @returns {() => Node | Node[]}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function from_html(content, flags) {\n\tvar is_fragment = (flags & TEMPLATE_FRAGMENT) !== 0;\n\tvar use_import_node = (flags & TEMPLATE_USE_IMPORT_NODE) !== 0;\n\n\t/** @type {Node} */\n\tvar node;\n\n\t/**\n\t * Whether or not the first item is a text/element node. If not, we need to\n\t * create an additional comment node to act as `effect.nodes.start`\n\t */\n\tvar has_start = !content.startsWith('<!>');\n\n\treturn () => {\n\t\tif (hydrating) {\n\t\t\tassign_nodes(hydrate_node, null);\n\t\t\treturn hydrate_node;\n\t\t}\n\n\t\tif (node === undefined) {\n\t\t\tnode = create_fragment_from_html(has_start ? content : '<!>' + content);\n\t\t\tif (!is_fragment) node = /** @type {Node} */ (get_first_child(node));\n\t\t}\n\n\t\tvar clone = /** @type {TemplateNode} */ (\n\t\t\tuse_import_node || is_firefox ? document.importNode(node, true) : node.cloneNode(true)\n\t\t);\n\n\t\tif (is_fragment) {\n\t\t\tvar start = /** @type {TemplateNode} */ (get_first_child(clone));\n\t\t\tvar end = /** @type {TemplateNode} */ (clone.lastChild);\n\n\t\t\tassign_nodes(start, end);\n\t\t} else {\n\t\t\tassign_nodes(clone, clone);\n\t\t}\n\n\t\treturn clone;\n\t};\n}\n\n/**\n * @param {string} content\n * @param {number} flags\n * @param {'svg' | 'math'} ns\n * @returns {() => Node | Node[]}\n */\n/*#__NO_SIDE_EFFECTS__*/\nfunction from_namespace(content, flags, ns = 'svg') {\n\t/**\n\t * Whether or not the first item is a text/element node. If not, we need to\n\t * create an additional comment node to act as `effect.nodes.start`\n\t */\n\tvar has_start = !content.startsWith('<!>');\n\n\tvar is_fragment = (flags & TEMPLATE_FRAGMENT) !== 0;\n\tvar wrapped = `<${ns}>${has_start ? content : '<!>' + content}</${ns}>`;\n\n\t/** @type {Element | DocumentFragment} */\n\tvar node;\n\n\treturn () => {\n\t\tif (hydrating) {\n\t\t\tassign_nodes(hydrate_node, null);\n\t\t\treturn hydrate_node;\n\t\t}\n\n\t\tif (!node) {\n\t\t\tvar fragment = /** @type {DocumentFragment} */ (create_fragment_from_html(wrapped));\n\t\t\tvar root = /** @type {Element} */ (get_first_child(fragment));\n\n\t\t\tif (is_fragment) {\n\t\t\t\tnode = document.createDocumentFragment();\n\t\t\t\twhile (get_first_child(root)) {\n\t\t\t\t\tnode.appendChild(/** @type {Node} */ (get_first_child(root)));\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tnode = /** @type {Element} */ (get_first_child(root));\n\t\t\t}\n\t\t}\n\n\t\tvar clone = /** @type {TemplateNode} */ (node.cloneNode(true));\n\n\t\tif (is_fragment) {\n\t\t\tvar start = /** @type {TemplateNode} */ (get_first_child(clone));\n\t\t\tvar end = /** @type {TemplateNode} */ (clone.lastChild);\n\n\t\t\tassign_nodes(start, end);\n\t\t} else {\n\t\t\tassign_nodes(clone, clone);\n\t\t}\n\n\t\treturn clone;\n\t};\n}\n\n/**\n * @param {string} content\n * @param {number} flags\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function from_svg(content, flags) {\n\treturn from_namespace(content, flags, 'svg');\n}\n\n/**\n * @param {string} content\n * @param {number} flags\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function from_mathml(content, flags) {\n\treturn from_namespace(content, flags, 'math');\n}\n\n/**\n * @param {TemplateStructure[]} structure\n * @param {typeof NAMESPACE_SVG | typeof NAMESPACE_MATHML | undefined} [ns]\n */\nfunction fragment_from_tree(structure, ns) {\n\tvar fragment = create_fragment();\n\n\tfor (var item of structure) {\n\t\tif (typeof item === 'string') {\n\t\t\tfragment.append(create_text(item));\n\t\t\tcontinue;\n\t\t}\n\n\t\t// if `preserveComments === true`, comments are represented as `['// <data>']`\n\t\tif (item === undefined || item[0][0] === '/') {\n\t\t\tfragment.append(create_comment(item ? item[0].slice(3) : ''));\n\t\t\tcontinue;\n\t\t}\n\n\t\tconst [name, attributes, ...children] = item;\n\n\t\tconst namespace = name === 'svg' ? NAMESPACE_SVG : name === 'math' ? NAMESPACE_MATHML : ns;\n\n\t\tvar element = create_element(name, namespace, attributes?.is);\n\n\t\tfor (var key in attributes) {\n\t\t\tset_attribute(element, key, attributes[key]);\n\t\t}\n\n\t\tif (children.length > 0) {\n\t\t\tvar target =\n\t\t\t\telement.tagName === 'TEMPLATE'\n\t\t\t\t\t? /** @type {HTMLTemplateElement} */ (element).content\n\t\t\t\t\t: element;\n\n\t\t\ttarget.append(\n\t\t\t\tfragment_from_tree(children, element.tagName === 'foreignObject' ? undefined : namespace)\n\t\t\t);\n\t\t}\n\n\t\tfragment.append(element);\n\t}\n\n\treturn fragment;\n}\n\n/**\n * @param {TemplateStructure[]} structure\n * @param {number} flags\n * @returns {() => Node | Node[]}\n */\n/*#__NO_SIDE_EFFECTS__*/\nexport function from_tree(structure, flags) {\n\tvar is_fragment = (flags & TEMPLATE_FRAGMENT) !== 0;\n\tvar use_import_node = (flags & TEMPLATE_USE_IMPORT_NODE) !== 0;\n\n\t/** @type {Node} */\n\tvar node;\n\n\treturn () => {\n\t\tif (hydrating) {\n\t\t\tassign_nodes(hydrate_node, null);\n\t\t\treturn hydrate_node;\n\t\t}\n\n\t\tif (node === undefined) {\n\t\t\tconst ns =\n\t\t\t\t(flags & TEMPLATE_USE_SVG) !== 0\n\t\t\t\t\t? NAMESPACE_SVG\n\t\t\t\t\t: (flags & TEMPLATE_USE_MATHML) !== 0\n\t\t\t\t\t\t? NAMESPACE_MATHML\n\t\t\t\t\t\t: undefined;\n\n\t\t\tnode = fragment_from_tree(structure, ns);\n\t\t\tif (!is_fragment) node = /** @type {Node} */ (get_first_child(node));\n\t\t}\n\n\t\tvar clone = /** @type {TemplateNode} */ (\n\t\t\tuse_import_node || is_firefox ? document.importNode(node, true) : node.cloneNode(true)\n\t\t);\n\n\t\tif (is_fragment) {\n\t\t\tvar start = /** @type {TemplateNode} */ (get_first_child(clone));\n\t\t\tvar end = /** @type {TemplateNode} */ (clone.lastChild);\n\n\t\t\tassign_nodes(start, end);\n\t\t} else {\n\t\t\tassign_nodes(clone, clone);\n\t\t}\n\n\t\treturn clone;\n\t};\n}\n\n/**\n * @param {() => Element | DocumentFragment} fn\n */\nexport function with_script(fn) {\n\treturn () => run_scripts(fn());\n}\n\n/**\n * Creating a document fragment from HTML that contains script tags will not execute\n * the scripts. We need to replace the script tags with new ones so that they are executed.\n * @param {Element | DocumentFragment} node\n * @returns {Node | Node[]}\n */\nfunction run_scripts(node) {\n\t// scripts were SSR'd, in which case they will run\n\tif (hydrating) return node;\n\n\tconst is_fragment = node.nodeType === DOCUMENT_FRAGMENT_NODE;\n\tconst scripts =\n\t\t/** @type {HTMLElement} */ (node).tagName === 'SCRIPT'\n\t\t\t? [/** @type {HTMLScriptElement} */ (node)]\n\t\t\t: node.querySelectorAll('script');\n\tconst effect = /** @type {Effect} */ (active_effect);\n\n\tfor (const script of scripts) {\n\t\tconst clone = document.createElement('script');\n\t\tfor (var attribute of script.attributes) {\n\t\t\tclone.setAttribute(attribute.name, attribute.value);\n\t\t}\n\n\t\tclone.textContent = script.textContent;\n\n\t\t// The script has changed - if it's at the edges, the effect now points at dead nodes\n\t\tif (is_fragment ? node.firstChild === script : node === script) {\n\t\t\teffect.nodes_start = clone;\n\t\t}\n\t\tif (is_fragment ? node.lastChild === script : node === script) {\n\t\t\teffect.nodes_end = clone;\n\t\t}\n\n\t\tscript.replaceWith(clone);\n\t}\n\treturn node;\n}\n\n/**\n * Don't mark this as side-effect-free, hydration needs to walk all nodes\n * @param {any} value\n */\nexport function text(value = '') {\n\tif (!hydrating) {\n\t\tvar t = create_text(value + '');\n\t\tassign_nodes(t, t);\n\t\treturn t;\n\t}\n\n\tvar node = hydrate_node;\n\n\tif (node.nodeType !== TEXT_NODE) {\n\t\t// if an {expression} is empty during SSR, we need to insert an empty text node\n\t\tnode.before((node = create_text()));\n\t\tset_hydrate_node(node);\n\t}\n\n\tassign_nodes(node, node);\n\treturn node;\n}\n\n/**\n * @returns {TemplateNode | DocumentFragment}\n */\nexport function comment() {\n\t// we're not delegating to `template` here for performance reasons\n\tif (hydrating) {\n\t\tassign_nodes(hydrate_node, null);\n\t\treturn hydrate_node;\n\t}\n\n\tvar frag = document.createDocumentFragment();\n\tvar start = document.createComment('');\n\tvar anchor = create_text();\n\tfrag.append(start, anchor);\n\n\tassign_nodes(start, anchor);\n\n\treturn frag;\n}\n\n/**\n * Assign the created (or in hydration mode, traversed) dom elements to the current block\n * and insert the elements into the dom (in client mode).\n * @param {Text | Comment | Element} anchor\n * @param {DocumentFragment | Element} dom\n */\nexport function append(anchor, dom) {\n\tif (hydrating) {\n\t\t/** @type {Effect} */ (active_effect).nodes_end = hydrate_node;\n\t\thydrate_next();\n\t\treturn;\n\t}\n\n\tif (anchor === null) {\n\t\t// edge case — void `<svelte:element>` with content\n\t\treturn;\n\t}\n\n\tanchor.before(/** @type {Node} */ (dom));\n}\n\n/**\n * Create (or hydrate) an unique UID for the component instance.\n */\nexport function props_id() {\n\tif (\n\t\thydrating &&\n\t\thydrate_node &&\n\t\thydrate_node.nodeType === COMMENT_NODE &&\n\t\thydrate_node.textContent?.startsWith(`$`)\n\t) {\n\t\tconst id = hydrate_node.textContent.substring(1);\n\t\thydrate_next();\n\t\treturn id;\n\t}\n\n\t// @ts-expect-error This way we ensure the id is unique even across Svelte runtimes\n\t(window.__svelte ??= {}).uid ??= 1;\n\n\t// @ts-expect-error\n\treturn `c${window.__svelte.uid++}`;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767831,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767831,
+      "end": 1762256767831,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767832,
+      "end": 1762256767832,
+      "order": "normal"
+    }
+  ]
+}

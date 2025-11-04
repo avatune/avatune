@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/css.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { DEV } from 'esm-env';\nimport { register_style } from '../dev/css.js';\nimport { effect } from '../reactivity/effects.js';\n\n/**\n * @param {Node} anchor\n * @param {{ hash: string, code: string }} css\n */\nexport function append_styles(anchor, css) {\n\t// Use `queue_micro_task` to ensure `anchor` is in the DOM, otherwise getRootNode() will yield wrong results\n\teffect(() => {\n\t\tvar root = anchor.getRootNode();\n\n\t\tvar target = /** @type {ShadowRoot} */ (root).host\n\t\t\t? /** @type {ShadowRoot} */ (root)\n\t\t\t: /** @type {Document} */ (root).head ?? /** @type {Document} */ (root.ownerDocument).head;\n\n\t\t// Always querying the DOM is roughly the same perf as additionally checking for presence in a map first assuming\n\t\t// that you'll get cache hits half of the time, so we just always query the dom for simplicity and code savings.\n\t\tif (!target.querySelector('#' + css.hash)) {\n\t\t\tconst style = document.createElement('style');\n\t\t\tstyle.id = css.hash;\n\t\t\tstyle.textContent = css.code;\n\n\t\t\ttarget.appendChild(style);\n\n\t\t\tif (DEV) {\n\t\t\t\tregister_style(css.hash, style);\n\t\t\t}\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767821,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    }
+  ]
+}

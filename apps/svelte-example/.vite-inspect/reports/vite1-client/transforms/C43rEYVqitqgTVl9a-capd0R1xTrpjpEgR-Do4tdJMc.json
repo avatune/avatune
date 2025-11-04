@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export { createAttachmentKey as attachment } from '../../attachments/index.js';\nexport { FILENAME, HMR, NAMESPACE_SVG } from '../../constants.js';\nexport { push, pop, add_svelte_meta } from './context.js';\nexport { assign, assign_and, assign_or, assign_nullish } from './dev/assign.js';\nexport { cleanup_styles } from './dev/css.js';\nexport { add_locations } from './dev/elements.js';\nexport { hmr } from './dev/hmr.js';\nexport { create_ownership_validator } from './dev/ownership.js';\nexport { check_target, legacy_api } from './dev/legacy.js';\nexport { trace, tag, tag_proxy } from './dev/tracing.js';\nexport { inspect } from './dev/inspect.js';\nexport { async } from './dom/blocks/async.js';\nexport { validate_snippet_args } from './dev/validation.js';\nexport { await_block as await } from './dom/blocks/await.js';\nexport { if_block as if } from './dom/blocks/if.js';\nexport { key } from './dom/blocks/key.js';\nexport { css_props } from './dom/blocks/css-props.js';\nexport { index, each } from './dom/blocks/each.js';\nexport { html } from './dom/blocks/html.js';\nexport { sanitize_slots, slot } from './dom/blocks/slot.js';\nexport { snippet, wrap_snippet } from './dom/blocks/snippet.js';\nexport { component } from './dom/blocks/svelte-component.js';\nexport { element } from './dom/blocks/svelte-element.js';\nexport { head } from './dom/blocks/svelte-head.js';\nexport { append_styles } from './dom/css.js';\nexport { action } from './dom/elements/actions.js';\nexport { attach } from './dom/elements/attachments.js';\nexport {\n\tremove_input_defaults,\n\tset_attribute,\n\tattribute_effect,\n\tset_custom_element_data,\n\tset_xlink_attribute,\n\tset_value,\n\tset_checked,\n\tset_selected,\n\tset_default_checked,\n\tset_default_value,\n\tCLASS,\n\tSTYLE\n} from './dom/elements/attributes.js';\nexport { set_class } from './dom/elements/class.js';\nexport { apply, event, delegate, replay_events } from './dom/elements/events.js';\nexport { autofocus, remove_textarea_child } from './dom/elements/misc.js';\nexport { set_style } from './dom/elements/style.js';\nexport { animation, transition } from './dom/elements/transitions.js';\nexport { bind_active_element } from './dom/elements/bindings/document.js';\nexport { bind_checked, bind_files, bind_group, bind_value } from './dom/elements/bindings/input.js';\nexport {\n\tbind_buffered,\n\tbind_current_time,\n\tbind_ended,\n\tbind_muted,\n\tbind_paused,\n\tbind_playback_rate,\n\tbind_played,\n\tbind_ready_state,\n\tbind_seekable,\n\tbind_seeking,\n\tbind_volume\n} from './dom/elements/bindings/media.js';\nexport { bind_online } from './dom/elements/bindings/navigator.js';\nexport { bind_prop } from './dom/elements/bindings/props.js';\nexport { bind_select_value, init_select, select_option } from './dom/elements/bindings/select.js';\nexport { bind_element_size, bind_resize_observer } from './dom/elements/bindings/size.js';\nexport { bind_this } from './dom/elements/bindings/this.js';\nexport {\n\tbind_content_editable,\n\tbind_property,\n\tbind_focused\n} from './dom/elements/bindings/universal.js';\nexport { bind_window_scroll, bind_window_size } from './dom/elements/bindings/window.js';\nexport { hydrate_template, next, reset } from './dom/hydration.js';\nexport {\n\tonce,\n\tpreventDefault,\n\tself,\n\tstopImmediatePropagation,\n\tstopPropagation,\n\ttrusted\n} from './dom/legacy/event-modifiers.js';\nexport { init } from './dom/legacy/lifecycle.js';\nexport {\n\tadd_legacy_event_listener,\n\tbubble_event,\n\treactive_import,\n\tupdate_legacy_props\n} from './dom/legacy/misc.js';\nexport {\n\tappend,\n\tcomment,\n\tfrom_html,\n\tfrom_mathml,\n\tfrom_svg,\n\tfrom_tree,\n\ttext,\n\tprops_id,\n\twith_script\n} from './dom/template.js';\nexport {\n\tasync_body,\n\tfor_await_track_reactivity_loss,\n\trun,\n\tsave,\n\ttrack_reactivity_loss\n} from './reactivity/async.js';\nexport { eager, flushSync as flush } from './reactivity/batch.js';\nexport {\n\tasync_derived,\n\tuser_derived as derived,\n\tderived_safe_equal\n} from './reactivity/deriveds.js';\nexport {\n\taborted,\n\teffect_tracking,\n\teffect_root,\n\tlegacy_pre_effect,\n\tlegacy_pre_effect_reset,\n\trender_effect,\n\ttemplate_effect,\n\teffect,\n\tuser_effect,\n\tuser_pre_effect\n} from './reactivity/effects.js';\nexport { mutable_source, mutate, set, state, update, update_pre } from './reactivity/sources.js';\nexport {\n\tprop,\n\trest_props,\n\tlegacy_rest_props,\n\tspread_props,\n\tupdate_pre_prop,\n\tupdate_prop\n} from './reactivity/props.js';\nexport {\n\tinvalidate_store,\n\tstore_mutate,\n\tsetup_stores,\n\tstore_get,\n\tstore_set,\n\tstore_unsub,\n\tupdate_pre_store,\n\tupdate_store,\n\tmark_store_binding\n} from './reactivity/store.js';\nexport { boundary, pending } from './dom/blocks/boundary.js';\nexport { invalidate_inner_signals } from './legacy.js';\nexport { set_text } from './render.js';\nexport {\n\tget,\n\tsafe_get,\n\ttick,\n\tuntrack,\n\texclude_from_object,\n\tdeep_read,\n\tdeep_read_state,\n\tactive_effect\n} from './runtime.js';\nexport { validate_binding, validate_each_keys } from './validate.js';\nexport { raf } from './timing.js';\nexport { proxy } from './proxy.js';\nexport { create_custom_element } from './dom/elements/custom-element.js';\nexport {\n\tchild,\n\tfirst_child,\n\tsibling,\n\t$window as window,\n\t$document as document\n} from './dom/operations.js';\nexport { attr, clsx } from '../shared/attributes.js';\nexport { snapshot } from '../shared/clone.js';\nexport { noop, fallback, to_array } from '../shared/utils.js';\nexport {\n\tinvalid_default_snippet,\n\tvalidate_dynamic_element_tag,\n\tvalidate_store,\n\tvalidate_void_dynamic_element,\n\tprevent_snippet_stringification\n} from '../shared/validate.js';\nexport { strict_equals, equals } from './dev/equality.js';\nexport { log_if_contains_state } from './dev/console-log.js';\nexport { invoke_error_boundary } from './error-handling.js';\n",
+      "start": 1762256767738,
+      "end": 1762256767777,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767777,
+      "end": 1762256767777,
+      "order": "normal"
+    }
+  ]
+}

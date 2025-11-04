@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/legacy/lifecycle.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { ComponentContextLegacy } from '#client' */\nimport { run, run_all } from '../../../shared/utils.js';\nimport { component_context } from '../../context.js';\nimport { derived } from '../../reactivity/deriveds.js';\nimport { user_pre_effect, user_effect } from '../../reactivity/effects.js';\nimport { deep_read_state, get, untrack } from '../../runtime.js';\n\n/**\n * Legacy-mode only: Call `onMount` callbacks and set up `beforeUpdate`/`afterUpdate` effects\n * @param {boolean} [immutable]\n */\nexport function init(immutable = false) {\n\tconst context = /** @type {ComponentContextLegacy} */ (component_context);\n\n\tconst callbacks = context.l.u;\n\tif (!callbacks) return;\n\n\tlet props = () => deep_read_state(context.s);\n\n\tif (immutable) {\n\t\tlet version = 0;\n\t\tlet prev = /** @type {Record<string, any>} */ ({});\n\n\t\t// In legacy immutable mode, before/afterUpdate only fire if the object identity of a prop changes\n\t\tconst d = derived(() => {\n\t\t\tlet changed = false;\n\t\t\tconst props = context.s;\n\t\t\tfor (const key in props) {\n\t\t\t\tif (props[key] !== prev[key]) {\n\t\t\t\t\tprev[key] = props[key];\n\t\t\t\t\tchanged = true;\n\t\t\t\t}\n\t\t\t}\n\t\t\tif (changed) version++;\n\t\t\treturn version;\n\t\t});\n\n\t\tprops = () => get(d);\n\t}\n\n\t// beforeUpdate\n\tif (callbacks.b.length) {\n\t\tuser_pre_effect(() => {\n\t\t\tobserve_all(context, props);\n\t\t\trun_all(callbacks.b);\n\t\t});\n\t}\n\n\t// onMount (must run before afterUpdate)\n\tuser_effect(() => {\n\t\tconst fns = untrack(() => callbacks.m.map(run));\n\t\treturn () => {\n\t\t\tfor (const fn of fns) {\n\t\t\t\tif (typeof fn === 'function') {\n\t\t\t\t\tfn();\n\t\t\t\t}\n\t\t\t}\n\t\t};\n\t});\n\n\t// afterUpdate\n\tif (callbacks.a.length) {\n\t\tuser_effect(() => {\n\t\t\tobserve_all(context, props);\n\t\t\trun_all(callbacks.a);\n\t\t});\n\t}\n}\n\n/**\n * Invoke the getter of all signals associated with a component\n * so they can be registered to the effect this function is called in.\n * @param {ComponentContextLegacy} context\n * @param {(() => void)} props\n */\nfunction observe_all(context, props) {\n\tif (context.l.s) {\n\t\tfor (const signal of context.l.s) get(signal);\n\t}\n\n\tprops();\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767830,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    }
+  ]
+}

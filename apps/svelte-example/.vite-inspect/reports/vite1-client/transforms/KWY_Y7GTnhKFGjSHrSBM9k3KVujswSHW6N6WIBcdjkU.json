@@ -1,0 +1,144 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/static/DecoratorHandler.svelte",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script>\n  const { decorator, Component, props } = $props();\n\n  /*\n    Svelte Docgen will create argTypes for events with the name 'event_eventName'\n    The Actions addon will convert these to args because they are type: 'action'\n    We need to filter these args out so they are not passed to the component\n  */\n  let propsWithoutDocgenEvents = $derived(\n    Object.fromEntries(Object.entries(props).filter(([key]) => !key.startsWith('event_')))\n  );\n</script>\n\n{#if decorator}\n  <decorator.Component {...decorator.props}>\n    <Component {...propsWithoutDocgenEvents} />\n  </decorator.Component>\n{:else}\n  <Component {...propsWithoutDocgenEvents} />\n{/if}\n",
+      "start": 1762256767691,
+      "end": 1762256767730,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767730,
+      "end": 1762256767730,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "result": "import 'svelte/internal/disclose-version';\nimport * as $ from 'svelte/internal/client';\n\nexport default function DecoratorHandler($$anchor, $$props) {\n\t$.push($$props, true);\n\n\t/*\n\t  Svelte Docgen will create argTypes for events with the name 'event_eventName'\n\t  The Actions addon will convert these to args because they are type: 'action'\n\t  We need to filter these args out so they are not passed to the component\n\t*/\n\tlet propsWithoutDocgenEvents = $.derived(() => Object.fromEntries(Object.entries($$props.props).filter(([key]) => !key.startsWith('event_'))));\n\n\tvar fragment = $.comment();\n\tvar node = $.first_child(fragment);\n\n\t{\n\t\tvar consequent = ($$anchor) => {\n\t\t\tvar fragment_1 = $.comment();\n\t\t\tvar node_1 = $.first_child(fragment_1);\n\n\t\t\t$.component(node_1, () => $$props.decorator.Component, ($$anchor, decorator_Component) => {\n\t\t\t\tdecorator_Component($$anchor, $.spread_props(() => $$props.decorator.props, {\n\t\t\t\t\tchildren: ($$anchor, $$slotProps) => {\n\t\t\t\t\t\tvar fragment_2 = $.comment();\n\t\t\t\t\t\tvar node_2 = $.first_child(fragment_2);\n\n\t\t\t\t\t\t$.component(node_2, () => $$props.Component, ($$anchor, Component_1) => {\n\t\t\t\t\t\t\tComponent_1($$anchor, $.spread_props(() => $.get(propsWithoutDocgenEvents)));\n\t\t\t\t\t\t});\n\n\t\t\t\t\t\t$.append($$anchor, fragment_2);\n\t\t\t\t\t},\n\n\t\t\t\t\t$$slots: { default: true }\n\t\t\t\t}));\n\t\t\t});\n\n\t\t\t$.append($$anchor, fragment_1);\n\t\t};\n\n\t\tvar alternate = ($$anchor) => {\n\t\t\tvar fragment_3 = $.comment();\n\t\t\tvar node_3 = $.first_child(fragment_3);\n\n\t\t\t$.component(node_3, () => $$props.Component, ($$anchor, Component_2) => {\n\t\t\t\tComponent_2($$anchor, $.spread_props(() => $.get(propsWithoutDocgenEvents)));\n\t\t\t});\n\n\t\t\t$.append($$anchor, fragment_3);\n\t\t};\n\n\t\t$.if(node, ($$render) => {\n\t\t\tif ($$props.decorator) $$render(consequent); else $$render(alternate, false);\n\t\t});\n\t}\n\n\t$.append($$anchor, fragment);\n\t$.pop();\n}",
+      "start": 1762256767730,
+      "end": 1762256767733,
+      "order": "pre",
+      "sourcemaps": {
+        "version": 3,
+        "names": [],
+        "sources": [
+          "DecoratorHandler.svelte"
+        ],
+        "sourcesContent": [
+          "<script>\n  const { decorator, Component, props } = $props();\n\n  /*\n    Svelte Docgen will create argTypes for events with the name 'event_eventName'\n    The Actions addon will convert these to args because they are type: 'action'\n    We need to filter these args out so they are not passed to the component\n  */\n  let propsWithoutDocgenEvents = $derived(\n    Object.fromEntries(Object.entries(props).filter(([key]) => !key.startsWith('event_')))\n  );\n</script>\n\n{#if decorator}\n  <decorator.Component {...decorator.props}>\n    <Component {...propsWithoutDocgenEvents} />\n  </decorator.Component>\n{:else}\n  <Component {...propsWithoutDocgenEvents} />\n{/if}\n"
+        ],
+        "mappings": ";;;4DAAA,CAAC;;;;;;;;KAQK,wBAAwB,mBAC1B,MAAM,CAAC,WAAW,CAAC,MAAM,CAAC,OAAO,gBAAQ,MAAM,GAAG,GAAG,OAAO,GAAG,CAAC,UAAU,CAAC,QAAQ;;;;;;;;;;;yEAKlD,KAAK;;;;;;wDACvB,wBAAwB;;;;;;;;;;;;;;;;;;qDAG1B,wBAAwB;;;;;;;;;;;;;AAP1C,CAAC"
+      }
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767733,
+      "end": 1762256767733,
+      "order": "normal"
+    }
+  ]
+}

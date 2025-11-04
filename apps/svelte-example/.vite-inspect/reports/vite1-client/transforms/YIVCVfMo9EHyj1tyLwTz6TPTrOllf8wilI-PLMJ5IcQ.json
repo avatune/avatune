@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dev/console-log.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { STATE_SYMBOL } from '#client/constants';\nimport { snapshot } from '../../shared/clone.js';\nimport * as w from '../warnings.js';\nimport { untrack } from '../runtime.js';\n\n/**\n * @param {string} method\n * @param  {...any} objects\n */\nexport function log_if_contains_state(method, ...objects) {\n\tuntrack(() => {\n\t\ttry {\n\t\t\tlet has_state = false;\n\t\t\tconst transformed = [];\n\n\t\t\tfor (const obj of objects) {\n\t\t\t\tif (obj && typeof obj === 'object' && STATE_SYMBOL in obj) {\n\t\t\t\t\ttransformed.push(snapshot(obj, true));\n\t\t\t\t\thas_state = true;\n\t\t\t\t} else {\n\t\t\t\t\ttransformed.push(obj);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (has_state) {\n\t\t\t\tw.console_log_state(method);\n\n\t\t\t\t// eslint-disable-next-line no-console\n\t\t\t\tconsole.log('%c[snapshot]', 'color: grey', ...transformed);\n\t\t\t}\n\t\t} catch {}\n\t});\n\n\treturn objects;\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767836,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767836,
+      "end": 1762256767836,
+      "order": "normal"
+    }
+  ]
+}

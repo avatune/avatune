@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/predicate/matchesProperty.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isMatch } from './isMatch.mjs';\nimport { toKey } from '../_internal/toKey.mjs';\nimport { cloneDeep } from '../object/cloneDeep.mjs';\nimport { get } from '../object/get.mjs';\nimport { has } from '../object/has.mjs';\n\nfunction matchesProperty(property, source) {\n    switch (typeof property) {\n        case 'object': {\n            if (Object.is(property?.valueOf(), -0)) {\n                property = '-0';\n            }\n            break;\n        }\n        case 'number': {\n            property = toKey(property);\n            break;\n        }\n    }\n    source = cloneDeep(source);\n    return function (target) {\n        const result = get(target, property);\n        if (result === undefined) {\n            return has(target, property);\n        }\n        if (source === undefined) {\n            return result === undefined;\n        }\n        return isMatch(result, source);\n    };\n}\n\nexport { matchesProperty };\n",
+      "start": 1762256768011,
+      "end": 1762256768129,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768129,
+      "end": 1762256768129,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/shared/utils.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "// Store the references to globals in case someone tries to monkey patch these, causing the below\n// to de-opt (this occurs often when using popular extensions).\nexport var is_array = Array.isArray;\nexport var index_of = Array.prototype.indexOf;\nexport var array_from = Array.from;\nexport var object_keys = Object.keys;\nexport var define_property = Object.defineProperty;\nexport var get_descriptor = Object.getOwnPropertyDescriptor;\nexport var get_descriptors = Object.getOwnPropertyDescriptors;\nexport var object_prototype = Object.prototype;\nexport var array_prototype = Array.prototype;\nexport var get_prototype_of = Object.getPrototypeOf;\nexport var is_extensible = Object.isExtensible;\n\n/**\n * @param {any} thing\n * @returns {thing is Function}\n */\nexport function is_function(thing) {\n\treturn typeof thing === 'function';\n}\n\nexport const noop = () => {};\n\n// Adapted from https://github.com/then/is-promise/blob/master/index.js\n// Distributed under MIT License https://github.com/then/is-promise/blob/master/LICENSE\n\n/**\n * @template [T=any]\n * @param {any} value\n * @returns {value is PromiseLike<T>}\n */\nexport function is_promise(value) {\n\treturn typeof value?.then === 'function';\n}\n\n/** @param {Function} fn */\nexport function run(fn) {\n\treturn fn();\n}\n\n/** @param {Array<() => void>} arr */\nexport function run_all(arr) {\n\tfor (var i = 0; i < arr.length; i++) {\n\t\tarr[i]();\n\t}\n}\n\n/**\n * TODO replace with Promise.withResolvers once supported widely enough\n * @template T\n */\nexport function deferred() {\n\t/** @type {(value: T) => void} */\n\tvar resolve;\n\n\t/** @type {(reason: any) => void} */\n\tvar reject;\n\n\t/** @type {Promise<T>} */\n\tvar promise = new Promise((res, rej) => {\n\t\tresolve = res;\n\t\treject = rej;\n\t});\n\n\t// @ts-expect-error\n\treturn { promise, resolve, reject };\n}\n\n/**\n * @template V\n * @param {V} value\n * @param {V | (() => V)} fallback\n * @param {boolean} [lazy]\n * @returns {V}\n */\nexport function fallback(value, fallback, lazy = false) {\n\treturn value === undefined\n\t\t? lazy\n\t\t\t? /** @type {() => V} */ (fallback)()\n\t\t\t: /** @type {V} */ (fallback)\n\t\t: value;\n}\n\n/**\n * When encountering a situation like `let [a, b, c] = $derived(blah())`,\n * we need to stash an intermediate value that `a`, `b`, and `c` derive\n * from, in case it's an iterable\n * @template T\n * @param {ArrayLike<T> | Iterable<T>} value\n * @param {number} [n]\n * @returns {Array<T>}\n */\nexport function to_array(value, n) {\n\t// return arrays unchanged\n\tif (Array.isArray(value)) {\n\t\treturn value;\n\t}\n\n\t// if value is not iterable, or `n` is unspecified (indicates a rest\n\t// element, which means we're not concerned about unbounded iterables)\n\t// convert to an array with `Array.from`\n\tif (n === undefined || !(Symbol.iterator in value)) {\n\t\treturn Array.from(value);\n\t}\n\n\t// otherwise, populate an array with `n` values\n\n\t/** @type {T[]} */\n\tconst array = [];\n\n\tfor (const element of value) {\n\t\tarray.push(element);\n\t\tif (array.length === n) break;\n\t}\n\n\treturn array;\n}\n",
+      "start": 1762256767745,
+      "end": 1762256767790,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767790,
+      "end": 1762256767790,
+      "order": "normal"
+    }
+  ]
+}

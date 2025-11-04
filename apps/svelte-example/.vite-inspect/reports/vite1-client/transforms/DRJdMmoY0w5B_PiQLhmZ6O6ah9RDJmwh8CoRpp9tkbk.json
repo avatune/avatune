@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/math/random.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { clamp } from './clamp.mjs';\nimport { random as random$1 } from '../../math/random.mjs';\nimport { randomInt } from '../../math/randomInt.mjs';\n\nfunction random(...args) {\n    let minimum = 0;\n    let maximum = 1;\n    let floating = false;\n    switch (args.length) {\n        case 1: {\n            if (typeof args[0] === 'boolean') {\n                floating = args[0];\n            }\n            else {\n                maximum = args[0];\n            }\n            break;\n        }\n        case 2: {\n            if (typeof args[1] === 'boolean') {\n                maximum = args[0];\n                floating = args[1];\n            }\n            else {\n                minimum = args[0];\n                maximum = args[1];\n            }\n        }\n        case 3: {\n            if (typeof args[2] === 'object' && args[2] != null && args[2][args[1]] === args[0]) {\n                minimum = 0;\n                maximum = args[0];\n                floating = false;\n            }\n            else {\n                minimum = args[0];\n                maximum = args[1];\n                floating = args[2];\n            }\n        }\n    }\n    if (typeof minimum !== 'number') {\n        minimum = Number(minimum);\n    }\n    if (typeof maximum !== 'number') {\n        minimum = Number(maximum);\n    }\n    if (!minimum) {\n        minimum = 0;\n    }\n    if (!maximum) {\n        maximum = 0;\n    }\n    if (minimum > maximum) {\n        [minimum, maximum] = [maximum, minimum];\n    }\n    minimum = clamp(minimum, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);\n    maximum = clamp(maximum, -Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);\n    if (minimum === maximum) {\n        return minimum;\n    }\n    if (floating) {\n        return random$1(minimum, maximum + 1);\n    }\n    else {\n        return randomInt(minimum, maximum + 1);\n    }\n}\n\nexport { random };\n",
+      "start": 1762256768011,
+      "end": 1762256768124,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768124,
+      "end": 1762256768124,
+      "order": "normal"
+    }
+  ]
+}

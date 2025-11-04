@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/legacy/event-modifiers.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { noop } from '../../../shared/utils.js';\nimport { user_pre_effect } from '../../reactivity/effects.js';\nimport { on } from '../elements/events.js';\n\n/**\n * Substitute for the `trusted` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function trusted(fn) {\n\treturn function (...args) {\n\t\tvar event = /** @type {Event} */ (args[0]);\n\t\tif (event.isTrusted) {\n\t\t\t// @ts-ignore\n\t\t\tfn?.apply(this, args);\n\t\t}\n\t};\n}\n\n/**\n * Substitute for the `self` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function self(fn) {\n\treturn function (...args) {\n\t\tvar event = /** @type {Event} */ (args[0]);\n\t\t// @ts-ignore\n\t\tif (event.target === this) {\n\t\t\t// @ts-ignore\n\t\t\tfn?.apply(this, args);\n\t\t}\n\t};\n}\n\n/**\n * Substitute for the `stopPropagation` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function stopPropagation(fn) {\n\treturn function (...args) {\n\t\tvar event = /** @type {Event} */ (args[0]);\n\t\tevent.stopPropagation();\n\t\t// @ts-ignore\n\t\treturn fn?.apply(this, args);\n\t};\n}\n\n/**\n * Substitute for the `once` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function once(fn) {\n\tvar ran = false;\n\n\treturn function (...args) {\n\t\tif (ran) return;\n\t\tran = true;\n\n\t\t// @ts-ignore\n\t\treturn fn?.apply(this, args);\n\t};\n}\n\n/**\n * Substitute for the `stopImmediatePropagation` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function stopImmediatePropagation(fn) {\n\treturn function (...args) {\n\t\tvar event = /** @type {Event} */ (args[0]);\n\t\tevent.stopImmediatePropagation();\n\t\t// @ts-ignore\n\t\treturn fn?.apply(this, args);\n\t};\n}\n\n/**\n * Substitute for the `preventDefault` event modifier\n * @deprecated\n * @param {(event: Event, ...args: Array<unknown>) => void} fn\n * @returns {(event: Event, ...args: unknown[]) => void}\n */\nexport function preventDefault(fn) {\n\treturn function (...args) {\n\t\tvar event = /** @type {Event} */ (args[0]);\n\t\tevent.preventDefault();\n\t\t// @ts-ignore\n\t\treturn fn?.apply(this, args);\n\t};\n}\n\n/**\n * Substitute for the `passive` event modifier, implemented as an action\n * @deprecated\n * @param {HTMLElement} node\n * @param {[event: string, handler: () => EventListener]} options\n */\nexport function passive(node, [event, handler]) {\n\tuser_pre_effect(() => {\n\t\treturn on(node, event, handler() ?? noop, {\n\t\t\tpassive: true\n\t\t});\n\t});\n}\n\n/**\n * Substitute for the `nonpassive` event modifier, implemented as an action\n * @deprecated\n * @param {HTMLElement} node\n * @param {[event: string, handler: () => EventListener]} options\n */\nexport function nonpassive(node, [event, handler]) {\n\tuser_pre_effect(() => {\n\t\treturn on(node, event, handler() ?? noop, {\n\t\t\tpassive: false\n\t\t});\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767830,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    }
+  ]
+}

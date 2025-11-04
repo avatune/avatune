@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/object/get.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { isUnsafeProperty } from '../../_internal/isUnsafeProperty.mjs';\nimport { isDeepKey } from '../_internal/isDeepKey.mjs';\nimport { toKey } from '../_internal/toKey.mjs';\nimport { toPath } from '../util/toPath.mjs';\n\nfunction get(object, path, defaultValue) {\n    if (object == null) {\n        return defaultValue;\n    }\n    switch (typeof path) {\n        case 'string': {\n            if (isUnsafeProperty(path)) {\n                return defaultValue;\n            }\n            const result = object[path];\n            if (result === undefined) {\n                if (isDeepKey(path)) {\n                    return get(object, toPath(path), defaultValue);\n                }\n                else {\n                    return defaultValue;\n                }\n            }\n            return result;\n        }\n        case 'number':\n        case 'symbol': {\n            if (typeof path === 'number') {\n                path = toKey(path);\n            }\n            const result = object[path];\n            if (result === undefined) {\n                return defaultValue;\n            }\n            return result;\n        }\n        default: {\n            if (Array.isArray(path)) {\n                return getWithPath(object, path, defaultValue);\n            }\n            if (Object.is(path?.valueOf(), -0)) {\n                path = '-0';\n            }\n            else {\n                path = String(path);\n            }\n            if (isUnsafeProperty(path)) {\n                return defaultValue;\n            }\n            const result = object[path];\n            if (result === undefined) {\n                return defaultValue;\n            }\n            return result;\n        }\n    }\n}\nfunction getWithPath(object, path, defaultValue) {\n    if (path.length === 0) {\n        return defaultValue;\n    }\n    let current = object;\n    for (let index = 0; index < path.length; index++) {\n        if (current == null) {\n            return defaultValue;\n        }\n        if (isUnsafeProperty(path[index])) {\n            return defaultValue;\n        }\n        current = current[path[index]];\n    }\n    if (current === undefined) {\n        return defaultValue;\n    }\n    return current;\n}\n\nexport { get };\n",
+      "start": 1762256768011,
+      "end": 1762256768125,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768125,
+      "end": 1762256768125,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/task.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { run_all } from '../../shared/utils.js';\nimport { is_flushing_sync } from '../reactivity/batch.js';\n\n/** @type {Array<() => void>} */\nlet micro_tasks = [];\n\nfunction run_micro_tasks() {\n\tvar tasks = micro_tasks;\n\tmicro_tasks = [];\n\trun_all(tasks);\n}\n\n/**\n * @param {() => void} fn\n */\nexport function queue_micro_task(fn) {\n\tif (micro_tasks.length === 0 && !is_flushing_sync) {\n\t\tvar tasks = micro_tasks;\n\t\tqueueMicrotask(() => {\n\t\t\t// If this is false, a flushSync happened in the meantime. Do _not_ run new scheduled microtasks in that case\n\t\t\t// as the ordering of microtasks would be broken at that point - consider this case:\n\t\t\t// - queue_micro_task schedules microtask A to flush task X\n\t\t\t// - synchronously after, flushSync runs, processing task X\n\t\t\t// - synchronously after, some other microtask B is scheduled, but not through queue_micro_task but for example a Promise.resolve() in user code\n\t\t\t// - synchronously after, queue_micro_task schedules microtask C to flush task Y\n\t\t\t// - one tick later, microtask A now resolves, flushing task Y before microtask B, which is incorrect\n\t\t\t// This if check prevents that race condition (that realistically will only happen in tests)\n\t\t\tif (tasks === micro_tasks) run_micro_tasks();\n\t\t});\n\t}\n\n\tmicro_tasks.push(fn);\n}\n\n/**\n * Synchronously run any queued tasks.\n */\nexport function flush_tasks() {\n\twhile (micro_tasks.length > 0) {\n\t\trun_micro_tasks();\n\t}\n}\n",
+      "start": 1762256767803,
+      "end": 1762256767887,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767887,
+      "end": 1762256767887,
+      "order": "normal"
+    }
+  ]
+}

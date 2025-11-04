@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/packages/svelte/dist/index.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import \"svelte/internal/disclose-version\";\nimport { append, child, clsx, comment, component, derived, each, first_child, from_svg, get, if as client_if, index, pop, prop, push, reset as client_reset, rest_props, set_attribute, set_class, set_style, template_effect, to_array } from \"svelte/internal/client\";\nimport { selectItemFromConfig } from \"@avatune/utils\";\nvar root_2 = from_svg(\"<g><!></g>\");\nvar root = from_svg('<svg xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Avatar\"></svg>');\nfunction Avatar($$anchor, $$props) {\n    push($$props, true);\n    const width = prop($$props, 'width', 19, ()=>$$props.theme.metadata.size), height = prop($$props, 'height', 19, ()=>$$props.theme.metadata.size), config = rest_props($$props, [\n        '$$slots',\n        '$$events',\n        '$$legacy',\n        'theme',\n        'width',\n        'height',\n        'class',\n        'style'\n    ]);\n    const result = derived(()=>selectItemFromConfig(config, $$props.theme));\n    const sortedItems = derived(()=>Object.entries(get(result).selected).sort(([, a], [, b])=>(a?.layer || 0) - (b?.layer || 0)));\n    const scaleFactor = derived(()=>width() / $$props.theme.metadata.size);\n    const backgroundColor = $$props.theme.metadata.backgroundColor;\n    const borderColor = $$props.theme.metadata.borderColor;\n    const borderWidth = $$props.theme.metadata.borderWidth;\n    const finalStyle = derived(()=>[\n            $$props.style,\n            backgroundColor ? `background-color: ${backgroundColor}` : '',\n            borderWidth && borderColor ? `border: ${borderWidth}px solid ${borderColor}` : '',\n            'border-radius: 100%'\n        ].filter(Boolean).join('; '));\n    var svg = root();\n    each(svg, 21, ()=>get(sortedItems), index, ($$anchor, $$item)=>{\n        var $$array = derived(()=>to_array(get($$item), 2));\n        let category = ()=>get($$array)[0];\n        let item = ()=>get($$array)[1];\n        var fragment = comment();\n        var node = first_child(fragment);\n        var consequent = ($$anchor)=>{\n            const position = derived(()=>'function' == typeof item().position ? item().position(width(), height()) : item().position);\n            const transformX = derived(()=>get(position).x);\n            const transformY = derived(()=>get(position).y);\n            const configColor = derived(()=>$$props.seed ? void 0 : config[`${category()}Color`]);\n            const ItemComponent = derived(()=>item().Component);\n            var g = root_2();\n            var node_1 = child(g);\n            component(node_1, ()=>get(ItemComponent), ($$anchor, ItemComponent_1)=>{\n                ItemComponent_1($$anchor, {});\n            });\n            client_reset(g);\n            template_effect(()=>{\n                set_attribute(g, 'transform', `translate(${get(transformX) ?? ''}, ${get(transformY) ?? ''}) scale(${get(scaleFactor) ?? ''})`);\n                set_style(g, `color: ${(get(configColor) || item().color) ?? ''}`);\n            });\n            append($$anchor, g);\n        };\n        client_if(node, ($$render)=>{\n            if (item()) $$render(consequent);\n        });\n        append($$anchor, fragment);\n    });\n    client_reset(svg);\n    template_effect(()=>{\n        set_attribute(svg, 'width', width());\n        set_attribute(svg, 'height', height());\n        set_attribute(svg, 'viewBox', `0 0 ${width() ?? ''} ${height() ?? ''}`);\n        set_class(svg, 0, clsx($$props.class));\n        set_style(svg, get(finalStyle));\n    });\n    append($$anchor, svg);\n    pop();\n}\nconst src_Avatar = Avatar;\nexport { src_Avatar as Avatar };\n",
+      "start": 1762256767779,
+      "end": 1762256767818,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767818,
+      "end": 1762256767818,
+      "order": "normal"
+    }
+  ]
+}

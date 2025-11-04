@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/function/debounce.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "function debounce(func, debounceMs, { signal, edges } = {}) {\n    let pendingThis = undefined;\n    let pendingArgs = null;\n    const leading = edges != null && edges.includes('leading');\n    const trailing = edges == null || edges.includes('trailing');\n    const invoke = () => {\n        if (pendingArgs !== null) {\n            func.apply(pendingThis, pendingArgs);\n            pendingThis = undefined;\n            pendingArgs = null;\n        }\n    };\n    const onTimerEnd = () => {\n        if (trailing) {\n            invoke();\n        }\n        cancel();\n    };\n    let timeoutId = null;\n    const schedule = () => {\n        if (timeoutId != null) {\n            clearTimeout(timeoutId);\n        }\n        timeoutId = setTimeout(() => {\n            timeoutId = null;\n            onTimerEnd();\n        }, debounceMs);\n    };\n    const cancelTimer = () => {\n        if (timeoutId !== null) {\n            clearTimeout(timeoutId);\n            timeoutId = null;\n        }\n    };\n    const cancel = () => {\n        cancelTimer();\n        pendingThis = undefined;\n        pendingArgs = null;\n    };\n    const flush = () => {\n        invoke();\n    };\n    const debounced = function (...args) {\n        if (signal?.aborted) {\n            return;\n        }\n        pendingThis = this;\n        pendingArgs = args;\n        const isFirstCall = timeoutId == null;\n        schedule();\n        if (leading && isFirstCall) {\n            invoke();\n        }\n    };\n    debounced.schedule = schedule;\n    debounced.cancel = cancel;\n    debounced.flush = flush;\n    signal?.addEventListener('abort', cancel, { once: true });\n    return debounced;\n}\n\nexport { debounce };\n",
+      "start": 1762256768158,
+      "end": 1762256768193,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768193,
+      "end": 1762256768193,
+      "order": "normal"
+    }
+  ]
+}

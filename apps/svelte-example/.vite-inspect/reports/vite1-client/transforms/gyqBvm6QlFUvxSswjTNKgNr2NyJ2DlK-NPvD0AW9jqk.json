@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/constants.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "// General flags\nexport const DERIVED = 1 << 1;\nexport const EFFECT = 1 << 2;\nexport const RENDER_EFFECT = 1 << 3;\nexport const BLOCK_EFFECT = 1 << 4;\nexport const BRANCH_EFFECT = 1 << 5;\nexport const ROOT_EFFECT = 1 << 6;\nexport const BOUNDARY_EFFECT = 1 << 7;\nexport const CLEAN = 1 << 10;\nexport const DIRTY = 1 << 11;\nexport const MAYBE_DIRTY = 1 << 12;\nexport const INERT = 1 << 13;\nexport const DESTROYED = 1 << 14;\n\n// Flags exclusive to effects\n/** Set once an effect that should run synchronously has run */\nexport const EFFECT_RAN = 1 << 15;\n/**\n * 'Transparent' effects do not create a transition boundary.\n * This is on a block effect 99% of the time but may also be on a branch effect if its parent block effect was pruned\n */\nexport const EFFECT_TRANSPARENT = 1 << 16;\nexport const EAGER_EFFECT = 1 << 17;\nexport const HEAD_EFFECT = 1 << 18;\nexport const EFFECT_PRESERVED = 1 << 19;\nexport const USER_EFFECT = 1 << 20;\n\n// Flags exclusive to deriveds\nexport const UNOWNED = 1 << 8;\nexport const DISCONNECTED = 1 << 9;\n/**\n * Tells that we marked this derived and its reactions as visited during the \"mark as (maybe) dirty\"-phase.\n * Will be lifted during execution of the derived and during checking its dirty state (both are necessary\n * because a derived might be checked but not executed).\n */\nexport const WAS_MARKED = 1 << 15;\n\n// Flags used for async\nexport const REACTION_IS_UPDATING = 1 << 21;\nexport const ASYNC = 1 << 22;\n\nexport const ERROR_VALUE = 1 << 23;\n\nexport const STATE_SYMBOL = Symbol('$state');\nexport const LEGACY_PROPS = Symbol('legacy props');\nexport const LOADING_ATTR_SYMBOL = Symbol('');\nexport const PROXY_PATH_SYMBOL = Symbol('proxy path');\n\n/** allow users to ignore aborted signal errors if `reason.name === 'StaleReactionError` */\nexport const STALE_REACTION = new (class StaleReactionError extends Error {\n\tname = 'StaleReactionError';\n\tmessage = 'The reaction that called `getAbortSignal()` was re-run or destroyed';\n})();\n\nexport const ELEMENT_NODE = 1;\nexport const TEXT_NODE = 3;\nexport const COMMENT_NODE = 8;\nexport const DOCUMENT_FRAGMENT_NODE = 11;\n",
+      "start": 1762256767800,
+      "end": 1762256767858,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767858,
+      "end": 1762256767858,
+      "order": "normal"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/legacy/misc.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { set, source } from '../../reactivity/sources.js';\nimport { get } from '../../runtime.js';\nimport { is_array } from '../../../shared/utils.js';\n\n/**\n * Under some circumstances, imports may be reactive in legacy mode. In that case,\n * they should be using `reactive_import` as part of the transformation\n * @param {() => any} fn\n */\nexport function reactive_import(fn) {\n\tvar s = source(0);\n\n\treturn function () {\n\t\tif (arguments.length === 1) {\n\t\t\tset(s, get(s) + 1);\n\t\t\treturn arguments[0];\n\t\t} else {\n\t\t\tget(s);\n\t\t\treturn fn();\n\t\t}\n\t};\n}\n\n/**\n * @this {any}\n * @param {Record<string, unknown>} $$props\n * @param {Event} event\n * @returns {void}\n */\nexport function bubble_event($$props, event) {\n\tvar events = /** @type {Record<string, Function[] | Function>} */ ($$props.$$events)?.[\n\t\tevent.type\n\t];\n\n\tvar callbacks = is_array(events) ? events.slice() : events == null ? [] : [events];\n\n\tfor (var fn of callbacks) {\n\t\t// Preserve \"this\" context\n\t\tfn.call(this, event);\n\t}\n}\n\n/**\n * Used to simulate `$on` on a component instance when `compatibility.componentApi === 4`\n * @param {Record<string, any>} $$props\n * @param {string} event_name\n * @param {Function} event_callback\n */\nexport function add_legacy_event_listener($$props, event_name, event_callback) {\n\t$$props.$$events ||= {};\n\t$$props.$$events[event_name] ||= [];\n\t$$props.$$events[event_name].push(event_callback);\n}\n\n/**\n * Used to simulate `$set` on a component instance when `compatibility.componentApi === 4`.\n * Needs component accessors so that it can call the setter of the prop. Therefore doesn't\n * work for updating props in `$$props` or `$$restProps`.\n * @this {Record<string, any>}\n * @param {Record<string, any>} $$new_props\n */\nexport function update_legacy_props($$new_props) {\n\tfor (var key in $$new_props) {\n\t\tif (key in this) {\n\t\t\tthis[key] = $$new_props[key];\n\t\t}\n\t}\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767830,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767830,
+      "end": 1762256767830,
+      "order": "normal"
+    }
+  ]
+}

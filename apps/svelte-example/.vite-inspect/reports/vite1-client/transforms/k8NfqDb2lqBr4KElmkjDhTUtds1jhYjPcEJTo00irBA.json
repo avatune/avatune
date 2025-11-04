@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/timing.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Raf } from '#client' */\nimport { noop } from '../shared/utils.js';\n\nimport { BROWSER } from 'esm-env';\n\nconst now = BROWSER ? () => performance.now() : () => Date.now();\n\n/** @type {Raf} */\nexport const raf = {\n\t// don't access requestAnimationFrame eagerly outside method\n\t// this allows basic testing of user code without JSDOM\n\t// bunder will eval and remove ternary when the user's app is built\n\ttick: /** @param {any} _ */ (_) => (BROWSER ? requestAnimationFrame : noop)(_),\n\tnow: () => now(),\n\ttasks: new Set()\n};\n",
+      "start": 1762256767787,
+      "end": 1762256767833,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767833,
+      "end": 1762256767833,
+      "order": "normal"
+    }
+  ]
+}

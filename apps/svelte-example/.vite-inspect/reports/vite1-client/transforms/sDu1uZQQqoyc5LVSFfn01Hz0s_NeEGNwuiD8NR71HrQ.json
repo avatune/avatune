@@ -1,0 +1,12 @@
+{
+  "resolvedId": "\u0000virtual:/@storybook/builder-vite/setup-addons.js",
+  "transforms": [
+    {
+      "name": "storybook:code-generator-plugin",
+      "result": "import { createBrowserChannel } from 'storybook/internal/channels';\n    import { addons } from 'storybook/preview-api';\n\n    const channel = createBrowserChannel({ page: 'preview' });\n    addons.setChannel(channel);\n    window.__STORYBOOK_ADDONS_CHANNEL__ = channel;\n    \n    if (window.CONFIG_TYPE === 'DEVELOPMENT'){\n      window.__STORYBOOK_SERVER_CHANNEL__ = channel;\n    }",
+      "start": 1762256767049,
+      "end": 1762256767049,
+      "sourcemaps": null
+    }
+  ]
+}

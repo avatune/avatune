@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/blocks/html.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect, TemplateNode } from '#client' */\nimport { FILENAME, HYDRATION_ERROR } from '../../../../constants.js';\nimport { remove_effect_dom, template_effect } from '../../reactivity/effects.js';\nimport { hydrate_next, hydrate_node, hydrating, set_hydrate_node } from '../hydration.js';\nimport { create_fragment_from_html } from '../reconciler.js';\nimport { assign_nodes } from '../template.js';\nimport * as w from '../../warnings.js';\nimport { hash, sanitize_location } from '../../../../utils.js';\nimport { DEV } from 'esm-env';\nimport { dev_current_component_function } from '../../context.js';\nimport { get_first_child, get_next_sibling } from '../operations.js';\nimport { active_effect } from '../../runtime.js';\nimport { COMMENT_NODE } from '#client/constants';\n\n/**\n * @param {Element} element\n * @param {string | null} server_hash\n * @param {string} value\n */\nfunction check_hash(element, server_hash, value) {\n\tif (!server_hash || server_hash === hash(String(value ?? ''))) return;\n\n\tlet location;\n\n\t// @ts-expect-error\n\tconst loc = element.__svelte_meta?.loc;\n\tif (loc) {\n\t\tlocation = `near ${loc.file}:${loc.line}:${loc.column}`;\n\t} else if (dev_current_component_function?.[FILENAME]) {\n\t\tlocation = `in ${dev_current_component_function[FILENAME]}`;\n\t}\n\n\tw.hydration_html_changed(sanitize_location(location));\n}\n\n/**\n * @param {Element | Text | Comment} node\n * @param {() => string} get_value\n * @param {boolean} [svg]\n * @param {boolean} [mathml]\n * @param {boolean} [skip_warning]\n * @returns {void}\n */\nexport function html(node, get_value, svg = false, mathml = false, skip_warning = false) {\n\tvar anchor = node;\n\n\tvar value = '';\n\n\ttemplate_effect(() => {\n\t\tvar effect = /** @type {Effect} */ (active_effect);\n\n\t\tif (value === (value = get_value() ?? '')) {\n\t\t\tif (hydrating) hydrate_next();\n\t\t\treturn;\n\t\t}\n\n\t\tif (effect.nodes_start !== null) {\n\t\t\tremove_effect_dom(effect.nodes_start, /** @type {TemplateNode} */ (effect.nodes_end));\n\t\t\teffect.nodes_start = effect.nodes_end = null;\n\t\t}\n\n\t\tif (value === '') return;\n\n\t\tif (hydrating) {\n\t\t\t// We're deliberately not trying to repair mismatches between server and client,\n\t\t\t// as it's costly and error-prone (and it's an edge case to have a mismatch anyway)\n\t\t\tvar hash = /** @type {Comment} */ (hydrate_node).data;\n\t\t\tvar next = hydrate_next();\n\t\t\tvar last = next;\n\n\t\t\twhile (\n\t\t\t\tnext !== null &&\n\t\t\t\t(next.nodeType !== COMMENT_NODE || /** @type {Comment} */ (next).data !== '')\n\t\t\t) {\n\t\t\t\tlast = next;\n\t\t\t\tnext = /** @type {TemplateNode} */ (get_next_sibling(next));\n\t\t\t}\n\n\t\t\tif (next === null) {\n\t\t\t\tw.hydration_mismatch();\n\t\t\t\tthrow HYDRATION_ERROR;\n\t\t\t}\n\n\t\t\tif (DEV && !skip_warning) {\n\t\t\t\tcheck_hash(/** @type {Element} */ (next.parentNode), hash, value);\n\t\t\t}\n\n\t\t\tassign_nodes(hydrate_node, last);\n\t\t\tanchor = set_hydrate_node(next);\n\t\t\treturn;\n\t\t}\n\n\t\tvar html = value + '';\n\t\tif (svg) html = `<svg>${html}</svg>`;\n\t\telse if (mathml) html = `<math>${html}</math>`;\n\n\t\t// Don't use create_fragment_with_script_from_html here because that would mean script tags are executed.\n\t\t// @html is basically `.innerHTML = ...` and that doesn't execute scripts either due to security reasons.\n\t\t/** @type {DocumentFragment | Element} */\n\t\tvar node = create_fragment_from_html(html);\n\n\t\tif (svg || mathml) {\n\t\t\tnode = /** @type {Element} */ (get_first_child(node));\n\t\t}\n\n\t\tassign_nodes(\n\t\t\t/** @type {TemplateNode} */ (get_first_child(node)),\n\t\t\t/** @type {TemplateNode} */ (node.lastChild)\n\t\t);\n\n\t\tif (svg || mathml) {\n\t\t\twhile (get_first_child(node)) {\n\t\t\t\tanchor.before(/** @type {Node} */ (get_first_child(node)));\n\t\t\t}\n\t\t} else {\n\t\t\tanchor.before(node);\n\t\t}\n\t});\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767821,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767821,
+      "end": 1762256767821,
+      "order": "normal"
+    }
+  ]
+}

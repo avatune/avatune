@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/shared/attributes.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { escape_html } from '../../escaping.js';\nimport { clsx as _clsx } from 'clsx';\n\n/**\n * `<div translate={false}>` should be rendered as `<div translate=\"no\">` and _not_\n * `<div translate=\"false\">`, which is equivalent to `<div translate=\"yes\">`. There\n * may be other odd cases that need to be added to this list in future\n * @type {Record<string, Map<any, string>>}\n */\nconst replacements = {\n\ttranslate: new Map([\n\t\t[true, 'yes'],\n\t\t[false, 'no']\n\t])\n};\n\n/**\n * @template V\n * @param {string} name\n * @param {V} value\n * @param {boolean} [is_boolean]\n * @returns {string}\n */\nexport function attr(name, value, is_boolean = false) {\n\t// attribute hidden for values other than \"until-found\" behaves like a boolean attribute\n\tif (name === 'hidden' && value !== 'until-found') {\n\t\tis_boolean = true;\n\t}\n\tif (value == null || (!value && is_boolean)) return '';\n\tconst normalized = (name in replacements && replacements[name].get(value)) || value;\n\tconst assignment = is_boolean ? '' : `=\"${escape_html(normalized, true)}\"`;\n\treturn ` ${name}${assignment}`;\n}\n\n/**\n * Small wrapper around clsx to preserve Svelte's (weird) handling of falsy values.\n * TODO Svelte 6 revisit this, and likely turn all falsy values into the empty string (what clsx also does)\n * @param  {any} value\n */\nexport function clsx(value) {\n\tif (typeof value === 'object') {\n\t\treturn _clsx(value);\n\t} else {\n\t\treturn value ?? '';\n\t}\n}\n\nconst whitespace = [...' \\t\\n\\r\\f\\u00a0\\u000b\\ufeff'];\n\n/**\n * @param {any} value\n * @param {string | null} [hash]\n * @param {Record<string, boolean>} [directives]\n * @returns {string | null}\n */\nexport function to_class(value, hash, directives) {\n\tvar classname = value == null ? '' : '' + value;\n\n\tif (hash) {\n\t\tclassname = classname ? classname + ' ' + hash : hash;\n\t}\n\n\tif (directives) {\n\t\tfor (var key in directives) {\n\t\t\tif (directives[key]) {\n\t\t\t\tclassname = classname ? classname + ' ' + key : key;\n\t\t\t} else if (classname.length) {\n\t\t\t\tvar len = key.length;\n\t\t\t\tvar a = 0;\n\n\t\t\t\twhile ((a = classname.indexOf(key, a)) >= 0) {\n\t\t\t\t\tvar b = a + len;\n\n\t\t\t\t\tif (\n\t\t\t\t\t\t(a === 0 || whitespace.includes(classname[a - 1])) &&\n\t\t\t\t\t\t(b === classname.length || whitespace.includes(classname[b]))\n\t\t\t\t\t) {\n\t\t\t\t\t\tclassname = (a === 0 ? '' : classname.substring(0, a)) + classname.substring(b + 1);\n\t\t\t\t\t} else {\n\t\t\t\t\t\ta = b;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n\n\treturn classname === '' ? null : classname;\n}\n\n/**\n *\n * @param {Record<string,any>} styles\n * @param {boolean} important\n */\nfunction append_styles(styles, important = false) {\n\tvar separator = important ? ' !important;' : ';';\n\tvar css = '';\n\n\tfor (var key in styles) {\n\t\tvar value = styles[key];\n\t\tif (value != null && value !== '') {\n\t\t\tcss += ' ' + key + ': ' + value + separator;\n\t\t}\n\t}\n\n\treturn css;\n}\n\n/**\n * @param {string} name\n * @returns {string}\n */\nfunction to_css_name(name) {\n\tif (name[0] !== '-' || name[1] !== '-') {\n\t\treturn name.toLowerCase();\n\t}\n\treturn name;\n}\n\n/**\n * @param {any} value\n * @param {Record<string, any> | [Record<string, any>, Record<string, any>]} [styles]\n * @returns {string | null}\n */\nexport function to_style(value, styles) {\n\tif (styles) {\n\t\tvar new_style = '';\n\n\t\t/** @type {Record<string,any> | undefined} */\n\t\tvar normal_styles;\n\n\t\t/** @type {Record<string,any> | undefined} */\n\t\tvar important_styles;\n\n\t\tif (Array.isArray(styles)) {\n\t\t\tnormal_styles = styles[0];\n\t\t\timportant_styles = styles[1];\n\t\t} else {\n\t\t\tnormal_styles = styles;\n\t\t}\n\n\t\tif (value) {\n\t\t\tvalue = String(value)\n\t\t\t\t.replaceAll(/\\s*\\/\\*.*?\\*\\/\\s*/g, '')\n\t\t\t\t.trim();\n\n\t\t\t/** @type {boolean | '\"' | \"'\"} */\n\t\t\tvar in_str = false;\n\t\t\tvar in_apo = 0;\n\t\t\tvar in_comment = false;\n\n\t\t\tvar reserved_names = [];\n\n\t\t\tif (normal_styles) {\n\t\t\t\treserved_names.push(...Object.keys(normal_styles).map(to_css_name));\n\t\t\t}\n\t\t\tif (important_styles) {\n\t\t\t\treserved_names.push(...Object.keys(important_styles).map(to_css_name));\n\t\t\t}\n\n\t\t\tvar start_index = 0;\n\t\t\tvar name_index = -1;\n\n\t\t\tconst len = value.length;\n\t\t\tfor (var i = 0; i < len; i++) {\n\t\t\t\tvar c = value[i];\n\n\t\t\t\tif (in_comment) {\n\t\t\t\t\tif (c === '/' && value[i - 1] === '*') {\n\t\t\t\t\t\tin_comment = false;\n\t\t\t\t\t}\n\t\t\t\t} else if (in_str) {\n\t\t\t\t\tif (in_str === c) {\n\t\t\t\t\t\tin_str = false;\n\t\t\t\t\t}\n\t\t\t\t} else if (c === '/' && value[i + 1] === '*') {\n\t\t\t\t\tin_comment = true;\n\t\t\t\t} else if (c === '\"' || c === \"'\") {\n\t\t\t\t\tin_str = c;\n\t\t\t\t} else if (c === '(') {\n\t\t\t\t\tin_apo++;\n\t\t\t\t} else if (c === ')') {\n\t\t\t\t\tin_apo--;\n\t\t\t\t}\n\n\t\t\t\tif (!in_comment && in_str === false && in_apo === 0) {\n\t\t\t\t\tif (c === ':' && name_index === -1) {\n\t\t\t\t\t\tname_index = i;\n\t\t\t\t\t} else if (c === ';' || i === len - 1) {\n\t\t\t\t\t\tif (name_index !== -1) {\n\t\t\t\t\t\t\tvar name = to_css_name(value.substring(start_index, name_index).trim());\n\n\t\t\t\t\t\t\tif (!reserved_names.includes(name)) {\n\t\t\t\t\t\t\t\tif (c !== ';') {\n\t\t\t\t\t\t\t\t\ti++;\n\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\tvar property = value.substring(start_index, i).trim();\n\t\t\t\t\t\t\t\tnew_style += ' ' + property + ';';\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\n\t\t\t\t\t\tstart_index = i + 1;\n\t\t\t\t\t\tname_index = -1;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\tif (normal_styles) {\n\t\t\tnew_style += append_styles(normal_styles);\n\t\t}\n\n\t\tif (important_styles) {\n\t\t\tnew_style += append_styles(important_styles, true);\n\t\t}\n\n\t\tnew_style = new_style.trim();\n\t\treturn new_style === '' ? null : new_style;\n\t}\n\n\treturn value == null ? null : String(value);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767835,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    }
+  ]
+}

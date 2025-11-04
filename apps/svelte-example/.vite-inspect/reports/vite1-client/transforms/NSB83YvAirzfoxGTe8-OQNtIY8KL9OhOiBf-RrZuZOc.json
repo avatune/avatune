@@ -1,0 +1,134 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/_browser-chunks/chunk-PB6FZ3WE.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import {\n  EVENT_ID\n} from \"./chunk-XW6KSYKF.js\";\nimport {\n  __name\n} from \"./chunk-MM7DTO55.js\";\n\n// src/actions/runtime/configureActions.ts\nvar config = {\n  depth: 10,\n  clearOnStoryChange: true,\n  limit: 50\n};\nvar configureActions = /* @__PURE__ */ __name((options = {}) => {\n  Object.assign(config, options);\n}, \"configureActions\");\n\n// src/actions/runtime/action.ts\nimport { ImplicitActionsDuringRendering } from \"storybook/internal/preview-errors\";\nimport { global } from \"@storybook/global\";\nimport { addons } from \"storybook/preview-api\";\nvar findProto = /* @__PURE__ */ __name((obj, callback) => {\n  const proto = Object.getPrototypeOf(obj);\n  if (!proto || callback(proto)) {\n    return proto;\n  }\n  return findProto(proto, callback);\n}, \"findProto\");\nvar isReactSyntheticEvent = /* @__PURE__ */ __name((e) => Boolean(\n  typeof e === \"object\" && e && findProto(e, (proto) => /^Synthetic(?:Base)?Event$/.test(proto.constructor.name)) && typeof e.persist === \"function\"\n), \"isReactSyntheticEvent\");\nvar serializeArg = /* @__PURE__ */ __name((a) => {\n  if (isReactSyntheticEvent(a)) {\n    const e = Object.create(\n      a.constructor.prototype,\n      Object.getOwnPropertyDescriptors(a)\n    );\n    e.persist();\n    const viewDescriptor = Object.getOwnPropertyDescriptor(e, \"view\");\n    const view = viewDescriptor?.value;\n    if (typeof view === \"object\" && view?.constructor.name === \"Window\") {\n      Object.defineProperty(e, \"view\", {\n        ...viewDescriptor,\n        value: Object.create(view.constructor.prototype)\n      });\n    }\n    return e;\n  }\n  return a;\n}, \"serializeArg\");\nfunction action(name, options = {}) {\n  const actionOptions = {\n    ...config,\n    ...options\n  };\n  const handler = /* @__PURE__ */ __name(function actionHandler(...args) {\n    if (options.implicit) {\n      const preview = \"__STORYBOOK_PREVIEW__\" in global ? global.__STORYBOOK_PREVIEW__ : void 0;\n      const storyRenderer = preview?.storyRenders.find(\n        (render) => render.phase === \"playing\" || render.phase === \"rendering\"\n      );\n      if (storyRenderer) {\n        const deprecated = !globalThis?.FEATURES?.disallowImplicitActionsInRenderV8;\n        const error = new ImplicitActionsDuringRendering({\n          phase: storyRenderer.phase,\n          name,\n          deprecated\n        });\n        if (deprecated) {\n          console.warn(error);\n        } else {\n          throw error;\n        }\n      }\n    }\n    const channel = addons.getChannel();\n    const id = Date.now().toString(36) + Math.random().toString(36).substring(2);\n    const minDepth = 5;\n    const serializedArgs = args.map(serializeArg);\n    const normalizedArgs = args.length > 1 ? serializedArgs : serializedArgs[0];\n    const actionDisplayToEmit = {\n      id,\n      count: 0,\n      data: { name, args: normalizedArgs },\n      options: {\n        ...actionOptions,\n        maxDepth: minDepth + (actionOptions.depth || 3)\n      }\n    };\n    channel.emit(EVENT_ID, actionDisplayToEmit);\n  }, \"actionHandler\");\n  handler.isAction = true;\n  handler.implicit = options.implicit;\n  return handler;\n}\n__name(action, \"action\");\n\n// src/actions/runtime/actions.ts\nvar actions = /* @__PURE__ */ __name((...args) => {\n  let options = config;\n  let names = args;\n  if (names.length === 1 && Array.isArray(names[0])) {\n    [names] = names;\n  }\n  if (names.length !== 1 && typeof names[names.length - 1] !== \"string\") {\n    options = {\n      ...config,\n      ...names.pop()\n    };\n  }\n  let namesObject = names[0];\n  if (names.length !== 1 || typeof namesObject === \"string\") {\n    namesObject = {};\n    names.forEach((name) => {\n      namesObject[name] = name;\n    });\n  }\n  const actionsObject = {};\n  Object.keys(namesObject).forEach((name) => {\n    actionsObject[name] = action(namesObject[name], options);\n  });\n  return actionsObject;\n}, \"actions\");\n\nexport {\n  config,\n  configureActions,\n  action,\n  actions\n};\n",
+      "start": 1762256767098,
+      "end": 1762256767138,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "result": "import {\n  EVENT_ID\n} from \"./chunk-XW6KSYKF.js\";\nimport {\n  __name\n} from \"./chunk-MM7DTO55.js\";\n\n// src/actions/runtime/configureActions.ts\nvar config = {\n  depth: 10,\n  clearOnStoryChange: true,\n  limit: 50\n};\nvar configureActions = /* @__PURE__ */ __name((options = {}) => {\n  Object.assign(config, options);\n}, \"configureActions\");\n\n// src/actions/runtime/action.ts\nconst { ImplicitActionsDuringRendering } = __STORYBOOK_MODULE_CORE_EVENTS_PREVIEW_ERRORS__;\nconst { global } = __STORYBOOK_MODULE_GLOBAL__;\nconst { addons } = __STORYBOOK_MODULE_PREVIEW_API__;\nvar findProto = /* @__PURE__ */ __name((obj, callback) => {\n  const proto = Object.getPrototypeOf(obj);\n  if (!proto || callback(proto)) {\n    return proto;\n  }\n  return findProto(proto, callback);\n}, \"findProto\");\nvar isReactSyntheticEvent = /* @__PURE__ */ __name((e) => Boolean(\n  typeof e === \"object\" && e && findProto(e, (proto) => /^Synthetic(?:Base)?Event$/.test(proto.constructor.name)) && typeof e.persist === \"function\"\n), \"isReactSyntheticEvent\");\nvar serializeArg = /* @__PURE__ */ __name((a) => {\n  if (isReactSyntheticEvent(a)) {\n    const e = Object.create(\n      a.constructor.prototype,\n      Object.getOwnPropertyDescriptors(a)\n    );\n    e.persist();\n    const viewDescriptor = Object.getOwnPropertyDescriptor(e, \"view\");\n    const view = viewDescriptor?.value;\n    if (typeof view === \"object\" && view?.constructor.name === \"Window\") {\n      Object.defineProperty(e, \"view\", {\n        ...viewDescriptor,\n        value: Object.create(view.constructor.prototype)\n      });\n    }\n    return e;\n  }\n  return a;\n}, \"serializeArg\");\nfunction action(name, options = {}) {\n  const actionOptions = {\n    ...config,\n    ...options\n  };\n  const handler = /* @__PURE__ */ __name(function actionHandler(...args) {\n    if (options.implicit) {\n      const preview = \"__STORYBOOK_PREVIEW__\" in global ? global.__STORYBOOK_PREVIEW__ : void 0;\n      const storyRenderer = preview?.storyRenders.find(\n        (render) => render.phase === \"playing\" || render.phase === \"rendering\"\n      );\n      if (storyRenderer) {\n        const deprecated = !globalThis?.FEATURES?.disallowImplicitActionsInRenderV8;\n        const error = new ImplicitActionsDuringRendering({\n          phase: storyRenderer.phase,\n          name,\n          deprecated\n        });\n        if (deprecated) {\n          console.warn(error);\n        } else {\n          throw error;\n        }\n      }\n    }\n    const channel = addons.getChannel();\n    const id = Date.now().toString(36) + Math.random().toString(36).substring(2);\n    const minDepth = 5;\n    const serializedArgs = args.map(serializeArg);\n    const normalizedArgs = args.length > 1 ? serializedArgs : serializedArgs[0];\n    const actionDisplayToEmit = {\n      id,\n      count: 0,\n      data: { name, args: normalizedArgs },\n      options: {\n        ...actionOptions,\n        maxDepth: minDepth + (actionOptions.depth || 3)\n      }\n    };\n    channel.emit(EVENT_ID, actionDisplayToEmit);\n  }, \"actionHandler\");\n  handler.isAction = true;\n  handler.implicit = options.implicit;\n  return handler;\n}\n__name(action, \"action\");\n\n// src/actions/runtime/actions.ts\nvar actions = /* @__PURE__ */ __name((...args) => {\n  let options = config;\n  let names = args;\n  if (names.length === 1 && Array.isArray(names[0])) {\n    [names] = names;\n  }\n  if (names.length !== 1 && typeof names[names.length - 1] !== \"string\") {\n    options = {\n      ...config,\n      ...names.pop()\n    };\n  }\n  let namesObject = names[0];\n  if (names.length !== 1 || typeof namesObject === \"string\") {\n    namesObject = {};\n    names.forEach((name) => {\n      namesObject[name] = name;\n    });\n  }\n  const actionsObject = {};\n  Object.keys(namesObject).forEach((name) => {\n    actionsObject[name] = action(namesObject[name], options);\n  });\n  return actionsObject;\n}, \"actions\");\n\nexport {\n  config,\n  configureActions,\n  action,\n  actions\n};\n",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "post",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767138,
+      "end": 1762256767138,
+      "order": "normal"
+    }
+  ]
+}

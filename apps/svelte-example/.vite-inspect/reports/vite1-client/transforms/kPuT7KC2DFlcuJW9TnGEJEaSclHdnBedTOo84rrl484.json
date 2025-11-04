@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/es-toolkit/dist/compat/array/some.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { identity } from '../../function/identity.mjs';\nimport { property } from '../object/property.mjs';\nimport { matches } from '../predicate/matches.mjs';\nimport { matchesProperty } from '../predicate/matchesProperty.mjs';\n\nfunction some(source, predicate, guard) {\n    if (!source) {\n        return false;\n    }\n    if (guard != null) {\n        predicate = undefined;\n    }\n    if (predicate == null) {\n        predicate = identity;\n    }\n    const values = Array.isArray(source) ? source : Object.values(source);\n    switch (typeof predicate) {\n        case 'function': {\n            if (!Array.isArray(source)) {\n                const keys = Object.keys(source);\n                for (let i = 0; i < keys.length; i++) {\n                    const key = keys[i];\n                    const value = source[key];\n                    if (predicate(value, key, source)) {\n                        return true;\n                    }\n                }\n                return false;\n            }\n            for (let i = 0; i < source.length; i++) {\n                if (predicate(source[i], i, source)) {\n                    return true;\n                }\n            }\n            return false;\n        }\n        case 'object': {\n            if (Array.isArray(predicate) && predicate.length === 2) {\n                const key = predicate[0];\n                const value = predicate[1];\n                const matchFunc = matchesProperty(key, value);\n                if (Array.isArray(source)) {\n                    for (let i = 0; i < source.length; i++) {\n                        if (matchFunc(source[i])) {\n                            return true;\n                        }\n                    }\n                    return false;\n                }\n                return values.some(matchFunc);\n            }\n            else {\n                const matchFunc = matches(predicate);\n                if (Array.isArray(source)) {\n                    for (let i = 0; i < source.length; i++) {\n                        if (matchFunc(source[i])) {\n                            return true;\n                        }\n                    }\n                    return false;\n                }\n                return values.some(matchFunc);\n            }\n        }\n        case 'number':\n        case 'symbol':\n        case 'string': {\n            const propFunc = property(predicate);\n            if (Array.isArray(source)) {\n                for (let i = 0; i < source.length; i++) {\n                    if (propFunc(source[i])) {\n                        return true;\n                    }\n                }\n                return false;\n            }\n            return values.some(propFunc);\n        }\n    }\n}\n\nexport { some };\n",
+      "start": 1762256768011,
+      "end": 1762256768120,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256768120,
+      "end": 1762256768120,
+      "order": "normal"
+    }
+  ]
+}

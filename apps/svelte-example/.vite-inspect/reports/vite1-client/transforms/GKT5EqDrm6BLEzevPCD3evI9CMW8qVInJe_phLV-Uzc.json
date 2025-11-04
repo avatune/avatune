@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/utils.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "const regex_return_characters = /\\r/g;\n\n/**\n * @param {string} str\n * @returns {string}\n */\nexport function hash(str) {\n\tstr = str.replace(regex_return_characters, '');\n\tlet hash = 5381;\n\tlet i = str.length;\n\n\twhile (i--) hash = ((hash << 5) - hash) ^ str.charCodeAt(i);\n\treturn (hash >>> 0).toString(36);\n}\n\nconst VOID_ELEMENT_NAMES = [\n\t'area',\n\t'base',\n\t'br',\n\t'col',\n\t'command',\n\t'embed',\n\t'hr',\n\t'img',\n\t'input',\n\t'keygen',\n\t'link',\n\t'meta',\n\t'param',\n\t'source',\n\t'track',\n\t'wbr'\n];\n\n/**\n * Returns `true` if `name` is of a void element\n * @param {string} name\n */\nexport function is_void(name) {\n\treturn VOID_ELEMENT_NAMES.includes(name) || name.toLowerCase() === '!doctype';\n}\n\nconst RESERVED_WORDS = [\n\t'arguments',\n\t'await',\n\t'break',\n\t'case',\n\t'catch',\n\t'class',\n\t'const',\n\t'continue',\n\t'debugger',\n\t'default',\n\t'delete',\n\t'do',\n\t'else',\n\t'enum',\n\t'eval',\n\t'export',\n\t'extends',\n\t'false',\n\t'finally',\n\t'for',\n\t'function',\n\t'if',\n\t'implements',\n\t'import',\n\t'in',\n\t'instanceof',\n\t'interface',\n\t'let',\n\t'new',\n\t'null',\n\t'package',\n\t'private',\n\t'protected',\n\t'public',\n\t'return',\n\t'static',\n\t'super',\n\t'switch',\n\t'this',\n\t'throw',\n\t'true',\n\t'try',\n\t'typeof',\n\t'var',\n\t'void',\n\t'while',\n\t'with',\n\t'yield'\n];\n\n/**\n * Returns `true` if `word` is a reserved JavaScript keyword\n * @param {string} word\n */\nexport function is_reserved(word) {\n\treturn RESERVED_WORDS.includes(word);\n}\n\n/**\n * @param {string} name\n */\nexport function is_capture_event(name) {\n\treturn name.endsWith('capture') && name !== 'gotpointercapture' && name !== 'lostpointercapture';\n}\n\n/** List of Element events that will be delegated */\nconst DELEGATED_EVENTS = [\n\t'beforeinput',\n\t'click',\n\t'change',\n\t'dblclick',\n\t'contextmenu',\n\t'focusin',\n\t'focusout',\n\t'input',\n\t'keydown',\n\t'keyup',\n\t'mousedown',\n\t'mousemove',\n\t'mouseout',\n\t'mouseover',\n\t'mouseup',\n\t'pointerdown',\n\t'pointermove',\n\t'pointerout',\n\t'pointerover',\n\t'pointerup',\n\t'touchend',\n\t'touchmove',\n\t'touchstart'\n];\n\n/**\n * Returns `true` if `event_name` is a delegated event\n * @param {string} event_name\n */\nexport function can_delegate_event(event_name) {\n\treturn DELEGATED_EVENTS.includes(event_name);\n}\n\n/**\n * Attributes that are boolean, i.e. they are present or not present.\n */\nconst DOM_BOOLEAN_ATTRIBUTES = [\n\t'allowfullscreen',\n\t'async',\n\t'autofocus',\n\t'autoplay',\n\t'checked',\n\t'controls',\n\t'default',\n\t'disabled',\n\t'formnovalidate',\n\t'indeterminate',\n\t'inert',\n\t'ismap',\n\t'loop',\n\t'multiple',\n\t'muted',\n\t'nomodule',\n\t'novalidate',\n\t'open',\n\t'playsinline',\n\t'readonly',\n\t'required',\n\t'reversed',\n\t'seamless',\n\t'selected',\n\t'webkitdirectory',\n\t'defer',\n\t'disablepictureinpicture',\n\t'disableremoteplayback'\n];\n\n/**\n * Returns `true` if `name` is a boolean attribute\n * @param {string} name\n */\nexport function is_boolean_attribute(name) {\n\treturn DOM_BOOLEAN_ATTRIBUTES.includes(name);\n}\n\n/**\n * @type {Record<string, string>}\n * List of attribute names that should be aliased to their property names\n * because they behave differently between setting them as an attribute and\n * setting them as a property.\n */\nconst ATTRIBUTE_ALIASES = {\n\t// no `class: 'className'` because we handle that separately\n\tformnovalidate: 'formNoValidate',\n\tismap: 'isMap',\n\tnomodule: 'noModule',\n\tplaysinline: 'playsInline',\n\treadonly: 'readOnly',\n\tdefaultvalue: 'defaultValue',\n\tdefaultchecked: 'defaultChecked',\n\tsrcobject: 'srcObject',\n\tnovalidate: 'noValidate',\n\tallowfullscreen: 'allowFullscreen',\n\tdisablepictureinpicture: 'disablePictureInPicture',\n\tdisableremoteplayback: 'disableRemotePlayback'\n};\n\n/**\n * @param {string} name\n */\nexport function normalize_attribute(name) {\n\tname = name.toLowerCase();\n\treturn ATTRIBUTE_ALIASES[name] ?? name;\n}\n\nconst DOM_PROPERTIES = [\n\t...DOM_BOOLEAN_ATTRIBUTES,\n\t'formNoValidate',\n\t'isMap',\n\t'noModule',\n\t'playsInline',\n\t'readOnly',\n\t'value',\n\t'volume',\n\t'defaultValue',\n\t'defaultChecked',\n\t'srcObject',\n\t'noValidate',\n\t'allowFullscreen',\n\t'disablePictureInPicture',\n\t'disableRemotePlayback'\n];\n\n/**\n * @param {string} name\n */\nexport function is_dom_property(name) {\n\treturn DOM_PROPERTIES.includes(name);\n}\n\nconst NON_STATIC_PROPERTIES = ['autofocus', 'muted', 'defaultValue', 'defaultChecked'];\n\n/**\n * Returns `true` if the given attribute cannot be set through the template\n * string, i.e. needs some kind of JavaScript handling to work.\n * @param {string} name\n */\nexport function cannot_be_set_statically(name) {\n\treturn NON_STATIC_PROPERTIES.includes(name);\n}\n\n/**\n * Subset of delegated events which should be passive by default.\n * These two are already passive via browser defaults on window, document and body.\n * But since\n * - we're delegating them\n * - they happen often\n * - they apply to mobile which is generally less performant\n * we're marking them as passive by default for other elements, too.\n */\nconst PASSIVE_EVENTS = ['touchstart', 'touchmove'];\n\n/**\n * Returns `true` if `name` is a passive event\n * @param {string} name\n */\nexport function is_passive_event(name) {\n\treturn PASSIVE_EVENTS.includes(name);\n}\n\nconst CONTENT_EDITABLE_BINDINGS = ['textContent', 'innerHTML', 'innerText'];\n\n/** @param {string} name */\nexport function is_content_editable_binding(name) {\n\treturn CONTENT_EDITABLE_BINDINGS.includes(name);\n}\n\nconst LOAD_ERROR_ELEMENTS = [\n\t'body',\n\t'embed',\n\t'iframe',\n\t'img',\n\t'link',\n\t'object',\n\t'script',\n\t'style',\n\t'track'\n];\n\n/**\n * Returns `true` if the element emits `load` and `error` events\n * @param {string} name\n */\nexport function is_load_error_element(name) {\n\treturn LOAD_ERROR_ELEMENTS.includes(name);\n}\n\nconst SVG_ELEMENTS = [\n\t'altGlyph',\n\t'altGlyphDef',\n\t'altGlyphItem',\n\t'animate',\n\t'animateColor',\n\t'animateMotion',\n\t'animateTransform',\n\t'circle',\n\t'clipPath',\n\t'color-profile',\n\t'cursor',\n\t'defs',\n\t'desc',\n\t'discard',\n\t'ellipse',\n\t'feBlend',\n\t'feColorMatrix',\n\t'feComponentTransfer',\n\t'feComposite',\n\t'feConvolveMatrix',\n\t'feDiffuseLighting',\n\t'feDisplacementMap',\n\t'feDistantLight',\n\t'feDropShadow',\n\t'feFlood',\n\t'feFuncA',\n\t'feFuncB',\n\t'feFuncG',\n\t'feFuncR',\n\t'feGaussianBlur',\n\t'feImage',\n\t'feMerge',\n\t'feMergeNode',\n\t'feMorphology',\n\t'feOffset',\n\t'fePointLight',\n\t'feSpecularLighting',\n\t'feSpotLight',\n\t'feTile',\n\t'feTurbulence',\n\t'filter',\n\t'font',\n\t'font-face',\n\t'font-face-format',\n\t'font-face-name',\n\t'font-face-src',\n\t'font-face-uri',\n\t'foreignObject',\n\t'g',\n\t'glyph',\n\t'glyphRef',\n\t'hatch',\n\t'hatchpath',\n\t'hkern',\n\t'image',\n\t'line',\n\t'linearGradient',\n\t'marker',\n\t'mask',\n\t'mesh',\n\t'meshgradient',\n\t'meshpatch',\n\t'meshrow',\n\t'metadata',\n\t'missing-glyph',\n\t'mpath',\n\t'path',\n\t'pattern',\n\t'polygon',\n\t'polyline',\n\t'radialGradient',\n\t'rect',\n\t'set',\n\t'solidcolor',\n\t'stop',\n\t'svg',\n\t'switch',\n\t'symbol',\n\t'text',\n\t'textPath',\n\t'tref',\n\t'tspan',\n\t'unknown',\n\t'use',\n\t'view',\n\t'vkern'\n];\n\n/** @param {string} name */\nexport function is_svg(name) {\n\treturn SVG_ELEMENTS.includes(name);\n}\n\nconst MATHML_ELEMENTS = [\n\t'annotation',\n\t'annotation-xml',\n\t'maction',\n\t'math',\n\t'merror',\n\t'mfrac',\n\t'mi',\n\t'mmultiscripts',\n\t'mn',\n\t'mo',\n\t'mover',\n\t'mpadded',\n\t'mphantom',\n\t'mprescripts',\n\t'mroot',\n\t'mrow',\n\t'ms',\n\t'mspace',\n\t'msqrt',\n\t'mstyle',\n\t'msub',\n\t'msubsup',\n\t'msup',\n\t'mtable',\n\t'mtd',\n\t'mtext',\n\t'mtr',\n\t'munder',\n\t'munderover',\n\t'semantics'\n];\n\n/** @param {string} name */\nexport function is_mathml(name) {\n\treturn MATHML_ELEMENTS.includes(name);\n}\n\nconst STATE_CREATION_RUNES = /** @type {const} */ ([\n\t'$state',\n\t'$state.raw',\n\t'$derived',\n\t'$derived.by'\n]);\n\nconst RUNES = /** @type {const} */ ([\n\t...STATE_CREATION_RUNES,\n\t'$state.eager',\n\t'$state.snapshot',\n\t'$props',\n\t'$props.id',\n\t'$bindable',\n\t'$effect',\n\t'$effect.pre',\n\t'$effect.tracking',\n\t'$effect.root',\n\t'$effect.pending',\n\t'$inspect',\n\t'$inspect().with',\n\t'$inspect.trace',\n\t'$host'\n]);\n\n/** @typedef {typeof RUNES[number]} RuneName */\n\n/**\n * @param {string} name\n * @returns {name is RuneName}\n */\nexport function is_rune(name) {\n\treturn RUNES.includes(/** @type {RuneName} */ (name));\n}\n\n/** @typedef {typeof STATE_CREATION_RUNES[number]} StateCreationRuneName */\n\n/**\n * @param {string} name\n * @returns {name is StateCreationRuneName}\n */\nexport function is_state_creation_rune(name) {\n\treturn STATE_CREATION_RUNES.includes(/** @type {StateCreationRuneName} */ (name));\n}\n\n/** List of elements that require raw contents and should not have SSR comments put in them */\nconst RAW_TEXT_ELEMENTS = /** @type {const} */ (['textarea', 'script', 'style', 'title']);\n\n/** @param {string} name */\nexport function is_raw_text_element(name) {\n\treturn RAW_TEXT_ELEMENTS.includes(/** @type {typeof RAW_TEXT_ELEMENTS[number]} */ (name));\n}\n\n/**\n * Prevent devtools trying to make `location` a clickable link by inserting a zero-width space\n * @template {string | undefined} T\n * @param {T} location\n * @returns {T};\n */\nexport function sanitize_location(location) {\n\treturn /** @type {T} */ (location?.replace(/\\//g, '/\\u200b'));\n}\n",
+      "start": 1762256767804,
+      "end": 1762256767886,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767886,
+      "end": 1762256767886,
+      "order": "normal"
+    }
+  ]
+}

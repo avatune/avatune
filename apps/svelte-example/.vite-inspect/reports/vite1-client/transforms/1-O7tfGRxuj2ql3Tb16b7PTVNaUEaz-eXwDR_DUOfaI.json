@@ -1,0 +1,132 @@
+{
+  "resolvedId": "/Users/teimurgasanov/Projects/avatune/node_modules/svelte/src/internal/client/dom/operations.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "/** @import { Effect, TemplateNode } from '#client' */\nimport { hydrate_node, hydrating, set_hydrate_node } from './hydration.js';\nimport { DEV } from 'esm-env';\nimport { init_array_prototype_warnings } from '../dev/equality.js';\nimport { get_descriptor, is_extensible } from '../../shared/utils.js';\nimport { active_effect } from '../runtime.js';\nimport { async_mode_flag } from '../../flags/index.js';\nimport { TEXT_NODE, EFFECT_RAN } from '#client/constants';\nimport { eager_block_effects } from '../reactivity/batch.js';\n\n// export these for reference in the compiled code, making global name deduplication unnecessary\n/** @type {Window} */\nexport var $window;\n\n/** @type {Document} */\nexport var $document;\n\n/** @type {boolean} */\nexport var is_firefox;\n\n/** @type {() => Node | null} */\nvar first_child_getter;\n/** @type {() => Node | null} */\nvar next_sibling_getter;\n\n/**\n * Initialize these lazily to avoid issues when using the runtime in a server context\n * where these globals are not available while avoiding a separate server entry point\n */\nexport function init_operations() {\n\tif ($window !== undefined) {\n\t\treturn;\n\t}\n\n\t$window = window;\n\t$document = document;\n\tis_firefox = /Firefox/.test(navigator.userAgent);\n\n\tvar element_prototype = Element.prototype;\n\tvar node_prototype = Node.prototype;\n\tvar text_prototype = Text.prototype;\n\n\t// @ts-ignore\n\tfirst_child_getter = get_descriptor(node_prototype, 'firstChild').get;\n\t// @ts-ignore\n\tnext_sibling_getter = get_descriptor(node_prototype, 'nextSibling').get;\n\n\tif (is_extensible(element_prototype)) {\n\t\t// the following assignments improve perf of lookups on DOM nodes\n\t\t// @ts-expect-error\n\t\telement_prototype.__click = undefined;\n\t\t// @ts-expect-error\n\t\telement_prototype.__className = undefined;\n\t\t// @ts-expect-error\n\t\telement_prototype.__attributes = null;\n\t\t// @ts-expect-error\n\t\telement_prototype.__style = undefined;\n\t\t// @ts-expect-error\n\t\telement_prototype.__e = undefined;\n\t}\n\n\tif (is_extensible(text_prototype)) {\n\t\t// @ts-expect-error\n\t\ttext_prototype.__t = undefined;\n\t}\n\n\tif (DEV) {\n\t\t// @ts-expect-error\n\t\telement_prototype.__svelte_meta = null;\n\n\t\tinit_array_prototype_warnings();\n\t}\n}\n\n/**\n * @param {string} value\n * @returns {Text}\n */\nexport function create_text(value = '') {\n\treturn document.createTextNode(value);\n}\n\n/**\n * @template {Node} N\n * @param {N} node\n * @returns {Node | null}\n */\n/*@__NO_SIDE_EFFECTS__*/\nexport function get_first_child(node) {\n\treturn first_child_getter.call(node);\n}\n\n/**\n * @template {Node} N\n * @param {N} node\n * @returns {Node | null}\n */\n/*@__NO_SIDE_EFFECTS__*/\nexport function get_next_sibling(node) {\n\treturn next_sibling_getter.call(node);\n}\n\n/**\n * Don't mark this as side-effect-free, hydration needs to walk all nodes\n * @template {Node} N\n * @param {N} node\n * @param {boolean} is_text\n * @returns {Node | null}\n */\nexport function child(node, is_text) {\n\tif (!hydrating) {\n\t\treturn get_first_child(node);\n\t}\n\n\tvar child = /** @type {TemplateNode} */ (get_first_child(hydrate_node));\n\n\t// Child can be null if we have an element with a single child, like `<p>{text}</p>`, where `text` is empty\n\tif (child === null) {\n\t\tchild = hydrate_node.appendChild(create_text());\n\t} else if (is_text && child.nodeType !== TEXT_NODE) {\n\t\tvar text = create_text();\n\t\tchild?.before(text);\n\t\tset_hydrate_node(text);\n\t\treturn text;\n\t}\n\n\tset_hydrate_node(child);\n\treturn child;\n}\n\n/**\n * Don't mark this as side-effect-free, hydration needs to walk all nodes\n * @param {DocumentFragment | TemplateNode | TemplateNode[]} fragment\n * @param {boolean} [is_text]\n * @returns {Node | null}\n */\nexport function first_child(fragment, is_text = false) {\n\tif (!hydrating) {\n\t\t// when not hydrating, `fragment` is a `DocumentFragment` (the result of calling `open_frag`)\n\t\tvar first = /** @type {DocumentFragment} */ (get_first_child(/** @type {Node} */ (fragment)));\n\n\t\t// TODO prevent user comments with the empty string when preserveComments is true\n\t\tif (first instanceof Comment && first.data === '') return get_next_sibling(first);\n\n\t\treturn first;\n\t}\n\n\t// if an {expression} is empty during SSR, there might be no\n\t// text node to hydrate — we must therefore create one\n\tif (is_text && hydrate_node?.nodeType !== TEXT_NODE) {\n\t\tvar text = create_text();\n\n\t\thydrate_node?.before(text);\n\t\tset_hydrate_node(text);\n\t\treturn text;\n\t}\n\n\treturn hydrate_node;\n}\n\n/**\n * Don't mark this as side-effect-free, hydration needs to walk all nodes\n * @param {TemplateNode} node\n * @param {number} count\n * @param {boolean} is_text\n * @returns {Node | null}\n */\nexport function sibling(node, count = 1, is_text = false) {\n\tlet next_sibling = hydrating ? hydrate_node : node;\n\tvar last_sibling;\n\n\twhile (count--) {\n\t\tlast_sibling = next_sibling;\n\t\tnext_sibling = /** @type {TemplateNode} */ (get_next_sibling(next_sibling));\n\t}\n\n\tif (!hydrating) {\n\t\treturn next_sibling;\n\t}\n\n\t// if a sibling {expression} is empty during SSR, there might be no\n\t// text node to hydrate — we must therefore create one\n\tif (is_text && next_sibling?.nodeType !== TEXT_NODE) {\n\t\tvar text = create_text();\n\t\t// If the next sibling is `null` and we're handling text then it's because\n\t\t// the SSR content was empty for the text, so we need to generate a new text\n\t\t// node and insert it after the last sibling\n\t\tif (next_sibling === null) {\n\t\t\tlast_sibling?.after(text);\n\t\t} else {\n\t\t\tnext_sibling.before(text);\n\t\t}\n\t\tset_hydrate_node(text);\n\t\treturn text;\n\t}\n\n\tset_hydrate_node(next_sibling);\n\treturn /** @type {TemplateNode} */ (next_sibling);\n}\n\n/**\n * @template {Node} N\n * @param {N} node\n * @returns {void}\n */\nexport function clear_text_content(node) {\n\tnode.textContent = '';\n}\n\n/**\n * Returns `true` if we're updating the current block, for example `condition` in\n * an `{#if condition}` block just changed. In this case, the branch should be\n * appended (or removed) at the same time as other updates within the\n * current `<svelte:boundary>`\n */\nexport function should_defer_append() {\n\tif (!async_mode_flag) return false;\n\tif (eager_block_effects !== null) return false;\n\n\tvar flags = /** @type {Effect} */ (active_effect).f;\n\treturn (flags & EFFECT_RAN) !== 0;\n}\n\n/**\n *\n * @param {string} tag\n * @param {string} [namespace]\n * @param {string} [is]\n * @returns\n */\nexport function create_element(tag, namespace, is) {\n\tlet options = is ? { is } : undefined;\n\tif (namespace) {\n\t\treturn document.createElementNS(namespace, tag, options);\n\t}\n\treturn document.createElement(tag, options);\n}\n\nexport function create_fragment() {\n\treturn document.createDocumentFragment();\n}\n\n/**\n * @param {string} data\n * @returns\n */\nexport function create_comment(data = '') {\n\treturn document.createComment(data);\n}\n\n/**\n * @param {Element} element\n * @param {string} key\n * @param {string} value\n * @returns\n */\nexport function set_attribute(element, key, value = '') {\n\tif (key.startsWith('xlink:')) {\n\t\telement.setAttributeNS('http://www.w3.org/1999/xlink', key, value);\n\t\treturn;\n\t}\n\treturn element.setAttribute(key, value);\n}\n",
+      "start": 1762256767787,
+      "end": 1762256767835,
+      "sourcemaps": null
+    },
+    {
+      "name": "storybook:mock-loader",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-pre"
+    },
+    {
+      "name": "vite-plugin-svelte",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "plugin-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "pre"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "storybook:mock-loader-preview",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:svelte-docgen-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "storybook:addon-svelte-csf",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite-plugin-svelte-module",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:inject-export-order-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:strip-hmr-boundary-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "storybook:external-globals-plugin",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal-normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1762256767835,
+      "end": 1762256767835,
+      "order": "normal"
+    }
+  ]
+}
