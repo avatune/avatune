@@ -1,0 +1,27 @@
+{
+  "extends": "@avatune/typescript-config/base",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/flat-design-assets/svg": [
+        "../flat-design-assets/dist/svg/index.d.ts"
+      ],
+      "@avatune/flat-design-assets/react": [
+        "../flat-design-assets/dist/react/index.d.ts"
+      ],
+      "@avatune/flat-design-assets/svelte": [
+        "../flat-design-assets/dist/svelte/index.d.ts"
+      ],
+      "@avatune/flat-design-assets/vue": [
+        "../flat-design-assets/dist/vue/index.d.ts"
+      ]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,18 @@
+<svg width="37.1" height="12.2" viewBox="0 0 371 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="310" cy="61.002" r="61" fill="white"/>
+<mask id="mask0_91_558" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="249" y="0" width="123" height="122">
+<circle cx="310" cy="61" r="61" fill="white"/>
+</mask>
+<g mask="url(#mask0_91_558)">
+<path d="M330 61C330 72.0457 321.046 81 310 81C298.954 81 290 72.0457 290 61C290 49.9543 298.954 41 310 41C321.046 41 330 49.9543 330 61Z" fill="black"/>
+<rect x="403.435" y="59.999" width="187" height="123" transform="rotate(179.797 403.435 59.999)" fill="#E28D53"/>
+</g>
+<circle cx="61.0001" cy="61.002" r="61" fill="white"/>
+<mask id="mask1_91_558" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="123" height="122">
+<circle cx="61" cy="61" r="61" fill="white"/>
+</mask>
+<g mask="url(#mask1_91_558)">
+<circle cx="61.0001" cy="61" r="20" fill="black"/>
+<rect x="154.435" y="59.999" width="187" height="123" transform="rotate(179.797 154.435 59.999)" fill="#E28D53"/>
+</g>
+</svg>

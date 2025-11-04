@@ -112,3 +112,34 @@ export function selectItemFromConfig<T extends AvatarItem>(
 
   return { selected, identifiers }
 }
+
+export function metadataToStyle(
+  metadata: Theme['metadata'],
+  output: 'object' | 'string' = 'object',
+) {
+  const backgroundColor = metadata.backgroundColor
+  const borderColor = metadata.borderColor
+  const borderWidth = metadata.borderWidth
+  const borderRadius = metadata.borderRadius
+
+  if (output === 'object') {
+    return {
+      backgroundColor,
+      border:
+        borderWidth && borderColor
+          ? `${borderWidth}px solid ${borderColor}`
+          : undefined,
+      borderRadius,
+    }
+  }
+
+  return [
+    backgroundColor ? `background-color: ${backgroundColor};` : false,
+    borderWidth && borderColor
+      ? `border: ${borderWidth}px solid ${borderColor};`
+      : false,
+    borderRadius ? `border-radius: ${borderRadius};` : false,
+  ]
+    .filter(Boolean)
+    .join(' ')
+}
