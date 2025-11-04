@@ -101,9 +101,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "createReactiveProps.svelte.js"
-        ],
+        "sources": ["createReactiveProps.svelte.js"],
         "sourcesContent": [
           "/**\n * Turns an object into reactive props in Svelte 5. Needs to be in a separate .svelte.js file to\n * ensure Svelte compiles it. As proposed in\n * https://github.com/sveltejs/svelte/issues/9827#issuecomment-1845589616\n *\n * @template TProps\n * @param {TProps} data - The data to create Svelte 5 props from.\n * @returns {TProps} - The created Svelte 5 props.\n */\nexport const createReactiveProps = (data) => {\n  const props = $state(data);\n  return props;\n};\n"
         ],

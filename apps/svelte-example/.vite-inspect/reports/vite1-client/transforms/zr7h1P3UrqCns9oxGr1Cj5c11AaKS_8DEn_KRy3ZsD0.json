@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "LegacyStory.svelte"
-        ],
+        "sources": ["LegacyStory.svelte"],
         "sourcesContent": [
           "<!--\n@component\nThis component is to support deprecated legacy component - `Story`,\nand this component functionality is just a \"mock\".\nE.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into new `Story` component destrucutred from `defineMeta`.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#export-meta-removed-in-favor-of-definemeta}\n-->\n\n<script lang=\"ts\">\n  import type { Slots, StoryProps } from '../legacy-types.d.ts';\n\n  type $$Props = StoryProps;\n  type $$Slots = Slots;\n\n  let args: $$Slots['default']['args'];\n  let context: $$Slots['default']['context'];\n</script>\n\n<slot {context} {args} />\n"
         ],

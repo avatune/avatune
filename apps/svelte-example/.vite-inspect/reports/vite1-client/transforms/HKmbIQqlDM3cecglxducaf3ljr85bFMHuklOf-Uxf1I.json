@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "StoryRenderer.svelte"
-        ],
+        "sources": ["StoryRenderer.svelte"],
         "sourcesContent": [
           "<script lang=\"ts\">\n  import type { Component, Snippet } from 'svelte';\n\n  import { useStoryRenderer } from './contexts/renderer.svelte';\n  import { emitCode } from './emit-code.js';\n\n  import type { Cmp, StoryContext } from '../types.js';\n\n  type Props = {\n    Stories: Component;\n    exportName: string;\n    args: Record<string, any>;\n    storyContext: StoryContext<Cmp>;\n    metaRenderSnippet?: Snippet;\n  };\n\n  let { Stories, exportName, args, storyContext, metaRenderSnippet }: Props = $props();\n\n  const context = useStoryRenderer<Cmp>();\n\n  $effect(() => {\n    context.set({\n      currentStoryExportName: exportName,\n      args,\n      storyContext,\n      metaRenderSnippet,\n    });\n  });\n\n  $effect(() => {\n    // TODO: optimize effect params here, we don't read the whole context in reality\n    emitCode({ args, storyContext });\n  });\n</script>\n\n<Stories />\n"
         ],

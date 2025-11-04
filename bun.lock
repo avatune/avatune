@@ -34,8 +34,8 @@
       "name": "@avatune/example",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/flat-design-theme": "workspace:*",
         "@avatune/react": "workspace:*",
-        "@avatune/sketch-black-white-assets": "workspace:*",
         "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "react": "^19.2.0",
@@ -53,6 +53,7 @@
       "name": "@avatune/svelte-example",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/flat-design-theme": "workspace:*",
         "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -89,6 +90,7 @@
       "name": "@avatune/vue-example",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/flat-design-theme": "workspace:*",
         "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",

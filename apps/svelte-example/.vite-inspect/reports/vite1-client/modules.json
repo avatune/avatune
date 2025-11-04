@@ -2,9 +2,7 @@
   {
     "id": "\u0000virtual:/@storybook/builder-vite/setup-addons.js",
     "deps": [],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "storybook:code-generator-plugin",
@@ -23,12 +21,8 @@
   },
   {
     "id": "\u0000virtual:/@storybook/builder-vite/storybook-stories.js",
-    "deps": [
-      "\u0000vite/preload-helper.js"
-    ],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "deps": ["\u0000vite/preload-helper.js"],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "storybook:code-generator-plugin",
@@ -124,9 +118,7 @@
   {
     "id": "/Users/teimurgasanov/Projects/avatune/apps/svelte-example/.storybook/preview.ts",
     "deps": [],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "vite:load-fallback",
@@ -777,9 +769,7 @@
       "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/dist/_browser-chunks/chunk-4ZGG6PUN.js",
       "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/svelte/dist/_browser-chunks/chunk-JFJ5UJ7Q.js"
     ],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "vite:load-fallback",
@@ -1004,9 +994,7 @@
       "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/_browser-chunks/chunk-Q3EHWMWT.js",
       "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/sveltekit/dist/_browser-chunks/chunk-JFJ5UJ7Q.js"
     ],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "vite:load-fallback",
@@ -17067,9 +17055,7 @@
   {
     "id": "/Users/teimurgasanov/Projects/avatune/node_modules/storybook/dist/preview/runtime.js",
     "deps": [],
-    "importers": [
-      "\u0000virtual:/@storybook/builder-vite/vite-app.js"
-    ],
+    "importers": ["\u0000virtual:/@storybook/builder-vite/vite-app.js"],
     "plugins": [
       {
         "name": "vite:load-fallback",

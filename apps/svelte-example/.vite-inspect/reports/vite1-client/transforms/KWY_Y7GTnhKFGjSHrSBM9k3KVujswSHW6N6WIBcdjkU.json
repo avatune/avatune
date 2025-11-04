@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "DecoratorHandler.svelte"
-        ],
+        "sources": ["DecoratorHandler.svelte"],
         "sourcesContent": [
           "<script>\n  const { decorator, Component, props } = $props();\n\n  /*\n    Svelte Docgen will create argTypes for events with the name 'event_eventName'\n    The Actions addon will convert these to args because they are type: 'action'\n    We need to filter these args out so they are not passed to the component\n  */\n  let propsWithoutDocgenEvents = $derived(\n    Object.fromEntries(Object.entries(props).filter(([key]) => !key.startsWith('event_')))\n  );\n</script>\n\n{#if decorator}\n  <decorator.Component {...decorator.props}>\n    <Component {...propsWithoutDocgenEvents} />\n  </decorator.Component>\n{:else}\n  <Component {...propsWithoutDocgenEvents} />\n{/if}\n"
         ],

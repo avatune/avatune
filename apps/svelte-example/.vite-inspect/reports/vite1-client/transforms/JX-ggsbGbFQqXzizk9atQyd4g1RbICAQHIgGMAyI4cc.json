@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "LegacyMeta.svelte"
-        ],
+        "sources": ["LegacyMeta.svelte"],
         "sourcesContent": [
           "<!--\n@component\nThis component is to support deprecated legacy component - `Meta`,\nand this component functionality is just a \"mock\".\ne.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into `defineMeta` and inserted into script module tag.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#meta-component-removed-in-favor-of-definemeta}\n-->\n<script lang=\"ts\">\n  import type { MetaProps, Slots } from '../legacy-types.d.ts';\n\n  type $$Props = MetaProps;\n</script>\n"
         ],

@@ -101,9 +101,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "renderer.svelte.js"
-        ],
+        "sources": ["renderer.svelte.js"],
         "sourcesContent": [
           "import { getContext, hasContext, setContext } from 'svelte';\nconst CONTEXT_KEY = 'storybook-story-renderer-context';\nfunction buildContext(props) {\n    let currentStoryExportName = $state(props.currentStoryExportName);\n    let args = $state(props.args);\n    let storyContext = $state(props.storyContext);\n    let metaRenderSnippet = $state(props.metaRenderSnippet);\n    function set(props) {\n        currentStoryExportName = props.currentStoryExportName;\n        args = props.args;\n        storyContext = props.storyContext;\n        metaRenderSnippet = props.metaRenderSnippet;\n    }\n    return {\n        get args() {\n            return args;\n        },\n        get storyContext() {\n            return storyContext;\n        },\n        get currentStoryExportName() {\n            return currentStoryExportName;\n        },\n        get metaRenderSnippet() {\n            return metaRenderSnippet;\n        },\n        set,\n    };\n}\nfunction createStoryRendererContext() {\n    const ctx = buildContext({\n        currentStoryExportName: undefined,\n        args: {},\n        // @ts-expect-error FIXME: I don't know how to satisfy this one\n        storyContext: {},\n    });\n    setContext(CONTEXT_KEY, ctx);\n}\nexport function useStoryRenderer() {\n    if (!hasContext(CONTEXT_KEY)) {\n        createStoryRendererContext();\n    }\n    return getContext(CONTEXT_KEY);\n}\n"
         ],

@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "SeedGenerator.svelte"
-        ],
+        "sources": ["SeedGenerator.svelte"],
         "sourcesContent": [
           "<script lang=\"ts\">\nimport theme from '@avatune/sketch-black-white-theme/svelte'\nimport { Avatar } from '@avatune/svelte'\n\nlet seed = $state('hello-world')\n</script>\n\n<div style=\"padding: 2rem; text-align: center\">\n  <div style=\"margin-bottom: 2rem\">\n    <Avatar {theme} {seed} width={300} height={300} />\n  </div>\n\n  <div style=\"max-width: 400px; margin: 0 auto\">\n    <label\n      for=\"seed\"\n      style=\"display: block; font-weight: bold; margin-bottom: 0.5rem\"\n    >\n      Seed Phrase:\n    </label>\n    <input\n      id=\"seed\"\n      type=\"text\"\n      bind:value={seed}\n      placeholder=\"Enter a seed phrase...\"\n      style=\"width: 100%; padding: 0.75rem; font-size: 1rem; border-radius: 4px; border: 1px solid #ccc; font-family: monospace\"\n    />\n    <p style=\"margin-top: 1rem; font-size: 0.875rem; color: #666\">\n      Try different phrases to generate unique avatars deterministically!\n    </p>\n  </div>\n</div>\n"
         ],

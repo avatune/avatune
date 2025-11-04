@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "Avatar.stories.svelte"
-        ],
+        "sources": ["Avatar.stories.svelte"],
         "sourcesContent": [
           "<script module lang=\"ts\">\nimport { defineMeta } from '@storybook/addon-svelte-csf'\nimport AllCombinations from './AllCombinations.svelte'\nimport SeedGenerator from './SeedGenerator.svelte'\n\nconst { Story } = defineMeta({\n  title: 'Avatar/Configurator',\n  parameters: {\n    layout: 'centered',\n  },\n})\n</script>\n\n<Story name=\"AllCombinations\">\n  <AllCombinations />\n</Story>\n\n<Story name=\"SeedGenerator\">\n  <SeedGenerator />\n</Story>\n"
         ],

@@ -101,9 +101,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "extractor.svelte.js"
-        ],
+        "sources": ["extractor.svelte.js"],
         "sourcesContent": [
           "import { getContext, hasContext, setContext } from 'svelte';\nimport { storyNameToExportName } from '../../utils/identifier-utils.js';\nconst CONTEXT_KEY = 'storybook-stories-extractor-context';\nfunction buildContext(storyCmpProps) {\n    let isExtracting = $state(storyCmpProps.isExtracting);\n    let register = $state(storyCmpProps.register);\n    return {\n        get isExtracting() {\n            return isExtracting;\n        },\n        get register() {\n            return register;\n        },\n    };\n}\nexport function createStoriesExtractorContext(repository) {\n    const { stories } = repository;\n    const ctx = buildContext({\n        isExtracting: true,\n        register: (s) => {\n            stories.set(s.exportName ?? storyNameToExportName(s.name), s);\n        },\n    });\n    setContext(CONTEXT_KEY, ctx);\n}\nexport function useStoriesExtractor() {\n    if (!hasContext(CONTEXT_KEY)) {\n        setContext(CONTEXT_KEY, buildContext({\n            isExtracting: false,\n            register: () => { },\n        }));\n    }\n    return getContext(CONTEXT_KEY);\n}\n"
         ],

@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "LegacyTemplate.svelte"
-        ],
+        "sources": ["LegacyTemplate.svelte"],
         "sourcesContent": [
           "<!--\n@component\nThis component is to support deprecated legacy component - `Template`,\nand this component functionality is just a \"mock\".\nE.g. to allow user still have typing experience.\nVite pre-transform hook does codemod where this component gets transformed into Svelte v5 snippet block.\n\n@deprecated\n@see {@link https://github.com/storybookjs/addon-svelte-csf/blob/main/MIGRATION.md#template-component-removed}\n-->\n<script lang=\"ts\">\n  import type { Slots, TemplateProps } from '../legacy-types.d.ts';\n\n  export let id: string = 'default';\n  // silents the Svelte warning about 'id' being unused. It's only here for typing purposes.\n  const silentWarningAboutId = id;\n\n  type $$Props = TemplateProps;\n  type $$Slots = Slots;\n\n  let args: $$Slots['default']['args'];\n  let context: $$Slots['default']['context'];\n</script>\n\n<slot {context} {args} />\n"
         ],

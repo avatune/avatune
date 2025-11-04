@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "AllCombinations.svelte"
-        ],
+        "sources": ["AllCombinations.svelte"],
         "sourcesContent": [
           "<script lang=\"ts\">\nimport theme from '@avatune/sketch-black-white-theme/svelte'\nimport { Avatar } from '@avatune/svelte'\n\nconst config = $state({\n  ears: 'round',\n  eyebrows: 'bold',\n  eyes: 'standard',\n  hair: 'star',\n  head: 'oval',\n  mouth: 'smile',\n  noses: 'standard',\n})\n\nconst options = {\n  ears: ['round', 'standard'],\n  eyebrows: ['bold', 'raised', 'sharp'],\n  eyes: ['arrows', 'cute', 'sharp', 'standard'],\n  hair: ['boom', 'bundle', 'cute', 'rocket', 'star'],\n  head: ['oval'],\n  mouth: ['lips', 'smile', 'smirk'],\n  noses: ['sharp', 'standard', 'wide'],\n}\n</script>\n\n<div style=\"padding: 2rem\">\n  <div style=\"margin-bottom: 2rem; text-align: center\">\n    <Avatar {theme} {...config} width={300} height={300} />\n  </div>\n\n  <div\n    style=\"display: grid; grid-template-columns: auto 1fr; gap: 1rem; max-width: 500px; margin: 0 auto\"\n  >\n    {#each Object.entries(options) as [category, items]}\n      <label\n        for={category}\n        style=\"font-weight: bold; text-transform: capitalize; align-self: center\"\n      >\n        {category}:\n      </label>\n      <select\n        id={category}\n        bind:value={config[category as keyof typeof config]}\n        style=\"padding: 0.5rem; border-radius: 4px; border: 1px solid #ccc\"\n      >\n        {#each items as item}\n          <option value={item}>\n            {item}\n          </option>\n        {/each}\n      </select>\n    {/each}\n  </div>\n</div>\n"
         ],

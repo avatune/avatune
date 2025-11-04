@@ -23,9 +23,7 @@
       "sourcemaps": {
         "version": 3,
         "names": [],
-        "sources": [
-          "StoriesExtractor.svelte"
-        ],
+        "sources": ["StoriesExtractor.svelte"],
         "sourcesContent": [
           "<script lang=\"ts\">\n  import type { Component } from 'svelte';\n\n  import type { Cmp } from '../types.js';\n\n  import {\n    type StoriesRepository,\n    createStoriesExtractorContext,\n  } from './contexts/extractor.svelte';\n\n  interface Props {\n    Stories: Component;\n    repository: () => StoriesRepository<Cmp>;\n  }\n\n  const { Stories, repository }: Props = $props();\n\n  createStoriesExtractorContext(repository());\n</script>\n\n<Stories />\n"
         ],
