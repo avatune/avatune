@@ -17,10 +17,8 @@ export type AvatarProps<T extends VueTheme = VueTheme> =
   TypedAvatarConfig<T> & {
     /** Theme to use for rendering */
     theme: T
-    /** Width of the avatar (default: 400) */
-    width?: number
-    /** Height of the avatar (default: 400) */
-    height?: number
+    /** Size of the avatar (default: theme size) */
+    size?: number
     /** Optional className for the SVG container */
     class?: string
     /** Optional style for the SVG container */
@@ -105,11 +103,7 @@ export const Avatar = defineComponent({
       type: String,
       default: undefined,
     },
-    width: {
-      type: Number,
-      default: undefined,
-    },
-    height: {
+    size: {
       type: Number,
       default: undefined,
     },
@@ -126,8 +120,7 @@ export const Avatar = defineComponent({
     const config = computed(() => {
       const {
         theme: _theme,
-        width: _width,
-        height: _height,
+        size: _size,
         class: _class,
         style: _style,
         ...rest
@@ -145,13 +138,10 @@ export const Avatar = defineComponent({
       ),
     )
 
-    const actualWidth = computed(() => props.width ?? props.theme.metadata.size)
-    const actualHeight = computed(
-      () => props.height ?? props.theme.metadata.size,
-    )
+    const actualSize = computed(() => props.size ?? props.theme.metadata.size)
 
     const scaleFactor = computed(
-      () => actualWidth.value / props.theme.metadata.size,
+      () => actualSize.value / props.theme.metadata.size,
     )
 
     const finalStyle = computed(() => ({
@@ -166,9 +156,9 @@ export const Avatar = defineComponent({
           xmlns: 'http://www.w3.org/2000/svg',
           role: 'img',
           'aria-label': 'Avatar',
-          width: actualWidth.value,
-          height: actualHeight.value,
-          viewBox: `0 0 ${actualWidth.value} ${actualHeight.value}`,
+          width: actualSize.value,
+          height: actualSize.value,
+          viewBox: `0 0 ${actualSize.value} ${actualSize.value}`,
           class: props.class,
           style: finalStyle.value,
         },
@@ -181,7 +171,7 @@ export const Avatar = defineComponent({
 
           const position =
             typeof item.position === 'function'
-              ? item.position(actualWidth.value, actualHeight.value)
+              ? item.position(actualSize.value, actualSize.value)
               : item.position
           const transformX = position.x
           const transformY = position.y

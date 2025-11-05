@@ -1,8 +1,8 @@
-import flatTheme from '@avatune/flat-design-theme/react'
-import type { AvatarProps } from '@avatune/react'
-import { Avatar } from '@avatune/react'
-import sketchTheme from '@avatune/sketch-black-white-theme/react'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import flatTheme from '@avatune/flat-design-theme/svelte'
+import sketchTheme from '@avatune/sketch-black-white-theme/svelte'
+import type { AvatarProps } from '@avatune/svelte'
+import { Avatar } from '@avatune/svelte'
+import type { Meta, StoryObj } from '@storybook/svelte-vite'
 
 const meta = {
   title: 'Avatar',
@@ -12,11 +12,13 @@ const meta = {
 } satisfies Meta<typeof Avatar>
 
 export default meta
-type FlatArgs = Omit<AvatarProps<typeof flatTheme>, 'theme'>
-type SketchArgs = Omit<AvatarProps<typeof sketchTheme>, 'theme'>
+
+type FlatArgs = AvatarProps<typeof flatTheme>
+type SketchArgs = AvatarProps<typeof sketchTheme>
 
 export const FlatDesign: StoryObj<FlatArgs> = {
   argTypes: {
+    theme: { table: { disable: true } },
     body: { control: { type: 'select' }, options: Object.keys(flatTheme.body) },
     ears: { control: { type: 'select' }, options: Object.keys(flatTheme.ears) },
     eyebrows: {
@@ -43,8 +45,8 @@ export const FlatDesign: StoryObj<FlatArgs> = {
     nosesColor: { control: { type: 'color' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
-  render: (args) => <Avatar theme={flatTheme} {...args} />,
   args: {
+    theme: flatTheme,
     body: 'sweater',
     ears: 'standard',
     eyebrows: 'standard',
@@ -59,6 +61,7 @@ export const FlatDesign: StoryObj<FlatArgs> = {
 
 export const Sketch: StoryObj<SketchArgs> = {
   argTypes: {
+    theme: { table: { disable: true } },
     ears: {
       control: { type: 'select' },
       options: Object.keys(sketchTheme.ears),
@@ -89,8 +92,8 @@ export const Sketch: StoryObj<SketchArgs> = {
     },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
-  render: (args) => <Avatar theme={sketchTheme} {...args} />,
   args: {
+    theme: sketchTheme,
     ears: 'round',
     eyebrows: 'bold',
     eyes: 'standard',
@@ -104,23 +107,28 @@ export const Sketch: StoryObj<SketchArgs> = {
 
 type ThemeKey = 'flat' | 'sketch'
 
-export const SeededThemeSwitch: StoryObj<{
-  theme: ThemeKey
-  seed?: string | number
-  size?: number
-  height?: number
-}> = {
+export const SeededThemeSwitch: StoryObj<
+  AvatarProps<typeof flatTheme | typeof sketchTheme> & {
+    themeKey?: ThemeKey
+  }
+> = {
   argTypes: {
-    theme: { control: { type: 'select' }, options: ['flat', 'sketch'] },
+    theme: { table: { disable: true } },
+    themeKey: { control: { type: 'select' }, options: ['flat', 'sketch'] },
     seed: { control: { type: 'text' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
-  render: ({ theme, seed, size = 300 }) => {
-    const selectedTheme = theme === 'sketch' ? sketchTheme : flatTheme
-    return <Avatar theme={selectedTheme} seed={seed} size={size} />
-  },
+  render: (args) => ({
+    Component: Avatar,
+    props: {
+      theme: args.themeKey === 'sketch' ? sketchTheme : flatTheme,
+      seed: args.seed,
+      size: args.size,
+    },
+  }),
   args: {
-    theme: 'flat',
+    theme: flatTheme,
+    themeKey: 'flat',
     seed: 'Type any seed phrase here',
     size: 300,
   },

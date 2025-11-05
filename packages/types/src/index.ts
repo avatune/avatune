@@ -1,6 +1,7 @@
 import type { ComponentType, SVGProps } from 'react'
 import type { Component as SvelteComponent } from 'svelte'
-import type { DefineComponent } from 'vue'
+import type { SVGAttributes as SvelteSVGAttributes } from 'svelte/elements'
+import type { DefineComponent, SVGAttributes as VueSVGAttributes } from 'vue'
 
 /**
  * Position offset for an avatar item
@@ -53,7 +54,12 @@ export interface ReactAvatarItem extends BaseAvatarItem {
  */
 export interface VueAvatarItem extends BaseAvatarItem {
   /** Vue component to render */
-  Component: DefineComponent<any, any, any>
+  Component: DefineComponent<
+    VueSVGAttributes & {
+      className?: string
+      style?: string
+    }
+  >
 }
 
 /**
@@ -61,7 +67,12 @@ export interface VueAvatarItem extends BaseAvatarItem {
  */
 export interface SvelteAvatarItem extends BaseAvatarItem {
   /** Svelte component to render */
-  Component: SvelteComponent<any, any>
+  Component: SvelteComponent<
+    SvelteSVGAttributes<SVGSVGElement> & {
+      className?: string
+      style?: string
+    }
+  >
 }
 
 /**

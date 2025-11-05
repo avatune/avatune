@@ -4,19 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build",
     "check": "biome check --write",
-    "dev": "rsbuild dev --open",
-    "preview": "rsbuild preview"
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@avatune/sketch-black-white-theme": "workspace:*",
+    "@avatune/flat-design-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/utils": "workspace:*",
     "@avatune/vanilla": "workspace:*"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.5.14",
+    "@storybook/addon-docs": "^10.0.4",
+    "@storybook/html-vite": "^10.0.4",
+    "storybook": "^10.0.4",
     "typescript": "^5.9.3"
   }
 }

@@ -7,13 +7,20 @@ import type {
 } from '@avatune/types'
 import { AVATAR_CATEGORIES, seededRandom, selectItem } from '@avatune/utils'
 
+interface AvatarArgs<T extends VanillaTheme = VanillaTheme>
+  extends TypedAvatarConfig<T> {
+  theme: T
+  size?: number
+  config?: TypedAvatarConfig<T>
+}
 /**
  * Generate avatar SVG code from theme and config
  */
-export function avatar<T extends VanillaTheme = VanillaTheme>(
-  theme: T,
-  config: TypedAvatarConfig<T> = {},
-): string {
+export function avatar<T extends VanillaTheme = VanillaTheme>({
+  theme,
+  size = theme.metadata.size,
+  ...config
+}: AvatarArgs<T>): string {
   const avatarConfig = config as AvatarConfig
   const random =
     'seed' in avatarConfig && avatarConfig.seed
@@ -46,11 +53,11 @@ export function avatar<T extends VanillaTheme = VanillaTheme>(
 
   // Generate SVG
   // Default viewBox and dimensions
-  const width = theme.metadata.size
-  const height = theme.metadata.size
+  // const width = theme.metadata.size
+  // const height = theme.metadata.size
 
   // Calculate responsive scale factor (base size is 400)
-  const scaleFactor = width / theme.metadata.size
+  const scaleFactor = size / theme.metadata.size
 
   const svgParts: string[] = []
 
@@ -58,7 +65,7 @@ export function avatar<T extends VanillaTheme = VanillaTheme>(
     if (item) {
       const position =
         typeof item.position === 'function'
-          ? item.position(width, height)
+          ? item.position(size, size)
           : item.position
       const transformX = position.x
       const transformY = position.y
@@ -91,7 +98,7 @@ export function avatar<T extends VanillaTheme = VanillaTheme>(
     .filter(Boolean)
     .join('; ')
 
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" style="${finalStyle}" viewBox="0 0 ${width} ${height}">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" style="${finalStyle}" viewBox="0 0 ${size} ${size}">
   ${svgParts.join('\n  ')}
 </svg>`
 

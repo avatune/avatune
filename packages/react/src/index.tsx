@@ -15,10 +15,8 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
   TypedAvatarConfig<T> & {
     /** Theme to use for rendering */
     theme: T
-    /** Width of the avatar (default: 400) */
-    width?: number
-    /** Height of the avatar (default: 400) */
-    height?: number
+    /** Size of the avatar (default: 400) */
+    size?: number
     /** Optional className for the SVG container */
     className?: string
     /** Optional style for the SVG container */
@@ -30,8 +28,9 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
  */
 export function Avatar<T extends ReactTheme = ReactTheme>({
   theme,
-  width = theme.metadata.size,
-  height = theme.metadata.size,
+  // width = theme.metadata.size,
+  // height = theme.metadata.size,
+  size = theme.metadata.size,
   className,
   style = {},
   ...config
@@ -56,16 +55,16 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
     [result.selected],
   )
 
-  const scaleFactor = width / theme.metadata.size
+  const scaleFactor = size / theme.metadata.size
 
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label="Avatar"
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
       className={className}
       style={{
         ...(metadataToStyle(theme.metadata) as CSSProperties),
@@ -81,7 +80,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
 
         const position =
           typeof item.position === 'function'
-            ? item.position(width, height)
+            ? item.position(size, size)
             : item.position
 
         const configColor = config.seed

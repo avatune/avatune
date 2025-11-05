@@ -4,8 +4,7 @@ import AvatarComponent from './Avatar.svelte'
 export type AvatarProps<T extends SvelteTheme = SvelteTheme> =
   TypedAvatarConfig<T> & {
     theme: SvelteTheme
-    width?: number
-    height?: number
+    size?: number
     class?: string
     style?: string
   }

@@ -17,8 +17,7 @@
     "svelte": "^5.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-svelte-csf": "^5.0.10",
-    "@storybook/sveltekit": "^10.0.3",
+    "@storybook/svelte-vite": "^10.0.4",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "storybook": "^10.0.3",
