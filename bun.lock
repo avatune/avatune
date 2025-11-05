@@ -144,8 +144,6 @@
       },
       "devDependencies": {
         "@avatune/typescript-config": "workspace:*",
-        "@rsbuild/plugin-svelte": "^1.0.10",
-        "@rsbuild/plugin-vue": "^1.2.0",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "@types/react": "^19.0.8",
@@ -299,8 +297,6 @@
       },
       "devDependencies": {
         "@avatune/typescript-config": "workspace:*",
-        "@rsbuild/plugin-svelte": "^1.0.10",
-        "@rsbuild/plugin-vue": "^1.2.0",
         "@rslib/core": "^0.16.1",
         "@types/node": "^22.18.12",
         "@types/react": "^19.0.8",

@@ -171,7 +171,7 @@ export const Avatar = defineComponent({
 
           const position =
             typeof item.position === 'function'
-              ? item.position(actualSize.value, actualSize.value)
+              ? item.position(actualSize.value)
               : item.position
           const transformX = position.x
           const transformY = position.y

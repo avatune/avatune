@@ -49,7 +49,7 @@ const finalStyle = $derived(
 >
   {#each sortedItems as [category, item]}
     {#if item}
-      {@const position = typeof item.position === 'function' ? item.position(size, size) : item.position}
+      {@const position = typeof item.position === 'function' ? item.position(size) : item.position}
       {@const transformX = position.x}
       {@const transformY = position.y}
       {@const configColor = config.seed ? undefined : config[`${category}Color` as `${AvatarPartCategory}Color`]}

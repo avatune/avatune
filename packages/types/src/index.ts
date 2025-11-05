@@ -11,10 +11,7 @@ export type Position =
       x: number | string
       y: number | string
     }
-  | ((
-      width: number,
-      height: number,
-    ) => {
+  | ((size: number) => {
       x: number | string
       y: number | string
     })

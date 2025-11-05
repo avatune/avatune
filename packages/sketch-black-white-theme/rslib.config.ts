@@ -1,5 +1,3 @@
-import { pluginSvelte } from '@rsbuild/plugin-svelte'
-import { pluginVue } from '@rsbuild/plugin-vue'
 import { defineConfig } from '@rslib/core'
 
 export default defineConfig({
@@ -18,15 +16,4 @@ export default defineConfig({
       svelte: './src/svelte.ts',
     },
   },
-  output: {
-    target: 'node',
-    externals: {
-      '@avatune/sketch-black-white-assets':
-        '@avatune/sketch-black-white-assets',
-      '@avatune/sketch-black-white-assets/svg':
-        '@avatune/sketch-black-white-assets/svg',
-      '@avatune/types': '@avatune/types',
-    },
-  },
-  plugins: [pluginVue(), pluginSvelte()],
 })

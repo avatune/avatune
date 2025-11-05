@@ -4,11 +4,7 @@ import type {
   ReactTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import {
-  AVATAR_CATEGORIES,
-  metadataToStyle,
-  selectItemFromConfig,
-} from '@avatune/utils'
+import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> =
@@ -28,23 +24,38 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
  */
 export function Avatar<T extends ReactTheme = ReactTheme>({
   theme,
-  // width = theme.metadata.size,
-  // height = theme.metadata.size,
   size = theme.metadata.size,
   className,
   style = {},
-  ...config
+  ...restConfig
 }: AvatarProps<T>) {
-  const configDep = AVATAR_CATEGORIES.flatMap((category) => [
-    config[category],
-    config[`${category}Color`],
-  ])
-    .concat(config.seed ? [config.seed.toString()] : [])
-    .join(',')
-  // biome-ignore lint/correctness/useExhaustiveDependencies: configDep is enough
+  // biome-ignore lint/correctness/useExhaustiveDependencies: granular tracking needed
+  const config = useMemo(
+    () => restConfig as AvatarConfig,
+    [
+      restConfig.seed,
+      restConfig.body,
+      restConfig.bodyColor,
+      restConfig.ears,
+      restConfig.earsColor,
+      restConfig.eyebrows,
+      restConfig.eyebrowsColor,
+      restConfig.eyes,
+      restConfig.eyesColor,
+      restConfig.hair,
+      restConfig.hairColor,
+      restConfig.head,
+      restConfig.headColor,
+      restConfig.mouth,
+      restConfig.mouthColor,
+      restConfig.noses,
+      restConfig.nosesColor,
+    ],
+  )
+
   const result = useMemo(
-    () => selectItemFromConfig(config as AvatarConfig, theme),
-    [theme, configDep],
+    () => selectItemFromConfig(config, theme),
+    [config, theme],
   )
 
   const sortedItems = useMemo(
@@ -80,7 +91,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
 
         const position =
           typeof item.position === 'function'
-            ? item.position(size, size)
+            ? item.position(size)
             : item.position
 
         const configColor = config.seed

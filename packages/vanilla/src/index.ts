@@ -51,11 +51,6 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
     ([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0),
   )
 
-  // Generate SVG
-  // Default viewBox and dimensions
-  // const width = theme.metadata.size
-  // const height = theme.metadata.size
-
   // Calculate responsive scale factor (base size is 400)
   const scaleFactor = size / theme.metadata.size
 
@@ -65,7 +60,7 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
     if (item) {
       const position =
         typeof item.position === 'function'
-          ? item.position(size, size)
+          ? item.position(size)
           : item.position
       const transformX = position.x
       const transformY = position.y

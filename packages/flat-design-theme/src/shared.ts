@@ -1,6 +1,6 @@
-const getHeadPosition = (width: number, height: number) => ({
-  x: width * 0.32,
-  y: height * 0.3,
+const getHeadPosition = (size: number) => ({
+  x: size * 0.32,
+  y: size * 0.3,
 })
 
 export default {
@@ -11,11 +11,11 @@ export default {
   },
   body: {
     sweater: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x - width * 0.035,
-          y: headPosition.y + height * 0.42,
+          x: headPosition.x - size * 0.035,
+          y: headPosition.y + size * 0.42,
         }
       },
       layer: 10,
@@ -25,11 +25,11 @@ export default {
   },
   ears: {
     standard: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x - width * 0.018,
-          y: headPosition.y + height * 0.2,
+          x: headPosition.x - size * 0.018,
+          y: headPosition.y + size * 0.2,
         }
       },
       layer: 100,
@@ -39,11 +39,11 @@ export default {
   },
   eyebrows: {
     standard: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.07,
-          y: headPosition.y + height * 0.17,
+          x: headPosition.x + size * 0.07,
+          y: headPosition.y + size * 0.17,
         }
       },
       layer: 30,
@@ -53,11 +53,11 @@ export default {
   },
   eyes: {
     boring: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.075,
-          y: headPosition.y + height * 0.21,
+          x: headPosition.x + size * 0.075,
+          y: headPosition.y + size * 0.21,
         }
       },
       layer: 20,
@@ -65,11 +65,11 @@ export default {
       color: '#FCBE93',
     },
     dots: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.11,
-          y: headPosition.y + height * 0.21,
+          x: headPosition.x + size * 0.11,
+          y: headPosition.y + size * 0.21,
         }
       },
       layer: 20,
@@ -79,11 +79,11 @@ export default {
   },
   hair: {
     short: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x - width * 0.01,
-          y: headPosition.y - height * 0.01,
+          x: headPosition.x - size * 0.01,
+          y: headPosition.y - size * 0.01,
         }
       },
       layer: 5,
@@ -91,11 +91,11 @@ export default {
       color: '#7F3D2B',
     },
     long: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x - width * 0.17,
-          y: headPosition.y - height * 0.03,
+          x: headPosition.x - size * 0.17,
+          y: headPosition.y - size * 0.03,
         }
       },
       layer: 5,
@@ -103,11 +103,11 @@ export default {
       color: '#FFD859',
     },
     medium: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x - width * 0.004,
-          y: headPosition.y - height * 0.02,
+          x: headPosition.x - size * 0.004,
+          y: headPosition.y - size * 0.02,
         }
       },
       layer: 5,
@@ -125,11 +125,11 @@ export default {
   },
   mouth: {
     laugh: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.098,
-          y: headPosition.y + height * 0.33,
+          x: headPosition.x + size * 0.098,
+          y: headPosition.y + size * 0.33,
         }
       },
       layer: 25,
@@ -137,11 +137,11 @@ export default {
       color: '#000000',
     },
     smile: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.07,
-          y: headPosition.y + height * 0.3,
+          x: headPosition.x + size * 0.07,
+          y: headPosition.y + size * 0.3,
         }
       },
       layer: 25,
@@ -149,11 +149,11 @@ export default {
       color: '#000000',
     },
     nervous: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.085,
-          y: headPosition.y + height * 0.32,
+          x: headPosition.x + size * 0.085,
+          y: headPosition.y + size * 0.32,
         }
       },
       layer: 25,
@@ -163,11 +163,11 @@ export default {
   },
   noses: {
     curve: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.15,
-          y: headPosition.y + height * 0.28,
+          x: headPosition.x + size * 0.15,
+          y: headPosition.y + size * 0.28,
         }
       },
       layer: 15,
@@ -175,11 +175,11 @@ export default {
       color: '#FF9C8D',
     },
     dots: {
-      position: (width: number, height: number) => {
-        const headPosition = getHeadPosition(width, height)
+      position: (size: number) => {
+        const headPosition = getHeadPosition(size)
         return {
-          x: headPosition.x + width * 0.15,
-          y: headPosition.y + height * 0.28,
+          x: headPosition.x + size * 0.15,
+          y: headPosition.y + size * 0.28,
         }
       },
       layer: 15,
