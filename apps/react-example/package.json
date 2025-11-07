@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@avatune/flat-design-theme": "workspace:*",
-    "@avatune/sketch-black-white-theme": "workspace:*",
     "@avatune/react": "workspace:*",
+    "@avatune/sketch-black-white-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

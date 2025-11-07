@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "check": "biome check --write",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6007",
     "build-storybook": "storybook build"
   },
   "dependencies": {

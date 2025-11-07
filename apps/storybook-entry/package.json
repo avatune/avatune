@@ -1,0 +1,18 @@
+{
+  "name": "@avatune/storybook-entry",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "biome check --write",
+    "storybook": "storybook dev -p 6010",
+    "build-storybook": "storybook build"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@storybook/html-vite": "^10.0.4",
+    "@types/node": "^22.10.0",
+    "storybook": "^10.0.4",
+    "typescript": "^5.9.3"
+  }
+}
