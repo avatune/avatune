@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "@avatune/flat-design-assets": "workspace:*",
-    "@avatune/types": "workspace:*"
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",

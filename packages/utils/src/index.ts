@@ -113,6 +113,22 @@ export function selectItemFromConfig<T extends AvatarItem>(
   return { selected, identifiers }
 }
 
+/**
+ * Higher-order function to create position functions with offsets
+ * from a base position function
+ */
+export function offsetFrom(
+  basePosition: (size: number) => { x: number; y: number },
+) {
+  return (xRatio: number, yRatio: number) => (size: number) => {
+    const base = basePosition(size)
+    return {
+      x: base.x + size * xRatio,
+      y: base.y + size * yRatio,
+    }
+  }
+}
+
 export function metadataToStyle(
   metadata: Theme['metadata'],
   output: 'object' | 'string' = 'object',

@@ -152,6 +152,7 @@
       "dependencies": {
         "@avatune/flat-design-assets": "workspace:*",
         "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
       },
       "devDependencies": {
         "@avatune/typescript-config": "workspace:*",
@@ -321,6 +322,7 @@
       "dependencies": {
         "@avatune/sketch-black-white-assets": "workspace:*",
         "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
       },
       "devDependencies": {
         "@avatune/typescript-config": "workspace:*",
