@@ -1,29 +1,27 @@
 {
-  "name": "@avatune/predictor-example",
+  "name": "@avatune/predictor-storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build",
     "check": "biome check --write",
-    "dev": "rsbuild dev --open",
-    "preview": "rsbuild preview"
+    "storybook": "storybook dev -p 6005 --no-open",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
-    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.5.14",
-    "@rsbuild/plugin-react": "^1.4.1",
+    "@avatune/typescript-config": "workspace:*",
+    "@storybook/react-vite": "^10.0.3",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.4",
+    "storybook": "^10.0.3",
     "typescript": "^5.9.3"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "extends": "../../packages/typescript-config/base.json",
+  "extends": "@avatune/typescript-config/base",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src"
