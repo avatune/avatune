@@ -178,6 +178,7 @@
       "name": "@avatune/hair-color-predictor",
       "version": "0.0.0",
       "devDependencies": {
+        "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
         "@tensorflow/tfjs": "^4.22.0",
         "@tensorflow/tfjs-backend-wasm": "^4.22.0",
@@ -195,6 +196,7 @@
       "name": "@avatune/hair-length-predictor",
       "version": "0.0.0",
       "devDependencies": {
+        "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
         "@tensorflow/tfjs": "^4.22.0",
         "@tensorflow/tfjs-backend-wasm": "^4.22.0",
@@ -226,6 +228,20 @@
       },
       "peerDependencies": {
         "react": ">=18.0.0",
+      },
+    },
+    "packages/rsbuild-plugin-copy-tfjs-model": {
+      "name": "@avatune/rsbuild-plugin-copy-tfjs-model",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rsbuild/core": "^1.5.17",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^22.18.12",
+        "typescript": "^5.9.3",
+      },
+      "peerDependencies": {
+        "@rsbuild/core": ">=1.0.0",
       },
     },
     "packages/rsbuild-plugin-svg-to-svelte": {
@@ -331,6 +347,7 @@
       "name": "@avatune/skin-tone-predictor",
       "version": "0.0.0",
       "devDependencies": {
+        "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
         "@tensorflow/tfjs": "^4.22.0",
         "@tensorflow/tfjs-backend-wasm": "^4.22.0",
@@ -464,6 +481,8 @@
     "@avatune/react": ["@avatune/react@workspace:packages/react"],
 
     "@avatune/react-storybook": ["@avatune/react-storybook@workspace:apps/react-storybook"],
+
+    "@avatune/rsbuild-plugin-copy-tfjs-model": ["@avatune/rsbuild-plugin-copy-tfjs-model@workspace:packages/rsbuild-plugin-copy-tfjs-model"],
 
     "@avatune/rsbuild-plugin-svg-to-svelte": ["@avatune/rsbuild-plugin-svg-to-svelte@workspace:packages/rsbuild-plugin-svg-to-svelte"],
 
@@ -1613,6 +1632,8 @@
 
     "@avatune/react/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
 
+    "@avatune/rsbuild-plugin-copy-tfjs-model/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
+
     "@avatune/rsbuild-plugin-svg-to-svelte/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
 
     "@avatune/rsbuild-plugin-svg-to-vue/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
@@ -1706,6 +1727,8 @@
     "@avatune/hair-length-predictor/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/react/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+
+    "@avatune/rsbuild-plugin-copy-tfjs-model/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/rsbuild-plugin-svg-to-svelte/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 

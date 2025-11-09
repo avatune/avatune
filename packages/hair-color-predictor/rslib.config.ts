@@ -1,4 +1,5 @@
 import { defineConfig } from '@rslib/core'
+import { pluginCopyTfjsModel } from '@avatune/rsbuild-plugin-copy-tfjs-model'
 
 export default defineConfig({
   source: {
@@ -32,10 +33,10 @@ export default defineConfig({
   output: {
     target: 'node',
     externals: {
-      // Don't bundle these - they should be installed by users
       '@tensorflow/tfjs': '@tensorflow/tfjs',
       '@tensorflow/tfjs-backend-webgl': '@tensorflow/tfjs-backend-webgl',
       '@tensorflow/tfjs-backend-wasm': '@tensorflow/tfjs-backend-wasm',
     },
   },
+  plugins: [pluginCopyTfjsModel({ modelName: 'hair_color' })],
 })

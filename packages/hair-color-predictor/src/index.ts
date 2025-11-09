@@ -1,4 +1,4 @@
 export {
-  HairColorPrediction,
+  HairColorPredictor,
   type HairColorResult,
-} from './hair-color-prediction'
+} from './hair-color-predictor'

@@ -1,4 +1,4 @@
 export {
-  SkinTonePrediction,
+  SkinTonePredictor,
   type SkinToneResult,
-} from './skin-tone-prediction'
+} from './skin-tone-predictor'

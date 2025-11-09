@@ -22,6 +22,7 @@
     "dev": "rslib build --watch"
   },
   "devDependencies": {
+    "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
     "@rslib/core": "^0.16.0",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",

@@ -1,5 +1,4 @@
 import * as tf from '@tensorflow/tfjs'
-import { getClassesPath, getModelPath } from './utils'
 
 export type HairLengthResult = {
   length: string
@@ -8,16 +7,18 @@ export type HairLengthResult = {
 }
 
 /**
- * Hair length prediction from face image
+ * Hair length predictor from face image
  * Analyzes image to determine hair length category
  */
-export class HairLengthPrediction {
+export class HairLengthPredictor {
   private model: tf.LayersModel | null
   private classes: string[]
+  private readonly modelDir: string
 
-  constructor() {
+  constructor(modelDir: string) {
     this.model = null
     this.classes = []
+    this.modelDir = modelDir.endsWith('/') ? modelDir.slice(0, -1) : modelDir
   }
 
   /**
@@ -29,7 +30,7 @@ export class HairLengthPrediction {
       return
     }
 
-    const modelPath = getModelPath()
+    const modelPath = `${this.modelDir}/model.json`
 
     try {
       // Fetch the model.json to modify it
@@ -52,8 +53,7 @@ export class HairLengthPrediction {
 
       // Fetch the weights binary file
       const weightsManifest = modelJSON.weightsManifest
-      const baseUrl = modelPath.replace('/model.json', '/')
-      const weightsPath = baseUrl + weightsManifest[0].paths[0]
+      const weightsPath = `${this.modelDir}/${weightsManifest[0].paths[0]}`
       const weightsResponse = await fetch(weightsPath)
       const weightsData = await weightsResponse.arrayBuffer()
 
@@ -79,7 +79,7 @@ export class HairLengthPrediction {
    */
   private async loadClasses() {
     try {
-      const classesPath = getClassesPath()
+      const classesPath = `${this.modelDir}/classes.json`
 
       const response = await fetch(classesPath)
       const data = await response.json()

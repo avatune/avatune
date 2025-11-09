@@ -1,13 +1,13 @@
 import {
-  HairColorPrediction,
+  HairColorPredictor,
   type HairColorResult,
 } from '@avatune/hair-color-predictor'
 import {
-  HairLengthPrediction,
+  HairLengthPredictor,
   type HairLengthResult,
 } from '@avatune/hair-length-predictor'
 import {
-  SkinTonePrediction,
+  SkinTonePredictor,
   type SkinToneResult,
 } from '@avatune/skin-tone-predictor'
 import type { Meta, StoryObj } from '@storybook/react'
@@ -17,9 +17,9 @@ import { useEffect, useRef, useState } from 'react'
 function PhotoAnalysis() {
   const initializingRef = useRef(false)
   const predictorsRef = useRef<{
-    hairColor: HairColorPrediction
-    hairLength: HairLengthPrediction
-    skinTone: SkinTonePrediction
+    hairColor: HairColorPredictor
+    hairLength: HairLengthPredictor
+    skinTone: SkinTonePredictor
   } | null>(null)
 
   const [initialized, setInitialized] = useState(false)
@@ -39,9 +39,9 @@ function PhotoAnalysis() {
 
       try {
         await tf.ready()
-        const hairColor = new HairColorPrediction()
-        const hairLength = new HairLengthPrediction()
-        const skinTone = new SkinTonePrediction()
+        const hairColor = new HairColorPredictor('/models/hair-color')
+        const hairLength = new HairLengthPredictor('/models/hair-length')
+        const skinTone = new SkinTonePredictor('/models/skin-tone')
 
         await Promise.all([
           hairColor.loadModel(),

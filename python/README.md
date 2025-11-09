@@ -1,105 +1,89 @@
-# Marimo Notebooks - ProfileKit Photo-to-Config
+# @avatune/python
 
-Interactive marimo notebooks for training ML models to analyze profile photos.
+Training pipeline for avatar analysis models using Marimo notebooks. Models are trained in Python with TensorFlow/Keras, then automatically exported to TensorFlow.js for browser inference.
 
-## 📁 Folder Structure
+## Structure
 
 ```
 notebooks/
-├── hair_color/          # Hair color classification (4 classes)
-│   ├── 01_explore.py    # Explore CelebA dataset
-│   ├── 02_prepare.py    # Prepare balanced dataset
-│   └── 03_train.py      # Train model + TFJS conversion ✨
+├── hair_color/
+│   ├── 01_explore.py    # Dataset analysis
+│   ├── 02_prepare.py    # Class balancing and image preparation
+│   └── 03_train.py      # Training + TFJS export
 │
-├── hair_length/         # Hair length classification (3 classes)
-│   ├── 01_prepare.py    # Prepare dataset from segmentation masks
-│   └── 02_train.py      # Train model + TFJS conversion ✨
+├── hair_length/
+│   ├── 01_prepare.py
+│   └── 02_train.py
 │
-└── skin_tone/           # Skin tone classification (3 classes)
-    ├── 01_explore.py    # Explore FairFace dataset
-    ├── 02_prepare.py    # Prepare dataset
-    ├── 03_prepare_3class.py  # Prepare 3-class with realistic backgrounds
-    └── 04_train.py      # Train model + TFJS conversion ✨
+└── skin_tone/
+    ├── 01_explore.py
+    ├── 02_prepare.py
+    ├── 03_prepare_3class.py
+    └── 04_train.py
 ```
 
-## 🚀 Running Notebooks
+## Running Notebooks
 
-### Install marimo
+Install dependencies:
 ```bash
 uv pip install marimo
 ```
 
-### Run a notebook
+Interactive mode (opens in browser):
 ```bash
-# Interactive mode (opens in browser)
 marimo edit python/notebooks/hair_color/03_train.py
+```
 
-# Run all cells
+Headless execution:
+```bash
 marimo run python/notebooks/hair_color/03_train.py
 ```
 
-## 📊 Models
+## Models
 
-All training notebooks include automatic TensorFlow.js conversion:
+| Model       | Classes                   | Dataset       | Accuracy |
+| ----------- | ------------------------- | ------------- | -------- |
+| Hair Color  | black, brown, blond, gray | CelebA        | ~79%     |
+| Skin Tone   | dark, medium, light       | FairFace      | ~68%     |
+| Hair Length | short, medium, long       | CelebAMask-HQ | ~82%     |
 
-| Model | Classes | Dataset | Accuracy |
-|-------|---------|---------|----------|
-| **Hair Color** | black, brown, blond, gray | CelebA | ~79% |
-| **Skin Tone** | dark, medium, light | FairFace | ~68% |
-| **Hair Length** | short, medium, long | CelebAMask-HQ | ~82% |
+All models use MobileNetV2 architecture with 128x128 input images.
 
-## ✨ TensorFlow.js Conversion
+## Output
 
-Each training notebook (`*_train.py`) includes a final cell that:
-- Converts the trained Keras model to TFJS format
-- Applies uint8 quantization for smaller file sizes
-- Copies class labels to output directory
-- Outputs to `models/tfjs/{model-name}/`
+Training notebooks automatically:
+- Save Keras model to `models/{model_name}.keras`
+- Export metadata to `models/{model_name}_classes.json` and `models/{model_name}_history.json`
+- Convert to TensorFlow.js format with uint8 quantization
+- Output TFJS files to `models/tfjs/{model_name}/`
 
-Output structure:
+TFJS output structure:
 ```
-models/
-└── tfjs/
-    ├── hair-color/
-    │   ├── model.json
-    │   ├── group1-shard1of1.bin
-    │   └── classes.json
-    ├── skin-tone-3class/
-    │   └── ...
-    └── hair-length/
-        └── ...
+models/tfjs/hair-color/
+├── model.json
+├── group1-shard1of1.bin
+└── classes.json
 ```
 
-## 🔧 Paths
+## Paths
 
 Notebooks use relative paths from their location:
-- **Data**: `../../data/` (from `python/notebooks/{topic}/`)
-- **Models**: `../../../models/` (from `python/notebooks/{topic}/`)
+- Data: `../../data/`
+- Models: `../../../models/`
 
-## 📝 Workflow
+## Workflow
 
-1. **Explore** - Understand the dataset and class distribution
-2. **Prepare** - Balance classes and organize images
-3. **Train** - Train model and convert to TFJS automatically
+Standard workflow for each model:
 
-Example workflow for hair color:
+1. Explore dataset distribution and characteristics
+2. Prepare balanced training set
+3. Train model and export to TFJS
+
+Example for hair color:
 ```bash
-# 1. Explore dataset
 marimo run python/notebooks/hair_color/01_explore.py
-
-# 2. Prepare balanced dataset
 marimo run python/notebooks/hair_color/02_prepare.py
-
-# 3. Train and convert to TFJS
 marimo run python/notebooks/hair_color/03_train.py
 ```
 
-## 🎯 Output
-
-After training, you'll have:
-- Keras model: `models/{model_name}.keras`
-- Classes JSON: `models/{model_name}_classes.json`
-- Training history: `models/{model_name}_history.json`
-- TFJS model: `models/tfjs/{model_name}/` ✨
-
-Ready for deployment in browser applications!
+After training, TFJS models are ready for use in the TypeScript predictor packages.

@@ -10,7 +10,6 @@ export default defineConfig({
     {
       name: 'copy-tfjs-models',
       buildStart() {
-        const modelsDir = join(__dirname, '..', '..', '..', 'python', 'models')
         const publicDir = join(__dirname, '..', 'public', 'models')
 
         try {
@@ -20,8 +19,14 @@ export default defineConfig({
         const models = ['hair_color', 'hair_length', 'skin_tone']
 
         for (const modelName of models) {
-          const srcDir = join(modelsDir, modelName, 'tfjs')
-          const destDir = join(publicDir, modelName.replace('_', '-'))
+          const predictorDist = join(
+            __dirname,
+            '../../../packages',
+            `${modelName.replace('_', '-')}-predictor`,
+            'dist',
+          )
+          const srcDir = join(predictorDist, 'model')
+          const destDir = join(publicDir, modelName)
 
           try {
             mkdirSync(destDir, { recursive: true })
