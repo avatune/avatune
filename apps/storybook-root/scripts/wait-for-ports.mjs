@@ -2,7 +2,7 @@
 
 import { setTimeout } from 'node:timers/promises'
 
-const PORTS = [6006, 6007, 6008, 6009]
+const PORTS = [6005, 6006, 6007, 6008, 6009]
 const TIMEOUT = 60000 // 60 seconds
 const CHECK_INTERVAL = 500 // 500ms
 

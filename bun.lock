@@ -9,7 +9,7 @@
         "typescript": "5.9.3",
       },
     },
-    "apps/predictor-example": {
+    "apps/predictor-storybook": {
       "name": "@avatune/predictor-storybook",
       "version": "0.0.0",
       "dependencies": {
@@ -17,16 +17,15 @@
         "@avatune/hair-length-predictor": "workspace:*",
         "@avatune/skin-tone-predictor": "workspace:*",
         "@tensorflow/tfjs": "^4.22.0",
-        "@tensorflow/tfjs-backend-wasm": "^4.22.0",
-        "@tensorflow/tfjs-backend-webgl": "^4.22.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
       },
       "devDependencies": {
-        "@rsbuild/core": "^1.5.14",
-        "@rsbuild/plugin-react": "^1.4.1",
+        "@avatune/typescript-config": "workspace:*",
+        "@storybook/react-vite": "^10.0.3",
         "@types/react": "^19.0.8",
         "@types/react-dom": "^19.0.4",
+        "storybook": "^10.0.3",
         "typescript": "^5.9.3",
       },
     },
@@ -52,12 +51,6 @@
     "apps/storybook-root": {
       "name": "@avatune/storybook-root",
       "version": "0.0.0",
-      "dependencies": {
-        "@avatune/react-storybook": "workspace:*",
-        "@avatune/svelte-storybook": "workspace:*",
-        "@avatune/vanilla-storybook": "workspace:*",
-        "@avatune/vue-storybook": "workspace:*",
-      },
       "devDependencies": {
         "@avatune/typescript-config": "workspace:*",
         "@storybook/html-vite": "^10.0.4",
@@ -466,7 +459,7 @@
 
     "@avatune/hair-length-predictor": ["@avatune/hair-length-predictor@workspace:packages/hair-length-predictor"],
 
-    "@avatune/predictor-storybook": ["@avatune/predictor-storybook@workspace:apps/predictor-example"],
+    "@avatune/predictor-storybook": ["@avatune/predictor-storybook@workspace:apps/predictor-storybook"],
 
     "@avatune/react": ["@avatune/react@workspace:packages/react"],
 

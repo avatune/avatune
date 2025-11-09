@@ -20,6 +20,11 @@ const config: StorybookConfig = {
     options: {},
   },
   refs: {
+    predictor: {
+      title: 'Photo Analysis',
+      url: 'http://localhost:6005',
+      expanded: true,
+    },
     react: {
       title: 'React',
       url: 'http://localhost:6006',

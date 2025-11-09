@@ -7,7 +7,7 @@
     "lint": "turbo run lint",
     "format": "biome format --write",
     "check-types": "turbo run check-types",
-    "storybook": "turbo run storybook --filter=@avatune/react-storybook --filter=@avatune/vue-storybook --filter=@avatune/svelte-storybook --filter=@avatune/vanilla-storybook --filter=@avatune/storybook-root"
+    "storybook": "turbo run storybook --filter=@avatune/predictor-storybook --filter=@avatune/react-storybook --filter=@avatune/vue-storybook --filter=@avatune/svelte-storybook --filter=@avatune/vanilla-storybook --filter=@avatune/storybook-root"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.3",
