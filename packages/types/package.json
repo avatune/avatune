@@ -14,7 +14,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",

@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
 Avatune is a monorepo combining ML-powered avatar analysis with browser-based avatar rendering. It consists of:
@@ -9,7 +5,6 @@ Avatune is a monorepo combining ML-powered avatar analysis with browser-based av
 1. **Python ML Training** - TensorFlow/Keras models trained on CelebA and FairFace datasets, converted to TensorFlow.js
 2. **TypeScript Packages** - Browser-compatible ML predictor packages using TensorFlow.js
 3. **Avatar Rendering** - Avatar generation from analysis results
-4. **Demo Apps** - React, Vue, Svelte example apps showcasing the full pipeline
 
 The workflow: Python trains models → exports to TFJS → TypeScript packages load models → browser inference.
 
@@ -19,22 +14,25 @@ The workflow: Python trains models → exports to TFJS → TypeScript packages l
 
 ```
 avatune/
-├── apps/               # Example applications
-│   ├── *-example/     # React demo apps (Rsbuild + React 19)
-│   └── ...
-├── packages/          # Reusable packages
-│   ├── *-predictor/   # TFJS browser inference packages
-│   ├── modern-cartoon/ # SVG avatar renderer
-│   ├── assets/        # Shared SVG assets
-│   ├── eslint-config/
-│   └── typescript-config/
-└── python/            # ML training pipeline
-    ├── notebooks/     # Marimo notebooks for training
+├── apps/                             # Example applications
+│   ├── *-storybook/                  # Storybook demo apps
+│   └── storybook-root                # Storybook root to ref all the *-storybook demo apps
+├── packages/                         # Reusable packages
+│   ├── *-predictor/                  # TFJS browser inference packages
+│   ├── *-assets/                     # SVG assets bundled for all supported platforms (React, Vue, Svelte, Vanilla)
+│   ├── *-theme/                      # Themes to be used by the platform renderers to visualize an avatar
+│   ├── (svelte|react|vue|vanilla)/   # Avatar platform renderers
+│   │── types                         # Types shared across other packages
+│   │── utils                         # Utils shared across other packages
+│   │── rsbuild-plugin-*              # Plugins shared across other packages built with Rsbuild
+│   └── typescript-config/            # Shared TS configs to extend in the other monorepo packages
+└── python/                           # ML training pipeline
+    ├── notebooks/                    # Marimo notebooks for training
     │   ├── hair_color/
     │   ├── hair_length/
     │   └── skin_tone/
-    ├── data/          # Training datasets (gitignored)
-    └── models/        # Trained Keras models + TFJS exports
+    ├── data/                         # Training datasets (gitignored)
+    └── models/                       # Trained Keras models + TFJS exports
 ```
 
 ### Key Technologies
@@ -44,7 +42,7 @@ avatune/
 - **Biome** - Linting and formatting (replaces ESLint/Prettier)
 - **Rslib** - Library bundler for packages (dual ESM/CJS)
 - **Rsbuild** - App bundler (Rspack-based, faster than Webpack)
-- **React 19** - UI framework for demo app
+- **Storybook** - Library to show for demos
 - **TensorFlow.js** - Browser-based ML inference
 - **uv** - Python package manager (fast pip alternative)
 - **Marimo** - Interactive Python notebooks
@@ -61,29 +59,19 @@ bun install
 bun run build
 
 # Dev mode (all workspaces with watch)
-bun run dev
+bun dev
+
+# Storybook (run all storybooks and the root one waiting for the others)
+bun storybook
 
 # Lint all workspaces
-bun run lint
+bun lint
 
 # Format all code
-bun run format
+bun format
 
 # Type checking
 bun run check-types
-```
-
-### Workspace-Specific
-
-```bash
-# Build single package (use actual package name from package.json)
-turbo build --filter=@avatune/<package-name>
-
-# Dev mode for specific app (use actual app name)
-turbo dev --filter=<app-name>
-
-# Run specific app
-cd apps/<app-name> && bun run dev
 ```
 
 ### Python ML Training
@@ -101,31 +89,7 @@ marimo edit notebooks/hair_color/03_train.py
 marimo run notebooks/hair_color/03_train.py
 ```
 
-Training notebooks automatically convert models to TFJS format at `models/tfjs/{model-name}/`.
-
-## Package Build System
-
-### Predictor Packages
-
-All ML predictor packages (`packages/*-predictor/`) use **rslib.config.ts** with:
-- Dual format output: ESM + CJS
-- Type definitions bundled separately (`dts: { bundle: false }`)
-- TensorFlow.js marked as external (peer dependency)
-- Node 18+ target syntax
-- Build output: `dist/index.js`, `dist/index.cjs`, `dist/index.d.ts`
-
-### Other Packages
-
-- **assets**: ESM-only, SVG handling (inline or raw), path aliases
-- **theme**: ESM-only, depends on assets package
-- All use rslib for consistent library bundling
-
-### Example Apps
-
-- Use **rsbuild.config.ts** with React plugin
-- Hot reload enabled in dev mode
-- Automatic model copying from `python/models/*/tfjs/` to `public/models/`
-- Models available at `/models/<model-name>/model.json` in browser
+Training notebooks automatically convert models to TFJS format at `models/tfjs/{model_name}/`.
 
 ## ML Models Pipeline
 
@@ -162,12 +126,6 @@ models/
 ### TFJS Integration
 
 Predictor packages export classes with `loadModel()` and `predict()` methods:
-```typescript
-// Example usage
-const predictor = new HairColorPrediction()
-await predictor.loadModel()
-const result = await predictor.predict(imageTensor)
-```
 
 - Models are externalized in rslib builds (not bundled)
 - TensorFlow.js is a peer dependency
@@ -195,14 +153,6 @@ Format: `bun run format`
 No test framework currently configured. Tests should be added to individual packages as needed.
 
 ## Key Implementation Details
-
-### Turborepo Tasks
-
-Defined in `turbo.json`:
-- `build` - Depends on upstream builds, caches `.next/**` and `dist/**`
-- `dev` - No cache, persistent (long-running servers)
-- `lint` - Depends on upstream linting
-- `check-types` - Depends on upstream type checking
 
 ### Workspace Protocol
 

@@ -31,7 +31,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@avatune/flat-design-assets": "workspace:*",

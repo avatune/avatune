@@ -17,6 +17,7 @@
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
+    "check-types": "tsc --noEmit",
     "watch": "rslib build --watch",
     "dev": "rslib build --watch"
   },

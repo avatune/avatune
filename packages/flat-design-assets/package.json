@@ -30,7 +30,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
