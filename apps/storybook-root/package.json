@@ -1,11 +1,11 @@
 {
-  "name": "@avatune/storybook-entry",
+  "name": "@avatune/storybook-root",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "check": "biome check --write",
-    "storybook": "storybook dev -p 6010",
+    "storybook": "node scripts/wait-for-ports.mjs && storybook dev -p 6010",
     "build-storybook": "storybook build"
   },
   "devDependencies": {

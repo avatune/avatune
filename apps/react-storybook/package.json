@@ -1,11 +1,11 @@
 {
-  "name": "@avatune/example",
+  "name": "@avatune/react-storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "check": "biome check --write",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
   "dependencies": {

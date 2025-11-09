@@ -1,23 +1,25 @@
 {
-  "name": "@avatune/vue-example",
+  "name": "@avatune/vanilla-storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "check": "biome check --write",
-    "storybook": "storybook dev -p 6007",
+    "storybook": "storybook dev -p 6009 --no-open",
     "build-storybook": "storybook build"
   },
   "dependencies": {
     "@avatune/flat-design-theme": "workspace:*",
     "@avatune/sketch-black-white-theme": "workspace:*",
+    "@avatune/typescript-config": "workspace:*",
     "@avatune/types": "workspace:*",
-    "@avatune/vue": "workspace:*",
-    "vue": "^3.5.22"
+    "@avatune/utils": "workspace:*",
+    "@avatune/vanilla": "workspace:*"
   },
   "devDependencies": {
-    "@storybook/vue3-vite": "^10.0.3",
-    "storybook": "^10.0.3",
+    "@storybook/addon-docs": "^10.0.4",
+    "@storybook/html-vite": "^10.0.4",
+    "storybook": "^10.0.4",
     "typescript": "^5.9.3"
   }
 }
