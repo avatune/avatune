@@ -15,10 +15,25 @@ export default {
     borderRadius: 0,
   },
   body: {
+    shirt: {
+      position: fromHead(-percentage('0%'), percentage('40.7%')),
+      layer: 10,
+      color: '#FF7A93',
+    },
     sweater: {
-      position: fromHead(-percentage('3.5%'), percentage('42%')),
+      position: fromHead(-percentage('0%'), percentage('40.7%')),
       layer: 10,
       color: '#720026',
+    },
+    tshort: {
+      position: fromHead(percentage('4.7%'), percentage('40.7%')),
+      layer: 10,
+      color: '#98683D',
+    },
+    turtleneck: {
+      position: fromHead(-percentage('0%'), percentage('40%')),
+      layer: 10,
+      color: '#F4D150',
     },
   },
   ears: {
@@ -29,6 +44,16 @@ export default {
     },
   },
   eyebrows: {
+    angry: {
+      position: fromHead(percentage('6%'), percentage('17%')),
+      layer: 30,
+      color: '#7F3D2B',
+    },
+    small: {
+      position: fromHead(percentage('9%'), percentage('17%')),
+      layer: 30,
+      color: '#7F3D2B',
+    },
     standard: {
       position: fromHead(percentage('7%'), percentage('17%')),
       layer: 30,
@@ -37,7 +62,7 @@ export default {
   },
   eyes: {
     boring: {
-      position: fromHead(percentage('7.5%'), percentage('21%')),
+      position: fromHead(percentage('8.5%'), percentage('21%')),
       layer: 20,
       color: '#FCBE93',
     },
@@ -46,8 +71,33 @@ export default {
       layer: 20,
       color: '#000000',
     },
+    openCircle: {
+      position: fromHead(percentage('8.5%'), percentage('21%')),
+      layer: 20,
+      color: '#FFFFFF',
+    },
+    openRounded: {
+      position: fromHead(percentage('10%'), percentage('21%')),
+      layer: 20,
+      color: '#000000',
+    },
   },
   hair: {
+    bobRounded: {
+      position: fromHead(-percentage('0%'), percentage('0%')),
+      layer: 5,
+      color: '#000000',
+    },
+    bobStraight: {
+      position: fromHead(-percentage('0%'), -percentage('0%')),
+      layer: 5,
+      color: '#4F8558',
+    },
+    cupCurly: {
+      position: fromHead(-percentage('8.1%'), -percentage('%')),
+      layer: 5,
+      color: '#302C2C',
+    },
     short: {
       position: fromHead(-percentage('1%'), -percentage('1%')),
       layer: 5,
@@ -72,6 +122,26 @@ export default {
     },
   },
   mouth: {
+    bigSmile: {
+      position: fromHead(percentage('10%'), percentage('32%')),
+      layer: 25,
+      color: '#F06E82',
+    },
+    flat: {
+      position: fromHead(percentage('10%'), percentage('34%')),
+      layer: 25,
+      color: '#F06E82',
+    },
+    frown: {
+      position: fromHead(percentage('11%'), percentage('33%')),
+      layer: 25,
+      color: '#F06E82',
+    },
+    halfOpen: {
+      position: fromHead(percentage('9%'), percentage('33%')),
+      layer: 25,
+      color: '#FFFFFF',
+    },
     laugh: {
       position: fromHead(percentage('9.8%'), percentage('33%')),
       layer: 25,
@@ -83,19 +153,29 @@ export default {
       color: '#000000',
     },
     nervous: {
-      position: fromHead(percentage('8.5%'), percentage('32%')),
+      position: fromHead(percentage('9.5%'), percentage('32%')),
       layer: 25,
       color: '#000000',
     },
   },
   noses: {
+    big: {
+      position: fromHead(percentage('15.5%'), percentage('25%')),
+      layer: 15,
+      color: '#FF9C8D',
+    },
     curve: {
-      position: fromHead(percentage('15%'), percentage('28%')),
+      position: fromHead(percentage('16.5%'), percentage('28%')),
       layer: 15,
       color: '#FF9C8D',
     },
     dots: {
-      position: fromHead(percentage('15%'), percentage('28%')),
+      position: fromHead(percentage('16%'), percentage('28%')),
+      layer: 15,
+      color: '#FF9C8D',
+    },
+    halfOval: {
+      position: fromHead(percentage('16%'), percentage('28%')),
       layer: 15,
       color: '#FF9C8D',
     },

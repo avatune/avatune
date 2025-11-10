@@ -1,14 +1,55 @@
-# Rslib project
+# @avatune/flat-design-assets
 
-## Setup
+Flat design style SVG assets for avatar generation.
 
-Install the dependencies:
+## Description
+
+This package provides SVG assets in flat design style for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+## Installation
 
 ```bash
-pnpm install
+npm install @avatune/flat-design-assets
 ```
 
-## Get started
+## Usage
+
+### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/flat-design-assets';
+```
+
+### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/flat-design-assets/react';
+```
+
+### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/flat-design-assets/svelte';
+```
+
+### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/flat-design-assets/vue';
+```
+
+## Available Assets
+
+- Body: shirt, sweater, tshort, turtleneck
+- Ears: standard
+- Eyebrows: angry, small, standard
+- Eyes: boring, dots, openCircle, openRounded
+- Hair: bobRounded, bobStraight, cupCurly, long, medium, short
+- Head: oval
+- Mouth: bigSmile, flat, frown, halfOpen, laugh, nervous, smile
+- Noses: big, curve, dots, halfOval
+
+## Development
 
 Build the library:
 
@@ -16,7 +57,7 @@ Build the library:
 pnpm build
 ```
 
-Build the library in watch mode:
+Build in watch mode:
 
 ```bash
 pnpm dev
