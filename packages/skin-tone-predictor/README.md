@@ -1,6 +1,6 @@
 # @avatune/skin-tone-predictor
 
-Browser-based skin tone prediction using TensorFlow.js. Classifies skin tone into 4 categories: dark, medium, light, very_light.
+Browser-based skin tone prediction using TensorFlow.js. Classifies skin tone into 4 categories: dark, medium, light.
 
 Tiny model (~110KB) with blazingly fast loading and inference in the browser.
 
@@ -76,7 +76,7 @@ console.log(result)
 // {
 //   tone: 'medium',
 //   confidence: 0.84,
-//   probabilities: { dark: 0.08, medium: 0.84, light: 0.06, very_light: 0.02 }
+//   probabilities: { dark: 0.08, medium: 0.84, light: 0.06 }
 // }
 ```
 
@@ -107,7 +107,7 @@ Predicts skin tone from an image tensor.
 **Returns:**
 ```ts
 {
-  tone: string         // Predicted class: 'dark' | 'medium' | 'light' | 'very_light'
+  tone: string         // Predicted class: 'dark' | 'medium' | 'light'
   confidence: number   // Confidence score [0, 1]
   probabilities: Record<string, number>  // Scores for all classes
 }
@@ -117,7 +117,7 @@ Predicts skin tone from an image tensor.
 
 - Architecture: MobileNetV2-based CNN
 - Input: 128x128 RGB images
-- Classes: 4 (dark, medium, light, very_light)
+- Classes: 3 (dark, medium, light)
 - Training: FairFace dataset
 - Accuracy: ~68%
 - Model size: ~110KB (uint8 quantized)

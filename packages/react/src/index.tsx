@@ -4,7 +4,7 @@ import type {
   ReactTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
+import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> =
@@ -24,7 +24,7 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
  */
 export function Avatar<T extends ReactTheme = ReactTheme>({
   theme,
-  size = theme.metadata.size,
+  size = theme.style.size,
   className,
   style = {},
   ...restConfig
@@ -66,7 +66,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
     [result.selected],
   )
 
-  const scaleFactor = size / theme.metadata.size
+  const scaleFactor = size / theme.style.size
 
   return (
     <svg
@@ -78,7 +78,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
       viewBox={`0 0 ${size} ${size}`}
       className={className}
       style={{
-        ...(metadataToStyle(theme.metadata) as CSSProperties),
+        ...(themeStyleToStyleProp(theme.style) as CSSProperties),
         ...style,
       }}
     >

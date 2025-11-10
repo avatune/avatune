@@ -5,7 +5,7 @@ import type {
   SvelteTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
+import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
 
 type Props = TypedAvatarConfig<T> & {
   theme: T
@@ -16,7 +16,7 @@ type Props = TypedAvatarConfig<T> & {
 
 const {
   theme,
-  size = theme.metadata.size,
+  size = theme.style.size,
   class: className,
   style,
   ...config
@@ -30,10 +30,12 @@ const sortedItems = $derived(
   ),
 )
 
-const scaleFactor = $derived(size / theme.metadata.size)
+const scaleFactor = $derived(size / theme.style.size)
 
 const finalStyle = $derived(
-  [metadataToStyle(theme.metadata, 'string'), style].filter(Boolean).join('; '),
+  [themeStyleToStyleProp(theme.style, 'string'), style]
+    .filter(Boolean)
+    .join('; '),
 )
 </script>
 

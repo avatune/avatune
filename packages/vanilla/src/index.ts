@@ -13,12 +13,13 @@ interface AvatarArgs<T extends VanillaTheme = VanillaTheme>
   size?: number
   config?: TypedAvatarConfig<T>
 }
+
 /**
  * Generate avatar SVG code from theme and config
  */
 export function avatar<T extends VanillaTheme = VanillaTheme>({
   theme,
-  size = theme.metadata.size,
+  size = theme.style.size,
   ...config
 }: AvatarArgs<T>): string {
   const avatarConfig = config as AvatarConfig
@@ -36,9 +37,8 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
     )[category]
 
     const identifier = typeof value === 'string' ? value : undefined
-    const tags = Array.isArray(value) ? value : undefined
 
-    const result = selectItem(theme[category], identifier, tags, random)
+    const result = selectItem(theme[category], identifier, random)
 
     if (result) {
       selected[category] = result.item
@@ -46,13 +46,11 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
     }
   }
 
-  // Sort items by layer
   const sortedItems = Object.entries(selected).sort(
     ([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0),
   )
 
-  // Calculate responsive scale factor (base size is 400)
-  const scaleFactor = size / theme.metadata.size
+  const scaleFactor = size / theme.style.size
 
   const svgParts: string[] = []
 
@@ -74,15 +72,14 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
       const transform = `transform="translate(${transformX}, ${transformY}) scale(${scaleFactor})"`
       const attributes = [transform, style].filter(Boolean).join(' ')
 
-      // Wrap each SVG in a group with transform for positioning and scaling
       const transformed = `<g ${attributes}>${item.code}</g>`
       svgParts.push(transformed)
     }
   }
 
-  const backgroundColor = theme.metadata.backgroundColor
-  const borderColor = theme.metadata.borderColor
-  const borderWidth = theme.metadata.borderWidth
+  const backgroundColor = theme.style.backgroundColor
+  const borderColor = theme.style.borderColor
+  const borderWidth = theme.style.borderWidth
   const finalStyle = [
     backgroundColor ? `background-color: ${backgroundColor}` : '',
     borderWidth && borderColor

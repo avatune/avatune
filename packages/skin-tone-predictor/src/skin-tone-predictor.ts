@@ -87,7 +87,7 @@ export class SkinTonePredictor {
     } catch (error) {
       // Fallback to hardcoded classes
       console.warn('Could not load classes.json, using fallback:', error)
-      this.classes = ['dark', 'medium', 'light', 'very_light']
+      this.classes = ['dark', 'medium', 'light']
     }
   }
 

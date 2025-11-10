@@ -33,15 +33,15 @@ npm install @avatune/svelte
   class?: string             // CSS class for SVG container
   style?: string             // Inline styles for SVG container
 
-  // Part selection (string identifier or tags array)
-  body?: string | string[]
-  ears?: string | string[]
-  eyebrows?: string | string[]
-  eyes?: string | string[]
-  hair?: string | string[]
-  head?: string | string[]
-  mouth?: string | string[]
-  noses?: string | string[]
+  // Part selection (string identifier)
+  body?: string
+  ears?: string
+  eyebrows?: string
+  eyes?: string
+  hair?: string
+  head?: string
+  mouth?: string
+  noses?: string
 
   // Part colors (CSS color values)
   bodyColor?: string
@@ -70,14 +70,5 @@ Specific parts with custom colors:
   hairColor="#ff6b6b"
   eyes="happy"
   eyesColor="#4ecdc4"
-/>
-```
-
-Parts by tags:
-```svelte
-<Avatar
-  theme={flatDesignTheme}
-  hair={['long', 'curly']}
-  eyes={['happy']}
 />
 ```

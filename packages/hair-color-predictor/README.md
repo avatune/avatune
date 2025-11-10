@@ -120,7 +120,6 @@ Predicts hair color from an image tensor.
 - Classes: 4 (black, brown, blond, gray)
 - Training: CelebA dataset
 - Accuracy: ~79%
-- Model size: ~110KB (uint8 quantized)
 - Format: TensorFlow.js with uint8 quantization
 
 ## License

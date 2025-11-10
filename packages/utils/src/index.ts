@@ -45,26 +45,18 @@ export function seededRandom(seed: string | number): () => number {
 }
 
 /**
- * Select an item from a collection based on identifier or tags
+ * Select an item from a collection based on identifier
  */
 export function selectItem<T extends AvatarItem>(
   collection: AvatarItemCollection<T>,
   identifier?: string,
-  tags?: string[],
   random?: () => number,
 ): { key: string; item: T } | null {
   if (identifier && collection[identifier]) {
     return { key: identifier, item: collection[identifier] }
   }
 
-  // Filter by tags if specified
-  let candidates = Object.entries(collection)
-
-  if (tags && tags.length > 0) {
-    candidates = candidates.filter(([, item]) =>
-      tags.every((tag) => item.tags.includes(tag)),
-    )
-  }
+  const candidates = Object.entries(collection)
 
   if (candidates.length === 0) {
     return null
@@ -100,9 +92,8 @@ export function selectItemFromConfig<T extends AvatarItem>(
     const value = config[category]
 
     const identifier = typeof value === 'string' ? value : undefined
-    const tags = Array.isArray(value) ? value : undefined
 
-    const result = selectItem(theme[category], identifier, tags, random)
+    const result = selectItem(theme[category], identifier, random)
 
     if (result) {
       selected[category] = result.item
@@ -129,14 +120,18 @@ export function offsetFrom(
   }
 }
 
-export function metadataToStyle(
-  metadata: Theme['metadata'],
+export function percentage(value: string) {
+  return Number.parseFloat(value) / 100
+}
+
+export function themeStyleToStyleProp(
+  style: Theme['style'],
   output: 'object' | 'string' = 'object',
 ) {
-  const backgroundColor = metadata.backgroundColor
-  const borderColor = metadata.borderColor
-  const borderWidth = metadata.borderWidth
-  const borderRadius = metadata.borderRadius
+  const backgroundColor = style.backgroundColor
+  const borderColor = style.borderColor
+  const borderWidth = style.borderWidth
+  const borderRadius = style.borderRadius
 
   if (output === 'object') {
     return {

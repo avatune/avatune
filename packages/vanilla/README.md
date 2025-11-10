@@ -36,15 +36,15 @@ function avatar(args: AvatarArgs): string
   seed?: string              // Random seed for avatar generation
   size?: number              // Avatar size in pixels (default: theme size)
 
-  // Part selection (string identifier or tags array)
-  body?: string | string[]
-  ears?: string | string[]
-  eyebrows?: string | string[]
-  eyes?: string | string[]
-  hair?: string | string[]
-  head?: string | string[]
-  mouth?: string | string[]
-  noses?: string | string[]
+  // Part selection (string identifier)
+  body?: string
+  ears?: string
+  eyebrows?: string
+  eyes?: string
+  hair?: string
+  head?: string
+  mouth?: string
+  noses?: string
 
   // Part colors (CSS color values)
   bodyColor?: string
@@ -78,14 +78,5 @@ const svg = avatar({
   hairColor: '#ff6b6b',
   eyes: 'happy',
   eyesColor: '#4ecdc4'
-})
-```
-
-Parts by tags:
-```ts
-const svg = avatar({
-  theme: flatDesignTheme,
-  hair: ['long', 'curly'],
-  eyes: ['happy']
 })
 ```

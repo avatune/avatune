@@ -4,7 +4,7 @@ import type {
   TypedAvatarConfig,
   VueTheme,
 } from '@avatune/types'
-import { metadataToStyle, selectItemFromConfig } from '@avatune/utils'
+import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -138,14 +138,14 @@ export const Avatar = defineComponent({
       ),
     )
 
-    const actualSize = computed(() => props.size ?? props.theme.metadata.size)
+    const actualSize = computed(() => props.size ?? props.theme.style.size)
 
     const scaleFactor = computed(
-      () => actualSize.value / props.theme.metadata.size,
+      () => actualSize.value / props.theme.style.size,
     )
 
     const finalStyle = computed(() => ({
-      ...(metadataToStyle(props.theme.metadata) as CSSProperties),
+      ...(themeStyleToStyleProp(props.theme.style) as CSSProperties),
       ...(props.style || {}),
     }))
 

@@ -39,9 +39,9 @@ function PhotoAnalysis() {
 
       try {
         await tf.ready()
-        const hairColor = new HairColorPredictor('/models/hair-color')
-        const hairLength = new HairLengthPredictor('/models/hair-length')
-        const skinTone = new SkinTonePredictor('/models/skin-tone')
+        const hairColor = new HairColorPredictor('/models/hair_color')
+        const hairLength = new HairLengthPredictor('/models/hair_length')
+        const skinTone = new SkinTonePredictor('/models/skin_tone')
 
         await Promise.all([
           hairColor.loadModel(),
