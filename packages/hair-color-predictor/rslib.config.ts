@@ -1,5 +1,5 @@
-import { defineConfig } from '@rslib/core'
 import { pluginCopyTfjsModel } from '@avatune/rsbuild-plugin-copy-tfjs-model'
+import { defineConfig } from '@rslib/core'
 
 export default defineConfig({
   source: {

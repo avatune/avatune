@@ -1,5 +1,4 @@
 import flatDesignTheme from '@avatune/flat-design-theme/vanilla'
-import sketchTheme from '@avatune/sketch-black-white-theme/vanilla'
 import type { TypedAvatarConfig } from '@avatune/types'
 import { avatar } from '@avatune/vanilla'
 import type { Meta, StoryObj } from '@storybook/html-vite'
@@ -90,56 +89,7 @@ export const FlatDesign: StoryObj<
   },
 }
 
-export const Sketch: StoryObj<
-  TypedAvatarConfig<typeof sketchTheme> & { size?: number }
-> = {
-  argTypes: {
-    ears: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.ears),
-    },
-    eyebrows: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.eyebrows),
-    },
-    eyes: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.eyes),
-    },
-    hair: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.hair),
-    },
-    head: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.head),
-    },
-    mouth: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.mouth),
-    },
-    noses: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.noses),
-    },
-    size: {
-      control: { type: 'range', min: 100, max: 800, step: 50 },
-    },
-  },
-  render: (args) => avatar({ theme: sketchTheme, ...args }),
-  args: {
-    ears: 'round',
-    eyebrows: 'bold',
-    eyes: 'standard',
-    hair: 'star',
-    head: 'oval',
-    mouth: 'smirk',
-    noses: 'sharp',
-    size: 200,
-  },
-}
-
-type ThemeKey = 'flat' | 'sketch'
+type ThemeKey = 'flat'
 
 export const SeededThemeSwitch: StoryObj<{
   theme: ThemeKey
@@ -149,7 +99,7 @@ export const SeededThemeSwitch: StoryObj<{
   argTypes: {
     theme: {
       control: { type: 'select' },
-      options: ['flat', 'sketch'],
+      options: ['flat'],
     },
     seed: {
       control: { type: 'text' },
@@ -158,9 +108,8 @@ export const SeededThemeSwitch: StoryObj<{
       control: { type: 'range', min: 100, max: 800, step: 50 },
     },
   },
-  render: ({ theme, seed, size }) => {
-    const selectedTheme = theme === 'sketch' ? sketchTheme : flatDesignTheme
-    return avatar({ theme: selectedTheme, seed, size })
+  render: ({ seed, size }) => {
+    return avatar({ theme: flatDesignTheme, seed, size })
   },
   args: {
     theme: 'flat',

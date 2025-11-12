@@ -9,9 +9,12 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@avatune/flat-design-theme": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
+    "@avatune/react": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",
+    "@avatune/types": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

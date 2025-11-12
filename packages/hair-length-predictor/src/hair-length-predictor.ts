@@ -1,9 +1,10 @@
+import type { HairLengthPredictorClass } from '@avatune/types'
 import * as tf from '@tensorflow/tfjs'
 
 export type HairLengthResult = {
-  length: string
+  length: HairLengthPredictorClass
   confidence: number
-  probabilities: Record<string, number>
+  probabilities: Record<HairLengthPredictorClass, number>
 }
 
 /**
@@ -117,13 +118,17 @@ export class HairLengthPredictor {
       const maxProbability = Math.max(...Array.from(probabilities))
       const maxIndex = Array.from(probabilities).indexOf(maxProbability)
 
-      const allProbabilities: Record<string, number> = {}
+      const allProbabilities: Record<HairLengthPredictorClass, number> = {
+        short: 0,
+        medium: 0,
+        long: 0,
+      }
       this.classes.forEach((length, i) => {
-        allProbabilities[length] = probabilities[i]
+        allProbabilities[length as HairLengthPredictorClass] = probabilities[i]
       })
 
       return {
-        length: this.classes[maxIndex],
+        length: this.classes[maxIndex] as HairLengthPredictorClass,
         confidence: maxProbability,
         probabilities: allProbabilities,
       }

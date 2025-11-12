@@ -88,11 +88,70 @@ export type AvatarItemCollection<
   Identifier extends string = string,
 > = Record<Identifier, T>
 
+/**
+ * Predictor result types
+ */
 export type HairLengthPredictorClass = 'short' | 'medium' | 'long'
 
 export type HairColorPredictorClass = 'black' | 'brown' | 'blond' | 'gray'
 
 export type SkinTonePredictorClass = 'dark' | 'medium' | 'light'
+
+/**
+ * Consolidated predictor results type
+ */
+export interface Predictions {
+  hairLength?: HairLengthPredictorClass
+  hairColor?: HairColorPredictorClass
+  skinTone?: SkinTonePredictorClass
+}
+
+/**
+ * Mapping from predictor result to asset identifiers
+ * Each predictor class maps to an array of possible identifiers
+ */
+export type PredictorMapping<Identifiers extends string = string> = {
+  [key: string]: Identifiers[]
+}
+
+/**
+ * Mapping from predictor result to colors
+ * Each predictor class maps to an array of possible colors
+ */
+export type ColorMapping = {
+  [key: string]: string[]
+}
+
+/**
+ * Color options for avatar parts
+ * Can be a single color or an array of colors to choose from
+ */
+export type ColorOptions = string | string[]
+
+/**
+ * Complete predictor mappings for a theme
+ * Maps predictor results to specific asset identifiers/colors
+ */
+export interface ThemePredictorMappings {
+  hair?: PredictorMapping
+  hairColor?: ColorMapping
+  skinTone?: ColorMapping
+}
+
+/**
+ * Color palettes for each avatar part
+ * Defines available colors that can be randomly selected when using seed
+ */
+export interface ThemeColorPalettes {
+  hair: ColorOptions
+  head: ColorOptions
+  body: ColorOptions
+  ears: ColorOptions
+  eyes: ColorOptions
+  eyebrows: ColorOptions
+  mouth: ColorOptions
+  noses: ColorOptions
+}
 
 export type ThemeStyle = {
   size: number
@@ -101,6 +160,15 @@ export type ThemeStyle = {
   borderWidth?: number | string
   borderRadius?: number | string
 }
+
+/**
+ * Connected colors configuration
+ * Defines which avatar parts should share the same color
+ * Key is the dependent part, value is the source part to copy color from
+ */
+export type ConnectedColors = Partial<
+  Record<AvatarPartCategory, AvatarPartCategory>
+>
 
 /**
  * Complete theme defining all avatar parts
@@ -115,6 +183,9 @@ export interface Theme<T extends AvatarItem = AvatarItem> {
   head: AvatarItemCollection<T>
   mouth: AvatarItemCollection<T>
   noses: AvatarItemCollection<T>
+  colorPalettes: ThemeColorPalettes
+  predictorMappings?: ThemePredictorMappings
+  connectedColors?: ConnectedColors
 }
 
 /**
@@ -140,7 +211,10 @@ export type SvelteTheme = Theme<SvelteAvatarItem>
 /**
  * Avatar part categories
  */
-export type AvatarPartCategory = Exclude<keyof Theme, 'style' | 'predictions'>
+export type AvatarPartCategory = Exclude<
+  keyof Theme,
+  'style' | 'predictorMappings' | 'colorPalettes' | 'connectedColors'
+>
 
 /**
  * Extract all identifiers from a theme category

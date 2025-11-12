@@ -3,22 +3,10 @@ import type {
   AvatarItem,
   AvatarItemCollection,
   AvatarPartCategory,
+  ColorOptions,
+  Predictions,
   Theme,
 } from '@avatune/types'
-
-/**
- * Avatar part categories in rendering order
- */
-export const AVATAR_CATEGORIES = [
-  'body',
-  'ears',
-  'eyebrows',
-  'eyes',
-  'hair',
-  'head',
-  'mouth',
-  'noses',
-] satisfies AvatarPartCategory[]
 
 /**
  * Simple string hash function
@@ -42,6 +30,15 @@ export function seededRandom(seed: string | number): () => number {
     value = (value * 9301 + 49297) % 233280
     return value / 233280
   }
+}
+
+/**
+ * Pick random element from array using seeded random
+ */
+function pickRandom<T>(items: T[], random: () => number): T | undefined {
+  if (items.length === 0) return undefined
+  const index = Math.floor(random() * items.length)
+  return items[index]
 }
 
 /**
@@ -75,33 +72,16 @@ export function selectItem<T extends AvatarItem>(
   return { key, item }
 }
 
-export function selectItemFromConfig<T extends AvatarItem>(
-  config: AvatarConfig,
-  theme: Theme<T>,
-): {
-  selected: Partial<Record<AvatarPartCategory, T>>
-  identifiers: Partial<Record<AvatarPartCategory, string>>
-} & { seed?: string | number } {
-  const random =
-    typeof config.seed !== 'undefined' ? seededRandom(config.seed) : Math.random
-
-  const selected: Partial<Record<AvatarPartCategory, T>> = {}
-  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
-
-  for (const category of AVATAR_CATEGORIES) {
-    const value = config[category]
-
-    const identifier = typeof value === 'string' ? value : undefined
-
-    const result = selectItem(theme[category], identifier, random)
-
-    if (result) {
-      selected[category] = result.item
-      identifiers[category] = result.key
-    }
-  }
-
-  return { selected, identifiers }
+/**
+ * Select color from options (string or array)
+ */
+export function selectColor(
+  options: ColorOptions | undefined,
+  random: () => number = Math.random,
+): string | undefined {
+  if (!options) return undefined
+  if (typeof options === 'string') return options
+  return pickRandom(options, random)
 }
 
 /**
@@ -153,4 +133,188 @@ export function themeStyleToStyleProp(
   ]
     .filter(Boolean)
     .join(' ')
+}
+
+/**
+ * Generic priority-based selector
+ * Tries strategies in order until one returns a non-undefined value
+ */
+type SelectionStrategy<T> = () => T | undefined
+
+function selectWithPriority<T>(
+  ...strategies: SelectionStrategy<T>[]
+): T | undefined {
+  for (const strategy of strategies) {
+    const result = strategy()
+    if (result !== undefined) return result
+  }
+  return undefined
+}
+
+/**
+ * Get predictor result identifiers for a category
+ */
+function getPredictorIdentifiers<T extends AvatarItem>(
+  category: AvatarPartCategory,
+  predictions: Predictions,
+  theme: Theme<T>,
+): string[] | undefined {
+  if (category !== 'hair' || !theme.predictorMappings?.hair) {
+    return undefined
+  }
+
+  const { hairLength } = predictions
+  if (!hairLength) return undefined
+
+  return theme.predictorMappings.hair[hairLength]
+}
+
+/**
+ * Get predictor result colors for a category
+ */
+function getPredictorColors<T extends AvatarItem>(
+  category: AvatarPartCategory,
+  predictions: Predictions,
+  theme: Theme<T>,
+): string[] | undefined {
+  const { predictorMappings } = theme
+  if (!predictorMappings) return undefined
+
+  // Hair-based categories use hairColor predictor
+  if (category === 'hair' || category === 'eyebrows') {
+    const { hairColor } = predictions
+    if (!hairColor || !predictorMappings.hairColor) return undefined
+    return predictorMappings.hairColor[hairColor]
+  }
+
+  // Skin-based categories use skinTone predictor
+  if (category === 'head' || category === 'ears') {
+    const { skinTone } = predictions
+    if (!skinTone || !predictorMappings.skinTone) return undefined
+    return predictorMappings.skinTone[skinTone]
+  }
+
+  return undefined
+}
+
+/**
+ * Select identifier with priority: explicit > predictor > random
+ */
+function selectIdentifier<T extends AvatarItem>(
+  category: AvatarPartCategory,
+  config: AvatarConfig,
+  predictions: Predictions | undefined,
+  theme: Theme<T>,
+  random: () => number,
+): string | undefined {
+  return selectWithPriority(
+    // Priority 1: Explicit from config
+    () => {
+      const explicit = config[category]
+      return typeof explicit === 'string' ? explicit : undefined
+    },
+    // Priority 2: Predictor-based
+    () => {
+      if (!predictions) return undefined
+      const candidates = getPredictorIdentifiers(category, predictions, theme)
+      return candidates ? pickRandom(candidates, random) : undefined
+    },
+    // Priority 3: Random from collection
+    () => {
+      const result = selectItem(theme[category], undefined, random)
+      return result?.key
+    },
+  )
+}
+
+/**
+ * Select color with priority: explicit > connected > predictor > palette
+ */
+function selectColorValue<T extends AvatarItem>(
+  category: AvatarPartCategory,
+  config: AvatarConfig,
+  predictions: Predictions | undefined,
+  theme: Theme<T>,
+  random: () => number,
+  selectedColors: Partial<Record<AvatarPartCategory, string>>,
+): string | undefined {
+  return selectWithPriority(
+    // Priority 1: Explicit from config
+    () => config[`${category}Color`],
+    // Priority 2: Connected color
+    () => {
+      const sourceCategory = theme.connectedColors?.[category]
+      return sourceCategory ? selectedColors[sourceCategory] : undefined
+    },
+    // Priority 3: Predictor-based
+    () => {
+      if (!predictions) return undefined
+      const candidates = getPredictorColors(category, predictions, theme)
+      return candidates ? pickRandom(candidates, random) : undefined
+    },
+    // Priority 4: Random from palette
+    () => {
+      const palette =
+        theme.colorPalettes?.[category as keyof typeof theme.colorPalettes]
+      return selectColor(palette, random)
+    },
+  )
+}
+
+/**
+ * Select items and colors for avatar generation
+ * Supports explicit config, ML predictors, and random fallbacks
+ */
+export function selectItems<T extends AvatarItem>(
+  config: AvatarConfig,
+  theme: Theme<T>,
+  predictions?: Predictions,
+): {
+  selected: Partial<Record<AvatarPartCategory, T>>
+  identifiers: Partial<Record<AvatarPartCategory, string>>
+  colors: Partial<Record<AvatarPartCategory, string>>
+  seed?: string | number
+} {
+  const random =
+    config.seed !== undefined ? seededRandom(config.seed) : Math.random
+
+  const selected: Partial<Record<AvatarPartCategory, T>> = {}
+  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
+  const colors: Partial<Record<AvatarPartCategory, string>> = {}
+
+  const allCategories = Object.keys(theme.colorPalettes) as AvatarPartCategory[]
+  for (const category of allCategories) {
+    // Select item (shape/asset)
+    const identifier = selectIdentifier(
+      category,
+      config,
+      predictions,
+      theme,
+      random,
+    )
+
+    if (identifier) {
+      const item = theme[category][identifier]
+      if (item) {
+        selected[category] = item
+        identifiers[category] = identifier
+      }
+    }
+
+    // Select color
+    const color = selectColorValue(
+      category,
+      config,
+      predictions,
+      theme,
+      random,
+      colors,
+    )
+
+    if (color) {
+      colors[category] = color
+    }
+  }
+
+  return { selected, identifiers, colors, seed: config.seed }
 }

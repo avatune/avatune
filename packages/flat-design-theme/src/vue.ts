@@ -45,8 +45,8 @@ export default {
       ...shared.body.sweater,
       Component: BodySweater,
     },
-    tshort: {
-      ...shared.body.tshort,
+    tshirt: {
+      ...shared.body.tshirt,
       Component: BodyTshort,
     },
     turtleneck: {

@@ -21,6 +21,9 @@
     "watch": "rslib build --watch",
     "dev": "rslib build --watch"
   },
+  "dependencies": {
+    "@avatune/types": "workspace:*"
+  },
   "devDependencies": {
     "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
     "@rslib/core": "^0.16.0",

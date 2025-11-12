@@ -1,5 +1,4 @@
 import flatTheme from '@avatune/flat-design-theme/svelte'
-import sketchTheme from '@avatune/sketch-black-white-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
 import type { Meta, StoryObj } from '@storybook/svelte-vite'
@@ -14,7 +13,6 @@ const meta = {
 export default meta
 
 type FlatArgs = AvatarProps<typeof flatTheme>
-type SketchArgs = AvatarProps<typeof sketchTheme>
 
 export const FlatDesign: StoryObj<FlatArgs> = {
   argTypes: {
@@ -59,69 +57,23 @@ export const FlatDesign: StoryObj<FlatArgs> = {
   },
 }
 
-export const Sketch: StoryObj<SketchArgs> = {
-  argTypes: {
-    theme: { table: { disable: true } },
-    ears: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.ears),
-    },
-    eyebrows: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.eyebrows),
-    },
-    eyes: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.eyes),
-    },
-    hair: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.hair),
-    },
-    head: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.head),
-    },
-    mouth: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.mouth),
-    },
-    noses: {
-      control: { type: 'select' },
-      options: Object.keys(sketchTheme.noses),
-    },
-    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
-  },
-  args: {
-    theme: sketchTheme,
-    ears: 'round',
-    eyebrows: 'bold',
-    eyes: 'standard',
-    hair: 'star',
-    head: 'oval',
-    mouth: 'smile',
-    noses: 'standard',
-    size: 300,
-  },
-}
-
-type ThemeKey = 'flat' | 'sketch'
+type ThemeKey = 'flat'
 
 export const SeededThemeSwitch: StoryObj<
-  AvatarProps<typeof flatTheme | typeof sketchTheme> & {
+  AvatarProps<typeof flatTheme> & {
     themeKey?: ThemeKey
   }
 > = {
   argTypes: {
     theme: { table: { disable: true } },
-    themeKey: { control: { type: 'select' }, options: ['flat', 'sketch'] },
+    themeKey: { control: { type: 'select' }, options: ['flat'] },
     seed: { control: { type: 'text' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
   render: (args) => ({
     Component: Avatar,
     props: {
-      theme: args.themeKey === 'sketch' ? sketchTheme : flatTheme,
+      theme: flatTheme,
       seed: args.seed,
       size: args.size,
     },

@@ -13,9 +13,12 @@
       "name": "@avatune/predictor-storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/flat-design-theme": "workspace:*",
         "@avatune/hair-color-predictor": "workspace:*",
         "@avatune/hair-length-predictor": "workspace:*",
+        "@avatune/react": "workspace:*",
         "@avatune/skin-tone-predictor": "workspace:*",
+        "@avatune/types": "workspace:*",
         "@tensorflow/tfjs": "^4.22.0",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
@@ -35,7 +38,6 @@
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
         "@avatune/react": "workspace:*",
-        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "react": "^19.2.0",
         "react-dom": "^19.2.0",
@@ -64,7 +66,6 @@
       "version": "0.0.0",
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "@sveltejs/kit": "^2.0.0",
@@ -86,7 +87,6 @@
       "version": "0.0.0",
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/typescript-config": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -104,7 +104,6 @@
       "version": "0.0.0",
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/sketch-black-white-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",
         "vue": "^3.5.22",
@@ -178,6 +177,9 @@
     "packages/hair-color-predictor": {
       "name": "@avatune/hair-color-predictor",
       "version": "0.0.0",
+      "dependencies": {
+        "@avatune/types": "workspace:*",
+      },
       "devDependencies": {
         "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
@@ -196,6 +198,9 @@
     "packages/hair-length-predictor": {
       "name": "@avatune/hair-length-predictor",
       "version": "0.0.0",
+      "dependencies": {
+        "@avatune/types": "workspace:*",
+      },
       "devDependencies": {
         "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
@@ -286,68 +291,12 @@
         "@vue/compiler-sfc": "^3.5.22",
       },
     },
-    "packages/sketch-black-white-assets": {
-      "name": "@avatune/sketch-black-white-assets",
-      "version": "0.0.0",
-      "devDependencies": {
-        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
-        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
-        "@rsbuild/core": "^1.5.17",
-        "@rsbuild/plugin-react": "^1.4.1",
-        "@rsbuild/plugin-svelte": "^1.0.10",
-        "@rsbuild/plugin-svgr": "^1.2.2",
-        "@rsbuild/plugin-vue": "^1.2.0",
-        "@rslib/core": "^0.16.1",
-        "@types/node": "^24.9.1",
-        "deepmerge": "^4.3.1",
-        "react": "v19.2.0",
-        "svelte": "^5.0.0",
-        "svgo": "^4.0.0",
-        "typescript": "^5.9.3",
-      },
-      "peerDependencies": {
-        "react": ">=18.0.0",
-        "svelte": ">=5.0.0",
-        "vue": "^3.5.22",
-      },
-      "optionalPeers": [
-        "react",
-        "svelte",
-        "vue",
-      ],
-    },
-    "packages/sketch-black-white-theme": {
-      "name": "@avatune/sketch-black-white-theme",
-      "version": "0.0.0",
-      "dependencies": {
-        "@avatune/sketch-black-white-assets": "workspace:*",
-        "@avatune/types": "workspace:*",
-        "@avatune/utils": "workspace:*",
-      },
-      "devDependencies": {
-        "@avatune/typescript-config": "workspace:*",
-        "@rslib/core": "^0.16.1",
-        "@types/node": "^22.18.12",
-        "@types/react": "^19.0.8",
-        "react": ">=18.0.0",
-        "svelte": "^5.0.0",
-        "typescript": "^5.9.3",
-        "vue": "^3.5.22",
-      },
-      "peerDependencies": {
-        "react": ">=18.0.0",
-        "svelte": ">=5.0.0",
-        "vue": "^3.5.22",
-      },
-      "optionalPeers": [
-        "react",
-        "svelte",
-        "vue",
-      ],
-    },
     "packages/skin-tone-predictor": {
       "name": "@avatune/skin-tone-predictor",
       "version": "0.0.0",
+      "dependencies": {
+        "@avatune/types": "workspace:*",
+      },
       "devDependencies": {
         "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
         "@rslib/core": "^0.16.0",
@@ -489,10 +438,6 @@
     "@avatune/rsbuild-plugin-svg-to-svelte": ["@avatune/rsbuild-plugin-svg-to-svelte@workspace:packages/rsbuild-plugin-svg-to-svelte"],
 
     "@avatune/rsbuild-plugin-svg-to-vue": ["@avatune/rsbuild-plugin-svg-to-vue@workspace:packages/rsbuild-plugin-svg-to-vue"],
-
-    "@avatune/sketch-black-white-assets": ["@avatune/sketch-black-white-assets@workspace:packages/sketch-black-white-assets"],
-
-    "@avatune/sketch-black-white-theme": ["@avatune/sketch-black-white-theme@workspace:packages/sketch-black-white-theme"],
 
     "@avatune/skin-tone-predictor": ["@avatune/skin-tone-predictor@workspace:packages/skin-tone-predictor"],
 
@@ -1640,8 +1585,6 @@
 
     "@avatune/rsbuild-plugin-svg-to-vue/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
 
-    "@avatune/sketch-black-white-theme/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
-
     "@avatune/skin-tone-predictor/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
 
     "@avatune/storybook-root/@types/node": ["@types/node@22.19.0", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-xpr/lmLPQEj+TUnHmR+Ab91/glhJvsqcjB+yY0Ix9GO70H6Lb4FHH5GeqdOE5btAx7eIMwuHkp4H2MSkLcqWbA=="],
@@ -1735,8 +1678,6 @@
     "@avatune/rsbuild-plugin-svg-to-svelte/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/rsbuild-plugin-svg-to-vue/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
-
-    "@avatune/sketch-black-white-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/skin-tone-predictor/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
