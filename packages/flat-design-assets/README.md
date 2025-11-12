@@ -40,7 +40,7 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/flat-design-assets/v
 
 ## Available Assets
 
-- Body: shirt, sweater, tshort, turtleneck
+- Body: shirt, sweater, tshirt, turtleneck
 - Ears: standard
 - Eyebrows: angry, small, standard
 - Eyes: boring, dots, openCircle, openRounded

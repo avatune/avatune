@@ -1,6 +1,6 @@
 import BodyShirt from './svg/body/shirt.svg?vue'
 import BodySweater from './svg/body/sweater.svg?vue'
-import BodyTshort from './svg/body/tshort.svg?vue'
+import BodyTshort from './svg/body/tshirt.svg?vue'
 import BodyTurtleneck from './svg/body/turtleneck.svg?vue'
 
 import EarsStandard from './svg/ears/standard.svg?vue'

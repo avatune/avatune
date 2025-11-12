@@ -2,16 +2,18 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
+  Predictions,
   SvelteTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
+import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
 
 type Props = TypedAvatarConfig<T> & {
   theme: T
   size?: number
   class?: string
   style?: string
+  predictions?: Predictions
 }
 
 const {
@@ -19,10 +21,11 @@ const {
   size = theme.style.size,
   class: className,
   style,
+  predictions,
   ...config
 }: Props = $props()
 
-const result = $derived(selectItemFromConfig(config as AvatarConfig, theme))
+const result = $derived(selectItems(config as AvatarConfig, theme, predictions))
 
 const sortedItems = $derived(
   Object.entries(result.selected).sort(
@@ -54,11 +57,11 @@ const finalStyle = $derived(
       {@const position = typeof item.position === 'function' ? item.position(size) : item.position}
       {@const transformX = position.x}
       {@const transformY = position.y}
-      {@const configColor = config.seed ? undefined : config[`${category}Color` as `${AvatarPartCategory}Color`]}
+      {@const color = result.colors[category]}
       {@const ItemComponent = item.Component}
       <g
         transform="translate({transformX}, {transformY}) scale({scaleFactor})"
-        style="color: {configColor || item.color}"
+        style="color: {color}"
       >
         <ItemComponent />
       </g>

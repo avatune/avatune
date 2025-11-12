@@ -1,10 +1,11 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
+  Predictions,
   ReactTheme,
   TypedAvatarConfig,
 } from '@avatune/types'
-import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
+import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
 import { type CSSProperties, useMemo } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> =
@@ -17,6 +18,8 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> =
     className?: string
     /** Optional style for the SVG container */
     style?: CSSProperties
+    /** Optional ML predictor results for avatar generation */
+    predictions?: Predictions
   }
 
 /**
@@ -27,6 +30,7 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
   size = theme.style.size,
   className,
   style = {},
+  predictions,
   ...restConfig
 }: AvatarProps<T>) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: granular tracking needed
@@ -54,8 +58,8 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
   )
 
   const result = useMemo(
-    () => selectItemFromConfig(config, theme),
-    [config, theme],
+    () => selectItems(config, theme, predictions),
+    [config, theme, predictions],
   )
 
   const sortedItems = useMemo(
@@ -94,15 +98,13 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
             ? item.position(size)
             : item.position
 
-        const configColor = config.seed
-          ? undefined
-          : config[`${category as AvatarPartCategory}Color`]
+        const color = result.colors[category as AvatarPartCategory]
 
         return (
           <g
             key={category}
             transform={`translate(${position.x}, ${position.y}) scale(${scaleFactor})`}
-            style={{ color: configColor || item.color }}
+            style={{ color }}
           >
             <Component />
           </g>

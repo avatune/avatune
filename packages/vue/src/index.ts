@@ -1,10 +1,11 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
+  Predictions,
   TypedAvatarConfig,
   VueTheme,
 } from '@avatune/types'
-import { selectItemFromConfig, themeStyleToStyleProp } from '@avatune/utils'
+import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -23,6 +24,8 @@ export type AvatarProps<T extends VueTheme = VueTheme> =
     class?: string
     /** Optional style for the SVG container */
     style?: CSSProperties
+    /** Optional ML predictor results for avatar generation */
+    predictions?: Predictions
   }
 
 /**
@@ -115,6 +118,10 @@ export const Avatar = defineComponent({
       type: Object as PropType<CSSProperties>,
       default: undefined,
     },
+    predictions: {
+      type: Object as PropType<Predictions>,
+      default: undefined,
+    },
   },
   setup(props) {
     const config = computed(() => {
@@ -123,13 +130,14 @@ export const Avatar = defineComponent({
         size: _size,
         class: _class,
         style: _style,
+        predictions: _predictions,
         ...rest
       } = props as Record<string, unknown>
       return rest as AvatarConfig
     })
 
     const result = computed(() =>
-      selectItemFromConfig(config.value, props.theme),
+      selectItems(config.value, props.theme, props.predictions),
     )
 
     const sortedItems = computed(() =>
@@ -176,16 +184,14 @@ export const Avatar = defineComponent({
           const transformX = position.x
           const transformY = position.y
 
-          const configColor = props.seed
-            ? undefined
-            : props[`${category}Color` as `${AvatarPartCategory}Color`]
+          const color = result.value.colors[category as AvatarPartCategory]
 
           return h(
             'g',
             {
               key: category,
               transform: `translate(${transformX}, ${transformY}) scale(${scaleFactor.value})`,
-              style: { color: configColor || item.color },
+              style: { color },
             },
             [h(Component)],
           )

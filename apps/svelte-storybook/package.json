@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@avatune/flat-design-theme": "workspace:*",
-    "@avatune/sketch-black-white-theme": "workspace:*",
     "@avatune/svelte": "workspace:*",
     "@avatune/types": "workspace:*",
     "@sveltejs/kit": "^2.0.0",

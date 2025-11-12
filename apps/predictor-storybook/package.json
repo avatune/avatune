@@ -9,9 +9,12 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@avatune/flat-design-theme": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
+    "@avatune/react": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",
+    "@avatune/types": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
@@ -22,6 +25,7 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.4",
     "storybook": "^10.0.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
   }
 }

@@ -1,9 +1,10 @@
+import type { SkinTonePredictorClass } from '@avatune/types'
 import * as tf from '@tensorflow/tfjs'
 
 export type SkinToneResult = {
-  tone: string
+  tone: SkinTonePredictorClass
   confidence: number
-  probabilities: Record<string, number>
+  probabilities: Record<SkinTonePredictorClass, number>
 }
 
 /**
@@ -117,13 +118,17 @@ export class SkinTonePredictor {
       const maxProbability = Math.max(...Array.from(probabilities))
       const maxIndex = Array.from(probabilities).indexOf(maxProbability)
 
-      const allProbabilities: Record<string, number> = {}
+      const allProbabilities: Record<SkinTonePredictorClass, number> = {
+        dark: 0,
+        medium: 0,
+        light: 0,
+      }
       this.classes.forEach((tone, i) => {
-        allProbabilities[tone] = probabilities[i]
+        allProbabilities[tone as SkinTonePredictorClass] = probabilities[i]
       })
 
       return {
-        tone: this.classes[maxIndex],
+        tone: this.classes[maxIndex] as SkinTonePredictorClass,
         confidence: maxProbability,
         probabilities: allProbabilities,
       }

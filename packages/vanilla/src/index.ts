@@ -1,16 +1,18 @@
 import type {
   AvatarConfig,
   AvatarPartCategory,
+  Predictions,
   TypedAvatarConfig,
   VanillaAvatarItem,
   VanillaTheme,
 } from '@avatune/types'
-import { AVATAR_CATEGORIES, seededRandom, selectItem } from '@avatune/utils'
+import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
 
 interface AvatarArgs<T extends VanillaTheme = VanillaTheme>
   extends TypedAvatarConfig<T> {
   theme: T
   size?: number
+  predictions?: Predictions
   config?: TypedAvatarConfig<T>
 }
 
@@ -20,33 +22,14 @@ interface AvatarArgs<T extends VanillaTheme = VanillaTheme>
 export function avatar<T extends VanillaTheme = VanillaTheme>({
   theme,
   size = theme.style.size,
+  predictions,
   ...config
 }: AvatarArgs<T>): string {
   const avatarConfig = config as AvatarConfig
-  const random =
-    'seed' in avatarConfig && avatarConfig.seed
-      ? seededRandom(avatarConfig.seed)
-      : Math.random
 
-  const selected: Partial<Record<AvatarPartCategory, VanillaAvatarItem>> = {}
-  const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
+  const result = selectItems(avatarConfig, theme, predictions)
 
-  for (const category of AVATAR_CATEGORIES) {
-    const value = (
-      avatarConfig as Partial<Record<AvatarPartCategory, string | string[]>>
-    )[category]
-
-    const identifier = typeof value === 'string' ? value : undefined
-
-    const result = selectItem(theme[category], identifier, random)
-
-    if (result) {
-      selected[category] = result.item
-      identifiers[category] = result.key
-    }
-  }
-
-  const sortedItems = Object.entries(selected).sort(
+  const sortedItems = Object.entries(result.selected).sort(
     ([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0),
   )
 
@@ -55,40 +38,26 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
   const svgParts: string[] = []
 
   for (const [category, item] of sortedItems) {
-    if (item) {
+    const vanillaItem = item as VanillaAvatarItem | undefined
+    if (vanillaItem && 'code' in vanillaItem) {
       const position =
-        typeof item.position === 'function'
-          ? item.position(size)
-          : item.position
+        typeof vanillaItem.position === 'function'
+          ? vanillaItem.position(size)
+          : vanillaItem.position
       const transformX = position.x
       const transformY = position.y
 
-      const configColor =
-        'seed' in avatarConfig
-          ? undefined
-          : avatarConfig[`${category as AvatarPartCategory}Color`]
-      const color = configColor || item.color
+      const color = result.colors[category as AvatarPartCategory]
       const style = color ? `style="color: ${color}"` : ''
       const transform = `transform="translate(${transformX}, ${transformY}) scale(${scaleFactor})"`
       const attributes = [transform, style].filter(Boolean).join(' ')
 
-      const transformed = `<g ${attributes}>${item.code}</g>`
+      const transformed = `<g ${attributes}>${vanillaItem.code}</g>`
       svgParts.push(transformed)
     }
   }
 
-  const backgroundColor = theme.style.backgroundColor
-  const borderColor = theme.style.borderColor
-  const borderWidth = theme.style.borderWidth
-  const finalStyle = [
-    backgroundColor ? `background-color: ${backgroundColor}` : '',
-    borderWidth && borderColor
-      ? `border: ${borderWidth}px solid ${borderColor}`
-      : '',
-    'border-radius: 100%',
-  ]
-    .filter(Boolean)
-    .join('; ')
+  const finalStyle = themeStyleToStyleProp(theme.style, 'string')
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" style="${finalStyle}" viewBox="0 0 ${size} ${size}">
   ${svgParts.join('\n  ')}
