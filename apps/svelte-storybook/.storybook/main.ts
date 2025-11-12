@@ -13,7 +13,6 @@ function getAbsolutePath(value: string): any {
 }
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|svelte)'],
-  addons: [getAbsolutePath('@storybook/addon-svelte-csf')],
   framework: {
     name: getAbsolutePath('@storybook/svelte-vite'),
     options: {},
