@@ -15,8 +15,8 @@ const getReplaceAttrValues = (colorPropName = 'color') => ({
   '#1B0B47': `{${colorPropName}}`,
   '#000000': `{${colorPropName}}`,
   '#FFCB7E': `{${colorPropName}}`,
-  '#F0BD70': `{colord(${colorPropName}).desaturate(0.20).darken(0.06).toHex()}`,
-  '#E9B05B': `{colord(${colorPropName}).desaturate(0.24).darken(0.11).toHex()}`,
+  '#F0BD70': `{colord(${colorPropName}).desaturate(0.08).darken(0.06).toHex()}`,
+  '#E9B05B': `{colord(${colorPropName}).desaturate(0.16).darken(0.12).toHex()}`,
   '#B03E67': `{${colorPropName}}`,
   '#66253C': `{colord(${colorPropName}).rotate(3).darken(0.20).toHex()}`,
 })

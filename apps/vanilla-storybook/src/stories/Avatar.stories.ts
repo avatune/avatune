@@ -172,23 +172,6 @@ export const MiniAvs: StoryObj<
   },
 }
 
-export const MiniAvsSeed: StoryObj<{
-  seed?: string | number
-  size?: number
-}> = {
-  argTypes: {
-    seed: { control: { type: 'text' } },
-    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
-  },
-  render: ({ seed, size }) => {
-    return avatar({ theme: miniavsTheme, seed, size })
-  },
-  args: {
-    seed: 'Type any seed phrase here',
-    size: 300,
-  },
-}
-
 export const FlatDesignSeed: StoryObj<{
   seed?: string | number
   size?: number
@@ -203,6 +186,23 @@ export const FlatDesignSeed: StoryObj<{
   },
   render: ({ seed, size }) => {
     return avatar({ theme: flatDesignTheme, seed, size })
+  },
+  args: {
+    seed: 'Type any seed phrase here',
+    size: 300,
+  },
+}
+
+export const MiniAvsSeed: StoryObj<{
+  seed?: string | number
+  size?: number
+}> = {
+  argTypes: {
+    seed: { control: { type: 'text' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: ({ seed, size }) => {
+    return avatar({ theme: miniavsTheme, seed, size })
   },
   args: {
     seed: 'Type any seed phrase here',

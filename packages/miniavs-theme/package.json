@@ -29,12 +29,12 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@avatune/miniavs-assets": "workspace:*",
     "@avatune/theme-builder": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/utils": "workspace:*"
   },
   "devDependencies": {
-    "@avatune/miniavs-assets": "workspace:*",
     "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "typescript": "^5.9.3"
