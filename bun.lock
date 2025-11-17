@@ -88,6 +88,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
+        "@avatune/miniavs-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/typescript-config": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -220,6 +221,56 @@
         "@tensorflow/tfjs": "^4.22.0",
         "@tensorflow/tfjs-backend-wasm": "^4.22.0",
         "@tensorflow/tfjs-backend-webgl": "^4.22.0",
+      },
+    },
+    "packages/miniavs-assets": {
+      "name": "@avatune/miniavs-assets",
+      "version": "0.0.0",
+      "dependencies": {
+        "colord": "^2.9.3",
+      },
+      "devDependencies": {
+        "@avatune/rsbuild-plugin-raw-svg": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
+        "@rsbuild/core": "^1.5.17",
+        "@rsbuild/plugin-react": "^1.4.1",
+        "@rsbuild/plugin-svelte": "^1.0.10",
+        "@rsbuild/plugin-svgr": "^1.2.2",
+        "@rsbuild/plugin-vue": "^1.2.0",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^24.9.1",
+        "deepmerge": "^4.3.1",
+        "react": "v19.2.0",
+        "svelte": "^5.0.0",
+        "svgo": "^4.0.0",
+        "typescript": "^5.9.3",
+        "vue": "^3.5.22",
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0",
+        "svelte": ">=5.0.0",
+        "vue": "^3.5.22",
+      },
+      "optionalPeers": [
+        "react",
+        "svelte",
+        "vue",
+      ],
+    },
+    "packages/miniavs-theme": {
+      "name": "@avatune/miniavs-theme",
+      "version": "0.0.0",
+      "dependencies": {
+        "@avatune/theme-builder": "workspace:*",
+        "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
+      },
+      "devDependencies": {
+        "@avatune/miniavs-assets": "workspace:*",
+        "@avatune/typescript-config": "workspace:*",
+        "@rslib/core": "^0.16.1",
+        "typescript": "^5.9.3",
       },
     },
     "packages/react": {
@@ -458,6 +509,10 @@
     "@avatune/hair-color-predictor": ["@avatune/hair-color-predictor@workspace:packages/hair-color-predictor"],
 
     "@avatune/hair-length-predictor": ["@avatune/hair-length-predictor@workspace:packages/hair-length-predictor"],
+
+    "@avatune/miniavs-assets": ["@avatune/miniavs-assets@workspace:packages/miniavs-assets"],
+
+    "@avatune/miniavs-theme": ["@avatune/miniavs-theme@workspace:packages/miniavs-theme"],
 
     "@avatune/predictor-storybook": ["@avatune/predictor-storybook@workspace:apps/predictor-storybook"],
 

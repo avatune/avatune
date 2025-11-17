@@ -145,6 +145,9 @@ export interface ThemePredictorMappings {
 export interface ThemeColorPalettes {
   background: ColorOptions
   hair: ColorOptions
+  faceHair: ColorOptions
+  blushes: ColorOptions
+  glasses: ColorOptions
   head: ColorOptions
   body: ColorOptions
   ears: ColorOptions
@@ -181,6 +184,9 @@ export interface Theme<T extends AvatarItem> {
   eyebrows: AvatarItemCollection<T>
   eyes: AvatarItemCollection<T>
   hair: AvatarItemCollection<T>
+  faceHair: AvatarItemCollection<T>
+  blushes: AvatarItemCollection<T>
+  glasses: AvatarItemCollection<T>
   head: AvatarItemCollection<T>
   mouth: AvatarItemCollection<T>
   noses: AvatarItemCollection<T>
@@ -233,6 +239,9 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   eyebrows?: ExtractIdentifiers<T['eyebrows']>
   eyes?: ExtractIdentifiers<T['eyes']>
   hair?: ExtractIdentifiers<T['hair']>
+  faceHair?: ExtractIdentifiers<T['faceHair']>
+  blushes?: ExtractIdentifiers<T['blushes']>
+  glasses?: ExtractIdentifiers<T['glasses']>
   head?: ExtractIdentifiers<T['head']>
   mouth?: ExtractIdentifiers<T['mouth']>
   noses?: ExtractIdentifiers<T['noses']>
@@ -242,6 +251,9 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   eyebrowsColor?: string
   eyesColor?: string
   hairColor?: string
+  faceHairColor?: string
+  blushesColor?: string
+  glassesColor?: string
   headColor?: string
   mouthColor?: string
   nosesColor?: string

@@ -12,7 +12,9 @@ export default function loader(source) {
   const replacements = options.replaceAttrValues || {}
 
   // Sort keys by length (longest first) to prevent premature replacements
-  const sortedKeys = Object.keys(replacements).sort((a, b) => b.length - a.length)
+  const sortedKeys = Object.keys(replacements).sort(
+    (a, b) => b.length - a.length,
+  )
 
   let result = source
 
@@ -59,9 +61,8 @@ export default function loader(source) {
 
   // Generate destructuring or use props directly
   const propsArray = Array.from(propsToExtract)
-  const destructuring = propsArray.length > 0
-    ? `const { ${propsArray.join(', ')} } = props;`
-    : ''
+  const destructuring =
+    propsArray.length > 0 ? `const { ${propsArray.join(', ')} } = props;` : ''
 
   return `
 ${imports}

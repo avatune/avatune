@@ -9,7 +9,9 @@ const applyReplacements = (svg, replacements = {}) => {
 
   // Sort keys by length (longest first) to ensure more specific patterns are replaced first
   // This prevents "currentColor" from being replaced before "color-mix(in srgb, currentColor 80%, white)"
-  const sortedKeys = Object.keys(replacements).sort((a, b) => b.length - a.length)
+  const sortedKeys = Object.keys(replacements).sort(
+    (a, b) => b.length - a.length,
+  )
 
   for (const key of sortedKeys) {
     let value = replacements[key]
@@ -22,7 +24,7 @@ const applyReplacements = (svg, replacements = {}) => {
       // Find and replace fill="key" with :fill="expression"
       const attrPattern = new RegExp(
         `(fill|stroke)="(${key.replace(/[()]/g, '\\$&')})"`,
-        'g'
+        'g',
       )
       result = result.replace(attrPattern, `:$1="${expression}"`)
     } else {

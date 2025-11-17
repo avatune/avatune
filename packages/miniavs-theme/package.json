@@ -1,0 +1,42 @@
+{
+  "name": "@avatune/miniavs-theme",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./svelte": {
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.js"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@avatune/theme-builder": "workspace:*",
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@avatune/miniavs-assets": "workspace:*",
+    "@avatune/typescript-config": "workspace:*",
+    "@rslib/core": "^0.16.1",
+    "typescript": "^5.9.3"
+  }
+}

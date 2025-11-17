@@ -1,4 +1,5 @@
 import flatTheme from '@avatune/flat-design-theme/react'
+import miniavsTheme from '@avatune/miniavs-theme/react'
 import type { AvatarProps } from '@avatune/react'
 import { Avatar } from '@avatune/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -12,6 +13,7 @@ const meta = {
 
 export default meta
 type FlatArgs = Omit<AvatarProps<typeof flatTheme>, 'theme'>
+type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
 
 export const FlatDesign: StoryObj<FlatArgs> = {
   argTypes: {
@@ -55,16 +57,71 @@ export const FlatDesign: StoryObj<FlatArgs> = {
   },
 }
 
-type ThemeKey = 'flat'
+export const MiniAvs: StoryObj<MiniavsArgs> = {
+  argTypes: {
+    body: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.body),
+    },
+    blushes: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.blushes),
+    },
+    eyes: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.eyes),
+    },
+    faceHair: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.faceHair),
+    },
+    glasses: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.glasses),
+    },
+    hair: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.hair),
+    },
+    head: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.head),
+    },
+    mouth: {
+      control: { type: 'select' },
+      options: Object.keys(miniavsTheme.mouth),
+    },
+    bodyColor: { control: { type: 'color' } },
+    blushesColor: { control: { type: 'color' } },
+    eyesColor: { control: { type: 'color' } },
+    faceHairColor: { control: { type: 'color' } },
+    glassesColor: { control: { type: 'color' } },
+    hairColor: { control: { type: 'color' } },
+    headColor: { control: { type: 'color' } },
+    mouthColor: { control: { type: 'color' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: (args) => <Avatar theme={miniavsTheme} {...args} />,
+  args: {
+    body: 'standard',
+    blushes: 'standard',
+    eyes: 'standard',
+    hair: 'classic1',
+    head: 'standard',
+    mouth: 'standard',
+    size: 300,
+  },
+}
 
-export const SeededThemeSwitch: StoryObj<{
+type ThemeKey = 'flat' | 'miniavs'
+
+export const FlatDesignSeed: StoryObj<{
   theme: ThemeKey
   seed?: string | number
   size?: number
   height?: number
 }> = {
   argTypes: {
-    theme: { control: { type: 'select' }, options: ['flat'] },
     seed: { control: { type: 'text' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
@@ -72,7 +129,25 @@ export const SeededThemeSwitch: StoryObj<{
     return <Avatar theme={flatTheme} seed={seed} size={size} />
   },
   args: {
-    theme: 'flat',
+    seed: 'Type any seed phrase here',
+    size: 300,
+  },
+}
+
+export const MiniAvsSeed: StoryObj<{
+  theme: ThemeKey
+  seed?: string | number
+  size?: number
+  height?: number
+}> = {
+  argTypes: {
+    seed: { control: { type: 'text' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: ({ seed, size = 300 }) => {
+    return <Avatar theme={miniavsTheme} seed={seed} size={size} />
+  },
+  args: {
     seed: 'Type any seed phrase here',
     size: 300,
   },

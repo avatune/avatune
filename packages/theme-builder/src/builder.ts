@@ -39,6 +39,9 @@ export interface ThemeBuilder<
   HeadIds extends string = never,
   MouthIds extends string = never,
   NosesIds extends string = never,
+  FaceHairIds extends string = never,
+  BlushesIds extends string = never,
+  GlassesIds extends string = never,
 > {
   readonly _state: BuilderState<T>
 
@@ -53,7 +56,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   addItem<Id extends string>(
@@ -70,7 +76,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'ears',
@@ -86,7 +95,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'eyebrows',
@@ -102,7 +114,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'eyes',
@@ -118,7 +133,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'hair',
@@ -134,7 +152,10 @@ export interface ThemeBuilder<
     HairIds | Id,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'head',
@@ -150,7 +171,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds | Id,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'mouth',
@@ -166,7 +190,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds | Id,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   addItem<Id extends string>(
     category: 'noses',
@@ -182,7 +209,67 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds | Id
+    NosesIds | Id,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
+  >
+  addItem<Id extends string>(
+    category: 'faceHair',
+    identifier: Id,
+    config: ItemConfig,
+    itemSpecific?: Partial<T>,
+  ): ThemeBuilder<
+    T,
+    BodyIds,
+    EarsIds,
+    EyebrowsIds,
+    EyesIds,
+    HairIds,
+    HeadIds,
+    MouthIds,
+    NosesIds,
+    FaceHairIds | Id,
+    BlushesIds,
+    GlassesIds
+  >
+  addItem<Id extends string>(
+    category: 'blushes',
+    identifier: Id,
+    config: ItemConfig,
+    itemSpecific?: Partial<T>,
+  ): ThemeBuilder<
+    T,
+    BodyIds,
+    EarsIds,
+    EyebrowsIds,
+    EyesIds,
+    HairIds,
+    HeadIds,
+    MouthIds,
+    NosesIds,
+    FaceHairIds,
+    BlushesIds | Id,
+    GlassesIds
+  >
+  addItem<Id extends string>(
+    category: 'glasses',
+    identifier: Id,
+    config: ItemConfig,
+    itemSpecific?: Partial<T>,
+  ): ThemeBuilder<
+    T,
+    BodyIds,
+    EarsIds,
+    EyebrowsIds,
+    EyesIds,
+    HairIds,
+    HeadIds,
+    MouthIds,
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds | Id
   >
 
   addColor(
@@ -197,7 +284,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   withColorPalette(
@@ -212,7 +302,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   withColorPalettes(
@@ -226,7 +319,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   mapPrediction(
@@ -242,7 +338,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
   mapPrediction(
     predictor: 'hairColor' | 'skinTone',
@@ -257,7 +356,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   connectColors(
@@ -272,7 +374,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   toFramework<NewT extends AvatarItem>(): ThemeBuilder<
@@ -284,7 +389,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   withComponents(
@@ -299,7 +407,10 @@ export interface ThemeBuilder<
     HairIds,
     HeadIds,
     MouthIds,
-    NosesIds
+    NosesIds,
+    FaceHairIds,
+    BlushesIds,
+    GlassesIds
   >
 
   build(): {
@@ -312,6 +423,9 @@ export interface ThemeBuilder<
     head: Record<HeadIds, T>
     mouth: Record<MouthIds, T>
     noses: Record<NosesIds, T>
+    faceHair: Record<FaceHairIds, T>
+    blushes: Record<BlushesIds, T>
+    glasses: Record<GlassesIds, T>
     colorPalettes: ThemeColorPalettes
     predictorMappings: ThemePredictorMappings
     connectedColors: ConnectedColors
@@ -328,6 +442,9 @@ const createBuilder = <
   HeadIds extends string = never,
   MouthIds extends string = never,
   NosesIds extends string = never,
+  FaceHairIds extends string = never,
+  BlushesIds extends string = never,
+  GlassesIds extends string = never,
 >(
   state: BuilderState<T>,
 ): ThemeBuilder<
@@ -339,7 +456,10 @@ const createBuilder = <
   HairIds,
   HeadIds,
   MouthIds,
-  NosesIds
+  NosesIds,
+  FaceHairIds,
+  BlushesIds,
+  GlassesIds
 > => {
   const addItem = (
     category: AvatarPartCategory,
@@ -496,6 +616,9 @@ const createBuilder = <
         head: state.items.head as Record<HeadIds, T>,
         mouth: state.items.mouth as Record<MouthIds, T>,
         noses: state.items.noses as Record<NosesIds, T>,
+        faceHair: state.items.faceHair as Record<FaceHairIds, T>,
+        blushes: state.items.blushes as Record<BlushesIds, T>,
+        glasses: state.items.glasses as Record<GlassesIds, T>,
         colorPalettes: state.palettes as ThemeColorPalettes,
         predictorMappings: state.predictorMappings,
         connectedColors: state.connectedColors,

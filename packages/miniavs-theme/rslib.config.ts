@@ -10,10 +10,10 @@ export default defineConfig({
   ],
   source: {
     entry: {
-      index: './src/index.ts',
+      react: './src/react.ts',
+      svelte: './src/svelte.ts',
+      vue: './src/vue.ts',
+      vanilla: './src/vanilla.ts',
     },
-  },
-  output: {
-    copy: [{ from: './src/loader.mjs', to: 'loader.mjs' }],
   },
 })
