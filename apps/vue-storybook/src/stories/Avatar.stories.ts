@@ -1,4 +1,5 @@
 import flatTheme from '@avatune/flat-design-theme/vue'
+import kawaiiTheme from '@avatune/kawaii-design-theme/vue'
 import miniavsTheme from '@avatune/miniavs-theme/vue'
 import type { AvatarProps } from '@avatune/vue'
 import { Avatar } from '@avatune/vue'
@@ -15,6 +16,7 @@ export default meta
 
 type FlatArgs = Omit<AvatarProps<typeof flatTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
+type KawaiiArgs = Omit<AvatarProps<typeof kawaiiTheme>, 'theme'>
 
 export const FlatDesign: StoryObj<FlatArgs> = {
   argTypes: {
@@ -122,11 +124,98 @@ export const MiniAvs: StoryObj<MiniavsArgs> = {
   },
 }
 
-type ThemeKey = 'flat' | 'miniavs'
-
-const themeMap = {
-  flat: flatTheme,
-  miniavs: miniavsTheme,
+export const KawaiiDesign: StoryObj<KawaiiArgs> = {
+  argTypes: {
+    glasses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.glasses || {}),
+    },
+    hats: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.hats || {}),
+    },
+    hair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.hair || {}),
+    },
+    faceDetails: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.faceDetails || {}),
+    },
+    body: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.body),
+    },
+    ears: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.ears),
+    },
+    eyes: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.eyes),
+    },
+    faceHair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.faceHair || {}),
+    },
+    forelock: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.forelock || {}),
+    },
+    head: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.head),
+    },
+    mouth: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.mouth),
+    },
+    neck: {
+      control: { type: 'select' },
+      options: ['none', ...Object.keys(kawaiiTheme.neck || {})],
+    },
+    noses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.noses),
+    },
+    glassesColor: { control: { type: 'color' } },
+    hatsColor: { control: { type: 'color' } },
+    hairColor: { control: { type: 'color' } },
+    faceDetailsColor: { control: { type: 'color' } },
+    bodyColor: { control: { type: 'color' } },
+    earsColor: { control: { type: 'color' } },
+    eyesColor: { control: { type: 'color' } },
+    faceHairColor: { control: { type: 'color' } },
+    forelockColor: { control: { type: 'color' } },
+    headColor: { control: { type: 'color' } },
+    mouthColor: { control: { type: 'color' } },
+    neckColor: { control: { type: 'color' } },
+    nosesColor: { control: { type: 'color' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: (args: KawaiiArgs) => {
+    return {
+      components: { Avatar },
+      setup: () => ({ args, theme: kawaiiTheme }),
+      template: '<Avatar :theme="theme" v-bind="args" />',
+    }
+  },
+  args: {
+    glasses: 'glass',
+    hats: 'beanie',
+    hair: 'straightMedium',
+    faceDetails: 'blushes',
+    body: 'teeBasic',
+    ears: 'standard',
+    eyes: 'standard',
+    faceHair: 'none',
+    forelock: 'short',
+    head: 'standard',
+    mouth: 'smile',
+    neck: 'standard',
+    noses: 'standard',
+    size: 300,
+  },
 }
 
 export const FlatDesignSeed: StoryObj<{
@@ -175,6 +264,31 @@ export const MiniAvsSeed: StoryObj<{
   }) => ({
     components: { Avatar },
     setup: () => ({ theme: miniavsTheme, seed, size }),
+    template: '<Avatar :theme="theme" :seed="seed" :size="size" />',
+  }),
+  args: {
+    seed: 'Type any seed phrase here',
+    size: 300,
+  },
+}
+
+export const KawaiiSeed: StoryObj<{
+  seed?: string | number
+  size?: number
+}> = {
+  argTypes: {
+    seed: { control: { type: 'text' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: ({
+    seed,
+    size = 300,
+  }: {
+    seed?: string | number
+    size?: number
+  }) => ({
+    components: { Avatar },
+    setup: () => ({ theme: kawaiiTheme, seed, size }),
     template: '<Avatar :theme="theme" :seed="seed" :size="size" />',
   }),
   args: {

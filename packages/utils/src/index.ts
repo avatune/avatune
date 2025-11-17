@@ -221,7 +221,9 @@ function selectIdentifier<I extends AvatarItem, T extends Theme<I>>(
     },
     // Priority 3: Random from collection
     () => {
-      const result = selectItem(theme[category], undefined, random)
+      const collection = theme[category]
+      if (!collection) return undefined
+      const result = selectItem(collection, undefined, random)
       return result?.key
     },
   )
@@ -311,7 +313,7 @@ export function selectItems<I extends AvatarItem, T extends Theme<I>>(
       random,
     )
 
-    if (identifier) {
+    if (identifier && theme[category]) {
       const item = theme[category][identifier]
       if (item) {
         selected[category] = item

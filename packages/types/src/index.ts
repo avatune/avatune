@@ -144,16 +144,19 @@ export interface ThemePredictorMappings {
  */
 export interface ThemeColorPalettes {
   background: ColorOptions
+  glasses?: ColorOptions
+  hats?: ColorOptions
   hair: ColorOptions
-  faceHair: ColorOptions
-  faceDetails: ColorOptions
-  glasses: ColorOptions
-  head: ColorOptions
+  faceDetails?: ColorOptions
   body: ColorOptions
   ears: ColorOptions
-  eyes: ColorOptions
   eyebrows: ColorOptions
+  eyes: ColorOptions
+  faceHair?: ColorOptions
+  forelock: ColorOptions
+  head: ColorOptions
   mouth: ColorOptions
+  neck?: ColorOptions
   noses: ColorOptions
 }
 
@@ -179,16 +182,19 @@ export type ConnectedColors = Partial<
  */
 export interface Theme<T extends AvatarItem> {
   style: ThemeStyle
+  glasses?: AvatarItemCollection<T>
+  hats?: AvatarItemCollection<T>
+  hair: AvatarItemCollection<T>
+  faceDetails?: AvatarItemCollection<T>
   body: AvatarItemCollection<T>
   ears: AvatarItemCollection<T>
   eyebrows: AvatarItemCollection<T>
   eyes: AvatarItemCollection<T>
-  hair: AvatarItemCollection<T>
-  faceHair: AvatarItemCollection<T>
-  faceDetails: AvatarItemCollection<T>
-  glasses: AvatarItemCollection<T>
+  faceHair?: AvatarItemCollection<T>
+  forelock?: AvatarItemCollection<T>
   head: AvatarItemCollection<T>
   mouth: AvatarItemCollection<T>
+  neck?: AvatarItemCollection<T>
   noses: AvatarItemCollection<T>
   colorPalettes: ThemeColorPalettes
   predictorMappings?: ThemePredictorMappings
@@ -234,27 +240,47 @@ export type ExtractIdentifiers<T extends AvatarItemCollection> = keyof T
  */
 export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   seed?: string | number
+  glasses?: T['glasses'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['glasses']>
+    : never
+  hats?: T['hats'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['hats']>
+    : never
+  hair?: ExtractIdentifiers<T['hair']>
+  faceDetails?: T['faceDetails'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['faceDetails']>
+    : never
   body?: ExtractIdentifiers<T['body']>
   ears?: ExtractIdentifiers<T['ears']>
   eyebrows?: ExtractIdentifiers<T['eyebrows']>
   eyes?: ExtractIdentifiers<T['eyes']>
-  hair?: ExtractIdentifiers<T['hair']>
-  faceHair?: ExtractIdentifiers<T['faceHair']>
-  faceDetails?: ExtractIdentifiers<T['faceDetails']>
-  glasses?: ExtractIdentifiers<T['glasses']>
+  faceHair?: T['faceHair'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['faceHair']>
+    : never
+  forelock?: T['forelock'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['forelock']>
+    : never
   head?: ExtractIdentifiers<T['head']>
   mouth?: ExtractIdentifiers<T['mouth']>
+  neck?: T['neck'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['neck']>
+    : never
   noses?: ExtractIdentifiers<T['noses']>
   backgroundColor?: string
+  glassesColor?: T['glasses'] extends AvatarItemCollection<I> ? string : never
+  hatsColor?: T['hats'] extends AvatarItemCollection<I> ? string : never
+  hairColor?: string
+  faceDetailsColor?: T['faceDetails'] extends AvatarItemCollection<I>
+    ? string
+    : never
   bodyColor?: string
   earsColor?: string
   eyebrowsColor?: string
   eyesColor?: string
-  hairColor?: string
-  faceHairColor?: string
-  faceDetailsColor?: string
-  glassesColor?: string
+  faceHairColor?: T['faceHair'] extends AvatarItemCollection<I> ? string : never
+  forelockColor?: string
   headColor?: string
   mouthColor?: string
+  neckColor?: T['neck'] extends AvatarItemCollection<I> ? string : never
   nosesColor?: string
 }

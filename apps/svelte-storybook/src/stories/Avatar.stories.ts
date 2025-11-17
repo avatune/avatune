@@ -1,4 +1,5 @@
 import flatTheme from '@avatune/flat-design-theme/svelte'
+import kawaiiTheme from '@avatune/kawaii-design-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
@@ -15,6 +16,7 @@ export default meta
 
 type FlatArgs = AvatarProps<typeof flatTheme>
 type MiniavsArgs = AvatarProps<typeof miniavsTheme>
+type KawaiiArgs = AvatarProps<typeof kawaiiTheme>
 
 export const FlatDesign: StoryObj<FlatArgs> = {
   argTypes: {
@@ -119,20 +121,116 @@ export const MiniAvs: StoryObj<MiniavsArgs> = {
     size: 300,
   },
 }
+export const KawaiiDesign: StoryObj<KawaiiArgs> = {
+  argTypes: {
+    theme: { table: { disable: true } },
+    glasses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.glasses || {}),
+    },
+    hats: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.hats || {}),
+    },
+    hair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.hair || {}),
+    },
+    faceDetails: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.faceDetails || {}),
+    },
+    body: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.body),
+    },
+    ears: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.ears),
+    },
+    eyes: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.eyes),
+    },
+    faceHair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.faceHair || {}),
+    },
+    forelock: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.forelock || {}),
+    },
+    head: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.head),
+    },
+    mouth: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.mouth),
+    },
+    neck: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.neck || {}),
+    },
+    noses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiTheme.noses),
+    },
+    glassesColor: { control: { type: 'color' } },
+    hatsColor: { control: { type: 'color' } },
+    hairColor: { control: { type: 'color' } },
+    faceDetailsColor: { control: { type: 'color' } },
+    bodyColor: { control: { type: 'color' } },
+    earsColor: { control: { type: 'color' } },
+    eyesColor: { control: { type: 'color' } },
+    faceHairColor: { control: { type: 'color' } },
+    forelockColor: { control: { type: 'color' } },
+    headColor: { control: { type: 'color' } },
+    mouthColor: { control: { type: 'color' } },
+    neckColor: { control: { type: 'color' } },
+    nosesColor: { control: { type: 'color' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: (args: KawaiiArgs) => {
+    return {
+      Component: Avatar,
+      props: args,
+    }
+  },
+  args: {
+    theme: kawaiiTheme,
+    glasses: 'glass',
+    hats: 'beanie',
+    hair: 'straightMedium',
+    faceDetails: 'blushes',
+    body: 'teeBasic',
+    ears: 'standard',
+    eyes: 'standard',
+    faceHair: 'mustache',
+    forelock: 'short',
+    head: 'standard',
+    mouth: 'smile',
+    neck: 'standard',
+    noses: 'standard',
+    size: 300,
+  },
+}
 
 export const FlatDesignSeed: StoryObj<AvatarProps<typeof flatTheme>> = {
   argTypes: {
     seed: { control: { type: 'text' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
-  render: (args) => ({
-    Component: Avatar,
-    props: {
-      theme: flatTheme,
-      seed: args.seed,
-      size: args.size,
-    },
-  }),
+  render: (args) => {
+    return {
+      Component: Avatar,
+      props: {
+        theme: flatTheme,
+        seed: args.seed,
+        size: args.size,
+      },
+    }
+  },
   args: {
     seed: 'Type any seed phrase here',
     size: 300,
@@ -148,6 +246,25 @@ export const MiniAvsSeed: StoryObj<MiniavsArgs> & {} = {
     Component: Avatar,
     props: {
       theme: miniavsTheme,
+      seed: args.seed,
+      size: args.size,
+    },
+  }),
+  args: {
+    seed: 'Type any seed phrase here',
+    size: 300,
+  },
+}
+
+export const KawaiiSeed: StoryObj<MiniavsArgs> & {} = {
+  argTypes: {
+    seed: { control: { type: 'text' } },
+    size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  },
+  render: (args) => ({
+    Component: Avatar,
+    props: {
+      theme: kawaiiTheme,
       seed: args.seed,
       size: args.size,
     },

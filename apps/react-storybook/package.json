@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@avatune/flat-design-theme": "workspace:*",
+    "@avatune/kawaii-design-theme": "workspace:*",
     "@avatune/react": "workspace:*",
     "@avatune/types": "workspace:*",
     "react": "^19.2.0",

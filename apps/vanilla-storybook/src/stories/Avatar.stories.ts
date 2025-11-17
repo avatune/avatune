@@ -1,4 +1,5 @@
 import flatDesignTheme from '@avatune/flat-design-theme/vanilla'
+import kawaiiDesignTheme from '@avatune/kawaii-design-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import type { AvatarConfig, VanillaAvatarItem } from '@avatune/types'
 import { avatar } from '@avatune/vanilla'
@@ -168,6 +169,128 @@ export const MiniAvs: StoryObj<
     hair: 'classic1',
     head: 'standard',
     mouth: 'standard',
+    size: 300,
+  },
+}
+
+export const KawaiiDesign: StoryObj<
+  AvatarConfig<VanillaAvatarItem, typeof kawaiiDesignTheme> & {
+    size?: number
+  }
+> = {
+  argTypes: {
+    glasses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.glasses || {}),
+    },
+    hats: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.hats || {}),
+    },
+    hair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.hair || {}),
+    },
+    faceDetails: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.faceDetails || {}),
+    },
+    body: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.body),
+    },
+    ears: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.ears),
+    },
+    eyes: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.eyes),
+    },
+    faceHair: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.faceHair || {}),
+    },
+    forelock: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.forelock || {}),
+    },
+    head: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.head),
+    },
+    mouth: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.mouth),
+    },
+    neck: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.neck || {}),
+    },
+    noses: {
+      control: { type: 'select' },
+      options: Object.keys(kawaiiDesignTheme.noses),
+    },
+    glassesColor: {
+      control: { type: 'color' },
+    },
+    hatsColor: {
+      control: { type: 'color' },
+    },
+    hairColor: {
+      control: { type: 'color' },
+    },
+    faceDetailsColor: {
+      control: { type: 'color' },
+    },
+    bodyColor: {
+      control: { type: 'color' },
+    },
+    earsColor: {
+      control: { type: 'color' },
+    },
+    eyesColor: {
+      control: { type: 'color' },
+    },
+    faceHairColor: {
+      control: { type: 'color' },
+    },
+    forelockColor: {
+      control: { type: 'color' },
+    },
+    headColor: {
+      control: { type: 'color' },
+    },
+    mouthColor: {
+      control: { type: 'color' },
+    },
+    neckColor: {
+      control: { type: 'color' },
+    },
+    nosesColor: {
+      control: { type: 'color' },
+    },
+    size: {
+      control: { type: 'range', min: 100, max: 800, step: 50 },
+    },
+  },
+  render: (args) => {
+    return avatar({ theme: kawaiiDesignTheme, ...args })
+  },
+  args: {
+    glasses: 'glass',
+    hats: 'beanie',
+    hair: 'straightMedium',
+    faceDetails: 'blushes',
+    body: 'teeBasic',
+    ears: 'standard',
+    eyes: 'standard',
+    faceHair: 'mustache',
+    forelock: 'short',
+    head: 'standard',
+    mouth: 'smile',
+    neck: 'standard',
+    noses: 'standard',
     size: 300,
   },
 }
