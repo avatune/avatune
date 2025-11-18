@@ -1,5 +1,6 @@
 import flatdesignTheme from '@avatune/flat-design-theme/vue'
 import kawaiidesignTheme from '@avatune/kawaii-design-theme/vue'
+import micahdesignTheme from '@avatune/micah-design-theme/vue'
 import miniavsTheme from '@avatune/miniavs-theme/vue'
 import type { Theme, VueAvatarItem } from '@avatune/types'
 import type { AvatarProps } from '@avatune/vue'
@@ -17,6 +18,7 @@ export default meta
 
 type FlatDesignArgs = Omit<AvatarProps<typeof flatdesignTheme>, 'theme'>
 type KawaiiDesignArgs = Omit<AvatarProps<typeof kawaiidesignTheme>, 'theme'>
+type MicahDesignArgs = Omit<AvatarProps<typeof micahdesignTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
 
 const getArgTypes = <T extends Theme<VueAvatarItem>>(theme: T) => {
@@ -62,6 +64,18 @@ export const KawaiiDesign: StoryObj<KawaiiDesignArgs> = {
   },
 }
 
+export const MicahDesign: StoryObj<MicahDesignArgs> = {
+  argTypes: getArgTypes(micahdesignTheme),
+  render: (args: MicahDesignArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: micahdesignTheme }),
+    template: '<Avatar :theme="theme" v-bind="args" />',
+  }),
+  args: {
+    size: 300,
+  },
+}
+
 export const Miniavs: StoryObj<MiniavsArgs> = {
   argTypes: getArgTypes(miniavsTheme),
   render: (args: MiniavsArgs) => ({
@@ -77,6 +91,7 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
 const themes = {
   'Flat Design': flatdesignTheme,
   'Kawaii Design': kawaiidesignTheme,
+  'Micah Design': micahdesignTheme,
   'Miniavs': miniavsTheme,
 } as const
 

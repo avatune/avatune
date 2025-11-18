@@ -1,5 +1,6 @@
 import flatdesignTheme from '@avatune/flat-design-theme/vanilla'
 import kawaiidesignTheme from '@avatune/kawaii-design-theme/vanilla'
+import micahdesignTheme from '@avatune/micah-design-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import type { Theme, VanillaAvatarItem } from '@avatune/types'
 import { type AvatarArgs, avatar } from '@avatune/vanilla'
@@ -15,6 +16,7 @@ export default meta
 
 type FlatDesignArgs = Omit<AvatarArgs<typeof flatdesignTheme>, 'theme'>
 type KawaiiDesignArgs = Omit<AvatarArgs<typeof kawaiidesignTheme>, 'theme'>
+type MicahDesignArgs = Omit<AvatarArgs<typeof micahdesignTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarArgs<typeof miniavsTheme>, 'theme'>
 
 const getArgTypes = <T extends Theme<VanillaAvatarItem>>(theme: T) => {
@@ -56,6 +58,16 @@ export const KawaiiDesign: StoryObj<KawaiiDesignArgs> = {
   },
 }
 
+export const MicahDesign: StoryObj<MicahDesignArgs> = {
+  argTypes: getArgTypes(micahdesignTheme),
+  render: (args: MicahDesignArgs) => {
+    return avatar({ theme: micahdesignTheme, ...args })
+  },
+  args: {
+    size: 300,
+  },
+}
+
 export const Miniavs: StoryObj<MiniavsArgs> = {
   argTypes: getArgTypes(miniavsTheme),
   render: (args: MiniavsArgs) => {
@@ -69,6 +81,7 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
 const themes = {
   'Flat Design': flatdesignTheme,
   'Kawaii Design': kawaiidesignTheme,
+  'Micah Design': micahdesignTheme,
   'Miniavs': miniavsTheme,
 } as const
 

@@ -11,6 +11,7 @@
   "dependencies": {
     "@avatune/flat-design-theme": "workspace:*",
     "@avatune/kawaii-design-theme": "workspace:*",
+    "@avatune/micah-design-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",
     "@avatune/react": "workspace:*",
     "@avatune/types": "workspace:*",
