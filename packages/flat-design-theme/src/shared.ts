@@ -10,15 +10,15 @@ import {
 } from './colors'
 
 const getHeadPosition = (size: number) => ({
-  x: size * percentage('32%'),
-  y: size * percentage('24%'),
+  x: size * percentage('28%'),
+  y: size * percentage('32%'),
 })
 
 const fromHeadOffset = fromHead(getHeadPosition)
 
 export default createTheme<BaseAvatarItem>()
   .withStyle({
-    size: 200,
+    size: 164,
     borderRadius: '100%',
   })
   .connectColors('head', ['ears'])
@@ -71,55 +71,55 @@ export default createTheme<BaseAvatarItem>()
   .addColor('noses', AccentColors.LipPink)
   .addColor('noses', AccentColors.BlushPink)
   .addItem('body', 'shirt', {
-    position: fromHeadOffset(-percentage('0%'), percentage('40.7%')),
+    position: fromHeadOffset(-percentage('0%'), percentage('49.63%')),
     layer: 10,
   })
   .addItem('body', 'sweater', {
-    position: fromHeadOffset(-percentage('0%'), percentage('40.7%')),
+    position: fromHeadOffset(-percentage('0%'), percentage('49.63%')),
     layer: 10,
   })
   .addItem('body', 'tshirt', {
-    position: fromHeadOffset(percentage('4.7%'), percentage('40.7%')),
+    position: fromHeadOffset(percentage('5.73%'), percentage('49.63%')),
     layer: 10,
   })
   .addItem('body', 'turtleneck', {
-    position: fromHeadOffset(-percentage('0%'), percentage('40%')),
+    position: fromHeadOffset(-percentage('0%'), percentage('48.78%')),
     layer: 10,
   })
   .addItem('ears', 'standard', {
-    position: fromHeadOffset(-percentage('1.8%'), percentage('20%')),
+    position: fromHeadOffset(-percentage('2.20%'), percentage('24.39%')),
     layer: 100,
   })
   .addItem('eyebrows', 'angry', {
-    position: fromHeadOffset(percentage('6%'), percentage('17%')),
+    position: fromHeadOffset(percentage('7.32%'), percentage('20.73%')),
     layer: 30,
   })
   .addItem('eyebrows', 'small', {
-    position: fromHeadOffset(percentage('9%'), percentage('17%')),
+    position: fromHeadOffset(percentage('10.98%'), percentage('20.73%')),
     layer: 30,
   })
   .addItem('eyebrows', 'standard', {
-    position: fromHeadOffset(percentage('7%'), percentage('17%')),
+    position: fromHeadOffset(percentage('8.54%'), percentage('20.73%')),
     layer: 30,
   })
   .addItem('eyes', 'boring', {
-    position: fromHeadOffset(percentage('8.5%'), percentage('21%')),
+    position: fromHeadOffset(percentage('10.37%'), percentage('25.61%')),
     layer: 20,
   })
   .addItem('eyes', 'dots', {
-    position: fromHeadOffset(percentage('11%'), percentage('21%')),
+    position: fromHeadOffset(percentage('13.41%'), percentage('25.61%')),
     layer: 20,
   })
   .addItem('eyes', 'openCircle', {
-    position: fromHeadOffset(percentage('8.5%'), percentage('21%')),
+    position: fromHeadOffset(percentage('10.37%'), percentage('25.61%')),
     layer: 20,
   })
   .addItem('eyes', 'openRounded', {
-    position: fromHeadOffset(percentage('10%'), percentage('21%')),
+    position: fromHeadOffset(percentage('12.20%'), percentage('25.61%')),
     layer: 20,
   })
   .addItem('hair', 'bobRounded', {
-    position: fromHeadOffset(percentage('0%'), -percentage('3%')),
+    position: fromHeadOffset(percentage('0%'), -percentage('3.66%')),
     layer: 5,
   })
   .addItem('hair', 'bobStraight', {
@@ -127,19 +127,19 @@ export default createTheme<BaseAvatarItem>()
     layer: 5,
   })
   .addItem('hair', 'cupCurly', {
-    position: fromHeadOffset(-percentage('8.1%'), -percentage('8%')),
+    position: fromHeadOffset(-percentage('9.88%'), -percentage('9.76%')),
     layer: 5,
   })
   .addItem('hair', 'short', {
-    position: fromHeadOffset(-percentage('1%'), -percentage('1%')),
+    position: fromHeadOffset(-percentage('1.22%'), -percentage('1.22%')),
     layer: 5,
   })
   .addItem('hair', 'long', {
-    position: fromHeadOffset(-percentage('17%'), -percentage('3%')),
+    position: fromHeadOffset(-percentage('20.73%'), -percentage('3.66%')),
     layer: 5,
   })
   .addItem('hair', 'medium', {
-    position: fromHeadOffset(-percentage('0.4%'), -percentage('2%')),
+    position: fromHeadOffset(-percentage('0.49%'), -percentage('2.44%')),
     layer: 5,
   })
   .addItem('head', 'oval', {
@@ -147,46 +147,46 @@ export default createTheme<BaseAvatarItem>()
     layer: 1,
   })
   .addItem('mouth', 'bigSmile', {
-    position: fromHeadOffset(percentage('10%'), percentage('32%')),
+    position: fromHeadOffset(percentage('12.20%'), percentage('39.02%')),
     layer: 25,
   })
   .addItem('mouth', 'flat', {
-    position: fromHeadOffset(percentage('10%'), percentage('34%')),
+    position: fromHeadOffset(percentage('12.20%'), percentage('41.46%')),
     layer: 25,
   })
   .addItem('mouth', 'frown', {
-    position: fromHeadOffset(percentage('11%'), percentage('33%')),
+    position: fromHeadOffset(percentage('13.41%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'halfOpen', {
-    position: fromHeadOffset(percentage('9%'), percentage('33%')),
+    position: fromHeadOffset(percentage('10.98%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'laugh', {
-    position: fromHeadOffset(percentage('9.8%'), percentage('33%')),
+    position: fromHeadOffset(percentage('11.95%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'smile', {
-    position: fromHeadOffset(percentage('7%'), percentage('30%')),
+    position: fromHeadOffset(percentage('8.54%'), percentage('36.59%')),
     layer: 25,
   })
   .addItem('mouth', 'nervous', {
-    position: fromHeadOffset(percentage('9.5%'), percentage('32%')),
+    position: fromHeadOffset(percentage('11.59%'), percentage('39.02%')),
     layer: 25,
   })
   .addItem('noses', 'big', {
-    position: fromHeadOffset(percentage('15.5%'), percentage('25%')),
+    position: fromHeadOffset(percentage('18.90%'), percentage('30.49%')),
     layer: 15,
   })
   .addItem('noses', 'curve', {
-    position: fromHeadOffset(percentage('16.5%'), percentage('28%')),
+    position: fromHeadOffset(percentage('20.12%'), percentage('34.15%')),
     layer: 15,
   })
   .addItem('noses', 'dots', {
-    position: fromHeadOffset(percentage('16%'), percentage('28%')),
+    position: fromHeadOffset(percentage('19.51%'), percentage('34.15%')),
     layer: 15,
   })
   .addItem('noses', 'halfOval', {
-    position: fromHeadOffset(percentage('16%'), percentage('28%')),
+    position: fromHeadOffset(percentage('19.51%'), percentage('34.15%')),
     layer: 15,
   })

@@ -215,7 +215,7 @@ export const FlatDesignSeed: StoryObj<{
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
   render: ({ seed, size = 300 }) => {
-    return <Avatar theme={kawaiiTheme} seed={seed} size={size} />
+    return <Avatar theme={flatTheme} seed={seed} size={size} />
   },
   args: {
     seed: 'Type any seed phrase here',
