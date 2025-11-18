@@ -78,7 +78,7 @@ export interface ThemeBuilder<
 
   addColor(
     category: keyof ThemeColorPalettes,
-    color: string,
+    color: string | string[],
   ): ThemeBuilder<T, IdMap>
 
   withColorPalettes(
@@ -155,13 +155,17 @@ const createBuilder = <T extends AvatarItem, IdMap extends CategoryIdMap>(
       return createBuilder(addItem(category, 'none', noneItem))
     },
 
-    addColor: (category: keyof ThemeColorPalettes, color: string) => {
+    addColor: (
+      category: keyof ThemeColorPalettes,
+      color: string | string[],
+    ) => {
       const palette = state.palettes[category]
+      const colorsToAdd = Array.isArray(color) ? color : [color]
       const newPalette = Array.isArray(palette)
-        ? [...palette, color]
+        ? [...palette, ...colorsToAdd]
         : palette
-          ? [palette, color]
-          : [color]
+          ? [palette, ...colorsToAdd]
+          : colorsToAdd
 
       return createBuilder({
         ...state,

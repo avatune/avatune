@@ -32,24 +32,22 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Yellow])
   .mapPrediction('skinTone', 'light', [SkinTones.White])
-  .addColor('background', BackgroundColors.Purple)
-  .addColor('background', BackgroundColors.LightBlue)
-  .addColor('background', BackgroundColors.Grey)
-  .addColor('background', BackgroundColors.Rose)
-  .addColor('background', BackgroundColors.Red)
-  .addColor('background', BackgroundColors.Purpose)
-  .addColor('hair', HairColors.Black)
-  .addColor('hair', HairColors.Red)
-  .addColor('hair', HairColors.Brown)
+  .addColor('background', [
+    BackgroundColors.Purple,
+    BackgroundColors.LightBlue,
+    BackgroundColors.Grey,
+    BackgroundColors.Rose,
+    BackgroundColors.Red,
+    BackgroundColors.Purpose,
+  ])
+  .addColor('hair', [HairColors.Black, HairColors.Red, HairColors.Brown])
   .addColor('head', SkinTones.Dark)
-  .addColor('head', SkinTones.Yellow)
-  .addColor('head', SkinTones.White)
-  .addColor('body', ClothingColors.Orange)
-  .addColor('body', ClothingColors.Pink)
-  .addColor('body', ClothingColors.Blue)
-  .addColor('faceHair', HairColors.Black)
-  .addColor('faceHair', HairColors.Brown)
-  .addColor('faceHair', HairColors.Red)
+  .addColor('body', [
+    ClothingColors.Orange,
+    ClothingColors.Pink,
+    ClothingColors.Blue,
+  ])
+  .addColor('faceHair', [HairColors.Black, HairColors.Brown, HairColors.Red])
   .addColor('faceDetails', AccentColors.BlushPink)
   .addColor('eyes', AccentColors.EyeBlack)
   .addColor('glasses', AccentColors.AccessoryBlack)

@@ -44,43 +44,60 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Black])
   .mapPrediction('skinTone', 'medium', [SkinTones.Black])
   .mapPrediction('skinTone', 'light', [SkinTones.Black])
-  .addColor('background', BackgroundColors.PastelPink)
-  .addColor('background', BackgroundColors.PastelBlue)
-  .addColor('background', BackgroundColors.PastelYellow)
-  .addColor('background', BackgroundColors.PastelGreen)
-  .addColor('background', BackgroundColors.PastelPurple)
-  .addColor('background', BackgroundColors.PastelPeach)
-  .addColor('forelock', HairColors.EmeraldGreen)
-  .addColor('forelock', HairColors.LavenderPurple)
-  .addColor('forelock', HairColors.ShockingPink)
-  .addColor('forelock', HairColors.RoseRed)
-  .addColor('forelock', HairColors.GoldenBlond)
-  .addColor('hair', HairColors.EmeraldGreen)
-  .addColor('hair', HairColors.LavenderPurple)
-  .addColor('hair', HairColors.ShockingPink)
-  .addColor('hair', HairColors.RoseRed)
-  .addColor('hair', HairColors.GoldenBlond)
+  .addColor('background', [
+    BackgroundColors.PastelPink,
+    BackgroundColors.PastelBlue,
+    BackgroundColors.PastelYellow,
+    BackgroundColors.PastelGreen,
+    BackgroundColors.PastelPurple,
+    BackgroundColors.PastelPeach,
+  ])
+  .addColor('forelock', [
+    HairColors.EmeraldGreen,
+    HairColors.LavenderPurple,
+    HairColors.ShockingPink,
+    HairColors.RoseRed,
+    HairColors.GoldenBlond,
+  ])
+  .addColor('hair', [
+    HairColors.EmeraldGreen,
+    HairColors.LavenderPurple,
+    HairColors.ShockingPink,
+    HairColors.RoseRed,
+    HairColors.GoldenBlond,
+  ])
   .addColor('head', SkinTones.Black)
-  .addColor('body', ClothingColors.Black)
-  .addColor('body', ClothingColors.MajorelleBlue)
-  .addColor('body', ClothingColors.GoldenPollen)
-  .addColor('body', ClothingColors.Ametist)
+  .addColor('body', [
+    ClothingColors.Black,
+    ClothingColors.MajorelleBlue,
+    ClothingColors.GoldenPollen,
+    ClothingColors.Ametist,
+  ])
   .addColor('ears', SkinTones.Black)
   .addColor('neck', SkinTones.Black)
   .addColor('eyes', SkinTones.Black)
   .addColor('mouth', SkinTones.Black)
   .addColor('noses', SkinTones.Black)
   .addColor('faceDetails', AccentColors.BlushPink)
-  .addColor('faceHair', HairColors.EmeraldGreen)
-  .addColor('faceHair', HairColors.LavenderPurple)
-  .addColor('faceHair', HairColors.ShockingPink)
-  .addColor('faceHair', HairColors.RoseRed)
-  .addColor('faceHair', HairColors.GoldenBlond)
-  .addColor('glasses', ClothingColors.Black)
-  .addColor('hats', ClothingColors.Black)
-  .addColor('hats', ClothingColors.MajorelleBlue)
-  .addColor('hats', ClothingColors.GoldenPollen)
-  .addColor('hats', ClothingColors.Ametist)
+  .addColor('faceHair', [
+    HairColors.EmeraldGreen,
+    HairColors.LavenderPurple,
+    HairColors.ShockingPink,
+    HairColors.RoseRed,
+    HairColors.GoldenBlond,
+  ])
+  .addColor('glasses', [
+    ClothingColors.Black,
+    ClothingColors.MajorelleBlue,
+    ClothingColors.GoldenPollen,
+    ClothingColors.Ametist,
+  ])
+  .addColor('hats', [
+    ClothingColors.Black,
+    ClothingColors.MajorelleBlue,
+    ClothingColors.GoldenPollen,
+    ClothingColors.Ametist,
+  ])
   // Glasses
   .addItem('glasses', 'glass', {
     position: fromHeadOffset(percentage('5.3%'), percentage('29%')),
