@@ -119,11 +119,11 @@ export const KawaiiDesign: StoryObj<KawaiiArgs> = {
   argTypes: {
     glasses: {
       control: { type: 'select' },
-      options: ['none', ...Object.keys(kawaiiTheme.glasses || {})],
+      options: Object.keys(kawaiiTheme.glasses || {}),
     },
     hats: {
       control: { type: 'select' },
-      options: ['none', ...Object.keys(kawaiiTheme.hats || {})],
+      options: Object.keys(kawaiiTheme.hats || {}),
     },
     hair: {
       control: { type: 'select' },

@@ -65,5 +65,8 @@
     "vue": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "colord": "^2.9.3"
   }
 }

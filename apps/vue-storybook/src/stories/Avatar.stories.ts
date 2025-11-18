@@ -172,7 +172,7 @@ export const KawaiiDesign: StoryObj<KawaiiArgs> = {
     },
     neck: {
       control: { type: 'select' },
-      options: ['none', ...Object.keys(kawaiiTheme.neck || {})],
+      options: Object.keys(kawaiiTheme.neck || {}),
     },
     noses: {
       control: { type: 'select' },
@@ -208,7 +208,7 @@ export const KawaiiDesign: StoryObj<KawaiiArgs> = {
     body: 'teeBasic',
     ears: 'standard',
     eyes: 'standard',
-    faceHair: 'none',
+    faceHair: 'mustache',
     forelock: 'short',
     head: 'standard',
     mouth: 'smile',

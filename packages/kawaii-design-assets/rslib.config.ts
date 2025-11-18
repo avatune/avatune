@@ -6,6 +6,12 @@ import { pluginVue } from '@rsbuild/plugin-vue'
 import { defineConfig } from '@rslib/core'
 import { pluginSvgToSvelte } from '../rsbuild-plugin-svg-to-svelte/dist'
 
+const colordImport = "import { colord } from 'colord';"
+const getReplaceAttrValues = (colorPropName = 'color') => ({
+  '#323232': `{${colorPropName}}`,
+  '#FC9D80': `{${colorPropName}}`,
+})
+
 export default defineConfig({
   lib: [
     {
@@ -24,7 +30,25 @@ export default defineConfig({
     },
   },
   plugins: [
-    pluginSvgr(),
+    pluginSvgr({
+      svgrOptions: {
+        replaceAttrValues: getReplaceAttrValues('props.color'),
+        template: (variables, { tpl }) => {
+          return tpl`
+${variables.imports};
+${colordImport}
+
+${variables.interfaces};
+
+function ${variables.componentName}(${variables.props}) {
+  return ${variables.jsx};
+}
+
+${variables.exports};
+`
+        },
+      },
+    }),
     pluginSvgToVue({
       svgo: true,
     }),

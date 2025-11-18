@@ -22,7 +22,7 @@ export default createTheme<BaseAvatarItem>()
     borderRadius: '100%',
   })
   .connectColors('head', ['ears', 'neck'])
-  .connectColors('forelock', ['hair'])
+  .connectColors('forelock', ['hair', 'faceHair'])
   .mapPrediction('hair', 'short', ['short', 'underCut'])
   .mapPrediction('hair', 'medium', ['medium', 'straight', 'curve'])
   .mapPrediction('hair', 'long', [
@@ -32,76 +32,56 @@ export default createTheme<BaseAvatarItem>()
     'puff',
   ])
   .mapPrediction('hairColor', 'black', [
-    HairColors.JetBlack,
-    HairColors.DeepBrown,
+    HairColors.EmeraldGreen,
+    HairColors.LavenderPurple,
+    HairColors.ShockingPink,
+    HairColors.RoseRed,
+    HairColors.GoldenBlond,
   ])
-  .mapPrediction('hairColor', 'brown', [
-    HairColors.ChestnutBrown,
-    HairColors.DeepBrown,
-  ])
+  .mapPrediction('hairColor', 'brown', [HairColors.EmeraldGreen])
   .mapPrediction('hairColor', 'blond', [HairColors.GoldenBlond])
-  .mapPrediction('hairColor', 'gray', [HairColors.DeepBrown])
-  .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
-  .mapPrediction('skinTone', 'medium', [SkinTones.Medium])
-  .mapPrediction('skinTone', 'light', [
-    SkinTones.Light,
-    SkinTones.VeryLight,
-    SkinTones.Porcelain,
-  ])
+  .mapPrediction('hairColor', 'gray', [HairColors.LavenderPurple])
+  .mapPrediction('skinTone', 'dark', [SkinTones.Black])
+  .mapPrediction('skinTone', 'medium', [SkinTones.Black])
+  .mapPrediction('skinTone', 'light', [SkinTones.Black])
   .addColor('background', BackgroundColors.PastelPink)
   .addColor('background', BackgroundColors.PastelBlue)
   .addColor('background', BackgroundColors.PastelYellow)
   .addColor('background', BackgroundColors.PastelGreen)
   .addColor('background', BackgroundColors.PastelPurple)
   .addColor('background', BackgroundColors.PastelPeach)
-  .addColor('forelock', HairColors.JetBlack)
-  .addColor('forelock', HairColors.DeepBrown)
-  .addColor('forelock', HairColors.ChestnutBrown)
+  .addColor('forelock', HairColors.EmeraldGreen)
+  .addColor('forelock', HairColors.LavenderPurple)
+  .addColor('forelock', HairColors.ShockingPink)
+  .addColor('forelock', HairColors.RoseRed)
   .addColor('forelock', HairColors.GoldenBlond)
-  .addColor('forelock', HairColors.PastelPink)
-  .addColor('forelock', HairColors.PastelBlue)
-  .addColor('forelock', HairColors.PastelPurple)
-  .addColor('hair', HairColors.JetBlack)
-  .addColor('hair', HairColors.DeepBrown)
-  .addColor('hair', HairColors.ChestnutBrown)
+  .addColor('hair', HairColors.EmeraldGreen)
+  .addColor('hair', HairColors.LavenderPurple)
+  .addColor('hair', HairColors.ShockingPink)
+  .addColor('hair', HairColors.RoseRed)
   .addColor('hair', HairColors.GoldenBlond)
-  .addColor('hair', HairColors.PastelPink)
-  .addColor('hair', HairColors.PastelBlue)
-  .addColor('hair', HairColors.PastelPurple)
-  .addColor('head', SkinTones.Dark)
-  .addColor('head', SkinTones.Medium)
-  .addColor('head', SkinTones.Light)
-  .addColor('head', SkinTones.VeryLight)
-  .addColor('head', SkinTones.Porcelain)
-  .addColor('body', ClothingColors.BrightPink)
-  .addColor('body', ClothingColors.SoftPeach)
-  .addColor('body', ClothingColors.MintGreen)
-  .addColor('body', ClothingColors.SkyBlue)
-  .addColor('body', ClothingColors.LavenderPurple)
-  .addColor('body', ClothingColors.SunnyYellow)
-  .addColor('body', ClothingColors.CoralRed)
-  .addColor('ears', SkinTones.Light)
-  .addColor('ears', SkinTones.VeryLight)
-  .addColor('ears', SkinTones.Porcelain)
-  .addColor('neck', SkinTones.Light)
-  .addColor('neck', SkinTones.VeryLight)
-  .addColor('neck', SkinTones.Porcelain)
-  .addColor('eyes', AccentColors.EyeWhite)
-  .addColor('eyes', AccentColors.Black)
-  .addColor('mouth', AccentColors.LipPink)
-  .addColor('mouth', AccentColors.Black)
-  .addColor('noses', AccentColors.LipPink)
-  .addColor('noses', AccentColors.Black)
+  .addColor('head', SkinTones.Black)
+  .addColor('body', ClothingColors.Black)
+  .addColor('body', ClothingColors.MajorelleBlue)
+  .addColor('body', ClothingColors.GoldenPollen)
+  .addColor('body', ClothingColors.Ametist)
+  .addColor('ears', SkinTones.Black)
+  .addColor('neck', SkinTones.Black)
+  .addColor('eyes', SkinTones.Black)
+  .addColor('mouth', SkinTones.Black)
+  .addColor('noses', SkinTones.Black)
+  .addColor('faceDetails', SkinTones.Black)
+  .addColor('faceHair', HairColors.EmeraldGreen)
+  .addColor('faceHair', HairColors.LavenderPurple)
+  .addColor('faceHair', HairColors.ShockingPink)
+  .addColor('faceHair', HairColors.RoseRed)
+  .addColor('faceHair', HairColors.GoldenBlond)
+  .addColor('glasses', ClothingColors.Black)
+  .addColor('hats', ClothingColors.Black)
+  .addColor('hats', ClothingColors.MajorelleBlue)
+  .addColor('hats', ClothingColors.GoldenPollen)
+  .addColor('hats', ClothingColors.Ametist)
   .addColor('faceDetails', AccentColors.BlushPink)
-  .addColor('faceHair', HairColors.JetBlack)
-  .addColor('faceHair', HairColors.DeepBrown)
-  .addColor('faceHair', HairColors.ChestnutBrown)
-  .addColor('glasses', ClothingColors.BrightPink)
-  .addColor('glasses', ClothingColors.MintGreen)
-  .addColor('glasses', ClothingColors.LavenderPurple)
-  .addColor('hats', ClothingColors.BrightPink)
-  .addColor('hats', ClothingColors.MintGreen)
-  .addColor('hats', ClothingColors.LavenderPurple)
   // Glasses
   .addItem('glasses', 'glass', {
     position: fromHeadOffset(percentage('5.3%'), percentage('29%')),
@@ -109,11 +89,11 @@ export default createTheme<BaseAvatarItem>()
   })
   // Hats
   .addItem('hats', 'beanie', {
-    position: fromHeadOffset(percentage('4%'), percentage('10%')),
+    position: fromHeadOffset(percentage('4%'), percentage('6%')),
     layer: 60,
   })
   .addItem('hats', 'hat', {
-    position: fromHeadOffset(-percentage('0%'), percentage('10%')),
+    position: fromHeadOffset(-percentage('0%'), percentage('6%')),
     layer: 60,
   })
   // Hair
@@ -203,8 +183,8 @@ export default createTheme<BaseAvatarItem>()
   })
   // Face Hair
   .addItem('faceHair', 'bigBeard', {
-    position: fromHeadOffset(percentage('5%'), percentage('35%')),
-    layer: 30,
+    position: fromHeadOffset(percentage('5%'), percentage('38%')),
+    layer: 21,
   })
   .addItem('faceHair', 'chevronMustache', {
     position: fromHeadOffset(percentage('11.5%'), percentage('40.5%')),
@@ -213,10 +193,6 @@ export default createTheme<BaseAvatarItem>()
   .addItem('faceHair', 'mustache', {
     position: fromHeadOffset(percentage('12.5%'), percentage('40%')),
     layer: 30,
-  })
-  .addItem('faceHair', 'none', {
-    position: { x: '0%', y: '0%' },
-    layer: 0,
   })
   // Forelock
   .addItem('forelock', 'bubble', {
@@ -261,5 +237,5 @@ export default createTheme<BaseAvatarItem>()
   // Noses
   .addItem('noses', 'standard', {
     position: fromHeadOffset(percentage('17%'), percentage('35%')),
-    layer: 18,
+    layer: 22,
   })

@@ -233,6 +233,9 @@
     "packages/kawaii-design-assets": {
       "name": "@avatune/kawaii-design-assets",
       "version": "0.0.0",
+      "dependencies": {
+        "colord": "^2.9.3",
+      },
       "devDependencies": {
         "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
         "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
