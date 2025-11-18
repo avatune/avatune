@@ -39,6 +39,7 @@
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
         "@avatune/kawaii-design-theme": "workspace:*",
+        "@avatune/miniavs-theme": "workspace:*",
         "@avatune/react": "workspace:*",
         "@avatune/types": "workspace:*",
         "react": "^19.2.0",
@@ -69,6 +70,7 @@
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
         "@avatune/kawaii-design-theme": "workspace:*",
+        "@avatune/miniavs-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "@sveltejs/kit": "^2.0.0",
@@ -110,6 +112,7 @@
       "dependencies": {
         "@avatune/flat-design-theme": "workspace:*",
         "@avatune/kawaii-design-theme": "workspace:*",
+        "@avatune/miniavs-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",
         "vue": "^3.5.22",
@@ -376,6 +379,7 @@
       "name": "@avatune/rsbuild-plugin-raw-svg",
       "version": "0.0.1",
       "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
         "@rslib/core": "^0.16.1",
         "@types/node": "^24.9.1",
         "typescript": "^5.9.3",

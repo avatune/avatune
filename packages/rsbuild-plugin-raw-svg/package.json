@@ -18,6 +18,7 @@
     "dev": "rslib build --watch"
   },
   "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "@types/node": "^24.9.1",
     "typescript": "^5.9.3"
