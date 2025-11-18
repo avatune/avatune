@@ -40,7 +40,7 @@ export interface ThemeBuilder<
   MouthIds extends string = never,
   NosesIds extends string = never,
   FaceHairIds extends string = never,
-  BlushesIds extends string = never,
+  FaceDetailsIds extends string = never,
   GlassesIds extends string = never,
 > {
   readonly _state: BuilderState<T>
@@ -58,7 +58,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -78,7 +78,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -97,7 +97,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -116,7 +116,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -135,7 +135,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -154,7 +154,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -173,7 +173,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -192,7 +192,7 @@ export interface ThemeBuilder<
     MouthIds | Id,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -211,7 +211,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds | Id,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -230,11 +230,11 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds | Id,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   addItem<Id extends string>(
-    category: 'blushes',
+    category: 'faceDetails',
     identifier: Id,
     config: ItemConfig,
     itemSpecific?: Partial<T>,
@@ -249,7 +249,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds | Id,
+    FaceDetailsIds | Id,
     GlassesIds
   >
   addItem<Id extends string>(
@@ -268,7 +268,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds | Id
   >
 
@@ -286,7 +286,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -304,7 +304,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -321,7 +321,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -340,7 +340,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
   mapPrediction(
@@ -358,7 +358,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -376,7 +376,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -391,7 +391,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -409,7 +409,7 @@ export interface ThemeBuilder<
     MouthIds,
     NosesIds,
     FaceHairIds,
-    BlushesIds,
+    FaceDetailsIds,
     GlassesIds
   >
 
@@ -424,7 +424,7 @@ export interface ThemeBuilder<
     mouth: Record<MouthIds, T>
     noses: Record<NosesIds, T>
     faceHair: Record<FaceHairIds, T>
-    blushes: Record<BlushesIds, T>
+    faceDetails: Record<FaceDetailsIds, T>
     glasses: Record<GlassesIds, T>
     colorPalettes: ThemeColorPalettes
     predictorMappings: ThemePredictorMappings
@@ -443,7 +443,7 @@ const createBuilder = <
   MouthIds extends string = never,
   NosesIds extends string = never,
   FaceHairIds extends string = never,
-  BlushesIds extends string = never,
+  FaceDetailsIds extends string = never,
   GlassesIds extends string = never,
 >(
   state: BuilderState<T>,
@@ -458,7 +458,7 @@ const createBuilder = <
   MouthIds,
   NosesIds,
   FaceHairIds,
-  BlushesIds,
+  FaceDetailsIds,
   GlassesIds
 > => {
   const addItem = (
@@ -617,7 +617,7 @@ const createBuilder = <
         mouth: state.items.mouth as Record<MouthIds, T>,
         noses: state.items.noses as Record<NosesIds, T>,
         faceHair: state.items.faceHair as Record<FaceHairIds, T>,
-        blushes: state.items.blushes as Record<BlushesIds, T>,
+        faceDetails: state.items.faceDetails as Record<FaceDetailsIds, T>,
         glasses: state.items.glasses as Record<GlassesIds, T>,
         colorPalettes: state.palettes as ThemeColorPalettes,
         predictorMappings: state.predictorMappings,

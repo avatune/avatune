@@ -63,9 +63,9 @@ export const MiniAvs: StoryObj<MiniavsArgs> = {
       control: { type: 'select' },
       options: Object.keys(miniavsTheme.body),
     },
-    blushes: {
+    faceDetails: {
       control: { type: 'select' },
-      options: Object.keys(miniavsTheme.blushes),
+      options: Object.keys(miniavsTheme.faceDetails),
     },
     eyes: {
       control: { type: 'select' },
@@ -92,7 +92,7 @@ export const MiniAvs: StoryObj<MiniavsArgs> = {
       options: Object.keys(miniavsTheme.mouth),
     },
     bodyColor: { control: { type: 'color' } },
-    blushesColor: { control: { type: 'color' } },
+    faceDetailsColor: { control: { type: 'color' } },
     eyesColor: { control: { type: 'color' } },
     faceHairColor: { control: { type: 'color' } },
     glassesColor: { control: { type: 'color' } },
@@ -104,7 +104,7 @@ export const MiniAvs: StoryObj<MiniavsArgs> = {
   render: (args) => <Avatar theme={miniavsTheme} {...args} />,
   args: {
     body: 'standard',
-    blushes: 'standard',
+    faceDetails: 'standard',
     eyes: 'standard',
     hair: 'classic1',
     head: 'standard',

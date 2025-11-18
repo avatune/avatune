@@ -146,7 +146,7 @@ export interface ThemeColorPalettes {
   background: ColorOptions
   hair: ColorOptions
   faceHair: ColorOptions
-  blushes: ColorOptions
+  faceDetails: ColorOptions
   glasses: ColorOptions
   head: ColorOptions
   body: ColorOptions
@@ -185,7 +185,7 @@ export interface Theme<T extends AvatarItem> {
   eyes: AvatarItemCollection<T>
   hair: AvatarItemCollection<T>
   faceHair: AvatarItemCollection<T>
-  blushes: AvatarItemCollection<T>
+  faceDetails: AvatarItemCollection<T>
   glasses: AvatarItemCollection<T>
   head: AvatarItemCollection<T>
   mouth: AvatarItemCollection<T>
@@ -240,7 +240,7 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   eyes?: ExtractIdentifiers<T['eyes']>
   hair?: ExtractIdentifiers<T['hair']>
   faceHair?: ExtractIdentifiers<T['faceHair']>
-  blushes?: ExtractIdentifiers<T['blushes']>
+  faceDetails?: ExtractIdentifiers<T['faceDetails']>
   glasses?: ExtractIdentifiers<T['glasses']>
   head?: ExtractIdentifiers<T['head']>
   mouth?: ExtractIdentifiers<T['mouth']>
@@ -252,7 +252,7 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   eyesColor?: string
   hairColor?: string
   faceHairColor?: string
-  blushesColor?: string
+  faceDetailsColor?: string
   glassesColor?: string
   headColor?: string
   mouthColor?: string

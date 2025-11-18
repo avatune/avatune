@@ -1,10 +1,10 @@
 import {
-  BlushesStandard,
   BodyGolf,
   BodyStandard,
   EyesConfident,
   EyesHappy,
   EyesStandard,
+  FaceDetailsBlushes,
   FaceHairFreddy,
   FaceHairHorshoe,
   FaceHairPencilThin,
@@ -34,8 +34,8 @@ export default shared
     standard: { Component: BodyStandard },
     golf: { Component: BodyGolf },
   })
-  .withComponents('blushes', {
-    standard: { Component: BlushesStandard },
+  .withComponents('faceDetails', {
+    standard: { Component: FaceDetailsBlushes },
   })
   .withComponents('eyes', {
     standard: { Component: EyesStandard },

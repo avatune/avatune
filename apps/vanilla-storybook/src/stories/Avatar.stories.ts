@@ -102,9 +102,9 @@ export const MiniAvs: StoryObj<
       control: { type: 'select' },
       options: Object.keys(miniavsTheme.body),
     },
-    blushes: {
+    faceDetails: {
       control: { type: 'select' },
-      options: Object.keys(miniavsTheme.blushes),
+      options: Object.keys(miniavsTheme.faceDetails),
     },
     eyes: {
       control: { type: 'select' },
@@ -133,7 +133,7 @@ export const MiniAvs: StoryObj<
     bodyColor: {
       control: { type: 'color' },
     },
-    blushesColor: {
+    faceDetailsColor: {
       control: { type: 'color' },
     },
     eyesColor: {
@@ -163,7 +163,7 @@ export const MiniAvs: StoryObj<
   },
   args: {
     body: 'standard',
-    blushes: 'standard',
+    faceDetails: 'standard',
     eyes: 'standard',
     hair: 'classic1',
     head: 'standard',

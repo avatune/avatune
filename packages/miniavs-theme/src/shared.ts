@@ -50,7 +50,7 @@ export default createTheme<BaseAvatarItem>()
   .addColor('faceHair', HairColors.Black)
   .addColor('faceHair', HairColors.Brown)
   .addColor('faceHair', HairColors.Red)
-  .addColor('blushes', AccentColors.BlushPink)
+  .addColor('faceDetails', AccentColors.BlushPink)
   .addColor('eyes', AccentColors.EyeBlack)
   .addColor('glasses', AccentColors.AccessoryBlack)
   .addColor('mouth', AccentColors.MouthPink)
@@ -62,7 +62,7 @@ export default createTheme<BaseAvatarItem>()
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
     layer: 10,
   })
-  .addItem('blushes', 'standard', {
+  .addItem('faceDetails', 'standard', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
     layer: 25,
   })

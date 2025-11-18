@@ -1,13 +1,13 @@
-import BlushesStandard from './svg/blushes/standard.svg?vue'
 import BodyGolf from './svg/body/golf.svg?vue'
 import BodyStandard from './svg/body/standard.svg?vue'
 import EyesConfident from './svg/eyes/confident.svg?vue'
 import EyesHappy from './svg/eyes/happy.svg?vue'
 import EyesStandard from './svg/eyes/standard.svg?vue'
-import FaceHairFreddy from './svg/face-hair/freddy.svg?vue'
-import FaceHairHorshoe from './svg/face-hair/horshoe.svg?vue'
-import FaceHairPencilThin from './svg/face-hair/pencilThin.svg?vue'
-import FaceHairPencilThinBeard from './svg/face-hair/pencilThinBeard.svg?vue'
+import FaceDetailsBlushes from './svg/faceDetails/blushes.svg?vue'
+import FaceHairFreddy from './svg/faceHair/freddy.svg?vue'
+import FaceHairHorshoe from './svg/faceHair/horshoe.svg?vue'
+import FaceHairPencilThin from './svg/faceHair/pencilThin.svg?vue'
+import FaceHairPencilThinBeard from './svg/faceHair/pencilThinBeard.svg?vue'
 import GlassesGlasses from './svg/glasses/glasses.svg?vue'
 import HairBaldness from './svg/hair/baldness.svg?vue'
 import HairClassic1 from './svg/hair/classic1.svg?vue'
@@ -25,7 +25,7 @@ import MouthStandard from './svg/mouth/standard.svg?vue'
 import MouthToothless from './svg/mouth/toothless.svg?vue'
 
 export {
-  BlushesStandard,
+  FaceDetailsBlushes,
   BodyGolf,
   BodyStandard,
   EyesConfident,
