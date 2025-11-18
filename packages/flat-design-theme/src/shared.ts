@@ -84,6 +84,7 @@ export default createTheme<BaseAvatarItem>()
   })
   .addItem('body', 'turtleneck', {
     position: fromHeadOffset(-percentage('0%'), percentage('40%')),
+    layer: 10,
   })
   .addItem('ears', 'standard', {
     position: fromHeadOffset(-percentage('1.8%'), percentage('20%')),

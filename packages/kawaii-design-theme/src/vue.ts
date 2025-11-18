@@ -1,14 +1,14 @@
 import {
-  AccessoriesBeanie,
-  AccessoriesGlass,
-  AccessoriesHat,
-  BackHairBraids,
-  BackHairHijab,
-  BackHairMedium,
-  BackHairPuff,
-  BackHairStraightLong,
-  BackHairStraightMedium,
-  BlushesStandart,
+  GlassesGlass,
+  HatsBeanie,
+  HatsHat,
+  HairBraids,
+  HairHijab,
+  HairMedium,
+  HairPuff,
+  HairStraightLong,
+  HairStraightMedium,
+  FaceDetailsBlushes,
   BodyBlouse,
   BodyFlowerCardigan,
   BodySimpleCardigan,
@@ -20,42 +20,44 @@ import {
   BodyTeeButtoned,
   BodyTeePocket,
   BodyTeeRound,
-  EarsStandart,
-  EyesStandart,
+  EarsStandard,
+  EyesStandard,
   FaceHairBigBeard,
   FaceHairChevronMustache,
   FaceHairMustache,
-  FrontHairBubble,
-  FrontHairCurve,
-  FrontHairShort,
-  FrontHairSplit,
-  FrontHairStraight,
-  FrontHairUnderCut,
-  HeadStandart,
+  ForelockBubble,
+  ForelockCurve,
+  ForelockShort,
+  ForelockSplit,
+  ForelockStraight,
+  ForelockUnderCut,
+  HeadStandard,
   MouthSmile,
-  NeckStandart,
-  NosesStandart,
+  NeckStandard,
+  NosesStandard,
 } from '@avatune/kawaii-design-assets/vue'
 import type { VueAvatarItem, VueTheme } from '@avatune/types'
 import shared from './shared'
 
 export default shared
   .toFramework<VueAvatarItem>()
-  .withComponents('accessories', {
-    beanie: { Component: AccessoriesBeanie },
-    glass: { Component: AccessoriesGlass },
-    hat: { Component: AccessoriesHat },
+  .withComponents('glasses', {
+    glass: { Component: GlassesGlass },
   })
-  .withComponents('backHair', {
-    braids: { Component: BackHairBraids },
-    hijab: { Component: BackHairHijab },
-    medium: { Component: BackHairMedium },
-    puff: { Component: BackHairPuff },
-    straightLong: { Component: BackHairStraightLong },
-    straightMedium: { Component: BackHairStraightMedium },
+  .withComponents('hats', {
+    beanie: { Component: HatsBeanie },
+    hat: { Component: HatsHat },
   })
-  .withComponents('blushes', {
-    standart: { Component: BlushesStandart },
+  .withComponents('hair', {
+    braids: { Component: HairBraids },
+    hijab: { Component: HairHijab },
+    medium: { Component: HairMedium },
+    puff: { Component: HairPuff },
+    straightLong: { Component: HairStraightLong },
+    straightMedium: { Component: HairStraightMedium },
+  })
+  .withComponents('faceDetails', {
+    blushes: { Component: FaceDetailsBlushes },
   })
   .withComponents('body', {
     blouse: { Component: BodyBlouse },
@@ -71,34 +73,34 @@ export default shared
     teeRound: { Component: BodyTeeRound },
   })
   .withComponents('ears', {
-    standart: { Component: EarsStandart },
+    standard: { Component: EarsStandard },
   })
   .withComponents('eyes', {
-    standart: { Component: EyesStandart },
+    standard: { Component: EyesStandard },
   })
   .withComponents('faceHair', {
     bigBeard: { Component: FaceHairBigBeard },
     chevronMustache: { Component: FaceHairChevronMustache },
     mustache: { Component: FaceHairMustache },
   })
-  .withComponents('hair', {
-    bubble: { Component: FrontHairBubble },
-    curve: { Component: FrontHairCurve },
-    short: { Component: FrontHairShort },
-    split: { Component: FrontHairSplit },
-    straight: { Component: FrontHairStraight },
-    underCut: { Component: FrontHairUnderCut },
+  .withComponents('forelock', {
+    bubble: { Component: ForelockBubble },
+    curve: { Component: ForelockCurve },
+    short: { Component: ForelockShort },
+    split: { Component: ForelockSplit },
+    straight: { Component: ForelockStraight },
+    underCut: { Component: ForelockUnderCut },
   })
   .withComponents('head', {
-    standart: { Component: HeadStandart },
+    standard: { Component: HeadStandard },
   })
   .withComponents('mouth', {
     smile: { Component: MouthSmile },
   })
   .withComponents('neck', {
-    standart: { Component: NeckStandart },
+    standard: { Component: NeckStandard },
   })
   .withComponents('noses', {
-    standart: { Component: NosesStandart },
+    standard: { Component: NosesStandard },
   })
   .build() satisfies VueTheme

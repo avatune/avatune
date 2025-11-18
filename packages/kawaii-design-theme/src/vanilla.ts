@@ -1,14 +1,7 @@
 import {
-  accessoriesBeanie,
-  accessoriesGlass,
-  accessoriesHat,
-  backHairBraids,
-  backHairHijab,
-  backHairMedium,
-  backHairPuff,
-  backHairStraightLong,
-  backHairStraightMedium,
-  blushesStandart,
+  glassesGlass,
+  hatsBeanie,
+  hatsHat,
   bodyBlouse,
   bodyFlowerCardigan,
   bodySimpleCardigan,
@@ -20,42 +13,51 @@ import {
   bodyTeeButtoned,
   bodyTeePocket,
   bodyTeeRound,
-  earsStandart,
-  eyesStandart,
+  earsStandard,
+  eyesStandard,
+  faceDetailsBlushes,
   faceHairBigBeard,
   faceHairChevronMustache,
   faceHairMustache,
-  frontHairBubble,
-  frontHairCurve,
-  frontHairShort,
-  frontHairSplit,
-  frontHairStraight,
-  frontHairUnderCut,
-  headStandart,
+  forelockBubble,
+  forelockCurve,
+  forelockShort,
+  forelockSplit,
+  forelockStraight,
+  forelockUnderCut,
+  hairBraids,
+  hairHijab,
+  hairMedium,
+  hairPuff,
+  hairStraightLong,
+  hairStraightMedium,
+  headStandard,
   mouthSmile,
-  neckStandart,
-  nosesStandart,
+  neckStandard,
+  nosesStandard,
 } from '@avatune/kawaii-design-assets'
 import type { VanillaAvatarItem, VanillaTheme } from '@avatune/types'
 import shared from './shared'
 
 export default shared
   .toFramework<VanillaAvatarItem>()
-  .withComponents('accessories', {
-    beanie: { code: accessoriesBeanie },
-    glass: { code: accessoriesGlass },
-    hat: { code: accessoriesHat },
+  .withComponents('glasses', {
+    glass: { code: glassesGlass },
   })
-  .withComponents('backHair', {
-    braids: { code: backHairBraids },
-    hijab: { code: backHairHijab },
-    medium: { code: backHairMedium },
-    puff: { code: backHairPuff },
-    straightLong: { code: backHairStraightLong },
-    straightMedium: { code: backHairStraightMedium },
+  .withComponents('hats', {
+    beanie: { code: hatsBeanie },
+    hat: { code: hatsHat },
   })
-  .withComponents('blushes', {
-    standart: { code: blushesStandart },
+  .withComponents('hair', {
+    braids: { code: hairBraids },
+    hijab: { code: hairHijab },
+    medium: { code: hairMedium },
+    puff: { code: hairPuff },
+    straightLong: { code: hairStraightLong },
+    straightMedium: { code: hairStraightMedium },
+  })
+  .withComponents('faceDetails', {
+    blushes: { code: faceDetailsBlushes },
   })
   .withComponents('body', {
     blouse: { code: bodyBlouse },
@@ -71,34 +73,34 @@ export default shared
     teeRound: { code: bodyTeeRound },
   })
   .withComponents('ears', {
-    standart: { code: earsStandart },
+    standard: { code: earsStandard },
   })
   .withComponents('eyes', {
-    standart: { code: eyesStandart },
+    standard: { code: eyesStandard },
   })
   .withComponents('faceHair', {
     bigBeard: { code: faceHairBigBeard },
     chevronMustache: { code: faceHairChevronMustache },
     mustache: { code: faceHairMustache },
   })
-  .withComponents('hair', {
-    bubble: { code: frontHairBubble },
-    curve: { code: frontHairCurve },
-    short: { code: frontHairShort },
-    split: { code: frontHairSplit },
-    straight: { code: frontHairStraight },
-    underCut: { code: frontHairUnderCut },
+  .withComponents('forelock', {
+    bubble: { code: forelockBubble },
+    curve: { code: forelockCurve },
+    short: { code: forelockShort },
+    split: { code: forelockSplit },
+    straight: { code: forelockStraight },
+    underCut: { code: forelockUnderCut },
   })
   .withComponents('head', {
-    standart: { code: headStandart },
+    standard: { code: headStandard },
   })
   .withComponents('mouth', {
     smile: { code: mouthSmile },
   })
   .withComponents('neck', {
-    standart: { code: neckStandart },
+    standard: { code: neckStandard },
   })
   .withComponents('noses', {
-    standart: { code: nosesStandart },
+    standard: { code: nosesStandard },
   })
   .build() satisfies VanillaTheme

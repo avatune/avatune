@@ -22,7 +22,7 @@ export default createTheme<BaseAvatarItem>()
     borderRadius: '100%',
   })
   .connectColors('head', ['ears', 'neck'])
-  .connectColors('hair', ['backHair'])
+  .connectColors('forelock', ['hair'])
   .mapPrediction('hair', 'short', ['short', 'underCut'])
   .mapPrediction('hair', 'medium', ['medium', 'straight', 'curve'])
   .mapPrediction('hair', 'long', [
@@ -54,6 +54,13 @@ export default createTheme<BaseAvatarItem>()
   .addColor('background', BackgroundColors.PastelGreen)
   .addColor('background', BackgroundColors.PastelPurple)
   .addColor('background', BackgroundColors.PastelPeach)
+  .addColor('forelock', HairColors.JetBlack)
+  .addColor('forelock', HairColors.DeepBrown)
+  .addColor('forelock', HairColors.ChestnutBrown)
+  .addColor('forelock', HairColors.GoldenBlond)
+  .addColor('forelock', HairColors.PastelPink)
+  .addColor('forelock', HairColors.PastelBlue)
+  .addColor('forelock', HairColors.PastelPurple)
   .addColor('hair', HairColors.JetBlack)
   .addColor('hair', HairColors.DeepBrown)
   .addColor('hair', HairColors.ChestnutBrown)
@@ -61,13 +68,6 @@ export default createTheme<BaseAvatarItem>()
   .addColor('hair', HairColors.PastelPink)
   .addColor('hair', HairColors.PastelBlue)
   .addColor('hair', HairColors.PastelPurple)
-  .addColor('backHair', HairColors.JetBlack)
-  .addColor('backHair', HairColors.DeepBrown)
-  .addColor('backHair', HairColors.ChestnutBrown)
-  .addColor('backHair', HairColors.GoldenBlond)
-  .addColor('backHair', HairColors.PastelPink)
-  .addColor('backHair', HairColors.PastelBlue)
-  .addColor('backHair', HairColors.PastelPurple)
   .addColor('head', SkinTones.Dark)
   .addColor('head', SkinTones.Medium)
   .addColor('head', SkinTones.Light)
@@ -92,53 +92,57 @@ export default createTheme<BaseAvatarItem>()
   .addColor('mouth', AccentColors.Black)
   .addColor('noses', AccentColors.LipPink)
   .addColor('noses', AccentColors.Black)
-  .addColor('blushes', AccentColors.BlushPink)
+  .addColor('faceDetails', AccentColors.BlushPink)
   .addColor('faceHair', HairColors.JetBlack)
   .addColor('faceHair', HairColors.DeepBrown)
   .addColor('faceHair', HairColors.ChestnutBrown)
-  .addColor('accessories', ClothingColors.BrightPink)
-  .addColor('accessories', ClothingColors.MintGreen)
-  .addColor('accessories', ClothingColors.LavenderPurple)
-  // Accessories
-  .addItem('accessories', 'beanie', {
-    position: fromHeadOffset(percentage('4%'), percentage('10%')),
-    layer: 60,
-  })
-  .addItem('accessories', 'glass', {
+  .addColor('glasses', ClothingColors.BrightPink)
+  .addColor('glasses', ClothingColors.MintGreen)
+  .addColor('glasses', ClothingColors.LavenderPurple)
+  .addColor('hats', ClothingColors.BrightPink)
+  .addColor('hats', ClothingColors.MintGreen)
+  .addColor('hats', ClothingColors.LavenderPurple)
+  // Glasses
+  .addItem('glasses', 'glass', {
     position: fromHeadOffset(percentage('5.3%'), percentage('29%')),
     layer: 50,
   })
-  .addItem('accessories', 'hat', {
+  // Hats
+  .addItem('hats', 'beanie', {
+    position: fromHeadOffset(percentage('4%'), percentage('10%')),
+    layer: 60,
+  })
+  .addItem('hats', 'hat', {
     position: fromHeadOffset(-percentage('0%'), percentage('10%')),
     layer: 60,
   })
-  // Back Hair
-  .addItem('backHair', 'braids', {
+  // Hair
+  .addItem('hair', 'braids', {
     position: fromHeadOffset(-percentage('11.5%'), percentage('9%')),
     layer: 2,
   })
-  .addItem('backHair', 'hijab', {
+  .addItem('hair', 'hijab', {
     position: fromHeadOffset(-percentage('4%'), percentage('10%')),
     layer: 40,
   })
-  .addItem('backHair', 'medium', {
+  .addItem('hair', 'medium', {
     position: fromHeadOffset(-percentage('8%'), percentage('12%')),
     layer: 2,
   })
-  .addItem('backHair', 'puff', {
+  .addItem('hair', 'puff', {
     position: fromHeadOffset(-percentage('7%'), percentage('5%')),
     layer: 2,
   })
-  .addItem('backHair', 'straightLong', {
+  .addItem('hair', 'straightLong', {
     position: fromHeadOffset(-percentage('2.5%'), percentage('10%')),
     layer: 1,
   })
-  .addItem('backHair', 'straightMedium', {
+  .addItem('hair', 'straightMedium', {
     position: fromHeadOffset(-percentage('6%'), percentage('100%')),
     layer: 2,
   })
-  // Blushes
-  .addItem('blushes', 'standart', {
+  // Face Details
+  .addItem('faceDetails', 'blushes', {
     position: fromHeadOffset(percentage('6%'), percentage('37%')),
     layer: 25,
   })
@@ -188,12 +192,12 @@ export default createTheme<BaseAvatarItem>()
     layer: 10,
   })
   // Ears
-  .addItem('ears', 'standart', {
+  .addItem('ears', 'standard', {
     position: fromHeadOffset(-percentage('0%'), percentage('30%')),
     layer: 5,
   })
   // Eyes
-  .addItem('eyes', 'standart', {
+  .addItem('eyes', 'standard', {
     position: fromHeadOffset(percentage('10%'), percentage('33%')),
     layer: 20,
   })
@@ -210,33 +214,37 @@ export default createTheme<BaseAvatarItem>()
     position: fromHeadOffset(percentage('12.5%'), percentage('40%')),
     layer: 30,
   })
-  // Hair
-  .addItem('hair', 'bubble', {
+  .addItem('faceHair', 'none', {
+    position: { x: '0%', y: '0%' },
+    layer: 0,
+  })
+  // Forelock
+  .addItem('forelock', 'bubble', {
     position: fromHeadOffset(percentage('4%'), percentage('13%')),
     layer: 40,
   })
-  .addItem('hair', 'curve', {
+  .addItem('forelock', 'curve', {
     position: fromHeadOffset(percentage('5.5%'), percentage('15%')),
     layer: 40,
   })
-  .addItem('hair', 'short', {
+  .addItem('forelock', 'short', {
     position: fromHeadOffset(percentage('3%'), percentage('11%')),
     layer: 40,
   })
-  .addItem('hair', 'split', {
+  .addItem('forelock', 'split', {
     position: fromHeadOffset(percentage('5%'), percentage('15%')),
     layer: 40,
   })
-  .addItem('hair', 'straight', {
+  .addItem('forelock', 'straight', {
     position: fromHeadOffset(percentage('5%'), percentage('13%')),
     layer: 40,
   })
-  .addItem('hair', 'underCut', {
+  .addItem('forelock', 'underCut', {
     position: fromHeadOffset(percentage('2.8%'), percentage('10%')),
     layer: 40,
   })
   // Head
-  .addItem('head', 'standart', {
+  .addItem('head', 'standard', {
     position: fromHeadOffset(percentage('5%'), percentage('15%')),
     layer: 10,
   })
@@ -246,12 +254,12 @@ export default createTheme<BaseAvatarItem>()
     layer: 22,
   })
   // Neck
-  .addItem('neck', 'standart', {
+  .addItem('neck', 'standard', {
     position: fromHeadOffset(percentage('12%'), percentage('35%')),
     layer: 8,
   })
   // Noses
-  .addItem('noses', 'standart', {
+  .addItem('noses', 'standard', {
     position: fromHeadOffset(percentage('17%'), percentage('35%')),
     layer: 18,
   })

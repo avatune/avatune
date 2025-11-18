@@ -1,19 +1,8 @@
-// Accessories
-import AccessoriesBeanie from './svg/accessories/beanie.svg?react'
-import AccessoriesGlass from './svg/accessories/glass.svg?react'
-import AccessoriesHat from './svg/accessories/hat.svg?react'
-
-// Back Hair
-import BackHairBraids from './svg/back-hair/braids.svg?react'
-import BackHairHijab from './svg/back-hair/hijab.svg?react'
-import BackHairMedium from './svg/back-hair/medium.svg?react'
-import BackHairPuff from './svg/back-hair/puff.svg?react'
-import BackHairStraightLong from './svg/back-hair/straight-long.svg?react'
-import BackHairStraightMedium from './svg/back-hair/straight-medium.svg?react'
-
-// Blushes
-import BlushesStandart from './svg/blushes/standart.svg?react'
-
+// Glasses
+import GlassesGlass from './svg/glasses/glass.svg?react'
+// Hats
+import HatsBeanie from './svg/hats/beanie.svg?react'
+import HatsHat from './svg/hats/hat.svg?react'
 // Body
 import BodyBlouse from './svg/body/blouse.svg?react'
 import BodyFlowerCardigan from './svg/body/flower-cardigan.svg?react'
@@ -26,52 +15,58 @@ import BodyTeeBasic from './svg/body/tee-basic.svg?react'
 import BodyTeeButtoned from './svg/body/tee-buttoned.svg?react'
 import BodyTeePocket from './svg/body/tee-pocket.svg?react'
 import BodyTeeRound from './svg/body/tee-round.svg?react'
-
 // Ears
-import EarsStandart from './svg/ears/standart.svg?react'
-
+import EarsStandard from './svg/ears/standard.svg?react'
 // Eyes
-import EyesStandart from './svg/eyes/standart.svg?react'
-
+import EyesStandard from './svg/eyes/standard.svg?react'
+// Face Details
+import FaceDetailsBlushes from './svg/face-details/blushes.svg?react'
 // Face Hair
 import FaceHairBigBeard from './svg/face-hair/big-beard.svg?react'
 import FaceHairChevronMustache from './svg/face-hair/chevron-mustache.svg?react'
 import FaceHairMustache from './svg/face-hair/mustache.svg?react'
-
-// Front Hair
-import FrontHairBubble from './svg/front-hair/bubble.svg?react'
-import FrontHairCurve from './svg/front-hair/curve.svg?react'
-import FrontHairShort from './svg/front-hair/short.svg?react'
-import FrontHairSplit from './svg/front-hair/split.svg?react'
-import FrontHairStraight from './svg/front-hair/straight.svg?react'
-import FrontHairUnderCut from './svg/front-hair/under-cut.svg?react'
+// Forelock
+import ForelockBubble from './svg/forelock/bubble.svg?react'
+import ForelockCurve from './svg/forelock/curve.svg?react'
+import ForelockShort from './svg/forelock/short.svg?react'
+import ForelockSplit from './svg/forelock/split.svg?react'
+import ForelockStraight from './svg/forelock/straight.svg?react'
+import ForelockUnderCut from './svg/forelock/under-cut.svg?react'
+// Hair
+import HairBraids from './svg/hair/braids.svg?react'
+import HairHijab from './svg/hair/hijab.svg?react'
+import HairMedium from './svg/hair/medium.svg?react'
+import HairPuff from './svg/hair/puff.svg?react'
+import HairStraightLong from './svg/hair/straight-long.svg?react'
+import HairStraightMedium from './svg/hair/straight-medium.svg?react'
 
 // Head
-import HeadStandart from './svg/head/standart.svg?react'
+import HeadStandard from './svg/head/standard.svg?react'
 
 // Mouth
 import MouthSmile from './svg/mouth/smile.svg?react'
 
 // Neck
-import NeckStandart from './svg/neck/standart.svg?react'
+import NeckStandard from './svg/neck/standard.svg?react'
 
 // Noses
-import NosesStandart from './svg/noses/standart.svg?react'
+import NosesStandard from './svg/noses/standard.svg?react'
 
 export {
-  // Accessories
-  AccessoriesBeanie,
-  AccessoriesGlass,
-  AccessoriesHat,
-  // Back Hair
-  BackHairBraids,
-  BackHairHijab,
-  BackHairMedium,
-  BackHairPuff,
-  BackHairStraightLong,
-  BackHairStraightMedium,
-  // Blushes
-  BlushesStandart,
+  // Glasses
+  GlassesGlass,
+  // Hats
+  HatsBeanie,
+  HatsHat,
+  // Hair
+  HairBraids,
+  HairHijab,
+  HairMedium,
+  HairPuff,
+  HairStraightLong,
+  HairStraightMedium,
+  // Face Details
+  FaceDetailsBlushes,
   // Body
   BodyBlouse,
   BodyFlowerCardigan,
@@ -85,27 +80,26 @@ export {
   BodyTeePocket,
   BodyTeeRound,
   // Ears
-  EarsStandart,
+  EarsStandard,
   // Eyes
-  EyesStandart,
+  EyesStandard,
   // Face Hair
   FaceHairBigBeard,
   FaceHairChevronMustache,
   FaceHairMustache,
-  // Front Hair
-  FrontHairBubble,
-  FrontHairCurve,
-  FrontHairShort,
-  FrontHairSplit,
-  FrontHairStraight,
-  FrontHairUnderCut,
+  // Forelock
+  ForelockBubble,
+  ForelockCurve,
+  ForelockShort,
+  ForelockSplit,
+  ForelockStraight,
+  ForelockUnderCut,
   // Head
-  HeadStandart,
+  HeadStandard,
   // Mouth
   MouthSmile,
   // Neck
-  NeckStandart,
+  NeckStandard,
   // Noses
-  NosesStandart,
+  NosesStandard,
 }
-
