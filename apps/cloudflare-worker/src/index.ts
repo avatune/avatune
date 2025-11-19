@@ -1,5 +1,6 @@
 import flatDesignTheme from '@avatune/flat-design-theme/vanilla'
 import kawaiiDesignTheme from '@avatune/kawaii-design-theme/vanilla'
+import micahDesignTheme from '@avatune/micah-design-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import type {
   AvatarConfig,
@@ -12,6 +13,7 @@ const THEMES = {
   'kawaii-design': kawaiiDesignTheme,
   'flat-design': flatDesignTheme,
   miniavs: miniavsTheme,
+  'micah-design': micahDesignTheme,
 } as const
 
 type ThemeName = keyof typeof THEMES

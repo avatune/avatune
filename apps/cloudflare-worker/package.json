@@ -1,22 +1,23 @@
 {
-	"name": "@avatune/cloudflare-worker",
-	"version": "0.0.0",
-	"private": true,
-	"scripts": {
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"cf-typegen": "wrangler types"
-	},
-	"dependencies": {
-		"@avatune/flat-design-theme": "workspace:*",
-		"@avatune/kawaii-design-theme": "workspace:*",
-		"@avatune/miniavs-theme": "workspace:*",
-		"@avatune/types": "workspace:*",
-		"@avatune/vanilla": "workspace:*"
-	},
-	"devDependencies": {
-		"typescript": "^5.9.3",
-		"wrangler": "^3.101.0"
-	}
+  "name": "@avatune/cloudflare-worker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@avatune/flat-design-theme": "workspace:*",
+    "@avatune/kawaii-design-theme": "workspace:*",
+    "@avatune/micah-design-theme": "workspace:*",
+    "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/types": "workspace:*",
+    "@avatune/vanilla": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "wrangler": "^3.101.0"
+  }
 }
