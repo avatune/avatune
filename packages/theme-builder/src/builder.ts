@@ -155,17 +155,9 @@ const createBuilder = <T extends AvatarItem, IdMap extends CategoryIdMap>(
       return createBuilder(addItem(category, 'none', noneItem))
     },
 
-    addColors: (
-      category: keyof ThemeColorPalettes,
-      color: string | string[],
-    ) => {
+    addColors: (category: keyof ThemeColorPalettes, colors: string[]) => {
       const palette = state.palettes[category]
-      const colorsToAdd = Array.isArray(color) ? color : [color]
-      const newPalette = Array.isArray(palette)
-        ? [...palette, ...colorsToAdd]
-        : palette
-          ? [palette, ...colorsToAdd]
-          : colorsToAdd
+      const newPalette = palette ? [...palette, ...colors] : colors
 
       return createBuilder({
         ...state,
