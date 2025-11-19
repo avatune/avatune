@@ -23,6 +23,10 @@
       "types": "./dist/svelte.d.ts",
       "svelte": "./dist/svelte.js",
       "import": "./dist/svelte.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "import": "./dist/react-native.js"
     }
   },
   "types": "./dist/vanilla.d.ts",
@@ -45,15 +49,17 @@
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
     "@types/react": "^19.0.8",
+    "react": ">=18.0.0",
+    "react-native": "^0.82.1",
     "svelte": "^5.0.0",
     "typescript": "^5.9.3",
-    "vue": "^3.5.22",
-    "react": ">=18.0.0"
+    "vue": "^3.5.22"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "svelte": ">=5.0.0",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "react-native": "^0.82.1"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -63,6 +69,9 @@
       "optional": true
     },
     "vue": {
+      "optional": true
+    },
+    "react-native": {
       "optional": true
     }
   },

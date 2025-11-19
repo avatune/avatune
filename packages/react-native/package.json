@@ -1,5 +1,5 @@
 {
-  "name": "@avatune/types",
+  "name": "@avatune/react-native",
   "version": "0.0.0",
   "type": "module",
   "exports": {
@@ -17,17 +17,25 @@
     "dev": "rslib build --watch",
     "check-types": "tsc --noEmit"
   },
+  "dependencies": {
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
+  },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
+    "@rsbuild/plugin-react": "^1.4.1",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
     "@types/react": "^19.0.8",
-    "typescript": "^5.9.3",
-    "react": ">=18.0.0",
+    "react": "^19.2.0",
     "react-native": "^0.76.5",
     "react-native-svg": "^15.9.0",
-    "svelte": ">=5.0.0",
-    "vue": "^3.5.22"
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-svg": ">=13.0.0"
   },
   "license": "MIT"
 }

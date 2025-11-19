@@ -1,4 +1,5 @@
 import type { ComponentType, SVGProps } from 'react'
+import type { SvgProps } from 'react-native-svg'
 import type { Component as SvelteComponent } from 'svelte'
 import type { SVGAttributes as SvelteSVGAttributes } from 'svelte/elements'
 import type { DefineComponent, SVGAttributes as VueSVGAttributes } from 'vue'
@@ -45,6 +46,14 @@ export interface ReactAvatarItem extends BaseAvatarItem {
 }
 
 /**
+ * React Native avatar item with a React Native component
+ */
+export interface ReactNativeAvatarItem extends BaseAvatarItem {
+  /** React Native component to render */
+  Component: ComponentType<SvgProps>
+}
+
+/**
  * Vue avatar item with a Vue component
  */
 export interface VueAvatarItem extends BaseAvatarItem {
@@ -71,12 +80,13 @@ export interface SvelteAvatarItem extends BaseAvatarItem {
 }
 
 /**
- * Avatar item can be vanilla, React, Vue, or Svelte
+ * Avatar item can be vanilla, React, React Native, Vue, or Svelte
  */
 export type AvatarItem =
   | BaseAvatarItem
   | VanillaAvatarItem
   | ReactAvatarItem
+  | ReactNativeAvatarItem
   | VueAvatarItem
   | SvelteAvatarItem
 
@@ -212,6 +222,11 @@ export type VanillaTheme = Theme<VanillaAvatarItem>
  * React theme with React components
  */
 export type ReactTheme = Theme<ReactAvatarItem>
+
+/**
+ * React Native theme with React Native components
+ */
+export type ReactNativeTheme = Theme<ReactNativeAvatarItem>
 
 /**
  * Vue theme with Vue components

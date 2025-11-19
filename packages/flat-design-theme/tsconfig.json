@@ -20,6 +20,9 @@
       "@avatune/flat-design-assets/vue": [
         "../flat-design-assets/dist/vue/index.d.ts"
       ],
+      "@avatune/flat-design-assets/react-native": [
+        "../flat-design-assets/dist/react-native/index.d.ts"
+      ],
       "@avatune/theme-builder": ["../theme-builder/dist/index.d.ts"]
     }
   },
