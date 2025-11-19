@@ -27,33 +27,35 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Topaz])
   .mapPrediction('skinTone', 'medium', [SkinTones.Cost])
   .mapPrediction('skinTone', 'light', [SkinTones.Apricot])
-  .addColor('background', BackgroundColors.Seashell)
-  .addColor('hair', AccentColors.Black)
-  .addColor('hair', AccentColors.White)
-  .addColor('hair', AccentColors.Lavender)
-  .addColor('hair', AccentColors.Sky)
-  .addColor('hair', AccentColors.Salmon)
-  .addColor('hair', AccentColors.Canary)
-  .addColor('head', SkinTones.Topaz)
-  .addColor('head', SkinTones.Cost)
-  .addColor('head', SkinTones.Apricot)
-  .addColor('faceHair', AccentColors.Black)
-  .addColor('faceHair', AccentColors.White)
-  .addColor('faceHair', AccentColors.Lavender)
-  .addColor('faceHair', AccentColors.Sky)
-  .addColor('faceHair', AccentColors.Salmon)
-  .addColor('faceHair', AccentColors.Canary)
-  .addColor('eyes', AccentColors.Black)
-  .addColor('eyebrows', AccentColors.Black)
-  .addColor('glasses', AccentColors.Black)
-  .addColor('mouth', AccentColors.Black)
-  .addColor('noses', AccentColors.Black)
-  .addColor('ears', SkinTones.Topaz)
-  .addColor('accessories', AccentColors.Canary)
-  .addColor('body', AccentColors.Lavender)
-  .addColor('body', AccentColors.Sky)
-  .addColor('body', AccentColors.Salmon)
-  .addColor('body', AccentColors.Canary)
+  .addColors('background', [BackgroundColors.Seashell])
+  .addColors('hair', [
+    AccentColors.Black,
+    AccentColors.White,
+    AccentColors.Lavender,
+    AccentColors.Sky,
+    AccentColors.Salmon,
+    AccentColors.Canary,
+  ])
+  .addColors('head', [SkinTones.Topaz, SkinTones.Cost, SkinTones.Apricot])
+  .addColors('faceHair', [
+    AccentColors.Black,
+    AccentColors.White,
+    AccentColors.Lavender,
+    AccentColors.Sky,
+    AccentColors.Salmon,
+    AccentColors.Canary,
+  ])
+  .addColors('eyes', [AccentColors.Black])
+  .addColors('eyebrows', [AccentColors.Black])
+  .addColors('glasses', [AccentColors.Black])
+  .addColors('mouth', [AccentColors.Black])
+  .addColors('noses', [AccentColors.Black])
+  .addColors('ears', [SkinTones.Topaz, SkinTones.Cost, SkinTones.Apricot])
+  .addColors('accessories', [AccentColors.Canary])
+  .addColors('body', [AccentColors.Lavender])
+  .addColors('body', [AccentColors.Sky])
+  .addColors('body', [AccentColors.Salmon])
+  .addColors('body', [AccentColors.Canary])
   // Accessories
   .addItem('accessories', 'studEarRing', {
     position: fromHeadOffset(-percentage('1%'), percentage('42%')),
