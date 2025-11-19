@@ -76,9 +76,9 @@ export interface ThemeBuilder<
     category: Category,
   ): ThemeBuilder<T, UpdateIdMap<IdMap, Category, 'none'>>
 
-  addColor(
+  addColors(
     category: keyof ThemeColorPalettes,
-    color: string | string[],
+    color: string[],
   ): ThemeBuilder<T, IdMap>
 
   withColorPalettes(
@@ -155,7 +155,7 @@ const createBuilder = <T extends AvatarItem, IdMap extends CategoryIdMap>(
       return createBuilder(addItem(category, 'none', noneItem))
     },
 
-    addColor: (
+    addColors: (
       category: keyof ThemeColorPalettes,
       color: string | string[],
     ) => {

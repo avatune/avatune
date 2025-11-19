@@ -32,7 +32,7 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Yellow])
   .mapPrediction('skinTone', 'light', [SkinTones.White])
-  .addColor('background', [
+  .addColors('background', [
     BackgroundColors.Purple,
     BackgroundColors.LightBlue,
     BackgroundColors.Grey,
@@ -40,18 +40,18 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.Red,
     BackgroundColors.Purpose,
   ])
-  .addColor('hair', [HairColors.Black, HairColors.Red, HairColors.Brown])
-  .addColor('head', SkinTones.Dark)
-  .addColor('body', [
+  .addColors('hair', [HairColors.Black, HairColors.Red, HairColors.Brown])
+  .addColors('head', [SkinTones.Dark])
+  .addColors('body', [
     ClothingColors.Orange,
     ClothingColors.Pink,
     ClothingColors.Blue,
   ])
-  .addColor('faceHair', [HairColors.Black, HairColors.Brown, HairColors.Red])
-  .addColor('faceDetails', AccentColors.BlushPink)
-  .addColor('eyes', AccentColors.EyeBlack)
-  .addColor('glasses', AccentColors.AccessoryBlack)
-  .addColor('mouth', AccentColors.MouthPink)
+  .addColors('faceHair', [HairColors.Black, HairColors.Brown, HairColors.Red])
+  .addColors('faceDetails', [AccentColors.BlushPink])
+  .addColors('eyes', [AccentColors.EyeBlack])
+  .addColors('glasses', [AccentColors.AccessoryBlack])
+  .addColors('mouth', [AccentColors.MouthPink])
   // Body
   .addItem('body', 'standard', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),

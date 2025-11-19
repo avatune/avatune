@@ -39,7 +39,7 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Medium])
   .mapPrediction('skinTone', 'light', [SkinTones.Light, SkinTones.VeryLight])
-  .addColor('background', [
+  .addColors('background', [
     BackgroundColors.MeadowGreen,
     BackgroundColors.SkyBlue,
     BackgroundColors.CoralPink,
@@ -47,7 +47,7 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.PeachOrange,
     BackgroundColors.MintGreen,
   ])
-  .addColor('hair', [
+  .addColors('hair', [
     HairColors.JetBlack,
     HairColors.DeepBrown,
     HairColors.ChestnutBrown,
@@ -55,27 +55,27 @@ export default createTheme<BaseAvatarItem>()
     HairColors.DarkNavy,
     HairColors.GoldenBlond,
   ])
-  .addColor('head', [
+  .addColors('head', [
     SkinTones.Dark,
     SkinTones.Medium,
     SkinTones.Light,
     SkinTones.VeryLight,
   ])
-  .addColor('body', [
+  .addColors('body', [
     ClothingColors.BrightPink,
     ClothingColors.DeepMaroon,
     ClothingColors.WarmBrown,
     ClothingColors.GoldenYellow,
   ])
-  .addColor('ears', [SkinTones.Light, SkinTones.VeryLight])
-  .addColor('eyebrows', [
+  .addColors('ears', [SkinTones.Light, SkinTones.VeryLight])
+  .addColors('eyebrows', [
     HairColors.ChestnutBrown,
     HairColors.DeepBrown,
     HairColors.JetBlack,
   ])
-  .addColor('eyes', [AccentColors.Black, AccentColors.EyeWhite])
-  .addColor('mouth', [AccentColors.LipPink, AccentColors.BlushPink])
-  .addColor('noses', [
+  .addColors('eyes', [AccentColors.Black, AccentColors.EyeWhite])
+  .addColors('mouth', [AccentColors.LipPink, AccentColors.BlushPink])
+  .addColors('noses', [
     AccentColors.LipPink,
     AccentColors.BlushPink,
     AccentColors.LipPink,

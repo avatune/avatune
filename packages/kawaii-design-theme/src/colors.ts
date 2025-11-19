@@ -1,10 +1,5 @@
 export enum HairColors {
   Black = '#323232',
-  EmeraldGreen = '#5BBA6F',
-  LavenderPurple = '#B796AC',
-  ShockingPink = '#ED33B9',
-  RoseRed = '#FF5733',
-  GoldenBlond = '#FFD859',
 }
 
 export enum SkinTones {
@@ -13,9 +8,6 @@ export enum SkinTones {
 
 export enum ClothingColors {
   Black = '#323232',
-  MajorelleBlue = '#623CEA',
-  GoldenPollen = '#FFC857',
-  Ametist = '#A657AE',
 }
 
 export enum AccentColors {

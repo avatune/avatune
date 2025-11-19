@@ -31,20 +31,14 @@ export default createTheme<BaseAvatarItem>()
     'braids',
     'puff',
   ])
-  .mapPrediction('hairColor', 'black', [
-    HairColors.EmeraldGreen,
-    HairColors.LavenderPurple,
-    HairColors.ShockingPink,
-    HairColors.RoseRed,
-    HairColors.GoldenBlond,
-  ])
-  .mapPrediction('hairColor', 'brown', [HairColors.EmeraldGreen])
-  .mapPrediction('hairColor', 'blond', [HairColors.GoldenBlond])
-  .mapPrediction('hairColor', 'gray', [HairColors.LavenderPurple])
+  .mapPrediction('hairColor', 'black', [HairColors.Black])
+  .mapPrediction('hairColor', 'brown', [HairColors.Black])
+  .mapPrediction('hairColor', 'blond', [HairColors.Black])
+  .mapPrediction('hairColor', 'gray', [HairColors.Black])
   .mapPrediction('skinTone', 'dark', [SkinTones.Black])
   .mapPrediction('skinTone', 'medium', [SkinTones.Black])
   .mapPrediction('skinTone', 'light', [SkinTones.Black])
-  .addColor('background', [
+  .addColors('background', [
     BackgroundColors.PastelPink,
     BackgroundColors.PastelBlue,
     BackgroundColors.PastelYellow,
@@ -52,52 +46,19 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.PastelPurple,
     BackgroundColors.PastelPeach,
   ])
-  .addColor('forelock', [
-    HairColors.EmeraldGreen,
-    HairColors.LavenderPurple,
-    HairColors.ShockingPink,
-    HairColors.RoseRed,
-    HairColors.GoldenBlond,
-  ])
-  .addColor('hair', [
-    HairColors.EmeraldGreen,
-    HairColors.LavenderPurple,
-    HairColors.ShockingPink,
-    HairColors.RoseRed,
-    HairColors.GoldenBlond,
-  ])
-  .addColor('head', SkinTones.Black)
-  .addColor('body', [
-    ClothingColors.Black,
-    ClothingColors.MajorelleBlue,
-    ClothingColors.GoldenPollen,
-    ClothingColors.Ametist,
-  ])
-  .addColor('ears', SkinTones.Black)
-  .addColor('neck', SkinTones.Black)
-  .addColor('eyes', SkinTones.Black)
-  .addColor('mouth', SkinTones.Black)
-  .addColor('noses', SkinTones.Black)
-  .addColor('faceDetails', AccentColors.BlushPink)
-  .addColor('faceHair', [
-    HairColors.EmeraldGreen,
-    HairColors.LavenderPurple,
-    HairColors.ShockingPink,
-    HairColors.RoseRed,
-    HairColors.GoldenBlond,
-  ])
-  .addColor('glasses', [
-    ClothingColors.Black,
-    ClothingColors.MajorelleBlue,
-    ClothingColors.GoldenPollen,
-    ClothingColors.Ametist,
-  ])
-  .addColor('hats', [
-    ClothingColors.Black,
-    ClothingColors.MajorelleBlue,
-    ClothingColors.GoldenPollen,
-    ClothingColors.Ametist,
-  ])
+  .addColors('forelock', [HairColors.Black])
+  .addColors('hair', [HairColors.Black])
+  .addColors('head', [SkinTones.Black])
+  .addColors('body', [ClothingColors.Black])
+  .addColors('ears', [SkinTones.Black])
+  .addColors('neck', [SkinTones.Black])
+  .addColors('eyes', [SkinTones.Black])
+  .addColors('mouth', [SkinTones.Black])
+  .addColors('noses', [SkinTones.Black])
+  .addColors('faceDetails', [AccentColors.BlushPink])
+  .addColors('faceHair', [HairColors.Black])
+  .addColors('glasses', [ClothingColors.Black])
+  .addColors('hats', [ClothingColors.Black])
   // Glasses
   .addItem('glasses', 'glass', {
     position: fromHeadOffset(percentage('5.3%'), percentage('29%')),
@@ -202,15 +163,15 @@ export default createTheme<BaseAvatarItem>()
   })
   // Face Hair
   .addItem('faceHair', 'bigBeard', {
-    position: fromHeadOffset(percentage('5%'), percentage('38%')),
-    layer: 21,
+    position: fromHeadOffset(percentage('5%'), percentage('36.5%')),
+    layer: 30,
   })
   .addItem('faceHair', 'chevronMustache', {
     position: fromHeadOffset(percentage('11.5%'), percentage('40.5%')),
     layer: 30,
   })
   .addItem('faceHair', 'mustache', {
-    position: fromHeadOffset(percentage('12.5%'), percentage('40%')),
+    position: fromHeadOffset(percentage('12.5%'), percentage('40.5%')),
     layer: 30,
   })
   .setOptional('faceHair')
@@ -246,7 +207,7 @@ export default createTheme<BaseAvatarItem>()
   })
   // Mouth
   .addItem('mouth', 'smile', {
-    position: fromHeadOffset(percentage('16.5%'), percentage('43%')),
+    position: fromHeadOffset(percentage('16.5%'), percentage('44%')),
     layer: 22,
   })
   // Neck
@@ -256,6 +217,6 @@ export default createTheme<BaseAvatarItem>()
   })
   // Noses
   .addItem('noses', 'standard', {
-    position: fromHeadOffset(percentage('17%'), percentage('35%')),
+    position: fromHeadOffset(percentage('17%'), percentage('35.5%')),
     layer: 22,
   })
