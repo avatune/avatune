@@ -144,6 +144,7 @@ export interface ThemePredictorMappings {
  */
 export interface ThemeColorPalettes {
   background: ColorOptions
+  accessories?: ColorOptions
   glasses?: ColorOptions
   hats?: ColorOptions
   hair: ColorOptions
@@ -182,6 +183,7 @@ export type ConnectedColors = Partial<
  */
 export interface Theme<T extends AvatarItem> {
   style: ThemeStyle
+  accessories?: AvatarItemCollection<T>
   glasses?: AvatarItemCollection<T>
   hats?: AvatarItemCollection<T>
   hair: AvatarItemCollection<T>
@@ -240,6 +242,9 @@ export type ExtractIdentifiers<T extends AvatarItemCollection> = keyof T
  */
 export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
   seed?: string | number
+  accessories?: T['accessories'] extends AvatarItemCollection<I>
+    ? ExtractIdentifiers<T['accessories']>
+    : never
   glasses?: T['glasses'] extends AvatarItemCollection<I>
     ? ExtractIdentifiers<T['glasses']>
     : never
@@ -267,6 +272,9 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
     : never
   noses?: ExtractIdentifiers<T['noses']>
   backgroundColor?: string
+  accessoriesColor?: T['accessories'] extends AvatarItemCollection<I>
+    ? string
+    : never
   glassesColor?: T['glasses'] extends AvatarItemCollection<I> ? string : never
   hatsColor?: T['hats'] extends AvatarItemCollection<I> ? string : never
   hairColor?: string

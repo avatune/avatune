@@ -1,4 +1,6 @@
 import {
+  accessoriesStudEarRing,
+  accessoriesHoopEarRing,
   bodyCollaredShirt,
   bodyCrewShirt,
   bodyOpenShirt,
@@ -41,6 +43,10 @@ import shared from './shared'
 
 export default shared
   .toFramework<VanillaAvatarItem>()
+  .withComponents('accessories', {
+    studEarRing: { code: accessoriesStudEarRing },
+    hoopEarRing: { code: accessoriesHoopEarRing },
+  })
   .withComponents('body', {
     collaredShirt: { code: bodyCollaredShirt },
     crewShirt: { code: bodyCrewShirt },

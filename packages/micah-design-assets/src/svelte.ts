@@ -1,3 +1,6 @@
+// Accessories
+import AccessoriesStudEarRing from './svg/accessories/stud-ear-ring.svg?svelte'
+import AccessoriesHoopEarRing from './svg/accessories/hoop-ear-ring.svg?svelte'
 // Body
 import BodyCollaredShirt from './svg/body/collared-shirt.svg?svelte'
 import BodyCrewShirt from './svg/body/crew-shirt.svg?svelte'
@@ -46,6 +49,9 @@ import NosesPointed from './svg/noses/pointed.svg?svelte'
 import NosesRound from './svg/noses/round.svg?svelte'
 
 export {
+  // Accessories
+  AccessoriesStudEarRing,
+  AccessoriesHoopEarRing,
   // Body
   BodyCollaredShirt,
   BodyCrewShirt,

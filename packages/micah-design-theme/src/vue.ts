@@ -1,4 +1,6 @@
 import {
+  AccessoriesStudEarRing,
+  AccessoriesHoopEarRing,
   BodyCollaredShirt,
   BodyCrewShirt,
   BodyOpenShirt,
@@ -41,6 +43,10 @@ import shared from './shared'
 
 export default shared
   .toFramework<VueAvatarItem>()
+  .withComponents('accessories', {
+    studEarRing: { Component: AccessoriesStudEarRing },
+    hoopEarRing: { Component: AccessoriesHoopEarRing },
+  })
   .withComponents('body', {
     collaredShirt: { Component: BodyCollaredShirt },
     crewShirt: { Component: BodyCrewShirt },

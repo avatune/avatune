@@ -9,8 +9,11 @@ import { defineConfig } from '@rslib/core'
 
 const colordImport = "import { colord } from 'colord';"
 const getReplaceAttrValues = (colorPropName = 'color') => ({
-  '#2C1B18': `{${colorPropName}}`,
-  '#65471B': `{${colorPropName}}`,
+  '#F4D150': `{${colorPropName}}`,
+  '#9287FF': `{${colorPropName}}`,
+  '#E0DDFF': `{colord(${colorPropName}).desaturate(0.08).lighten(0.06).toHex()}`,
+  '#AC6651': `{${colorPropName}}`,
+  '#6BD9E9': `{${colorPropName}}`,
 })
 
 export default defineConfig({

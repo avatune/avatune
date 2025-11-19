@@ -1,4 +1,6 @@
 import {
+  AccessoriesHoopEarRing,
+  AccessoriesStudEarRing,
   BodyCollaredShirt,
   BodyCrewShirt,
   BodyOpenShirt,
@@ -41,6 +43,10 @@ import shared from './shared'
 
 export default shared
   .toFramework<ReactAvatarItem>()
+  .withComponents('accessories', {
+    studEarRing: { Component: AccessoriesStudEarRing },
+    hoopEarRing: { Component: AccessoriesHoopEarRing },
+  })
   .withComponents('body', {
     collaredShirt: { Component: BodyCollaredShirt },
     crewShirt: { Component: BodyCrewShirt },
@@ -98,4 +104,3 @@ export default shared
     round: { Component: NosesRound },
   })
   .build() satisfies ReactTheme
-
