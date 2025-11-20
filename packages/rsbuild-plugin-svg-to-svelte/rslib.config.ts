@@ -1,5 +1,5 @@
-import { defineConfig } from '@rslib/core'
 import { cpSync } from 'node:fs'
+import { defineConfig } from '@rslib/core'
 
 export default defineConfig({
   lib: [

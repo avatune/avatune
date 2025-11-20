@@ -104,35 +104,34 @@ export function percentage(value: string) {
   return Number.parseFloat(value) / 100
 }
 
-export function themeStyleToStyleProp(
-  style: Theme<AvatarItem>['style'],
-  output: 'object' | 'string' = 'object',
-) {
-  const backgroundColor = style.backgroundColor
-  const borderColor = style.borderColor
-  const borderWidth = style.borderWidth
-  const borderRadius = style.borderRadius
+/**
+ * Parse border radius value (handles both numbers and percentage strings)
+ */
+export function parseBorderRadius(
+  borderRadius: number | string | undefined,
+  size: number,
+): number {
+  if (!borderRadius) return 0
+  if (typeof borderRadius === 'number') return borderRadius
 
-  if (output === 'object') {
-    return {
-      backgroundColor,
-      border:
-        borderWidth && borderColor
-          ? `${borderWidth}px solid ${borderColor}`
-          : undefined,
-      borderRadius,
-    }
+  // Handle percentage strings like "50%"
+  if (borderRadius.includes('%')) {
+    return (Number.parseFloat(borderRadius) / 100) * size
   }
 
-  return [
-    backgroundColor ? `background-color: ${backgroundColor};` : false,
-    borderWidth && borderColor
-      ? `border: ${borderWidth}px solid ${borderColor};`
-      : false,
-    borderRadius ? `border-radius: ${borderRadius};` : false,
-  ]
-    .filter(Boolean)
-    .join(' ')
+  // Handle numeric strings like "20px" or "20"
+  return Number.parseFloat(borderRadius)
+}
+
+/**
+ * Parse border width value (handles both numbers and strings)
+ */
+export function parseBorderWidth(
+  borderWidth: number | string | undefined,
+): number {
+  if (!borderWidth) return 0
+  if (typeof borderWidth === 'number') return borderWidth
+  return Number.parseFloat(borderWidth)
 }
 
 /**

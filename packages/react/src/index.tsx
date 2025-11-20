@@ -5,8 +5,12 @@ import type {
   ReactAvatarItem,
   ReactTheme,
 } from '@avatune/types'
-import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
-import { type CSSProperties, useMemo } from 'react'
+import {
+  parseBorderRadius,
+  parseBorderWidth,
+  selectItems,
+} from '@avatune/utils'
+import { type CSSProperties, memo, useRef } from 'react'
 
 export type AvatarProps<T extends ReactTheme = ReactTheme> = AvatarConfig<
   ReactAvatarItem,
@@ -24,10 +28,7 @@ export type AvatarProps<T extends ReactTheme = ReactTheme> = AvatarConfig<
   predictions?: Predictions
 }
 
-/**
- * React component for rendering avatars
- */
-export function Avatar<T extends ReactTheme = ReactTheme>({
+function AvatarComponent<T extends ReactTheme = ReactTheme>({
   theme,
   size = theme.style.size,
   className,
@@ -35,57 +36,19 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
   predictions,
   ...restConfig
 }: AvatarProps<T>) {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: granular tracking needed
-  const config = useMemo(
-    () => restConfig as AvatarConfig<ReactAvatarItem, T>,
-    [
-      restConfig.seed,
-      restConfig.backgroundColor,
-      restConfig.glasses,
-      restConfig.glassesColor,
-      restConfig.hats,
-      restConfig.hatsColor,
-      restConfig.hair,
-      restConfig.hairColor,
-      restConfig.faceDetails,
-      restConfig.faceDetailsColor,
-      restConfig.body,
-      restConfig.bodyColor,
-      restConfig.ears,
-      restConfig.earsColor,
-      restConfig.eyebrows,
-      restConfig.eyebrowsColor,
-      restConfig.eyes,
-      restConfig.eyesColor,
-      restConfig.faceHair,
-      restConfig.faceHairColor,
-      restConfig.forelock,
-      restConfig.forelockColor,
-      restConfig.head,
-      restConfig.headColor,
-      restConfig.mouth,
-      restConfig.mouthColor,
-      restConfig.neck,
-      restConfig.neckColor,
-      restConfig.noses,
-      restConfig.nosesColor,
-    ],
+  const config = restConfig as AvatarConfig<ReactAvatarItem, T>
+  const result = selectItems(config, theme, predictions)
+  const sortedItems = Object.entries(result.selected).sort(
+    ([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0),
   )
-
-  const result = useMemo(
-    () => selectItems(config, theme, predictions),
-    [config, theme, predictions],
-  )
-
-  const sortedItems = useMemo(
-    () =>
-      Object.entries(result.selected).sort(
-        ([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0),
-      ),
-    [result.selected],
-  )
+  const clipIdRef = useRef<string>(Math.random().toString(36).slice(2, 9))
 
   const scaleFactor = size / theme.style.size
+  const borderRadius = parseBorderRadius(theme.style.borderRadius, size)
+  const backgroundColor =
+    result.style?.backgroundColor || theme.style.backgroundColor
+  const borderColor = theme.style.borderColor
+  const borderWidth = parseBorderWidth(theme.style.borderWidth)
 
   return (
     <svg
@@ -96,34 +59,80 @@ export function Avatar<T extends ReactTheme = ReactTheme>({
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       className={className}
-      style={{
-        ...(themeStyleToStyleProp(result.style) as CSSProperties),
-        ...style,
-      }}
+      style={style}
     >
-      {sortedItems.map(([category, item]) => {
-        if (!item) {
-          return null
-        }
+      <defs>
+        <clipPath id={clipIdRef.current}>
+          <rect
+            x={0}
+            y={0}
+            width={size}
+            height={size}
+            rx={borderRadius}
+            ry={borderRadius}
+          />
+        </clipPath>
+      </defs>
 
-        const Component = item.Component
+      {/* Background */}
+      {backgroundColor && (
+        <rect
+          x={0}
+          y={0}
+          width={size}
+          height={size}
+          rx={borderRadius}
+          ry={borderRadius}
+          fill={backgroundColor}
+        />
+      )}
 
-        const position =
-          typeof item.position === 'function'
-            ? item.position(size)
-            : item.position
+      {/* Avatar content with clipping */}
+      <g clipPath={`url(#${clipIdRef.current})`}>
+        {sortedItems.map(([category, item]) => {
+          if (!item) {
+            return null
+          }
 
-        const color = result.colors[category as AvatarPartCategory]
+          const Component = item.Component
 
-        return (
-          <g
-            key={category}
-            transform={`translate(${position.x}, ${position.y}) scale(${scaleFactor})`}
-          >
-            <Component color={color} />
-          </g>
-        )
-      })}
+          const position =
+            typeof item.position === 'function'
+              ? item.position(size)
+              : item.position
+
+          const color = result.colors[category as AvatarPartCategory]
+
+          return (
+            <g
+              key={category}
+              transform={`translate(${position.x}, ${position.y}) scale(${scaleFactor})`}
+            >
+              <Component color={color} />
+            </g>
+          )
+        })}
+      </g>
+
+      {/* Border (rendered on top) */}
+      {borderColor && borderWidth > 0 && (
+        <rect
+          x={borderWidth / 2}
+          y={borderWidth / 2}
+          width={size - borderWidth}
+          height={size - borderWidth}
+          rx={borderRadius}
+          ry={borderRadius}
+          fill="none"
+          stroke={borderColor}
+          strokeWidth={borderWidth}
+        />
+      )}
     </svg>
   )
 }
+
+/**
+ * Memoized Avatar component for optimal performance
+ */
+export const Avatar = memo(AvatarComponent) as typeof AvatarComponent

@@ -6,7 +6,11 @@ import type {
   SvelteAvatarItem,
   SvelteTheme,
 } from '@avatune/types'
-import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
+import {
+  parseBorderRadius,
+  parseBorderWidth,
+  selectItems,
+} from '@avatune/utils'
 
 type Props = AvatarConfig<SvelteAvatarItem, T> & {
   theme: T
@@ -36,12 +40,13 @@ const sortedItems = $derived(
 )
 
 const scaleFactor = $derived(size / theme.style.size)
-
-const finalStyle = $derived(
-  [themeStyleToStyleProp(result.style, 'string'), style]
-    .filter(Boolean)
-    .join('; '),
+const clipId = `avatar-clip-${Math.random().toString(36).slice(2, 9)}`
+const borderRadius = $derived(parseBorderRadius(theme.style.borderRadius, size))
+const backgroundColor = $derived(
+  result.style?.backgroundColor || theme.style.backgroundColor,
 )
+const borderColor = $derived(theme.style.borderColor)
+const borderWidth = $derived(parseBorderWidth(theme.style.borderWidth))
 </script>
 
 <svg
@@ -52,20 +57,64 @@ const finalStyle = $derived(
   height={size}
   viewBox="0 0 {size} {size}"
   class={className}
-  style={finalStyle}
+  {style}
 >
-  {#each sortedItems as [category, item]}
-    {#if item}
-      {@const position = typeof item.position === 'function' ? item.position(size) : item.position}
-      {@const transformX = position.x}
-      {@const transformY = position.y}
-      {@const color = result.colors[category as AvatarPartCategory]}
-      {@const ItemComponent = item.Component}
-      <g
-        transform="translate({transformX}, {transformY}) scale({scaleFactor})"
-      >
-        <ItemComponent color={color} />
-      </g>
-    {/if}
-  {/each}
+  <defs>
+    <clipPath id={clipId}>
+      <rect
+        x={0}
+        y={0}
+        width={size}
+        height={size}
+        rx={borderRadius}
+        ry={borderRadius}
+      />
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  {#if backgroundColor}
+    <rect
+      x={0}
+      y={0}
+      width={size}
+      height={size}
+      rx={borderRadius}
+      ry={borderRadius}
+      fill={backgroundColor}
+    />
+  {/if}
+
+  <!-- Avatar content with clipping -->
+  <g clip-path="url(#{clipId})">
+    {#each sortedItems as [category, item]}
+      {#if item}
+        {@const position = typeof item.position === 'function' ? item.position(size) : item.position}
+        {@const transformX = position.x}
+        {@const transformY = position.y}
+        {@const color = result.colors[category as AvatarPartCategory]}
+        {@const ItemComponent = item.Component}
+        <g
+          transform="translate({transformX}, {transformY}) scale({scaleFactor})"
+        >
+          <ItemComponent color={color} />
+        </g>
+      {/if}
+    {/each}
+  </g>
+
+  <!-- Border (rendered on top) -->
+  {#if borderColor && borderWidth > 0}
+    <rect
+      x={borderWidth / 2}
+      y={borderWidth / 2}
+      width={size - borderWidth}
+      height={size - borderWidth}
+      rx={borderRadius}
+      ry={borderRadius}
+      fill="none"
+      stroke={borderColor}
+      stroke-width={borderWidth}
+    />
+  {/if}
 </svg>

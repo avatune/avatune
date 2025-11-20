@@ -8,6 +8,11 @@ export default defineConfig({
       syntax: ['node 18'],
       dts: true,
     },
+    {
+      format: 'cjs',
+      syntax: ['node 18'],
+      dts: false,
+    },
   ],
   source: {
     entry: {
@@ -19,6 +24,7 @@ export default defineConfig({
     externals: {
       '@avatune/types': '@avatune/types',
       react: 'react',
+      'react/jsx-runtime': 'react/jsx-runtime',
       'react-native': 'react-native',
       'react-native-svg': 'react-native-svg',
     },

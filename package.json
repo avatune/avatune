@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "check": "biome check --write",
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check-types": "turbo run check-types",
@@ -24,10 +25,8 @@
   ],
   "resolutions": {
     "react": "19.1.0",
-    "react-dom": "19.1.0"
-  },
-  "overrides": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "ws": "^8.18.0"
   }
 }

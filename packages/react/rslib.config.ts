@@ -19,6 +19,7 @@ export default defineConfig({
     externals: {
       '@avatune/types': '@avatune/types',
       react: 'react',
+      'react/jsx-runtime': 'react/jsx-runtime',
     },
   },
   plugins: [pluginReact()],

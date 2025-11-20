@@ -5,7 +5,11 @@ import type {
   VueAvatarItem,
   VueTheme,
 } from '@avatune/types'
-import { selectItems, themeStyleToStyleProp } from '@avatune/utils'
+import {
+  parseBorderRadius,
+  parseBorderWidth,
+  selectItems,
+} from '@avatune/utils'
 import {
   type CSSProperties,
   computed,
@@ -150,17 +154,107 @@ export const Avatar = defineComponent({
     )
 
     const actualSize = computed(() => props.size ?? props.theme.style.size)
-
     const scaleFactor = computed(
       () => actualSize.value / props.theme.style.size,
     )
-
-    const finalStyle = computed(() => ({
-      ...(themeStyleToStyleProp(result.value.style) as CSSProperties),
-      ...(props.style || {}),
-    }))
+    const clipId = `avatar-clip-${Math.random().toString(36).slice(2, 9)}`
+    const borderRadius = computed(() =>
+      parseBorderRadius(props.theme.style.borderRadius, actualSize.value),
+    )
+    const backgroundColor = computed(
+      () =>
+        result.value.style?.backgroundColor ||
+        props.theme.style.backgroundColor,
+    )
+    const borderColor = computed(() => props.theme.style.borderColor)
+    const borderWidth = computed(() =>
+      parseBorderWidth(props.theme.style.borderWidth),
+    )
 
     return () => {
+      const children = []
+
+      // Defs with clipPath
+      children.push(
+        h('defs', {}, [
+          h('clipPath', { id: clipId }, [
+            h('rect', {
+              x: 0,
+              y: 0,
+              width: actualSize.value,
+              height: actualSize.value,
+              rx: borderRadius.value,
+              ry: borderRadius.value,
+            }),
+          ]),
+        ]),
+      )
+
+      // Background
+      if (backgroundColor.value) {
+        children.push(
+          h('rect', {
+            x: 0,
+            y: 0,
+            width: actualSize.value,
+            height: actualSize.value,
+            rx: borderRadius.value,
+            ry: borderRadius.value,
+            fill: backgroundColor.value,
+          }),
+        )
+      }
+
+      // Avatar content with clipping
+      children.push(
+        h(
+          'g',
+          { 'clip-path': `url(#${clipId})` },
+          sortedItems.value.map(([category, item]) => {
+            if (!item) {
+              return null
+            }
+
+            const Component = item.Component
+
+            const position =
+              typeof item.position === 'function'
+                ? item.position(actualSize.value)
+                : item.position
+            const transformX = position.x
+            const transformY = position.y
+
+            const color = result.value.colors[category as AvatarPartCategory]
+
+            return h(
+              'g',
+              {
+                key: category,
+                transform: `translate(${transformX}, ${transformY}) scale(${scaleFactor.value})`,
+              },
+              [h(Component, { color })],
+            )
+          }),
+        ),
+      )
+
+      // Border (rendered on top)
+      if (borderColor.value && borderWidth.value > 0) {
+        children.push(
+          h('rect', {
+            x: borderWidth.value / 2,
+            y: borderWidth.value / 2,
+            width: actualSize.value - borderWidth.value,
+            height: actualSize.value - borderWidth.value,
+            rx: borderRadius.value,
+            ry: borderRadius.value,
+            fill: 'none',
+            stroke: borderColor.value,
+            strokeWidth: borderWidth.value,
+          }),
+        )
+      }
+
       return h(
         'svg',
         {
@@ -171,33 +265,9 @@ export const Avatar = defineComponent({
           height: actualSize.value,
           viewBox: `0 0 ${actualSize.value} ${actualSize.value}`,
           class: props.class,
-          style: finalStyle.value,
+          style: props.style,
         },
-        sortedItems.value.map(([category, item]) => {
-          if (!item) {
-            return null
-          }
-
-          const Component = item.Component
-
-          const position =
-            typeof item.position === 'function'
-              ? item.position(actualSize.value)
-              : item.position
-          const transformX = position.x
-          const transformY = position.y
-
-          const color = result.value.colors[category as AvatarPartCategory]
-
-          return h(
-            'g',
-            {
-              key: category,
-              transform: `translate(${transformX}, ${transformY}) scale(${scaleFactor.value})`,
-            },
-            [h(Component, { color })],
-          )
-        }),
+        children,
       )
     }
   },

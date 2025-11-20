@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "biome check --write",
     "storybook": "storybook dev -p 6005 --no-open",
     "build-storybook": "storybook build"
   },

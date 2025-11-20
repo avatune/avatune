@@ -1,11 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { view } from './storybook.requires'
 
-const StorybookUIRoot = view.getStorybookUI({
+const StorybookUI = view.getStorybookUI({
   storage: {
     getItem: AsyncStorage.getItem,
     setItem: AsyncStorage.setItem,
   },
 })
 
-export default StorybookUIRoot
+export default function StorybookUIRoot() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StorybookUI />
+    </GestureHandlerRootView>
+  )
+}

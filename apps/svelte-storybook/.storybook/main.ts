@@ -15,5 +15,19 @@ const config: StorybookConfig = {
     name: getAbsolutePath('@storybook/svelte-vite'),
     options: {},
   },
+  addons: [getAbsolutePath('@storybook/addon-docs')],
+  async viteFinal(config) {
+    return {
+      ...config,
+      ssr: {
+        ...config.ssr,
+        noExternal: ['ws'],
+      },
+      optimizeDeps: {
+        ...config.optimizeDeps,
+        include: [...(config.optimizeDeps?.include || []), 'ws'],
+      },
+    }
+  },
 }
 export default config

@@ -4,8 +4,13 @@ import micahdesignTheme from '@avatune/micah-design-theme/react-native'
 import miniavsTheme from '@avatune/miniavs-theme/react-native'
 import type { AvatarProps } from '@avatune/react-native'
 import { Avatar } from '@avatune/react-native'
-import type { ReactNativeAvatarItem, ReactNativeTheme } from '@avatune/types'
+import type {
+  ReactNativeAvatarItem,
+  ReactNativeTheme,
+  Theme,
+} from '@avatune/types'
 import type { Meta, StoryObj } from '@storybook/react-native'
+import * as React from 'react'
 
 const meta = {
   title: 'Avatar',
@@ -15,6 +20,8 @@ const meta = {
 } satisfies Meta<typeof Avatar>
 
 export default meta
+
+console.log(Avatar)
 
 type ExtractStoryArgs<T extends ReactNativeTheme> = Omit<
   AvatarProps<T>,

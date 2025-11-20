@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "biome check --write",
     "storybook": "node scripts/wait-for-ports.mjs && storybook dev -p 6010",
     "build-storybook": "storybook build"
   },

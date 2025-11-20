@@ -37,6 +37,7 @@
     "@react-native/babel-preset": "0.81.5",
     "@react-native/metro-config": "0.81.5",
     "@react-native/typescript-config": "0.81.5",
+    "@rnx-kit/metro-config": "^2.2.0",
     "@storybook/addon-ondevice-controls": "^10.0.7",
     "@storybook/react-native": "10.0.7",
     "@types/react": "^19",

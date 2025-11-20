@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "biome check --write",
     "storybook": "storybook dev -p 6008 --no-open",
     "build-storybook": "storybook build"
   },
@@ -19,13 +18,13 @@
     "svelte": "^5.0.0"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^10.0.4",
     "@storybook/svelte-vite": "^10.0.4",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "storybook": "^10.0.4",
     "typescript": "^5.9.3",
     "vite": "^6.0.0",
-    "vite-plugin-inspect": "^11.3.3",
-    "vitest": "^4.0.6"
+    "vite-plugin-inspect": "^11.3.3"
   }
 }

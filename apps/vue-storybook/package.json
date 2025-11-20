@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "biome check --write",
     "storybook": "storybook dev -p 6007 --no-open",
     "build-storybook": "storybook build"
   },
@@ -18,6 +17,7 @@
     "vue": "^3.5.22"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^10.0.4",
     "@storybook/vue3-vite": "^10.0.4",
     "storybook": "^10.0.4",
     "typescript": "^5.9.3"

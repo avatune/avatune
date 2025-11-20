@@ -24,7 +24,9 @@ export default defineConfig({
       dts: true,
     },
   ],
-
+  output: {
+    minify: true,
+  },
   source: {
     entry: {
       react: './src/react.ts',

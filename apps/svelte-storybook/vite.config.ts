@@ -1,16 +1,6 @@
-/// <reference types="vitest" />
-
-import path from 'node:path'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { defineConfig } from 'vite'
 
-export default defineConfig((configEnv) => ({
+export default defineConfig({
   plugins: [svelte()],
-  resolve: {
-    conditions: configEnv.mode === 'test' ? ['browser'] : [],
-    alias: {
-      // This is already set up in svelte.config.js, but we need it explicitly here for vitest
-      $lib: path.resolve(__dirname, 'src'),
-    },
-  },
-}))
+})

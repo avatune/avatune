@@ -5,7 +5,9 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.cjs"
     }
   },
   "types": "./dist/index.d.ts",
@@ -28,13 +30,13 @@
     "@types/node": "^22.18.12",
     "@types/react": "^19.0.8",
     "react": "^19.1.0",
-    "react-native": "^0.76.5",
+    "react-native": "^0.81.5",
     "react-native-svg": "^15.9.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
-    "react-native": ">=0.70.0",
+    "react-native": ">=0.74.0",
     "react-native-svg": ">=13.0.0"
   },
   "license": "MIT"
