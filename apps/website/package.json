@@ -1,0 +1,22 @@
+{
+  "name": "website",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "sync-docs": "node ./scripts/sync-docs.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.11",
+    "@astrojs/starlight": "^0.36.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.6.1",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.1.17",
+    "tw-animate-css": "^1.4.0"
+  }
+}
