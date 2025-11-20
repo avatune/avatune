@@ -9,6 +9,12 @@ declare module '*.svg?react' {
   export default Component
 }
 
+declare module '*.svg?native' {
+  import type { FC, SVGProps } from 'react-native-svg'
+  const Component: FC<SVGProps<SVGSVGElement>>
+  export default Component
+}
+
 declare module '*.svg' {
   const url: string
   export default url
@@ -39,4 +45,3 @@ declare module '*.svg?vue' {
   const component: DefineComponent<SvgComponentProps>
   export default component
 }
-

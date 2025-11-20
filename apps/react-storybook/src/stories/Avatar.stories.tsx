@@ -33,7 +33,12 @@ const getArgTypes = <T extends Theme<ReactAvatarItem>>(theme: T) => {
   }
 
   for (const [category, items] of Object.entries(theme)) {
-    const excludeCategories = ['style', 'predictorMappings', 'colorPalettes', 'connectedColors']
+    const excludeCategories = [
+      'style',
+      'predictorMappings',
+      'colorPalettes',
+      'connectedColors',
+    ]
     if (excludeCategories.includes(category)) continue
 
     argTypes[`${category}Color`] = { control: { type: 'color' } }
@@ -82,7 +87,7 @@ const themes = {
   'Flat Design': flatdesignTheme,
   'Kawaii Design': kawaiidesignTheme,
   'Micah Design': micahdesignTheme,
-  'Miniavs': miniavsTheme,
+  Miniavs: miniavsTheme,
 } as const
 
 export const Seed: StoryObj<{

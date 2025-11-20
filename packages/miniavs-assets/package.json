@@ -12,6 +12,10 @@
       "types": "./dist/react.d.ts",
       "import": "./dist/react.js"
     },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "import": "./dist/react-native.js"
+    },
     "./svelte": {
       "types": "./dist/svelte.d.ts",
       "import": "./dist/svelte.js"
@@ -30,8 +34,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build:web": "rslib build",
+    "build:native": "rslib build --config rslib.native.config.ts",
+    "build": "bun build:web && bun build:native",
+    "dev:web": "rslib build --watch",
+    "dev:native": "rslib build --config rslib.native.config.ts --watch",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
@@ -46,7 +53,7 @@
     "@rslib/core": "^0.16.1",
     "@types/node": "^24.9.1",
     "deepmerge": "^4.3.1",
-    "react": "v19.2.0",
+    "react": "19.1.0",
     "svelte": "^5.0.0",
     "vue": "^3.5.22",
     "svgo": "^4.0.0",
@@ -54,11 +61,19 @@
   },
   "peerDependencies": {
     "react": ">=18.0.0",
+    "react-native": ">=0.74.0",
+    "react-native-svg": ">=15.0.0",
     "svelte": ">=5.0.0",
     "vue": "^3.5.22"
   },
   "peerDependenciesMeta": {
     "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
       "optional": true
     },
     "svelte": {

@@ -104,4 +104,3 @@ export default shared
     round: { code: nosesRound },
   })
   .build() satisfies VanillaTheme
-

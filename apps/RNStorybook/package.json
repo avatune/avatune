@@ -1,0 +1,49 @@
+{
+  "name": "@avatune/rn-storybook",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start"
+  },
+  "dependencies": {
+    "@avatune/flat-design-theme": "workspace:*",
+    "@avatune/kawaii-design-theme": "workspace:*",
+    "@avatune/micah-design-theme": "workspace:*",
+    "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/react-native": "workspace:*",
+    "@avatune/types": "workspace:*",
+    "@gorhom/bottom-sheet": "^5.2.6",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-gesture-handler": "^2.29.1",
+    "react-native-reanimated": "^4.1.5",
+    "react-native-safe-area-context": "^5.6.2",
+    "react-native-svg": "^15.15.0",
+    "react-native-worklets": "^0.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
+    "@react-native-community/datetimepicker": "^8.5.0",
+    "@react-native-community/slider": "^5.1.1",
+    "@react-native/babel-preset": "0.81.5",
+    "@react-native/metro-config": "0.81.5",
+    "@react-native/typescript-config": "0.81.5",
+    "@storybook/addon-ondevice-controls": "^10.0.7",
+    "@storybook/react-native": "10.0.7",
+    "@types/react": "^19",
+    "storybook": "^10.0.4",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

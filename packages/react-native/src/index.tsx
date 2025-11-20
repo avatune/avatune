@@ -92,6 +92,7 @@ export function Avatar<T extends ReactNativeTheme = ReactNativeTheme>({
       style={{
         ...(themeStyleToStyleProp(result.style) as ViewStyle),
         ...style,
+        overflow: 'hidden',
       }}
     >
       {sortedItems.map(([category, item]) => {

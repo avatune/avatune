@@ -104,4 +104,3 @@ export default shared
     round: { Component: NosesRound },
   })
   .build() satisfies VueTheme
-

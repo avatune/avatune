@@ -7,6 +7,10 @@
       "types": "./dist/react.d.ts",
       "import": "./dist/react.js"
     },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "import": "./dist/react-native.js"
+    },
     "./svelte": {
       "types": "./dist/svelte.d.ts",
       "import": "./dist/svelte.js"

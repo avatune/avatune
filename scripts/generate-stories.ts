@@ -9,7 +9,7 @@ import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import { writeFileSync } from 'node:fs'
 
-type Framework = 'react' | 'vue' | 'svelte' | 'vanilla'
+type Framework = 'react' | 'vue' | 'svelte' | 'vanilla' | 'react-native'
 
 // Framework-specific configurations
 const FRAMEWORK_CONFIG = {
@@ -36,6 +36,12 @@ const FRAMEWORK_CONFIG = {
     fileExt: 'ts',
     avatarItemType: 'VanillaAvatarItem',
     storyRenderer: 'html-vite',
+  },
+  'react-native': {
+    storyPath: 'apps/RNStorybook/.rnstorybook/stories',
+    fileExt: 'tsx',
+    avatarItemType: 'ReactNativeAvatarItem',
+    storyRenderer: 'react-native',
   },
 } as const
 
@@ -367,6 +373,77 @@ ${generateSeedStoryArgTypes()}
 `
 }
 
+// Generate React Native story file
+function generateReactNativeStory(themes: string[]): string {
+  const themeImports = generateThemeImports(themes, 'react-native')
+
+  const themeTypes = generateThemeTypes(
+    themes,
+    (themeName) => `type ${themeName}Args = ExtractStoryArgs<typeof ${themeName.toLowerCase()}Theme>`
+  )
+
+  const stories = generateStories(
+    themes,
+    (themeName, themeVar) => `export const ${themeName}: StoryObj<${themeName}Args> = {
+  argTypes: getArgTypes(${themeVar}Theme),
+  render: (args) => <Avatar theme={${themeVar}Theme} {...args} />,
+  args: {
+    size: 300,
+  },
+}`
+  )
+
+  const themesObject = generateThemesObject(themes)
+
+  return `${themeImports}
+import type { AvatarProps } from '@avatune/react-native'
+import { Avatar } from '@avatune/react-native'
+import type { ReactNativeAvatarItem, ReactNativeTheme } from '@avatune/types'
+import type { Meta, StoryObj } from '@storybook/react-native'
+
+const meta = {
+  title: 'Avatar',
+  component: Avatar,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
+} satisfies Meta<typeof Avatar>
+
+export default meta
+
+type ExtractStoryArgs<T extends ReactNativeTheme> = Omit<
+  AvatarProps<T>,
+  'theme'
+>
+
+${themeTypes}
+
+${generateGetArgTypesFunction('ReactNativeAvatarItem')}
+
+${stories}
+
+const themes = {
+${themesObject}
+} as const
+
+export const Seed: StoryObj<{
+  theme: keyof typeof themes
+  seed?: string | number
+  size?: number
+}> = {
+${generateSeedStoryArgTypes()}
+  render: ({ theme: themeName, seed, size = 300 }) => {
+    const selectedTheme = themes[themeName]
+    return <Avatar theme={selectedTheme} seed={seed} size={size} />
+  },
+  args: {
+    theme: Object.keys(themes)[0] as keyof typeof themes,
+    seed: 'Type any seed phrase here',
+    size: 300,
+  },
+}
+`
+}
+
 // Generate Vanilla story file
 function generateVanillaStory(themes: string[]): string {
   const themeImports = generateThemeImports(themes, 'vanilla')
@@ -457,7 +534,7 @@ function main() {
 
   const frameworks = values.framework
     ? [values.framework as Framework]
-    : (['react', 'vue', 'svelte', 'vanilla'] as Framework[])
+    : (['react', 'vue', 'svelte', 'vanilla', 'react-native'] as Framework[])
 
   const themes = discoverThemes()
   console.log(`Found ${themes.length} themes: ${themes.join(', ')}`)
@@ -482,6 +559,9 @@ function main() {
         break
       case 'vanilla':
         content = generateVanillaStory(themes)
+        break
+      case 'react-native':
+        content = generateReactNativeStory(themes)
         break
       default:
         console.warn(`No generator for framework: ${framework}`)

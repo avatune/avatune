@@ -14,6 +14,7 @@ export default defineConfig({
       svelte: './src/svelte.ts',
       vue: './src/vue.ts',
       vanilla: './src/vanilla.ts',
+      'react-native': './src/react-native.ts',
     },
   },
 })
