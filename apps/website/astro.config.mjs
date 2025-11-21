@@ -31,10 +31,10 @@ export default defineConfig({
         {
           label: 'Frameworks',
           items: [
-            { label: '⚛ React', slug: 'packages/react' },
-            { label: '🖼 Vue', slug: 'packages/vue' },
-            { label: '🔥 Svelte', slug: 'packages/svelte' },
-            { label: '✨ Vanilla', slug: 'packages/vanilla' },
+            { label: 'React', slug: 'packages/react' },
+            { label: 'Vue', slug: 'packages/vue' },
+            { label: 'Svelte', slug: 'packages/svelte' },
+            { label: 'Vanilla', slug: 'packages/vanilla' },
           ],
         },
         {

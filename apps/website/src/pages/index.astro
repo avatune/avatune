@@ -1,5 +1,8 @@
 ---
 import heroImg from '../assets/houston.webp'
+import jsLogo from '../assets/javascript-logo.svg'
+import svelteLogo from '../assets/svelte-logo.svg'
+import vueLogo from '../assets/vue-logo.svg'
 import '../styles/global.css'
 
 const primaryDocsLink = '/welcome'
@@ -8,21 +11,25 @@ const frameworks = [
     label: 'React',
     description: 'Hooks, config helpers, and starter kit.',
     href: '/packages/react',
+    logo: null, // Will use inline SVG
   },
   {
     label: 'Vue',
     description: 'Composable API bindings with examples.',
     href: '/packages/vue',
+    logo: vueLogo,
   },
   {
     label: 'Svelte',
     description: 'Lightweight bindings with actions + stores.',
     href: '/packages/svelte',
+    logo: svelteLogo,
   },
   {
     label: 'Vanilla JS',
     description: 'Framework-agnostic utilities and CSS tokens.',
     href: '/packages/vanilla',
+    logo: jsLogo,
   },
 ]
 
@@ -55,7 +62,7 @@ const predictors = [
     <header class="relative isolate overflow-hidden px-6 pb-24 pt-16 sm:px-12 lg:px-16">
       <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
         <div class="space-y-8">
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-teal-200">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-pink-200">
             New · Unified avatar design system
           </span>
           <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
@@ -66,12 +73,12 @@ const predictors = [
           </p>
           <div class="flex flex-wrap gap-4">
             <a
-              class="inline-flex items-center justify-center rounded-full bg-teal-400 px-6 py-3 text-base font-semibold text-slate-950 transition hover:bg-teal-300"
+              class="inline-flex items-center justify-center rounded-full bg-pink-400 px-6 py-3 text-base font-semibold text-slate-950 transition hover:bg-pink-300"
               href={primaryDocsLink}
               >Explore the docs</a
             >
             <a
-              class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:text-teal-100"
+              class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:text-pink-100"
               href="https://github.com/avatune/avatune"
               target="_blank"
               rel="noreferrer"
@@ -94,7 +101,7 @@ const predictors = [
           </dl>
         </div>
         <div class="relative">
-          <div class="absolute -inset-6 rounded-3xl bg-teal-400/20 blur-3xl"></div>
+          <div class="absolute -inset-6 rounded-3xl bg-pink-400/20 blur-3xl"></div>
           <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl flex justify-center items-center">
             <img src={heroImg.src} alt="Avatune astronaut mascot" class="h-100 w-100 object-cover" loading="lazy" />
           </div>
@@ -105,26 +112,26 @@ const predictors = [
     <main class="space-y-24 px-6 pb-24 sm:px-12 lg:px-16">
       <section class="mx-auto max-w-5xl space-y-12">
         <div class="space-y-4 text-center">
-          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-teal-200">Why Avatune</p>
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-pink-200">Why Avatune</p>
           <h2 class="text-3xl font-semibold text-white sm:text-4xl">Design system DNA, ready for avatars</h2>
           <p class="text-lg text-slate-300">
             Combine flavors, predictive engines, and framework bindings to stay in sync from Figma to production.
           </p>
         </div>
         <div class="grid gap-6 md:grid-cols-3">
-          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-teal-400/10">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
             <h3 class="text-xl font-semibold text-white">Unified asset pipeline</h3>
             <p class="mt-3 text-sm text-slate-300">
               Pick a theme, swap palettes, and compose layers without rebuilding exports thanks to shared design tokens.
             </p>
           </article>
-          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-teal-400/10">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
             <h3 class="text-xl font-semibold text-white">Predictive customization</h3>
             <p class="mt-3 text-sm text-slate-300">
               Feed simple inputs into AI-assisted predictors to suggest hair color, length, and skin tones that feel on brand.
             </p>
           </article>
-          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-teal-400/10">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
             <h3 class="text-xl font-semibold text-white">Framework-native APIs</h3>
             <p class="mt-3 text-sm text-slate-300">
               React hooks, Vue composables, Svelte actions, and zero-dependency Vanilla helpers ensure teams share one toolkit.
@@ -133,10 +140,10 @@ const predictors = [
         </div>
       </section>
 
-      <section class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-10 shadow-2xl shadow-teal-500/5">
+      <section class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-10 shadow-2xl shadow-pink-500/5">
         <div class="grid gap-10 lg:grid-cols-[1.2fr,0.8fr]">
           <div>
-            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-teal-200">Start building</p>
+            <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-200">Start building</p>
             <h2 class="mt-4 text-3xl font-semibold text-white">Choose your stack</h2>
             <p class="mt-3 text-slate-300">
               Each framework kit mirrors the same API surface so switching stacks never means relearning Avatune.
@@ -145,13 +152,59 @@ const predictors = [
               {frameworks.map((framework) => (
                 <a
                   href={framework.href}
-                  class="flex items-start justify-between rounded-2xl border border-white/5 bg-white/5 px-5 py-4 hover:border-teal-300/70"
+                  class="flex items-center gap-4 rounded-2xl border border-white/5 bg-white/5 px-5 py-4 hover:border-pink-300/70 transition"
                 >
-                  <div>
+                  {framework.logo ? (
+                    <img
+                      src={framework.logo.src}
+                      alt={`${framework.label} logo`}
+                      class="h-8 w-8 flex-shrink-0 object-contain"
+                      loading="lazy"
+                    />
+                  ) : framework.label === 'React' ? (
+                    <svg
+                      class="h-8 w-8 flex-shrink-0"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="12" cy="12" r="2" fill="#61DAFB" />
+                      <ellipse
+                        cx="12"
+                        cy="12"
+                        rx="11"
+                        ry="4.2"
+                        stroke="#61DAFB"
+                        stroke-width="1.5"
+                        fill="none"
+                      />
+                      <ellipse
+                        cx="12"
+                        cy="12"
+                        rx="11"
+                        ry="4.2"
+                        stroke="#61DAFB"
+                        stroke-width="1.5"
+                        fill="none"
+                        transform="rotate(60 12 12)"
+                      />
+                      <ellipse
+                        cx="12"
+                        cy="12"
+                        rx="11"
+                        ry="4.2"
+                        stroke="#61DAFB"
+                        stroke-width="1.5"
+                        fill="none"
+                        transform="rotate(-60 12 12)"
+                      />
+                    </svg>
+                  ) : null}
+                  <div class="flex-1 min-w-0">
                     <p class="text-lg font-semibold text-white">{framework.label}</p>
                     <p class="text-sm text-slate-300">{framework.description}</p>
                   </div>
-                  <span aria-hidden="true" class="text-teal-200">→</span>
+                  <span aria-hidden="true" class="text-pink-200 flex-shrink-0">→</span>
                 </a>
               ))}
             </div>
@@ -162,7 +215,7 @@ const predictors = [
               <ul class="mt-3 space-y-2">
                 {themes.map((theme) => (
                   <li>
-                    <a class="inline-flex items-center gap-2 text-base font-medium text-white hover:text-teal-200" href={theme.href}>
+                    <a class="inline-flex items-center gap-2 text-base font-medium text-white hover:text-pink-200" href={theme.href}>
                       {theme.label}
                       <span aria-hidden="true">↗</span>
                     </a>
@@ -175,7 +228,7 @@ const predictors = [
               <ul class="mt-3 space-y-2">
                 {predictors.map((predictor) => (
                   <li>
-                    <a class="inline-flex items-center gap-2 text-base font-medium text-white hover:text-teal-200" href={predictor.href}>
+                    <a class="inline-flex items-center gap-2 text-base font-medium text-white hover:text-pink-200" href={predictor.href}>
                       {predictor.label}
                       <span aria-hidden="true">↗</span>
                     </a>
@@ -187,9 +240,55 @@ const predictors = [
         </div>
       </section>
 
+      <section class="mx-auto max-w-5xl space-y-12">
+        <div class="space-y-4 text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-pink-200">Use Cases</p>
+          <h2 class="text-3xl font-semibold text-white sm:text-4xl">Where you can use Avatune</h2>
+          <p class="text-lg text-slate-300">
+            From user profiles to placeholder images, Avatune adapts to any context where expressive avatars are needed.
+          </p>
+        </div>
+        <div class="grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
+            <h3 class="text-xl font-semibold text-white">Dynamic Profiles</h3>
+            <p class="mt-3 text-sm text-slate-300">
+              Generate unique, consistent avatars for user profiles that reflect identity through customizable attributes and AI-powered suggestions.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
+            <h3 class="text-xl font-semibold text-white">Avatars</h3>
+            <p class="mt-3 text-sm text-slate-300">
+              Build avatar customization interfaces where users can mix and match components to create their perfect representation.
+            </p>
+          </article>
+          <article class="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-lg shadow-pink-400/10">
+            <h3 class="text-xl font-semibold text-white">Avatar Placeholders</h3>
+            <p class="mt-3 text-sm text-slate-300">
+              Use seed-based generation to create deterministic avatar placeholders that load instantly without external image dependencies.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-5xl rounded-3xl border border-white/10 bg-gradient-to-br from-pink-500/10 to-slate-900/80 p-12 shadow-2xl shadow-pink-500/10">
+        <div class="space-y-6 text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-200">Infinite Possibilities</p>
+          <h2 class="text-3xl font-semibold text-white sm:text-4xl">Countless combinations at your fingertips</h2>
+          <p class="text-lg text-slate-300">
+            With multiple themes, hundreds of components, and AI-powered customization, the possibilities are virtually endless.
+          </p>
+          <div class="mt-8">
+            <div class="inline-block">
+              <div class="text-6xl font-bold text-pink-400 sm:text-7xl" id="combination-counter">0</div>
+              <div class="mt-2 text-sm uppercase tracking-wide text-slate-400">Unique Combinations</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="mx-auto max-w-5xl text-center">
         <div class="space-y-5">
-          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-teal-200">Docs preview</p>
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-200">Docs preview</p>
           <h2 class="text-3xl font-semibold text-white">Ready to explore the full knowledge base?</h2>
           <p class="text-lg text-slate-300">
             Jump straight into the documentation to see implementation details, live code samples, and synced package guides.
@@ -198,7 +297,7 @@ const predictors = [
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
             href={primaryDocsLink}
-            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950 transition hover:bg-teal-100"
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950 transition hover:bg-pink-100"
           >
             Open documentation
           </a>
@@ -215,6 +314,60 @@ const predictors = [
     <footer class="border-t border-white/10 px-6 py-10 text-center text-sm text-slate-400 sm:px-12 lg:px-16">
       <p>Made with ❤️ by the Avatune team. Looking for something else? Check out the docs.</p>
     </footer>
+
+    <script>
+      // @ts-nocheck
+      // Animated counter for combinations
+      /**
+       * @param {HTMLElement} element
+       * @param {number} target
+       * @param {number} duration
+       */
+      function animateCounter(element, target, duration = 2000) {
+        const start = 0
+        const startTime = performance.now()
+        
+        /**
+         * @param {number} currentTime
+         */
+        function update(currentTime) {
+          const elapsed = currentTime - startTime
+          const progress = Math.min(elapsed / duration, 1)
+          
+          // Easing function for smooth animation
+          const easeOutQuart = 1 - Math.pow(1 - progress, 4)
+          const current = Math.floor(start + (target - start) * easeOutQuart)
+          
+          // Format number with commas
+          element.textContent = current.toLocaleString('en-US')
+          
+          if (progress < 1) {
+            requestAnimationFrame(update)
+          } else {
+            element.textContent = target.toLocaleString('en-US') + '+'
+          }
+        }
+        
+        requestAnimationFrame(update)
+      }
+      
+      // Start animation when counter is visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const counter = entry.target
+            // Estimate: 4 themes × average 1000+ combinations per theme = 10M+ total
+            animateCounter(counter, 10000000)
+            observer.unobserve(counter)
+          }
+        })
+      }, { threshold: 0.5 })
+      
+      const counterElement = document.getElementById('combination-counter')
+      if (counterElement) {
+        observer.observe(counterElement)
+      }
+    </script>
   </body>
 </html>
 
