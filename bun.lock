@@ -192,7 +192,7 @@
       },
     },
     "apps/website": {
-      "name": "website",
+      "name": "@avatune/website",
       "version": "0.0.1",
       "dependencies": {
         "@astrojs/mdx": "^4.3.11",
@@ -918,6 +918,8 @@
     "@avatune/vue": ["@avatune/vue@workspace:packages/vue"],
 
     "@avatune/vue-storybook": ["@avatune/vue-storybook@workspace:apps/vue-storybook"],
+
+    "@avatune/website": ["@avatune/website@workspace:apps/website"],
 
     "@avatune/yanliu-assets": ["@avatune/yanliu-assets@workspace:packages/yanliu-assets"],
 
@@ -3504,8 +3506,6 @@
     "webpack-sources": ["webpack-sources@3.3.3", "", {}, "sha512-yd1RBzSGanHkitROoPFd6qsrxt+oFhg/129YzheDGqeustzX0vTZJZsSsQjVQC4yzBQ56K55XU8gaNCtIzOnTg=="],
 
     "webpack-virtual-modules": ["webpack-virtual-modules@0.6.2", "", {}, "sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ=="],
-
-    "website": ["website@workspace:apps/website"],
 
     "whatwg-fetch": ["whatwg-fetch@3.6.20", "", {}, "sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg=="],
 
