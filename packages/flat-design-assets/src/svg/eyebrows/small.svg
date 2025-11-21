@@ -1,7 +1,7 @@
 <svg width="32.5" height="4.1" viewBox="0 0 325 41" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g filter="url(#filter0_d_144_264)">
-<rect width="100" height="34" rx="17" fill="currentColor"/>
-<rect x="225" width="100" height="34" rx="17" fill="currentColor"/>
+<rect width="100" height="34" rx="17" fill="#A4C856"/>
+<rect x="225" width="100" height="34" rx="17" fill="#A4C856"/>
 </g>
 <defs>
 <filter id="filter0_d_144_264" x="0" y="0" width="325" height="41" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

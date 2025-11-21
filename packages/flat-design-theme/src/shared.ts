@@ -5,7 +5,7 @@ import {
   AccentColors,
   BackgroundColors,
   ClothingColors,
-  HairColors,
+  HairColor,
   SkinTones,
 } from './colors'
 
@@ -26,16 +26,14 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('hair', 'short', ['short'])
   .mapPrediction('hair', 'medium', ['medium', 'cupCurly'])
   .mapPrediction('hair', 'long', ['long', 'bobRounded', 'bobStraight'])
-  .mapPrediction('hairColor', 'black', [
-    HairColors.JetBlack,
-    HairColors.DeepBrown,
+  .mapPrediction('hairColor', 'black', [HairColor.Black, HairColor.DarkBrown])
+  .mapPrediction('hairColor', 'brown', [HairColor.Brown, HairColor.LightBrown])
+  .mapPrediction('hairColor', 'blond', [HairColor.Blonde, HairColor.Platinum])
+  .mapPrediction('hairColor', 'gray', [
+    HairColor.DarkGray,
+    HairColor.Gray,
+    HairColor.White,
   ])
-  .mapPrediction('hairColor', 'brown', [
-    HairColors.ChestnutBrown,
-    HairColors.DeepBrown,
-  ])
-  .mapPrediction('hairColor', 'blond', [HairColors.GoldenBlond])
-  .mapPrediction('hairColor', 'gray', [HairColors.DeepBrown])
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Medium])
   .mapPrediction('skinTone', 'light', [SkinTones.Light, SkinTones.VeryLight])
@@ -48,12 +46,28 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.MintGreen,
   ])
   .addColors('hair', [
-    HairColors.JetBlack,
-    HairColors.DeepBrown,
-    HairColors.ChestnutBrown,
-    HairColors.ForestGreen,
-    HairColors.DarkNavy,
-    HairColors.GoldenBlond,
+    HairColor.Black,
+    HairColor.DarkBrown,
+    HairColor.Brown,
+    HairColor.LightBrown,
+    HairColor.Blonde,
+    HairColor.Platinum,
+    HairColor.Ginger,
+    HairColor.Red,
+    HairColor.DarkGray,
+    HairColor.Gray,
+    HairColor.White,
+    HairColor.Pink,
+    HairColor.HotPink,
+    HairColor.Purple,
+    HairColor.Lavender,
+    HairColor.Blue,
+    HairColor.LightBlue,
+    HairColor.Teal,
+    HairColor.Green,
+    HairColor.Lime,
+    HairColor.Yellow,
+    HairColor.Orange,
   ])
   .addColors('head', [
     SkinTones.Dark,
@@ -62,24 +76,28 @@ export default createTheme<BaseAvatarItem>()
     SkinTones.VeryLight,
   ])
   .addColors('body', [
-    ClothingColors.BrightPink,
-    ClothingColors.DeepMaroon,
-    ClothingColors.WarmBrown,
-    ClothingColors.GoldenYellow,
+    ClothingColors.Black,
+    ClothingColors.White,
+    ClothingColors.Blue,
+    ClothingColors.LightBlue,
+    ClothingColors.Pink,
+    ClothingColors.HotPink,
+    ClothingColors.Red,
+    ClothingColors.Orange,
+    ClothingColors.Yellow,
+    ClothingColors.Green,
+    ClothingColors.Lime,
+    ClothingColors.Brown,
   ])
   .addColors('ears', [SkinTones.Light, SkinTones.VeryLight])
   .addColors('eyebrows', [
-    HairColors.ChestnutBrown,
-    HairColors.DeepBrown,
-    HairColors.JetBlack,
+    HairColor.Black,
+    HairColor.DarkBrown,
+    HairColor.Brown,
   ])
-  .addColors('eyes', [AccentColors.Black, AccentColors.EyeWhite])
-  .addColors('mouth', [AccentColors.LipPink, AccentColors.BlushPink])
-  .addColors('noses', [
-    AccentColors.LipPink,
-    AccentColors.BlushPink,
-    AccentColors.LipPink,
-  ])
+  .addColors('eyes', [AccentColors.Black])
+  .addColors('mouth', [AccentColors.LipPink])
+  .addColors('noses', [AccentColors.BlushPink])
   // Body
   .addItem('body', 'shirt', {
     position: fromHeadOffset(-percentage('0%'), percentage('49.63%')),
@@ -134,7 +152,7 @@ export default createTheme<BaseAvatarItem>()
   })
   // Hair
   .addItem('hair', 'bobRounded', {
-    position: fromHeadOffset(percentage('0%'), -percentage('3.66%')),
+    position: fromHeadOffset(percentage('0%'), -percentage('0%')),
     layer: 5,
   })
   .addItem('hair', 'bobStraight', {
@@ -172,15 +190,15 @@ export default createTheme<BaseAvatarItem>()
     layer: 25,
   })
   .addItem('mouth', 'frown', {
-    position: fromHeadOffset(percentage('13.41%'), percentage('40.24%')),
+    position: fromHeadOffset(percentage('14.3%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'halfOpen', {
-    position: fromHeadOffset(percentage('10.98%'), percentage('40.24%')),
+    position: fromHeadOffset(percentage('11.5%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'laugh', {
-    position: fromHeadOffset(percentage('11.95%'), percentage('40.24%')),
+    position: fromHeadOffset(percentage('13%'), percentage('40.24%')),
     layer: 25,
   })
   .addItem('mouth', 'smile', {

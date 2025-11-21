@@ -10,10 +10,14 @@ import { pluginSvgToSvelte } from '../rsbuild-plugin-svg-to-svelte/dist'
 const colordImport = "import { colord } from 'colord';"
 const getReplaceAttrValues = (colorPropName = 'color') => ({
   currentColor: `{${colorPropName}}`,
-  'color-mix(in srgb, currentColor 60%, white)': `{colord(${colorPropName}).lighten(0.4).toHex()}`,
-  'color-mix(in srgb, currentColor 70%, white)': `{colord(${colorPropName}).lighten(0.3).toHex()}`,
-  'color-mix(in srgb, currentColor 80%, white)': `{colord(${colorPropName}).lighten(0.2).toHex()}`,
-  'color-mix(in srgb, currentColor 80%, black)': `{colord(${colorPropName}).darken(0.2).toHex()}`,
+  '#FCBE93': `{${colorPropName}}`,
+  '#FF7A93': `{${colorPropName}}`,
+  '#FFA882': `{colord(${colorPropName}).darken(0.05).toHex()}`,
+  '#272424': `{colord(${colorPropName}).darken(0.2).toHex()}`,
+  '#A4C856': `{${colorPropName}}`,
+  '#8DA853': `{colord(${colorPropName}).darken(0.05).toHex()}`,
+  '#4F8558': `{colord(${colorPropName}).darken(0.1).toHex()}`,
+  '#F06E82': `{${colorPropName}}`,
 })
 
 export default defineConfig({
