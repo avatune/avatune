@@ -12,12 +12,12 @@ npm install @avatune/react
 
 ```tsx
 import { Avatar } from '@avatune/react'
-import { flatDesignTheme } from '@avatune/flat-design-theme/react'
+import { nevmstasTheme } from '@avatune/nevmstas-theme/react'
 
 function App() {
   return (
     <Avatar
-      theme={flatDesignTheme}
+      theme={nevmstasTheme}
       seed="user@example.com"
       size={200}
     />
@@ -61,13 +61,13 @@ function App() {
 
 Random avatar with seed:
 ```tsx
-<Avatar theme={flatDesignTheme} seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
+<Avatar theme={nevmstasTheme} seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
 ```
 
 Specific parts with custom colors:
 ```tsx
 <Avatar
-  theme={flatDesignTheme}
+  theme={nevmstasTheme}
   hair="long"
   hairColor="#ff6b6b"
   eyes="happy"

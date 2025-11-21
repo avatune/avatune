@@ -16,12 +16,12 @@ Generate beautiful, customizable avatars with machine learning prediction or man
 
 ```bash
 # Install a theme and renderer for your framework
-npm install @avatune/kawaii-design-theme @avatune/react
+npm install @avatune/yanliu-theme @avatune/react
 ```
 
 ```tsx
 import { Avatar } from '@avatune/react'
-import theme from '@avatune/kawaii-design-theme/react'
+import theme from '@avatune/yanliu-theme/react'
 
 function App() {
   return <Avatar theme={theme} seed="unique-identifier" size={300} />
@@ -32,9 +32,9 @@ function App() {
 
 All themes support React, Vue, Svelte, and Vanilla JavaScript.
 
-- [`@avatune/kawaii-design-theme`](./packages/kawaii-design-theme) - Cute, friendly avatar designs
+- [`@avatune/yanliu-theme`](./packages/yanliu-theme) - Cute, friendly avatar designs
 - [`@avatune/miniavs-theme`](./packages/miniavs-theme) - Minimalist avatar system
-- [`@avatune/flat-design-theme`](./packages/flat-design-theme) - Modern flat design avatars
+- [`@avatune/nevmstas-theme`](./packages/nevmstas-theme) - Modern Nevmstas avatars
 
 ## Framework Renderers
 

@@ -109,7 +109,7 @@ function generateReadme(
   const { license, credits } = findLicenseOrCredits(packageDir)
   const assetsTable = generateAssetsTable(assets)
 
-  // Extract style from package name (e.g., "flat-design" from "flat-design-assets")
+  // Extract style from package name (e.g., "nevmstas" from "nevmstas-assets")
   const styleName = packageName.replace('-assets', '').split('-').map(capitalizeFirst).join(' ')
 
   const sections: string[] = []

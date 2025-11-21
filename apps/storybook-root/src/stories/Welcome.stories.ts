@@ -47,7 +47,7 @@ const meta: Meta = {
           🎨 Available Themes
         </h2>
         <ul style="margin-left: 1.5rem;">
-          <li><strong>Flat Design Theme</strong> - Modern, minimalist design</li>
+          <li><strong>Nevmstas Theme</strong> - Modern, minimalist design</li>
           <li><strong>Sketch Black & White Theme</strong> - Hand-drawn aesthetic</li>
         </ul>
       </div>

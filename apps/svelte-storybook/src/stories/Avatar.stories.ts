@@ -1,10 +1,10 @@
-import flatdesignTheme from '@avatune/flat-design-theme/svelte'
-import kawaiidesignTheme from '@avatune/kawaii-design-theme/svelte'
-import micahdesignTheme from '@avatune/micah-design-theme/svelte'
+import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
+import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
 import type { SvelteAvatarItem, Theme } from '@avatune/types'
+import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import type { Meta, StoryObj } from '@storybook/svelte-vite'
 
 const meta = {
@@ -21,9 +21,9 @@ type ExtractStoryArgs<T extends Theme<SvelteAvatarItem>> = Omit<
   'theme'
 >
 
-type FlatDesignArgs = ExtractStoryArgs<typeof flatdesignTheme>
-type KawaiiDesignArgs = ExtractStoryArgs<typeof kawaiidesignTheme>
-type MicahDesignArgs = ExtractStoryArgs<typeof micahdesignTheme>
+type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
+type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
+type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
 
 const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
@@ -51,33 +51,33 @@ const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
   return argTypes as StoryObj<Args>['argTypes']
 }
 
-export const FlatDesign: StoryObj<FlatDesignArgs> = {
-  argTypes: getArgTypes(flatdesignTheme),
+export const Nevmstas: StoryObj<NevmstasArgs> = {
+  argTypes: getArgTypes(nevmstasTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: flatdesignTheme, ...args },
+    props: { theme: nevmstasTheme, ...args },
   }),
   args: {
     size: 300,
   },
 }
 
-export const KawaiiDesign: StoryObj<KawaiiDesignArgs> = {
-  argTypes: getArgTypes(kawaiidesignTheme),
+export const Yanliu: StoryObj<YanliuArgs> = {
+  argTypes: getArgTypes(yanliuTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: kawaiidesignTheme, ...args },
+    props: { theme: yanliuTheme, ...args },
   }),
   args: {
     size: 300,
   },
 }
 
-export const MicahDesign: StoryObj<MicahDesignArgs> = {
-  argTypes: getArgTypes(micahdesignTheme),
+export const Micah: StoryObj<MicahArgs> = {
+  argTypes: getArgTypes(micahTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: micahdesignTheme, ...args },
+    props: { theme: micahTheme, ...args },
   }),
   args: {
     size: 300,
@@ -96,9 +96,9 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
 }
 
 const themes = {
-  'Flat Design': flatdesignTheme,
-  'Kawaii Design': kawaiidesignTheme,
-  'Micah Design': micahdesignTheme,
+  Nevmstas: nevmstasTheme,
+  Yanliu: yanliuTheme,
+  Micah: micahTheme,
   Miniavs: miniavsTheme,
 } as const
 

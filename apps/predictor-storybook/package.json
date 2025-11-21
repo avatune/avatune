@@ -8,7 +8,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@avatune/flat-design-theme": "workspace:*",
+    "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
     "@avatune/react": "workspace:*",

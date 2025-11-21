@@ -12,10 +12,10 @@ npm install @avatune/vanilla
 
 ```ts
 import { avatar } from '@avatune/vanilla'
-import { flatDesignTheme } from '@avatune/flat-design-theme/vanilla'
+import { nevmstasTheme } from '@avatune/nevmstas-theme/vanilla'
 
 const svgString = avatar({
-  theme: flatDesignTheme,
+  theme: nevmstasTheme,
   seed: 'user@example.com',
   size: 200
 })
@@ -65,7 +65,7 @@ function avatar(args: AvatarArgs): string
 Random avatar with seed:
 ```ts
 const svg = avatar({
-  theme: flatDesignTheme,
+  theme: nevmstasTheme,
   seed: '521411f1-fab6-4ed5-90bf-2863028bcae6'
 })
 ```
@@ -73,7 +73,7 @@ const svg = avatar({
 Specific parts with custom colors:
 ```ts
 const svg = avatar({
-  theme: flatDesignTheme,
+  theme: nevmstasTheme,
   hair: 'long',
   hairColor: '#ff6b6b',
   eyes: 'happy',

@@ -13,9 +13,9 @@
       "name": "@avatune/rn-storybook",
       "version": "0.0.1",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/react-native": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -54,9 +54,9 @@
       "name": "@avatune/cloudflare-worker",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vanilla": "workspace:*",
@@ -70,7 +70,7 @@
       "name": "@avatune/predictor-storybook",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
         "@avatune/hair-color-predictor": "workspace:*",
         "@avatune/hair-length-predictor": "workspace:*",
         "@avatune/react": "workspace:*",
@@ -94,9 +94,9 @@
       "name": "@avatune/react-storybook",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/react": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -127,9 +127,9 @@
       "name": "@avatune/svelte-storybook",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -151,9 +151,9 @@
       "name": "@avatune/vanilla-storybook",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/typescript-config": "workspace:*",
@@ -171,9 +171,9 @@
       "name": "@avatune/vue-storybook",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-theme": "workspace:*",
-        "@avatune/kawaii-design-theme": "workspace:*",
-        "@avatune/micah-design-theme": "workspace:*",
+        "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/yanliu-theme": "workspace:*",
+        "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",
@@ -186,8 +186,8 @@
         "typescript": "^5.9.3",
       },
     },
-    "packages/flat-design-assets": {
-      "name": "@avatune/flat-design-assets",
+    "packages/nevmstas-assets": {
+      "name": "@avatune/nevmstas-assets",
       "version": "0.0.0",
       "dependencies": {
         "colord": "^2.9.3",
@@ -224,11 +224,11 @@
         "vue",
       ],
     },
-    "packages/flat-design-theme": {
-      "name": "@avatune/flat-design-theme",
+    "packages/nevmstas-theme": {
+      "name": "@avatune/nevmstas-theme",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/flat-design-assets": "workspace:*",
+        "@avatune/nevmstas-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -299,8 +299,8 @@
         "@tensorflow/tfjs-backend-webgl": "^4.22.0",
       },
     },
-    "packages/kawaii-design-assets": {
-      "name": "@avatune/kawaii-design-assets",
+    "packages/yanliu-assets": {
+      "name": "@avatune/yanliu-assets",
       "version": "0.0.0",
       "dependencies": {
         "colord": "^2.9.3",
@@ -337,11 +337,11 @@
         "vue",
       ],
     },
-    "packages/kawaii-design-theme": {
-      "name": "@avatune/kawaii-design-theme",
+    "packages/yanliu-theme": {
+      "name": "@avatune/yanliu-theme",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/kawaii-design-assets": "workspace:*",
+        "@avatune/yanliu-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -401,8 +401,8 @@
         "vue",
       ],
     },
-    "packages/micah-design-assets": {
-      "name": "@avatune/micah-design-assets",
+    "packages/micah-assets": {
+      "name": "@avatune/micah-assets",
       "version": "0.0.0",
       "dependencies": {
         "colord": "^2.9.3",
@@ -439,11 +439,11 @@
         "vue",
       ],
     },
-    "packages/micah-design-theme": {
-      "name": "@avatune/micah-design-theme",
+    "packages/micah-theme": {
+      "name": "@avatune/micah-theme",
       "version": "0.0.0",
       "dependencies": {
-        "@avatune/micah-design-assets": "workspace:*",
+        "@avatune/micah-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -792,23 +792,23 @@
 
     "@avatune/cloudflare-worker": ["@avatune/cloudflare-worker@workspace:apps/cloudflare-worker"],
 
-    "@avatune/flat-design-assets": ["@avatune/flat-design-assets@workspace:packages/flat-design-assets"],
+    "@avatune/nevmstas-assets": ["@avatune/nevmstas-assets@workspace:packages/nevmstas-assets"],
 
-    "@avatune/flat-design-theme": ["@avatune/flat-design-theme@workspace:packages/flat-design-theme"],
+    "@avatune/nevmstas-theme": ["@avatune/nevmstas-theme@workspace:packages/nevmstas-theme"],
 
     "@avatune/hair-color-predictor": ["@avatune/hair-color-predictor@workspace:packages/hair-color-predictor"],
 
     "@avatune/hair-length-predictor": ["@avatune/hair-length-predictor@workspace:packages/hair-length-predictor"],
 
-    "@avatune/kawaii-design-assets": ["@avatune/kawaii-design-assets@workspace:packages/kawaii-design-assets"],
+    "@avatune/yanliu-assets": ["@avatune/yanliu-assets@workspace:packages/yanliu-assets"],
 
-    "@avatune/kawaii-design-theme": ["@avatune/kawaii-design-theme@workspace:packages/kawaii-design-theme"],
+    "@avatune/yanliu-theme": ["@avatune/yanliu-theme@workspace:packages/yanliu-theme"],
 
     "@avatune/kyute-assets": ["@avatune/kyute-assets@workspace:packages/kyute-assets"],
 
-    "@avatune/micah-design-assets": ["@avatune/micah-design-assets@workspace:packages/micah-design-assets"],
+    "@avatune/micah-assets": ["@avatune/micah-assets@workspace:packages/micah-assets"],
 
-    "@avatune/micah-design-theme": ["@avatune/micah-design-theme@workspace:packages/micah-design-theme"],
+    "@avatune/micah-theme": ["@avatune/micah-theme@workspace:packages/micah-theme"],
 
     "@avatune/miniavs-assets": ["@avatune/miniavs-assets@workspace:packages/miniavs-assets"],
 
@@ -2920,15 +2920,15 @@
 
     "zod": ["zod@3.22.3", "", {}, "sha512-EjIevzuJRiRPbVH4mGc8nApb/lVLKVpmUhAaR5R5doKGfAnGJ6Gr3CViAVjP+4FWSxCsybeWQdcgCtbX+7oZug=="],
 
-    "@avatune/flat-design-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
+    "@avatune/nevmstas-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
     "@avatune/hair-color-predictor/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
     "@avatune/hair-length-predictor/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
-    "@avatune/kawaii-design-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
+    "@avatune/yanliu-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
-    "@avatune/micah-design-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
+    "@avatune/micah-theme/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
     "@avatune/react/@types/node": ["@types/node@22.19.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ=="],
 
@@ -3168,15 +3168,15 @@
 
     "youch/cookie": ["cookie@0.7.2", "", {}, "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w=="],
 
-    "@avatune/flat-design-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+    "@avatune/nevmstas-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/hair-color-predictor/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/hair-length-predictor/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
-    "@avatune/kawaii-design-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+    "@avatune/yanliu-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
-    "@avatune/micah-design-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
+    "@avatune/micah-theme/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "@avatune/react-native/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 

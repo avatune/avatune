@@ -14,12 +14,12 @@ npm install @avatune/react-native react-native-svg
 
 ```tsx
 import { Avatar } from '@avatune/react-native'
-import { flatDesignTheme } from '@avatune/flat-design-theme/react-native'
+import { nevmstasTheme } from '@avatune/nevmstas-theme/react-native'
 
 function App() {
   return (
     <Avatar
-      theme={flatDesignTheme}
+      theme={nevmstasTheme}
       seed="user@example.com"
       size={200}
     />
@@ -62,13 +62,13 @@ function App() {
 
 Random avatar with seed:
 ```tsx
-<Avatar theme={flatDesignTheme} seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
+<Avatar theme={nevmstasTheme} seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
 ```
 
 Specific parts with custom colors:
 ```tsx
 <Avatar
-  theme={flatDesignTheme}
+  theme={nevmstasTheme}
   hair="long"
   hairColor="#ff6b6b"
   eyes="happy"

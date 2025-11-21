@@ -8,9 +8,9 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@avatune/flat-design-theme": "workspace:*",
-    "@avatune/kawaii-design-theme": "workspace:*",
-    "@avatune/micah-design-theme": "workspace:*",
+    "@avatune/nevmstas-theme": "workspace:*",
+    "@avatune/yanliu-theme": "workspace:*",
+    "@avatune/micah-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",
     "@avatune/react-native": "workspace:*",
     "@avatune/types": "workspace:*",

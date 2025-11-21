@@ -1,19 +1,19 @@
-import flatDesignTheme from '@avatune/flat-design-theme/vanilla'
-import kawaiiDesignTheme from '@avatune/kawaii-design-theme/vanilla'
-import micahDesignTheme from '@avatune/micah-design-theme/vanilla'
+import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
+import nevmstasTheme from '@avatune/nevmstas-theme/vanilla'
 import type {
   AvatarConfig,
   VanillaAvatarItem,
   VanillaTheme,
 } from '@avatune/types'
 import { avatar } from '@avatune/vanilla'
+import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 
 const THEMES = {
-  'kawaii-design': kawaiiDesignTheme,
-  'flat-design': flatDesignTheme,
+  yanliu: yanliuTheme,
+  nevmstas: nevmstasTheme,
   miniavs: miniavsTheme,
-  'micah-design': micahDesignTheme,
+  micah: micahTheme,
 } as const
 
 type ThemeName = keyof typeof THEMES
@@ -137,8 +137,7 @@ export default {
     const url = new URL(request.url)
 
     if (url.pathname === '/') {
-      const themeName = (url.searchParams.get('theme') ||
-        'kawaii-design') as ThemeName
+      const themeName = (url.searchParams.get('theme') || 'yanliu') as ThemeName
       const theme = THEMES[themeName]
 
       if (!theme) {

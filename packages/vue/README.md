@@ -13,12 +13,12 @@ npm install @avatune/vue
 ```vue
 <script setup>
 import { Avatar } from '@avatune/vue'
-import { flatDesignTheme } from '@avatune/flat-design-theme/vue'
+import { nevmstasTheme } from '@avatune/nevmstas-theme/vue'
 </script>
 
 <template>
   <Avatar
-    :theme="flatDesignTheme"
+    :theme="nevmstasTheme"
     seed="user@example.com"
     :size="200"
   />
@@ -61,13 +61,13 @@ import { flatDesignTheme } from '@avatune/flat-design-theme/vue'
 
 Random avatar with seed:
 ```vue
-<Avatar :theme="flatDesignTheme" seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
+<Avatar :theme="nevmstasTheme" seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
 ```
 
 Specific parts with custom colors:
 ```vue
 <Avatar
-  :theme="flatDesignTheme"
+  :theme="nevmstasTheme"
   hair="long"
   hair-color="#ff6b6b"
   eyes="happy"

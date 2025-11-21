@@ -1,10 +1,10 @@
-import flatdesignTheme from '@avatune/flat-design-theme/vue'
-import kawaiidesignTheme from '@avatune/kawaii-design-theme/vue'
-import micahdesignTheme from '@avatune/micah-design-theme/vue'
+import micahTheme from '@avatune/micah-theme/vue'
 import miniavsTheme from '@avatune/miniavs-theme/vue'
+import nevmstasTheme from '@avatune/nevmstas-theme/vue'
 import type { Theme, VueAvatarItem } from '@avatune/types'
 import type { AvatarProps } from '@avatune/vue'
 import { Avatar } from '@avatune/vue'
+import yanliuTheme from '@avatune/yanliu-theme/vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 const meta = {
@@ -16,9 +16,9 @@ const meta = {
 
 export default meta
 
-type FlatDesignArgs = Omit<AvatarProps<typeof flatdesignTheme>, 'theme'>
-type KawaiiDesignArgs = Omit<AvatarProps<typeof kawaiidesignTheme>, 'theme'>
-type MicahDesignArgs = Omit<AvatarProps<typeof micahdesignTheme>, 'theme'>
+type NevmstasArgs = Omit<AvatarProps<typeof nevmstasTheme>, 'theme'>
+type YanliuArgs = Omit<AvatarProps<typeof yanliuTheme>, 'theme'>
+type MicahArgs = Omit<AvatarProps<typeof micahTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
 
 const getArgTypes = <T extends Theme<VueAvatarItem>>(theme: T) => {
@@ -45,11 +45,11 @@ const getArgTypes = <T extends Theme<VueAvatarItem>>(theme: T) => {
   return argTypes
 }
 
-export const FlatDesign: StoryObj<FlatDesignArgs> = {
-  argTypes: getArgTypes(flatdesignTheme),
-  render: (args: FlatDesignArgs) => ({
+export const Nevmstas: StoryObj<NevmstasArgs> = {
+  argTypes: getArgTypes(nevmstasTheme),
+  render: (args: NevmstasArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: flatdesignTheme }),
+    setup: () => ({ args, theme: nevmstasTheme }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
@@ -57,11 +57,11 @@ export const FlatDesign: StoryObj<FlatDesignArgs> = {
   },
 }
 
-export const KawaiiDesign: StoryObj<KawaiiDesignArgs> = {
-  argTypes: getArgTypes(kawaiidesignTheme),
-  render: (args: KawaiiDesignArgs) => ({
+export const Yanliu: StoryObj<YanliuArgs> = {
+  argTypes: getArgTypes(yanliuTheme),
+  render: (args: YanliuArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: kawaiidesignTheme }),
+    setup: () => ({ args, theme: yanliuTheme }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
@@ -69,11 +69,11 @@ export const KawaiiDesign: StoryObj<KawaiiDesignArgs> = {
   },
 }
 
-export const MicahDesign: StoryObj<MicahDesignArgs> = {
-  argTypes: getArgTypes(micahdesignTheme),
-  render: (args: MicahDesignArgs) => ({
+export const Micah: StoryObj<MicahArgs> = {
+  argTypes: getArgTypes(micahTheme),
+  render: (args: MicahArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: micahdesignTheme }),
+    setup: () => ({ args, theme: micahTheme }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
@@ -94,9 +94,9 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
 }
 
 const themes = {
-  'Flat Design': flatdesignTheme,
-  'Kawaii Design': kawaiidesignTheme,
-  'Micah Design': micahdesignTheme,
+  Nevmstas: nevmstasTheme,
+  Yanliu: yanliuTheme,
+  Micah: micahTheme,
   Miniavs: miniavsTheme,
 } as const
 

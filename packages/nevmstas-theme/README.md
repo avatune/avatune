@@ -1,0 +1,124 @@
+# @avatune/nevmstas-theme
+
+Avatar theme for Avatune using Nevmstas design assets.
+
+## Installation
+
+```bash
+npm install @avatune/nevmstas-theme
+```
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/nevmstas-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/nevmstas-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/nevmstas-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/nevmstas-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="bobRounded"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="shirt"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses assets from the [`@avatune/nevmstas-assets`](../packages/nevmstas-assets) package.
+
+## License
+
+This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/nevmstas-assets`](../packages/nevmstas-assets) - SVG assets used by this theme
+- [`@avatune/react`](../packages/react) - React avatar renderer
+- [`@avatune/vue`](../packages/vue) - Vue avatar renderer
+- [`@avatune/svelte`](../packages/svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](../packages/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

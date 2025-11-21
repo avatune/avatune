@@ -58,12 +58,12 @@ Exceeded requests return:
 ## API Usage
 
 ```
-GET /?theme=kawaii-design&size=200&seed=123
+GET /?theme=yanliu&size=200&seed=123
 ```
 
 ### Parameters
 
-- `theme` - Theme name (kawaii-design, flat-design, miniavs, micah-design)
+- `theme` - Theme name (yanliu, nevmstas, miniavs, micah)
 - `size` - Avatar size in pixels (default: theme default)
 - `seed` - Random seed for avatar generation
 - Plus any theme-specific parameters (hair, eyes, backgroundColor, etc.)

@@ -1,0 +1,20 @@
+{
+  "extends": "@avatune/typescript-config/base",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/yanliu-assets": ["../yanliu-assets/dist/svg.d.ts"],
+      "@avatune/yanliu-assets/react": ["../yanliu-assets/dist/react.d.ts"],
+      "@avatune/yanliu-assets/svelte": ["../yanliu-assets/dist/svelte.d.ts"],
+      "@avatune/yanliu-assets/vue": ["../yanliu-assets/dist/vue.d.ts"],
+      "@avatune/theme-builder": ["../theme-builder/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

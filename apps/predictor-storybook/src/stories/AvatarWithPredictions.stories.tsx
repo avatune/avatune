@@ -1,4 +1,4 @@
-import flatTheme from '@avatune/flat-design-theme/react'
+import flatTheme from '@avatune/nevmstas-theme/react'
 import { Avatar } from '@avatune/react'
 import type { Predictions } from '@avatune/types'
 import type { Meta, StoryObj } from '@storybook/react'
@@ -45,4 +45,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const FlatDesign: Story = {}
+export const Nevmstas: Story = {}
