@@ -114,6 +114,17 @@ export const pluginSvgToVue = (options: PluginOptions = {}): RsbuildPlugin => ({
 
       const vueQuery = /(^|\?)vue($|&)/
 
+      const replaceAttrValues = options.replaceAttrValues
+        ? Object.entries(options.replaceAttrValues).reduce(
+            (acc, [key, value]) => {
+              acc[key] = value
+              acc[key.toLowerCase()] = value
+              return acc
+            },
+            options.replaceAttrValues,
+          )
+        : undefined
+
       // 1) vue component rule FIRST
       try {
         rule
@@ -127,7 +138,7 @@ export const pluginSvgToVue = (options: PluginOptions = {}): RsbuildPlugin => ({
             svgo: merged.svgo,
             svgoConfig: merged.svgoConfig,
             imports: options.imports,
-            replaceAttrValues: options.replaceAttrValues,
+            replaceAttrValues,
           })
           .end()
       } catch (e) {
@@ -197,7 +208,7 @@ export const pluginSvgToVue = (options: PluginOptions = {}): RsbuildPlugin => ({
               svgo: merged.svgo,
               svgoConfig: merged.svgoConfig,
               imports: options.imports,
-              replaceAttrValues: options.replaceAttrValues,
+              replaceAttrValues,
             })
             .end()
         } catch (e) {

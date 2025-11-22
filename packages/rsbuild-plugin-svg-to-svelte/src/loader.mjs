@@ -7,7 +7,6 @@ const applyReplacements = (svg, replacements = {}) => {
   let result = svg
 
   // Sort keys by length (longest first) to ensure more specific patterns are replaced first
-  // This prevents "currentColor" from being replaced before "color-mix(in srgb, currentColor 80%, white)"
   const sortedKeys = Object.keys(replacements).sort(
     (a, b) => b.length - a.length,
   )

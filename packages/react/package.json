@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "@avatune/types": "workspace:*",
-    "@avatune/utils": "workspace:*"
+    "@avatune/utils": "workspace:*",
+    "@blazediff/object": "^1.6.0"
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
