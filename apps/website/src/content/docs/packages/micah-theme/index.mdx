@@ -1,17 +1,17 @@
 ---
-title: "@avatune/flat-design-theme"
-description: "Avatar theme for Avatune using flat design design assets."
-source: "packages/flat-design-theme/README.md"
+title: "@avatune/micah-theme"
+description: "Avatar theme for Avatune using Micah assets."
+source: "packages/micah-theme/README.md"
 ---
 
-> Source: `packages/flat-design-theme/README.md`
+> Source: `packages/micah-theme/README.md`
 
-Avatar theme for Avatune using flat design design assets.
+Avatar theme for Avatune using Micah assets.
 
 ## Installation
 
 ```bash
-npm install @avatune/flat-design-theme
+npm install @avatune/micah-theme
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla
 
 ```tsx
 import { Avatar } from '@avatune/react'
-import theme from '@avatune/flat-design-theme/react'
+import theme from '@avatune/micah-theme/react'
 
 function App() {
   return (
@@ -40,7 +40,7 @@ function App() {
 ```vue
 <script setup lang="ts">
 import { Avatar } from '@avatune/vue'
-import theme from '@avatune/flat-design-theme/vue'
+import theme from '@avatune/micah-theme/vue'
 </script>
 
 <template>
@@ -57,7 +57,7 @@ import theme from '@avatune/flat-design-theme/vue'
 ```svelte
 <script lang="ts">
   import { Avatar } from '@avatune/svelte'
-  import theme from '@avatune/flat-design-theme/svelte'
+  import theme from '@avatune/micah-theme/svelte'
 </script>
 
 <Avatar
@@ -71,7 +71,7 @@ import theme from '@avatune/flat-design-theme/vue'
 
 ```typescript
 import { avatar } from '@avatune/vanilla'
-import theme from '@avatune/flat-design-theme/vanilla'
+import theme from '@avatune/micah-theme/vanilla'
 
 const container = document.getElementById('avatar-container')
 const svg = avatar({
@@ -91,26 +91,35 @@ You can override specific avatar parts:
 <Avatar
   theme={theme}
   size={300}
-  hair="bobRounded"          // Choose specific hair style
+  hair="dannyPhantom"          // Choose specific hair style
   hairColor="#FF5733"    // Custom hair color
-  body="shirt"     // Choose specific clothing
+  body="collaredShirt"     // Choose specific clothing
   bodyColor="#3498DB"    // Custom clothing color
 />
 ```
 
 ## Design Assets
 
-This theme uses assets from the [`@avatune/flat-design-assets`](../packages/flat-design-assets) package.
+This theme uses assets from the [`@avatune/micah-assets`](../packages/micah-assets) package.
 
 ## License
 
 This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).
 
-The design assets used in this theme are separately licensed. See the asset package for details.
+The design assets used in this theme have their own license and attribution:
+
+This project uses avatar design assets licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Original designs by [Micah Lanier](https://www.figma.com/community/file/829741575478342595/avatar-illustration-system).
+Modifications were made to adapt them for composable SVG avatars.
+
+For full details, see:
+- [CREDITS.md](../packages/micah-assets/CREDITS.md) - Asset attribution
+- Asset package license in [`@avatune/micah-assets`](../packages/micah-assets)
 
 ## Related Packages
 
-- [`@avatune/flat-design-assets`](../packages/flat-design-assets) - SVG assets used by this theme
+- [`@avatune/micah-assets`](../packages/micah-assets) - SVG assets used by this theme
 - [`@avatune/react`](../packages/react) - React avatar renderer
 - [`@avatune/vue`](../packages/vue) - Vue avatar renderer
 - [`@avatune/svelte`](../packages/svelte) - Svelte avatar renderer
