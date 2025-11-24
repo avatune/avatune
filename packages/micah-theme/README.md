@@ -1,6 +1,6 @@
 # @avatune/micah-theme
 
-Avatar theme for Avatune using Micah design assets.
+Avatar theme for Avatune using Micah assets.
 
 ## Installation
 

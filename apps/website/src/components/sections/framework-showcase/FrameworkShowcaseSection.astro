@@ -1,0 +1,18 @@
+---
+import { getFrameworkShowcaseEntries } from '../../../lib/content/framework-showcase'
+import FrameworkShowcaseTabs from '../../client/framework-showcase-tabs.client.svelte'
+
+const frameworkEntries = await getFrameworkShowcaseEntries()
+---
+
+<section class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-linear-to-br from-slate-900/80 to-slate-950/80 p-4 sm:p-7 lg:p-10 shadow-2xl shadow-pink-500/5">
+  <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-200">Start building</p>
+  <h2 class="mt-4 text-3xl font-semibold text-white">Choose your stack</h2>
+  <p class="mt-3 text-slate-300">
+    Each framework kit mirrors the same API surface so switching stacks never means relearning Avatune.
+  </p>
+
+  <FrameworkShowcaseTabs client:only entries={frameworkEntries} />
+</section>
+
+
