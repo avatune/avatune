@@ -1,0 +1,29 @@
+---
+import { Code, TabItem, Tabs } from '@astrojs/starlight/components'
+
+type InstallTabsProps = {
+  packages: string | string[]
+  syncKey?: string
+}
+
+const { packages, syncKey = 'package-manager' } =
+  Astro.props as InstallTabsProps
+
+const packageList = Array.isArray(packages) ? packages.join(' ') : packages
+
+const commands: Record<string, string> = {
+  npm: `npm install ${packageList}`,
+  yarn: `yarn add ${packageList}`,
+  pnpm: `pnpm add ${packageList}`,
+  bun: `bun add ${packageList}`,
+}
+---
+
+<Tabs syncKey={syncKey}>
+  {Object.entries(commands).map(([label, cmd]) => (
+    <TabItem label={label}>
+        <Code lang="bash" code={cmd} />
+    </TabItem>
+  ))}
+</Tabs>
+

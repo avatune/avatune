@@ -9,7 +9,7 @@ import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import type {
   FrameworkShowcaseEntry,
   FrameworkThemeId,
-} from '../../lib/content/framework-showcase'
+} from '../../lib/framework-showcase'
 
 type FrameworkTab = FrameworkShowcaseEntry & {
   themeId: FrameworkThemeId

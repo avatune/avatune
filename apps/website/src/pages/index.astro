@@ -1,8 +1,8 @@
 ---
-import FrameworkShowcaseSection from '../components/sections/framework-showcase/FrameworkShowcaseSection.astro'
-import HeroSection from '../components/sections/hero/HeroSection.astro'
-import InfinitePossibilitiesSection from '../components/sections/infinite-possibilities/InfinitePossibilitiesSection.astro'
-import PredictionPipelineSection from '../components/sections/prediction-pipeline/PredictionPipelineSection.astro'
+import PredictionPipeline from '../components/client/prediction-pipeline.svelte'
+import FrameworkShowcaseSection from '../components/sections/framework-showcase-section.astro'
+import HeroSection from '../components/sections/hero-section.astro'
+import InfinitePossibilitiesSection from '../components/sections/infinite-possibilities-section.astro'
 import '../styles/global.css'
 
 const primaryDocsLink = '/welcome'
@@ -83,8 +83,9 @@ const primaryDocsLink = '/welcome'
           </article>
         </div>
       </section>
-
-      <PredictionPipelineSection />
+      <section class="mx-auto max-w-6xl px-2">
+        <PredictionPipeline client:only />
+      </section>
 
       <InfinitePossibilitiesSection />
 

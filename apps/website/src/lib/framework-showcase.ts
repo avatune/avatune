@@ -1,9 +1,9 @@
 import { codeToHtml } from 'shiki'
-import jsLogo from '../../assets/javascript-logo.svg'
-import reactLogo from '../../assets/react-logo.svg'
-import reactNativeLogo from '../../assets/react-native.svg'
-import svelteLogo from '../../assets/svelte-logo.svg'
-import vueLogo from '../../assets/vue-logo.svg'
+import jsLogo from '../assets/javascript-logo.svg'
+import reactLogo from '../assets/react-logo.svg'
+import reactNativeLogo from '../assets/react-native.svg'
+import svelteLogo from '../assets/svelte-logo.svg'
+import vueLogo from '../assets/vue-logo.svg'
 
 export type FrameworkThemeId =
   | 'yanliu'
@@ -125,8 +125,15 @@ ${scriptClose}
 import theme from '@avatune/kyute-theme/react-native'
 
 export function AvatarPreview() {
-  return <Avatar theme={theme} size={300} seed="${seed}" />
-}`,
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="${seed}"
+    />
+  )
+}
+`,
   },
   {
     id: 'vanilla',
