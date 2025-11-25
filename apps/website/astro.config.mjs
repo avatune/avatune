@@ -33,6 +33,7 @@ export default defineConfig({
           label: 'Frameworks',
           items: [
             { label: 'React', slug: 'packages/react' },
+            { label: 'React Native', slug: 'packages/react-native' },
             { label: 'Vue', slug: 'packages/vue' },
             { label: 'Svelte', slug: 'packages/svelte' },
             { label: 'Vanilla', slug: 'packages/vanilla' },
@@ -55,7 +56,7 @@ export default defineConfig({
               label: 'Nevmstas',
               slug: 'packages/nevmstas-theme',
             },
-            { label: 'Flat Assets', slug: 'packages/nevmstas-assets' },
+            { label: 'Nevmstas Assets', slug: 'packages/nevmstas-assets' },
             {
               label: 'Micah',
               slug: 'packages/micah-theme',

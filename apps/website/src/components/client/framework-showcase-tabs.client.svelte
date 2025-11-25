@@ -37,7 +37,7 @@ $: selectedTheme = selectedFramework
 $: selectedSeed = selectedFramework?.id ?? 'avatune'
 </script>
 
-<div class="mt-8 flex flex-nowrap gap-2 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 p-2 lg:flex-wrap">
+<div class="mt-8 flex flex-nowrap justify-around gap-2 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 sm:p-2 p-1 sm:flex-wrap">
   {#each entries as framework}
     <button
       type="button"
@@ -49,32 +49,7 @@ $: selectedSeed = selectedFramework?.id ?? 'avatune'
       onclick={() => selectFramework(framework.id)}
     >
       {#if framework.logo}
-        <img src={framework.logo.src} alt={framework.logo.alt} class="h-8 w-8 shrink-0 object-contain" />
-      {:else if framework.label === 'React'}
-        <svg class="h-8 w-8 shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle cx="12" cy="12" r="2" fill="#61DAFB" />
-          <ellipse cx="12" cy="12" rx="11" ry="4.2" stroke="#61DAFB" stroke-width="1.5" fill="none" />
-          <ellipse
-            cx="12"
-            cy="12"
-            rx="11"
-            ry="4.2"
-            stroke="#61DAFB"
-            stroke-width="1.5"
-            fill="none"
-            transform="rotate(60 12 12)"
-          />
-          <ellipse
-            cx="12"
-            cy="12"
-            rx="11"
-            ry="4.2"
-            stroke="#61DAFB"
-            stroke-width="1.5"
-            fill="none"
-            transform="rotate(-60 12 12)"
-          />
-        </svg>
+        <img src={framework.logo.src} alt={framework.logo.alt} class="sm:h-8 sm:w-8 h-5 w-5 shrink-0 object-contain" />
       {/if}
       <span class="hidden lg:inline">{framework.label}</span>
     </button>

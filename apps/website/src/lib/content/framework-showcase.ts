@@ -1,6 +1,7 @@
 import { codeToHtml } from 'shiki'
-
 import jsLogo from '../../assets/javascript-logo.svg'
+import reactLogo from '../../assets/react-logo.svg'
+import reactNativeLogo from '../../assets/react-native.svg'
 import svelteLogo from '../../assets/svelte-logo.svg'
 import vueLogo from '../../assets/vue-logo.svg'
 
@@ -43,6 +44,7 @@ const frameworkDefinitions: FrameworkDefinition[] = [
     language: 'tsx',
     filePath: 'src/components/Avatar.tsx',
     themeId: 'yanliu',
+    logo: { src: reactLogo.src, alt: 'React logo' },
     getSnippet: (seed: string) => `import { Avatar } from '@avatune/react'
 import theme from '@avatune/yanliu-theme/react'
 
@@ -103,6 +105,29 @@ ${scriptClose}
   seed="${seed}"
 />`
     },
+  },
+  {
+    id: 'react-native',
+    label: 'React Native',
+    description: 'Native component for iOS and Android apps.',
+    language: 'tsx',
+    filePath: 'app/Avatar.tsx',
+    themeId: 'nevmstas',
+    logo: { src: reactNativeLogo.src, alt: 'React Native logo' },
+    getSnippet: (
+      seed: string,
+    ) => `import { Avatar } from '@avatune/react-native'
+import theme from '@avatune/nevmstas-theme/react-native'
+
+export function AvatarPreview() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="${seed}"
+    />
+  )
+}`,
   },
   {
     id: 'vanilla',

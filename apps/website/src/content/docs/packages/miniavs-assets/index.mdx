@@ -4,6 +4,35 @@ description: "Miniavs style SVG assets for avatar generation."
 source: "packages/miniavs-assets/README.md"
 ---
 
+import AssetPreview from '../../../../components/docs/AssetPreview.astro'
+import {
+  bodyGolf,
+  bodyStandard,
+  eyesConfident,
+  eyesHappy,
+  eyesStandard,
+  faceDetailsBlushes,
+  faceHairFreddy,
+  faceHairHorshoe,
+  faceHairPencilThin,
+  faceHairPencilThinBeard,
+  glassesGlasses,
+  hairBaldness,
+  hairClassic1,
+  hairClassic2,
+  hairCurly,
+  hairElvis,
+  hairLong,
+  hairPonyTail,
+  hairSlaughter,
+  hairStylish,
+  headStandard,
+  headThin,
+  headWide,
+  mouthStandard,
+  mouthToothless,
+} from '@avatune/miniavs-assets/svg'
+
 > Source: `packages/miniavs-assets/README.md`
 
 Miniavs style SVG assets for avatar generation.
@@ -50,66 +79,66 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/miniavs-assets/vue';
 
 | Preview | Filename |
 |---------|----------|
-| **golf** (`packages/miniavs-assets/src/svg/body/golf.svg`) | `golf` |
-| **standard** (`packages/miniavs-assets/src/svg/body/standard.svg`) | `standard` |
+| <AssetPreview svg={bodyGolf} title="golf" hideCaption /> | `golf` |
+| <AssetPreview svg={bodyStandard} title="standard" hideCaption /> | `standard` |
 
 ### Eyes
 
 | Preview | Filename |
 |---------|----------|
-| **confident** (`packages/miniavs-assets/src/svg/eyes/confident.svg`) | `confident` |
-| **happy** (`packages/miniavs-assets/src/svg/eyes/happy.svg`) | `happy` |
-| **standard** (`packages/miniavs-assets/src/svg/eyes/standard.svg`) | `standard` |
+| <AssetPreview svg={eyesConfident} title="confident" hideCaption /> | `confident` |
+| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
+| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
 
 ### FaceDetails
 
 | Preview | Filename |
 |---------|----------|
-| **blushes** (`packages/miniavs-assets/src/svg/faceDetails/blushes.svg`) | `blushes` |
+| <AssetPreview svg={faceDetailsBlushes} title="blushes" hideCaption /> | `blushes` |
 
 ### FaceHair
 
 | Preview | Filename |
 |---------|----------|
-| **freddy** (`packages/miniavs-assets/src/svg/faceHair/freddy.svg`) | `freddy` |
-| **horshoe** (`packages/miniavs-assets/src/svg/faceHair/horshoe.svg`) | `horshoe` |
-| **pencilThin** (`packages/miniavs-assets/src/svg/faceHair/pencilThin.svg`) | `pencilThin` |
-| **pencilThinBeard** (`packages/miniavs-assets/src/svg/faceHair/pencilThinBeard.svg`) | `pencilThinBeard` |
+| <AssetPreview svg={faceHairFreddy} title="freddy" hideCaption /> | `freddy` |
+| <AssetPreview svg={faceHairHorshoe} title="horshoe" hideCaption /> | `horshoe` |
+| <AssetPreview svg={faceHairPencilThin} title="pencilThin" hideCaption /> | `pencilThin` |
+| <AssetPreview svg={faceHairPencilThinBeard} title="pencilThinBeard" hideCaption /> | `pencilThinBeard` |
 
 ### Glasses
 
 | Preview | Filename |
 |---------|----------|
-| **glasses** (`packages/miniavs-assets/src/svg/glasses/glasses.svg`) | `glasses` |
+| <AssetPreview svg={glassesGlasses} title="glasses" hideCaption /> | `glasses` |
 
 ### Hair
 
 | Preview | Filename |
 |---------|----------|
-| **baldness** (`packages/miniavs-assets/src/svg/hair/baldness.svg`) | `baldness` |
-| **classic1** (`packages/miniavs-assets/src/svg/hair/classic1.svg`) | `classic1` |
-| **classic2** (`packages/miniavs-assets/src/svg/hair/classic2.svg`) | `classic2` |
-| **curly** (`packages/miniavs-assets/src/svg/hair/curly.svg`) | `curly` |
-| **elvis** (`packages/miniavs-assets/src/svg/hair/elvis.svg`) | `elvis` |
-| **long** (`packages/miniavs-assets/src/svg/hair/long.svg`) | `long` |
-| **ponyTail** (`packages/miniavs-assets/src/svg/hair/ponyTail.svg`) | `ponyTail` |
-| **slaughter** (`packages/miniavs-assets/src/svg/hair/slaughter.svg`) | `slaughter` |
-| **stylish** (`packages/miniavs-assets/src/svg/hair/stylish.svg`) | `stylish` |
+| <AssetPreview svg={hairBaldness} title="baldness" hideCaption /> | `baldness` |
+| <AssetPreview svg={hairClassic1} title="classic1" hideCaption /> | `classic1` |
+| <AssetPreview svg={hairClassic2} title="classic2" hideCaption /> | `classic2` |
+| <AssetPreview svg={hairCurly} title="curly" hideCaption /> | `curly` |
+| <AssetPreview svg={hairElvis} title="elvis" hideCaption /> | `elvis` |
+| <AssetPreview svg={hairLong} title="long" hideCaption /> | `long` |
+| <AssetPreview svg={hairPonyTail} title="ponyTail" hideCaption /> | `ponyTail` |
+| <AssetPreview svg={hairSlaughter} title="slaughter" hideCaption /> | `slaughter` |
+| <AssetPreview svg={hairStylish} title="stylish" hideCaption /> | `stylish` |
 
 ### Head
 
 | Preview | Filename |
 |---------|----------|
-| **standard** (`packages/miniavs-assets/src/svg/head/standard.svg`) | `standard` |
-| **thin** (`packages/miniavs-assets/src/svg/head/thin.svg`) | `thin` |
-| **wide** (`packages/miniavs-assets/src/svg/head/wide.svg`) | `wide` |
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={headThin} title="thin" hideCaption /> | `thin` |
+| <AssetPreview svg={headWide} title="wide" hideCaption /> | `wide` |
 
 ### Mouth
 
 | Preview | Filename |
 |---------|----------|
-| **standard** (`packages/miniavs-assets/src/svg/mouth/standard.svg`) | `standard` |
-| **toothless** (`packages/miniavs-assets/src/svg/mouth/toothless.svg`) | `toothless` |
+| <AssetPreview svg={mouthStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={mouthToothless} title="toothless" hideCaption /> | `toothless` |
 
 ## License & Credits
 
