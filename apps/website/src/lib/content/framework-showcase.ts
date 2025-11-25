@@ -5,7 +5,12 @@ import reactNativeLogo from '../../assets/react-native.svg'
 import svelteLogo from '../../assets/svelte-logo.svg'
 import vueLogo from '../../assets/vue-logo.svg'
 
-export type FrameworkThemeId = 'yanliu' | 'miniavs' | 'nevmstas' | 'micah'
+export type FrameworkThemeId =
+  | 'yanliu'
+  | 'miniavs'
+  | 'nevmstas'
+  | 'micah'
+  | 'kyute'
 
 export interface FrameworkShowcaseEntry {
   id: string
@@ -112,21 +117,15 @@ ${scriptClose}
     description: 'Native component for iOS and Android apps.',
     language: 'tsx',
     filePath: 'app/Avatar.tsx',
-    themeId: 'nevmstas',
+    themeId: 'kyute',
     logo: { src: reactNativeLogo.src, alt: 'React Native logo' },
     getSnippet: (
       seed: string,
     ) => `import { Avatar } from '@avatune/react-native'
-import theme from '@avatune/nevmstas-theme/react-native'
+import theme from '@avatune/kyute-theme/react-native'
 
 export function AvatarPreview() {
-  return (
-    <Avatar
-      theme={theme}
-      size={300}
-      seed="${seed}"
-    />
-  )
+  return <Avatar theme={theme} size={300} seed="${seed}" />
 }`,
   },
   {

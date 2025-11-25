@@ -199,6 +199,7 @@
         "@astrojs/starlight": "^0.36.2",
         "@astrojs/svelte": "^7.2.2",
         "@avatune/kyute-assets": "workspace:*",
+        "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-assets": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-assets": "workspace:*",

@@ -1,4 +1,5 @@
 <script lang="ts">
+import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
@@ -7,7 +8,13 @@ import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import { onMount } from 'svelte'
 import { fade } from 'svelte/transition'
 
-const themes = [nevmstasTheme, miniavsTheme, yanliuTheme, micahTheme]
+const themes = [
+  nevmstasTheme,
+  miniavsTheme,
+  yanliuTheme,
+  micahTheme,
+  kyuteTheme,
+]
 
 const AVATAR_COUNT = 20
 const MIN_SIZE = 80

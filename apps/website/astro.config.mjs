@@ -62,6 +62,7 @@ export default defineConfig({
               slug: 'packages/micah-theme',
             },
             { label: 'Micah Assets', slug: 'packages/micah-assets' },
+            { label: 'Kyute', slug: 'packages/kyute-theme' },
             { label: 'Kyute Assets', slug: 'packages/kyute-assets' },
           ],
         },

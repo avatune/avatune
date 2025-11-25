@@ -1,4 +1,5 @@
 <script lang="ts">
+import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
@@ -21,6 +22,7 @@ const themeMap: Record<FrameworkThemeId, unknown> = {
   miniavs: miniavsTheme,
   nevmstas: nevmstasTheme,
   micah: micahTheme,
+  kyute: kyuteTheme,
 }
 
 let selectedFrameworkId = entries[0]?.id ?? 'react'

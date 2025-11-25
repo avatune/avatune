@@ -48,7 +48,7 @@ onDestroy(() => {
 <section class="space-y-8 rounded-3xl border border-white/10 bg-slate-950/80 p-6 text-center shadow-xl shadow-pink-500/5 sm:p-12">
   <p class="text-xs font-semibold uppercase tracking-[0.35em] text-pink-200/80">Prediction Flow</p>
   <h3 class="text-3xl font-semibold text-white sm:text-4xl">Photo in, avatar out.</h3>
-  <p class="mx-auto max-w-3xl text-base text-slate-300">
+  <p class="mobile-hidden mx-auto max-w-3xl text-base text-slate-300">
     Drop a single portrait into <span class="font-semibold text-white">createHairLengthPredictor</span>, <span class="font-semibold text-white">createHairColorPredictor</span>, and
     <span class="font-semibold text-white">createSkinTonePredictor</span>. Pipe those results into the Avatar component and render an instant preview.
   </p>
@@ -56,7 +56,7 @@ onDestroy(() => {
   <div class="grid gap-6 lg:grid-cols-3">
     <div class="rounded-3xl border border-dashed border-white/30 bg-slate-900/70 p-6 text-center">
       <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Upload photo</p>
-      <div class="example-photo-frame h-92 mt-4 rounded-2xl border border-dashed border-white/20 bg-slate-950/70">
+      <div class="example-photo-frame mobile-hidden h-92 mt-4 rounded-2xl border border-dashed border-white/20 bg-slate-950/70">
         <img
           class="example-photo"
           src={examplePhoto.src}
@@ -79,7 +79,7 @@ onDestroy(() => {
           </div>
         {/key}
       </div>
-      <p class="mt-8 text-sm text-slate-300">
+      <p class="mobile-hidden mt-8 text-sm text-slate-300">
         Structured data streams left to right, triggered by a single upload. No extra UI—just clean automation feeding the avatar layer.
       </p>
     </div>
@@ -89,7 +89,7 @@ onDestroy(() => {
       <div class="relative mx-auto mt-6 flex h-64 w-64 items-center justify-center rounded-full bg-linear-to-br from-pink-500/10 to-slate-900/80">
         <Avatar theme={theme} size={200} seed="svelte" />
       </div>
-      <p class="mt-6 text-sm text-slate-300">Predictions applied: medium hair length, chestnut copper palette, warm-neutral tone.</p>
+      <p class="mobile-hidden mt-6 text-sm text-slate-300">Predictions applied: medium hair length, chestnut copper palette, warm-neutral tone.</p>
     </div>
   </div>
 </section>
@@ -167,6 +167,12 @@ onDestroy(() => {
     height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  @media (max-width: 640px) {
+    .mobile-hidden {
+      display: none !important;
+    }
   }
 </style>
 

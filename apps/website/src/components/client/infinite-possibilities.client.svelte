@@ -1,4 +1,5 @@
 <script lang="ts">
+import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
@@ -14,6 +15,7 @@ const themes = [
   { label: 'Miniavs', theme: miniavsTheme },
   { label: 'Yanliu', theme: yanliuTheme },
   { label: 'Micah', theme: micahTheme },
+  { label: 'Kyute', theme: kyuteTheme },
 ]
 
 let counterElement: HTMLDivElement | null = null
