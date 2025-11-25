@@ -2,6 +2,7 @@
 import theme from '@avatune/nevmstas-theme/svelte'
 import { Avatar } from '@avatune/svelte'
 import { onDestroy, onMount } from 'svelte'
+import examplePhoto from '../../assets/photo.jpg'
 
 const examplePhotoNote =
   'Upload a centered, front-facing portrait shot, shoulders visible, neutral background, soft daylight, and no dramatic shadows.'
@@ -55,8 +56,15 @@ onDestroy(() => {
   <div class="grid gap-6 lg:grid-cols-3">
     <div class="rounded-3xl border border-dashed border-white/30 bg-slate-900/70 p-6 text-center">
       <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Upload photo</p>
-      <div class="h-92 mt-4 flex items-center justify-center rounded-2xl border border-dashed border-white/20 bg-slate-950/70 p-4 text-sm text-slate-200">
-        {examplePhotoNote}
+      <div class="example-photo-frame h-92 mt-4 rounded-2xl border border-dashed border-white/20 bg-slate-950/70">
+        <img
+          class="example-photo"
+          src={examplePhoto.src}
+          alt={examplePhotoNote}
+          loading="lazy"
+          width={examplePhoto.width}
+          height={examplePhoto.height}
+        />
       </div>
     </div>
 
@@ -148,6 +156,17 @@ onDestroy(() => {
       transform: translateX(150%) scale(0);
       opacity: 0;
     }
+  }
+
+  .example-photo-frame {
+    overflow: hidden;
+  }
+
+  .example-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 </style>
 

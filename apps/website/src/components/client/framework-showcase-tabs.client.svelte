@@ -37,7 +37,7 @@ $: selectedTheme = selectedFramework
 $: selectedSeed = selectedFramework?.id ?? 'avatune'
 </script>
 
-<div class="mt-8 flex flex-nowrap justify-around gap-2 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 sm:p-2 p-1 sm:flex-wrap">
+<div class="mt-8 flex flex-nowrap justify-around sm:justify-start gap-2 overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 sm:p-2 p-1 sm:flex-wrap">
   {#each entries as framework}
     <button
       type="button"
