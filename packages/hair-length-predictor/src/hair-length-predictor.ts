@@ -1,3 +1,4 @@
+import { createFaceDetector } from '@avatune/face-detector'
 import type { HairLengthPredictorClass } from '@avatune/types'
 import * as tf from '@tensorflow/tfjs'
 
@@ -5,6 +6,7 @@ export type HairLengthResult = {
   length: HairLengthPredictorClass
   confidence: number
   probabilities: Record<HairLengthPredictorClass, number>
+  faceDetected: boolean
 }
 
 type ModelState = {
@@ -68,9 +70,10 @@ async function loadClasses(modelDir: string): Promise<string[]> {
   }
 }
 
-function predict(
+function predictFromTensor(
   modelState: ModelState,
   imageTensor: tf.Tensor3D,
+  faceDetected: boolean,
 ): HairLengthResult {
   return tf.tidy(() => {
     const resized = tf.image.resizeBilinear(imageTensor, [128, 128])
@@ -94,19 +97,37 @@ function predict(
       length: modelState.classes[maxIndex] as HairLengthPredictorClass,
       confidence: maxProbability,
       probabilities: allProbabilities,
+      faceDetected,
     }
+  })
+}
+
+function canvasToTensor(canvas: HTMLCanvasElement): tf.Tensor3D {
+  return tf.tidy(() => {
+    const tensor = tf.browser.fromPixels(canvas)
+    return tensor.toFloat().div(255) as tf.Tensor3D
   })
 }
 
 export function createHairLengthPredictor(modelDir: string) {
   let modelStatePromise: Promise<ModelState> | null = null
 
+  const faceDetector = createFaceDetector()
+
   return {
     async loadModel(): Promise<void> {
+      const promises: Promise<void>[] = []
+
       if (!modelStatePromise) {
         modelStatePromise = loadModel(modelDir)
+        promises.push(modelStatePromise.then(() => {}))
       }
-      await modelStatePromise
+
+      if (faceDetector) {
+        promises.push(faceDetector.load())
+      }
+
+      await Promise.all(promises)
     },
 
     async predict(imageTensor: tf.Tensor3D): Promise<HairLengthResult> {
@@ -114,7 +135,47 @@ export function createHairLengthPredictor(modelDir: string) {
         throw new Error('Model not loaded. Call loadModel() first.')
       }
       const modelState = await modelStatePromise
-      return predict(modelState, imageTensor)
+      return predictFromTensor(modelState, imageTensor, false)
+    },
+
+    async predictFromImage(
+      image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement,
+    ): Promise<HairLengthResult> {
+      if (!modelStatePromise) {
+        throw new Error('Model not loaded. Call loadModel() first.')
+      }
+      const modelState = await modelStatePromise
+
+      let tensorSource:
+        | HTMLCanvasElement
+        | HTMLImageElement
+        | HTMLVideoElement = image
+      let faceDetected = false
+
+      if (faceDetector) {
+        const croppedFace = await faceDetector.cropFaceWithHair(image)
+        if (croppedFace) {
+          tensorSource = croppedFace
+          faceDetected = true
+        }
+      }
+
+      const tensor =
+        tensorSource instanceof HTMLCanvasElement
+          ? canvasToTensor(tensorSource)
+          : tf.tidy(
+              () =>
+                tf.browser
+                  .fromPixels(tensorSource)
+                  .toFloat()
+                  .div(255) as tf.Tensor3D,
+            )
+
+      try {
+        return predictFromTensor(modelState, tensor, faceDetected)
+      } finally {
+        tensor.dispose()
+      }
     },
   }
 }

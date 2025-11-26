@@ -1,3 +1,4 @@
+import { createFaceDetector } from '@avatune/face-detector'
 import type { HairColorPredictorClass } from '@avatune/types'
 import * as tf from '@tensorflow/tfjs'
 
@@ -5,6 +6,7 @@ export type HairColorResult = {
   color: HairColorPredictorClass
   confidence: number
   probabilities: Record<HairColorPredictorClass, number>
+  faceDetected: boolean
 }
 
 type ModelState = {
@@ -12,9 +14,6 @@ type ModelState = {
   classes: string[]
 }
 
-/**
- * Load the TensorFlow.js model and classes
- */
 async function loadModel(modelDir: string): Promise<ModelState> {
   const normalizedDir = modelDir.endsWith('/')
     ? modelDir.slice(0, -1)
@@ -25,7 +24,6 @@ async function loadModel(modelDir: string): Promise<ModelState> {
     const response = await fetch(modelPath)
     const modelJSON = await response.json()
 
-    // Fix the InputLayer config - convert batch_shape to inputShape
     if (
       modelJSON.modelTopology?.model_config?.config?.layers?.[0]?.class_name ===
       'InputLayer'
@@ -60,9 +58,6 @@ async function loadModel(modelDir: string): Promise<ModelState> {
   }
 }
 
-/**
- * Load class labels from classes.json
- */
 async function loadClasses(modelDir: string): Promise<string[]> {
   try {
     const classesPath = `${modelDir}/classes.json`
@@ -75,16 +70,10 @@ async function loadClasses(modelDir: string): Promise<string[]> {
   }
 }
 
-/**
- * Predict hair color from image tensor
- *
- * @param modelState - Loaded model and classes
- * @param imageTensor - Normalized image tensor [H, W, 3] in range [0, 1]
- * @returns Hair color prediction with confidence and probabilities
- */
-function predict(
+function predictFromTensor(
   modelState: ModelState,
   imageTensor: tf.Tensor3D,
+  faceDetected: boolean,
 ): HairColorResult {
   return tf.tidy(() => {
     const resized = tf.image.resizeBilinear(imageTensor, [128, 128])
@@ -109,22 +98,37 @@ function predict(
       color: modelState.classes[maxIndex] as HairColorPredictorClass,
       confidence: maxProbability,
       probabilities: allProbabilities,
+      faceDetected,
     }
   })
 }
 
-/**
- * Create a hair color predictor
- */
+function canvasToTensor(canvas: HTMLCanvasElement): tf.Tensor3D {
+  return tf.tidy(() => {
+    const tensor = tf.browser.fromPixels(canvas)
+    return tensor.toFloat().div(255) as tf.Tensor3D
+  })
+}
+
 export function createHairColorPredictor(modelDir: string) {
   let modelStatePromise: Promise<ModelState> | null = null
 
+  const faceDetector = createFaceDetector()
+
   return {
     async loadModel(): Promise<void> {
+      const promises: Promise<void>[] = []
+
       if (!modelStatePromise) {
         modelStatePromise = loadModel(modelDir)
+        promises.push(modelStatePromise.then(() => {}))
       }
-      await modelStatePromise
+
+      if (faceDetector) {
+        promises.push(faceDetector.load())
+      }
+
+      await Promise.all(promises)
     },
 
     async predict(imageTensor: tf.Tensor3D): Promise<HairColorResult> {
@@ -132,7 +136,47 @@ export function createHairColorPredictor(modelDir: string) {
         throw new Error('Model not loaded. Call loadModel() first.')
       }
       const modelState = await modelStatePromise
-      return predict(modelState, imageTensor)
+      return predictFromTensor(modelState, imageTensor, false)
+    },
+
+    async predictFromImage(
+      image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement,
+    ): Promise<HairColorResult> {
+      if (!modelStatePromise) {
+        throw new Error('Model not loaded. Call loadModel() first.')
+      }
+      const modelState = await modelStatePromise
+
+      let tensorSource:
+        | HTMLCanvasElement
+        | HTMLImageElement
+        | HTMLVideoElement = image
+      let faceDetected = false
+
+      if (faceDetector) {
+        const croppedFace = await faceDetector.cropFaceWithHair(image)
+        if (croppedFace) {
+          tensorSource = croppedFace
+          faceDetected = true
+        }
+      }
+
+      const tensor =
+        tensorSource instanceof HTMLCanvasElement
+          ? canvasToTensor(tensorSource)
+          : tf.tidy(
+              () =>
+                tf.browser
+                  .fromPixels(tensorSource)
+                  .toFloat()
+                  .div(255) as tf.Tensor3D,
+            )
+
+      try {
+        return predictFromTensor(modelState, tensor, faceDetected)
+      } finally {
+        tensor.dispose()
+      }
     },
   }
 }

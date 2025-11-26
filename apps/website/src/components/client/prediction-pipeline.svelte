@@ -1,24 +1,33 @@
 <script lang="ts">
-import theme from '@avatune/nevmstas-theme/svelte'
+import { createHairColorPredictor } from '@avatune/hair-color-predictor'
+import { createHairLengthPredictor } from '@avatune/hair-length-predictor'
+import theme from '@avatune/micah-theme/svelte'
+import { createSkinTonePredictor } from '@avatune/skin-tone-predictor'
 import { Avatar } from '@avatune/svelte'
+import type { Predictions } from '@avatune/types'
 import { onDestroy, onMount } from 'svelte'
-import examplePhoto from '../../assets/photo.jpg'
+import examplePhoto from '../../assets/prediction-1.jpg'
 
 const examplePhotoNote =
   'Upload a centered, front-facing portrait shot, shoulders visible, neutral background, soft daylight, and no dramatic shadows.'
 
-const labelStages = ['Hair length', 'Hair color', 'Skin tone']
-const CYCLE_DURATION = 7500
-const STAGE_COUNT = labelStages.length
-const STAGE_DURATION =
-  STAGE_COUNT > 0 ? CYCLE_DURATION / STAGE_COUNT : CYCLE_DURATION
+const STAGE_COUNT = 3
+const CYCLE_DURATION = 12000
+const STAGE_DURATION = CYCLE_DURATION / STAGE_COUNT
 
-let stageIndex = 0
-let payloadKey = 0
+let stageIndex = $state(0)
+let payloadKey = $state(0)
 let intervalId: ReturnType<typeof setInterval> | null = null
 
+let modelsLoading = $state(true)
+let predictions = $state<Predictions | null>(null)
+let predictionError = $state<string | null>(null)
+
+const hairColorPredictor = createHairColorPredictor('/models/hair-color')
+const hairLengthPredictor = createHairLengthPredictor('/models/hair-length')
+const skinTonePredictor = createSkinTonePredictor('/models/skin-tone')
+
 const advanceStage = () => {
-  if (!STAGE_COUNT) return
   stageIndex = (stageIndex + 1) % STAGE_COUNT
   payloadKey += 1
 }
@@ -34,10 +43,75 @@ const stopStageCycle = () => {
   intervalId = null
 }
 
-const getStageLabel = () => labelStages[stageIndex] ?? labelStages[0]
+const getStageLabel = () => {
+  if (predictions) {
+    const labels = [
+      `HAIR LENGTH: ${predictions.hairLength}`,
+      `HAIR COLOR: ${predictions.hairColor}`,
+      `SKIN TONE: ${predictions.skinTone}`,
+    ]
+    return labels[stageIndex] ?? labels[0]
+  }
+  return ['Hair length', 'Hair color', 'Skin tone'][stageIndex] ?? 'Hair length'
+}
+
+const imageToTensor = async (
+  img: HTMLImageElement,
+): Promise<import('@tensorflow/tfjs').Tensor3D> => {
+  const tf = await import('@tensorflow/tfjs')
+  return tf.tidy(() => {
+    const tensor = tf.browser.fromPixels(img)
+    return tensor.toFloat().div(255) as import('@tensorflow/tfjs').Tensor3D
+  })
+}
+
+const loadModelsAndPredict = async () => {
+  try {
+    await Promise.all([
+      hairColorPredictor.loadModel(),
+      hairLengthPredictor.loadModel(),
+      skinTonePredictor.loadModel(),
+    ])
+
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = examplePhoto.src
+
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve()
+      img.onerror = () => reject(new Error('Failed to load example image'))
+    })
+
+    const tensor = await imageToTensor(img)
+
+    try {
+      const [hairColorResult, hairLengthResult, skinToneResult] =
+        await Promise.all([
+          hairColorPredictor.predict(tensor),
+          hairLengthPredictor.predictFromImage(img),
+          skinTonePredictor.predictFromImage(img),
+        ])
+
+      predictions = {
+        hairColor: hairColorResult.color,
+        hairLength: hairLengthResult.length,
+        skinTone: skinToneResult.tone,
+      }
+    } finally {
+      tensor.dispose()
+    }
+  } catch (err) {
+    console.error('Prediction error:', err)
+    predictionError =
+      err instanceof Error ? err.message : 'Failed to run predictions'
+  } finally {
+    modelsLoading = false
+  }
+}
 
 onMount(() => {
   startStageCycle()
+  loadModelsAndPredict()
 })
 
 onDestroy(() => {
@@ -56,7 +130,7 @@ onDestroy(() => {
   <div class="grid gap-6 lg:grid-cols-3">
     <div class="rounded-3xl border border-dashed border-white/30 bg-slate-900/70 p-6 text-center">
       <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Upload photo</p>
-      <div class="example-photo-frame mobile-hidden h-92 mt-4 rounded-2xl border border-dashed border-white/20 bg-slate-950/70">
+      <div class="example-photo-frame h-92 mt-4 rounded-2xl border border-dashed border-white/20 bg-slate-950/70">
         <img
           class="example-photo"
           src={examplePhoto.src}
@@ -87,9 +161,28 @@ onDestroy(() => {
     <div class="rounded-3xl border border-white/10 bg-white/5 p-6 text-center">
       <p class="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">Avatar preview</p>
       <div class="relative mx-auto mt-6 flex h-64 w-64 items-center justify-center rounded-full bg-linear-to-br from-pink-500/10 to-slate-900/80">
-        <Avatar theme={theme} size={200} seed="svelte" />
+        {#if modelsLoading}
+          <div class="skeleton-avatar">
+            <div class="skeleton-pulse"></div>
+            <p class="skeleton-text">models loading...</p>
+          </div>
+        {:else if predictionError}
+          <div class="error-state">
+            <p class="text-sm text-red-400">Failed to load models</p>
+          </div>
+        {:else}
+          <Avatar theme={theme} size={200} predictions={predictions} />
+        {/if}
       </div>
-      <p class="mobile-hidden mt-6 text-sm text-slate-300">Predictions applied: medium hair length, chestnut copper palette, warm-neutral tone.</p>
+      <p class="mobile-hidden mt-6 text-sm text-slate-300">
+        {#if modelsLoading}
+          Loading TensorFlow.js models for real-time prediction...
+        {:else if predictions}
+          Predictions applied: {predictions.hairLength} hair, {predictions.hairColor} color, {predictions.skinTone} skin tone.
+        {:else}
+          Waiting for predictions...
+        {/if}
+      </p>
     </div>
   </div>
 </section>
@@ -114,7 +207,7 @@ onDestroy(() => {
   .pipeline-payload {
     position: absolute;
     top: -22px;
-    left: 0;
+    left: 50%;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -123,7 +216,7 @@ onDestroy(() => {
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(15, 23, 42, 0.9);
     box-shadow: 0 10px 25px rgba(15, 23, 42, 0.45);
-    animation: travelCycle calc(7500ms / 3) cubic-bezier(0.4, 0, 0.2, 1);
+    animation: travelCycle 4s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
   }
 
@@ -145,15 +238,19 @@ onDestroy(() => {
 
   @keyframes travelCycle {
     0% {
-      transform: translateX(-60%) scale(0);
+      transform: translateX(-150%) scale(0);
       opacity: 0;
     }
-    50% {
-      transform: translateX(50%) scale(1);
+    15% {
+      transform: translateX(-50%) scale(1);
+      opacity: 1;
+    }
+    85% {
+      transform: translateX(-50%) scale(1);
       opacity: 1;
     }
     100% {
-      transform: translateX(150%) scale(0);
+      transform: translateX(50%) scale(0);
       opacity: 0;
     }
   }
@@ -172,6 +269,66 @@ onDestroy(() => {
   @media (max-width: 640px) {
     .mobile-hidden {
       display: none !important;
+    }
+  }
+
+  .skeleton-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .skeleton-pulse {
+    width: 160px;
+    height: 160px;
+    border-radius: 9999px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .skeleton-text {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .error-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 9999px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px dashed rgba(239, 68, 68, 0.3);
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
     }
   }
 </style>

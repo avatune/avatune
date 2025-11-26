@@ -13,11 +13,12 @@ const getReplaceAttrValues = (colorPropName = 'color') => ({
   '#334B71': `{${colorPropName}}`,
   '#537C1E': `{${colorPropName}}`,
   '#901A3E': `{${colorPropName}}`,
-  '#C8D3E6': `colord({${colorPropName}}).mix('#FFFFFF', 0.62).toHex()`,
+  '#C8D3E6': `{colord(${colorPropName}).lighten(0.53).desaturate(0.27).toHex()}`,
   '#4D8FAB': `{${colorPropName}}`,
   '#B78276': `{${colorPropName}}`,
   '#CF7621': `{${colorPropName}}`,
   '#9C6458': `{${colorPropName}}`,
+  '#4B301C': `{${colorPropName}}`,
 })
 
 export default defineConfig({
@@ -61,9 +62,13 @@ ${variables.exports};
     }),
     pluginSvgToVue({
       svgo: true,
+      imports: colordImport,
+      replaceAttrValues: getReplaceAttrValues('color'),
     }),
     pluginSvgToSvelte({
       svgo: true,
+      imports: colordImport,
+      replaceAttrValues: getReplaceAttrValues('color'),
     }),
     pluginVue(),
     pluginSvelte(),

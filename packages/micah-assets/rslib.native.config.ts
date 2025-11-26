@@ -4,11 +4,11 @@ import { defineConfig } from '@rslib/core'
 
 const colordImport = "import { colord } from 'colord';"
 const getReplaceAttrValues = (colorPropName = 'color') => ({
-  currentColor: `{${colorPropName}}`,
-  'color-mix(in srgb, currentColor 60%, white)': `{colord(${colorPropName}).lighten(0.4).toHex()}`,
-  'color-mix(in srgb, currentColor 70%, white)': `{colord(${colorPropName}).lighten(0.3).toHex()}`,
-  'color-mix(in srgb, currentColor 80%, white)': `{colord(${colorPropName}).lighten(0.2).toHex()}`,
-  'color-mix(in srgb, currentColor 80%, black)': `{colord(${colorPropName}).darken(0.2).toHex()}`,
+  '#F4D150': `{${colorPropName}}`,
+  '#9287FF': `{${colorPropName}}`,
+  '#E0DDFF': `{colord(${colorPropName}).desaturate(0.08).lighten(0.06).toHex()}`,
+  '#AC6651': `{${colorPropName}}`,
+  '#6BD9E9': `{${colorPropName}}`,
 })
 
 export default defineConfig({

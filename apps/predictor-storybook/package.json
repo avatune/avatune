@@ -8,12 +8,16 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
+    "@avatune/kyute-theme": "workspace:*",
+    "@avatune/micah-theme": "workspace:*",
+    "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/react": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/yanliu-theme": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"

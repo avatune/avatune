@@ -96,20 +96,44 @@ function detectLargestFace(
   })
 }
 
+export type CropPadding =
+  | number
+  | { top?: number; right?: number; bottom?: number; left?: number }
+
+function normalizePadding(padding: CropPadding): {
+  top: number
+  right: number
+  bottom: number
+  left: number
+} {
+  if (typeof padding === 'number') {
+    return { top: padding, right: padding, bottom: padding, left: padding }
+  }
+  return {
+    top: padding.top ?? 0.2,
+    right: padding.right ?? 0.2,
+    bottom: padding.bottom ?? 0.2,
+    left: padding.left ?? 0.2,
+  }
+}
+
 function cropFaceFromCanvas(
   canvas: HTMLCanvasElement,
   detection: FaceDetection,
-  padding = 0.2,
+  padding: CropPadding = 0.2,
 ): HTMLCanvasElement {
   const { x, y, width, height } = detection.boundingBox
+  const pad = normalizePadding(padding)
 
-  const paddingX = width * padding
-  const paddingY = height * padding
+  const paddingTop = height * pad.top
+  const paddingRight = width * pad.right
+  const paddingBottom = height * pad.bottom
+  const paddingLeft = width * pad.left
 
-  const cropX = Math.max(0, x - paddingX)
-  const cropY = Math.max(0, y - paddingY)
-  const cropWidth = Math.min(canvas.width - cropX, width + paddingX * 2)
-  const cropHeight = Math.min(canvas.height - cropY, height + paddingY * 2)
+  const cropX = Math.max(0, x - paddingLeft)
+  const cropY = Math.max(0, y - paddingTop)
+  const cropWidth = Math.min(canvas.width - cropX, width + paddingLeft + paddingRight)
+  const cropHeight = Math.min(canvas.height - cropY, height + paddingTop + paddingBottom)
 
   const croppedCanvas = document.createElement('canvas')
   croppedCanvas.width = cropWidth
@@ -190,7 +214,7 @@ export function createFaceDetector(options: FaceDetectorOptions = {}) {
 
     async cropFace(
       image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement,
-      padding = 0.2,
+      padding: CropPadding = 0.2,
     ): Promise<HTMLCanvasElement | null> {
       if (!statePromise) {
         throw new Error('Face detector not loaded. Call load() first.')
@@ -203,6 +227,17 @@ export function createFaceDetector(options: FaceDetectorOptions = {}) {
       if (!face) return null
 
       return cropFaceFromCanvas(canvas, face, padding)
+    },
+
+    async cropFaceWithHair(
+      image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement,
+    ): Promise<HTMLCanvasElement | null> {
+      return this.cropFace(image, {
+        top: 0.8,
+        right: 0.3,
+        bottom: 0.1,
+        left: 0.3,
+      })
     },
   }
 }

@@ -54,9 +54,13 @@ ${variables.exports};
     }),
     pluginSvgToVue({
       svgo: true,
+      imports: colordImport,
+      replaceAttrValues: getReplaceAttrValues('color'),
     }),
     pluginSvgToSvelte({
       svgo: true,
+      imports: colordImport,
+      replaceAttrValues: getReplaceAttrValues('color'),
     }),
     pluginVue(),
     pluginSvelte(),

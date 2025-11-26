@@ -21,6 +21,7 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
+    "@avatune/face-detector": "workspace:*",
     "@avatune/types": "workspace:*"
   },
   "devDependencies": {

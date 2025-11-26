@@ -95,30 +95,19 @@ export function PredictionFileInput({
       canvas.height = height
       ctx.drawImage(img, 0, 0, width, height)
 
-      const imageData = ctx.getImageData(0, 0, width, height)
+      const [hairColor, skinTone, hairLength] = await Promise.all([
+        predictorsRef.current.hairColor.predictFromImage(canvas),
+        predictorsRef.current.skinTone.predictFromImage(canvas),
+        predictorsRef.current.hairLength.predictFromImage(canvas),
+      ])
 
-      const imageTensor = tf.tidy(() => {
-        const tensor = tf.browser.fromPixels(imageData)
-        return tf.cast(tensor, 'float32').div(255.0) as tf.Tensor3D
-      })
-
-      try {
-        const [hairColor, skinTone, hairLength] = await Promise.all([
-          predictorsRef.current.hairColor.predict(imageTensor),
-          predictorsRef.current.skinTone.predictFromImage(canvas),
-          predictorsRef.current.hairLength.predict(imageTensor),
-        ])
-
-        const predictions: Predictions = {
-          hairColor: hairColor.color,
-          hairLength: hairLength.length,
-          skinTone: skinTone.tone,
-        }
-
-        onPredictSuccess?.(predictions)
-      } finally {
-        imageTensor.dispose()
+      const predictions: Predictions = {
+        hairColor: hairColor.color,
+        hairLength: hairLength.length,
+        skinTone: skinTone.tone,
       }
+
+      onPredictSuccess?.(predictions)
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Failed to predict'
       setError(errorMsg)
