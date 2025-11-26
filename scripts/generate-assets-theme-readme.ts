@@ -3,163 +3,18 @@
  * Generates README files for theme packages with credits, license, and usage examples
  */
 
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
-
-type Framework = 'react' | 'vue' | 'svelte' | 'vanilla'
-
-interface ThemeInfo {
-  name: string
-  packageName: string
-  assetsPackageName: string
-  displayName: string
-  hasCredits: boolean
-  creditsContent?: string
-  exampleItems?: {
-    hair?: string
-    body?: string
-  }
-}
-
-// Discover available themes
-async function discoverThemes(): Promise<ThemeInfo[]> {
-  const packagesDir = join(process.cwd(), 'packages')
-  const packages = readdirSync(packagesDir)
-
-  const themePackages = packages.filter((pkg) => pkg.endsWith('-theme'))
-
-  const themes = await Promise.all(
-    themePackages.map(async (pkg) => {
-      const name = pkg.replace('-theme', '')
-      const assetsName = `${name}-assets`
-      const creditsPath = join(packagesDir, assetsName, 'CREDITS.md')
-
-      const hasCredits = existsSync(creditsPath)
-      const creditsContent = hasCredits
-        ? readFileSync(creditsPath, 'utf-8').trim()
-        : undefined
-
-      // Try to extract example items from vanilla.ts source file
-      let exampleItems: { hair?: string; body?: string } | undefined
-      try {
-        const vanillaSourcePath = join(packagesDir, pkg, 'src', 'vanilla.ts')
-        if (existsSync(vanillaSourcePath)) {
-          const sourceCode = readFileSync(vanillaSourcePath, 'utf-8')
-
-          // Extract hair items from withComponents('hair', { ... }) blocks
-          const hairMatch = sourceCode.match(/\.withComponents\('hair',\s*\{([^}]+)\}/s)
-          if (hairMatch) {
-            const hairBlock = hairMatch[1]
-            const hairKeys = hairBlock.match(/(\w+):\s*\{/g)
-            if (hairKeys && hairKeys.length > 0) {
-              exampleItems = exampleItems || {}
-              exampleItems.hair = hairKeys[0].replace(/:\s*\{/, '').trim()
-            }
-          }
-
-          // Extract body items from withComponents('body', { ... }) blocks
-          const bodyMatch = sourceCode.match(/\.withComponents\('body',\s*\{([^}]+)\}/s)
-          if (bodyMatch) {
-            const bodyBlock = bodyMatch[1]
-            const bodyKeys = bodyBlock.match(/(\w+):\s*\{/g)
-            if (bodyKeys && bodyKeys.length > 0) {
-              exampleItems = exampleItems || {}
-              exampleItems.body = bodyKeys[0].replace(/:\s*\{/, '').trim()
-            }
-          }
-        }
-      } catch (error) {
-        // If we can't parse the source, we'll use generic examples
-        console.warn(`Could not parse theme ${pkg} for examples:`, error)
-      }
-
-      return {
-        name,
-        packageName: pkg,
-        assetsPackageName: assetsName,
-        displayName: toPascalCase(name).replace(/([A-Z])/g, ' $1').trim(),
-        hasCredits,
-        creditsContent,
-        exampleItems,
-      }
-    })
-  )
-
-  return themes
-}
-
-function toPascalCase(str: string): string {
-  return str
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join('')
-}
-
-function generateFrameworkExample(framework: Framework, packageName: string): string {
-  switch (framework) {
-    case 'react':
-      return `\`\`\`tsx
-import { Avatar } from '@avatune/react'
-import theme from '@avatune/${packageName}/react'
-
-function App() {
-  return (
-    <Avatar
-      theme={theme}
-      size={300}
-      seed="optional-seed-for-random-generation"
-    />
-  )
-}
-\`\`\``
-
-    case 'vue':
-      return `\`\`\`vue
-<script setup lang="ts">
-import { Avatar } from '@avatune/vue'
-import theme from '@avatune/${packageName}/vue'
-</script>
-
-<template>
-  <Avatar
-    :theme="theme"
-    :size="300"
-    seed="optional-seed-for-random-generation"
-  />
-</template>
-\`\`\``
-
-    case 'svelte':
-      return `\`\`\`svelte
-<script lang="ts">
-  import { Avatar } from '@avatune/svelte'
-  import theme from '@avatune/${packageName}/svelte'
-</script>
-
-<Avatar
-  theme={theme}
-  size={300}
-  seed="optional-seed-for-random-generation"
-/>
-\`\`\``
-
-    case 'vanilla':
-      return `\`\`\`typescript
-import { avatar } from '@avatune/vanilla'
-import theme from '@avatune/${packageName}/vanilla'
-
-const container = document.getElementById('avatar-container')
-const svg = avatar({
-  theme,
-  size: 300,
-  seed: 'optional-seed-for-random-generation',
-})
-
-container?.appendChild(svg)
-\`\`\``
-  }
-}
+import {
+  type Framework,
+  type ThemeInfo,
+  discoverThemes,
+  generateFrameworkExample,
+  generateCustomizationSection,
+  generateRelatedPackagesSection,
+  generateDevelopmentSection,
+} from './shared'
 
 function generateREADME(theme: ThemeInfo): string {
   const { packageName, assetsPackageName, displayName, hasCredits, creditsContent, exampleItems } = theme
@@ -168,86 +23,89 @@ function generateREADME(theme: ThemeInfo): string {
   const hairExample = exampleItems?.hair || 'braids'
   const bodyExample = exampleItems?.body || 'sweaterVest'
 
-  return `# @avatune/${packageName}
+  const sections: string[] = []
 
-Avatar theme for Avatune using ${displayName.toLowerCase()} design assets.
+  // Header
+  sections.push(`# @avatune/${packageName}`)
+  sections.push('')
+  sections.push(`Avatar theme for Avatune using ${displayName.toLowerCase()} design assets.`)
+  sections.push('')
 
-## Installation
+  // Installation
+  sections.push('## Installation')
+  sections.push('')
+  sections.push('```bash')
+  sections.push(`npm install @avatune/${packageName}`)
+  sections.push('```')
+  sections.push('')
 
-\`\`\`bash
-npm install @avatune/${packageName}
-\`\`\`
+  // Usage
+  sections.push('## Usage')
+  sections.push('')
+  sections.push('This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.')
+  sections.push('')
 
-## Usage
+  sections.push('### React')
+  sections.push('')
+  sections.push(generateFrameworkExample('react', packageName))
+  sections.push('')
 
-This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+  sections.push('### Vue')
+  sections.push('')
+  sections.push(generateFrameworkExample('vue', packageName))
+  sections.push('')
 
-### React
+  sections.push('### Svelte')
+  sections.push('')
+  sections.push(generateFrameworkExample('svelte', packageName))
+  sections.push('')
 
-${generateFrameworkExample('react', packageName)}
+  sections.push('### Vanilla JavaScript')
+  sections.push('')
+  sections.push(generateFrameworkExample('vanilla', packageName))
+  sections.push('')
 
-### Vue
+  // Customization
+  sections.push(generateCustomizationSection(hairExample, bodyExample))
+  sections.push('')
 
-${generateFrameworkExample('vue', packageName)}
+  // Design Assets
+  sections.push('## Design Assets')
+  sections.push('')
+  sections.push(`This theme uses assets from the [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName}) package.`)
+  sections.push('')
 
-### Svelte
+  // License
+  sections.push('## License')
+  sections.push('')
+  sections.push('This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).')
+  sections.push('')
+  if (hasCredits && creditsContent) {
+    sections.push('The design assets used in this theme have their own license and attribution:')
+    sections.push('')
+    sections.push(creditsContent)
+    sections.push('')
+    sections.push('For full details, see:')
+    sections.push(`- [CREDITS.md](../packages/${assetsPackageName}/CREDITS.md) - Asset attribution`)
+    sections.push(`- Asset package license in [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName})`)
+    sections.push('')
+  } else {
+    sections.push('The design assets used in this theme are separately licensed. See the asset package for details.')
+    sections.push('')
+  }
 
-${generateFrameworkExample('svelte', packageName)}
+  // Related Packages
+  sections.push(generateRelatedPackagesSection(assetsPackageName, true))
+  sections.push('')
 
-### Vanilla JavaScript
+  // Development
+  sections.push(generateDevelopmentSection())
 
-${generateFrameworkExample('vanilla', packageName)}
-
-## Customization
-
-You can override specific avatar parts:
-
-\`\`\`tsx
-<Avatar
-  theme={theme}
-  size={300}
-  hair="${hairExample}"          // Choose specific hair style
-  hairColor="#FF5733"    // Custom hair color
-  body="${bodyExample}"     // Choose specific clothing
-  bodyColor="#3498DB"    // Custom clothing color
-/>
-\`\`\`
-
-## Design Assets
-
-This theme uses assets from the [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName}) package.
-
-## License
-
-This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).
-
-${hasCredits ? `The design assets used in this theme have their own license and attribution:\n\n${creditsContent}\n\nFor full details, see:\n- [CREDITS.md](../packages/${assetsPackageName}/CREDITS.md) - Asset attribution\n- Asset package license in [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName})` : 'The design assets used in this theme are separately licensed. See the asset package for details.'}
-
-## Related Packages
-
-- [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName}) - SVG assets used by this theme
-- [\`@avatune/react\`](../packages/react) - React avatar renderer
-- [\`@avatune/vue\`](../packages/vue) - Vue avatar renderer
-- [\`@avatune/svelte\`](../packages/svelte) - Svelte avatar renderer
-- [\`@avatune/vanilla\`](../packages/vanilla) - Vanilla JavaScript avatar renderer
-
-## Development
-
-\`\`\`bash
-# Build the theme
-bun run build
-
-# Build in watch mode
-bun run dev
-
-# Type checking
-bun run check-types
-\`\`\`
-`
+  return sections.join('\n')
 }
 
 // Main execution
-async function main() {
+function main() {
   const { values } = parseArgs({
     options: {
       theme: {
@@ -257,7 +115,7 @@ async function main() {
     },
   })
 
-  const allThemes = await discoverThemes()
+  const allThemes = discoverThemes()
   const themes = values.theme
     ? allThemes.filter((t) => t.name === values.theme)
     : allThemes

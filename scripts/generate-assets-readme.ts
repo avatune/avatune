@@ -1,105 +1,21 @@
 #!/usr/bin/env bun
-import { existsSync, readdirSync, statSync, writeFileSync } from 'node:fs'
-import { join, basename } from 'node:path'
+import { existsSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
+import {
+  type CategoryAssets,
+  capitalizeFirst,
+  findLicenseOrCredits,
+  findSvgFiles,
+  generateAssetsTable,
+  generateAssetDevelopmentSection,
+} from './shared'
 
 /**
  * Script to generate README.md for asset packages.
  *
- * Usage: bun scripts/generate-readme.ts <package-name>
- * Example: bun scripts/generate-readme.ts kyute-assets
+ * Usage: bun scripts/generate-assets-readme.ts <package-name>
+ * Example: bun scripts/generate-assets-readme.ts kyute-assets
  */
-
-interface AssetFile {
-  category: string
-  name: string
-  filename: string
-  path: string
-}
-
-interface CategoryAssets {
-  [category: string]: AssetFile[]
-}
-
-function toPascalCase(str: string): string {
-  return str
-    .split(/[-_]/)
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('')
-}
-
-function capitalizeFirst(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-function findSvgFiles(svgDir: string): CategoryAssets {
-  const assets: CategoryAssets = {}
-
-  if (!existsSync(svgDir)) {
-    console.error(`SVG directory not found: ${svgDir}`)
-    process.exit(1)
-  }
-
-  const categories = readdirSync(svgDir).filter(item => {
-    const itemPath = join(svgDir, item)
-    return statSync(itemPath).isDirectory()
-  })
-
-  for (const category of categories) {
-    const categoryPath = join(svgDir, category)
-    const files = readdirSync(categoryPath).filter(file => file.endsWith('.svg'))
-
-    assets[category] = files
-      .map(file => ({
-        category,
-        name: basename(file, '.svg'),
-        filename: file,
-        path: join(categoryPath, file),
-      }))
-      .sort((a, b) => a.name.localeCompare(b.name))
-  }
-
-  return assets
-}
-
-function generateAssetsTable(assets: CategoryAssets): string {
-  const lines: string[] = []
-  const sortedCategories = Object.keys(assets).sort()
-
-  for (const category of sortedCategories) {
-    const categoryFiles = assets[category]
-
-    lines.push(`### ${capitalizeFirst(category)}`)
-    lines.push('')
-    lines.push('| Preview | Filename |')
-    lines.push('|---------|----------|')
-
-    for (const asset of categoryFiles) {
-      const svgPath = `./src/svg/${category}/${asset.filename}`
-      lines.push(`| ![${asset.name}](${svgPath}) | \`${asset.name}\` |`)
-    }
-
-    lines.push('')
-  }
-
-  return lines.join('\n')
-}
-
-function findLicenseOrCredits(packageDir: string): { license?: string; credits?: string } {
-  const result: { license?: string; credits?: string } = {}
-
-  const licensePath = join(packageDir, 'LICENSE.md')
-  const creditsPath = join(packageDir, 'CREDITS.md')
-
-  if (existsSync(licensePath)) {
-    result.license = 'LICENSE.md'
-  }
-
-  if (existsSync(creditsPath)) {
-    result.credits = 'CREDITS.md'
-  }
-
-  return result
-}
 
 function generateReadme(
   packageName: string,
@@ -186,19 +102,7 @@ function generateReadme(
   }
 
   // Development
-  sections.push('## Development')
-  sections.push('')
-  sections.push('Build the library:')
-  sections.push('')
-  sections.push('```bash')
-  sections.push('bun run build')
-  sections.push('```')
-  sections.push('')
-  sections.push('Build in watch mode:')
-  sections.push('')
-  sections.push('```bash')
-  sections.push('bun dev')
-  sections.push('```')
+  sections.push(generateAssetDevelopmentSection())
   sections.push('')
 
   return sections.join('\n')

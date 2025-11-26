@@ -1,6 +1,7 @@
 // Accessories
-import AccessoriesStudEarRing from './svg/accessories/stud-ear-ring.svg?react'
+
 import AccessoriesHoopEarRing from './svg/accessories/hoop-ear-ring.svg?react'
+import AccessoriesStudEarRing from './svg/accessories/stud-ear-ring.svg?react'
 // Body
 import BodyCollaredShirt from './svg/body/collared-shirt.svg?react'
 import BodyCrewShirt from './svg/body/crew-shirt.svg?react'
@@ -19,8 +20,8 @@ import EyesRound from './svg/eyes/round.svg?react'
 import EyesSmiling from './svg/eyes/smiling.svg?react'
 import EyesStandard from './svg/eyes/standard.svg?react'
 // Face Hair
-import FaceHairBeard from './svg/face-hair/beard.svg?react'
-import FaceHairScruff from './svg/face-hair/scruff.svg?react'
+import FaceHairBeard from './svg/faceHair/beard.svg?react'
+import FaceHairScruff from './svg/faceHair/scruff.svg?react'
 // Glasses
 import GlassesRound from './svg/glasses/round.svg?react'
 import GlassesSquare from './svg/glasses/square.svg?react'

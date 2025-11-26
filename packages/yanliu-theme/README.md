@@ -1,6 +1,6 @@
 # @avatune/yanliu-theme
 
-Avatar theme for Avatune using Yanliu assets.
+Avatar theme for Avatune using yanliu design assets.
 
 ## Installation
 

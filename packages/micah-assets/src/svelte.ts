@@ -1,6 +1,7 @@
 // Accessories
-import AccessoriesStudEarRing from './svg/accessories/stud-ear-ring.svg?svelte'
+
 import AccessoriesHoopEarRing from './svg/accessories/hoop-ear-ring.svg?svelte'
+import AccessoriesStudEarRing from './svg/accessories/stud-ear-ring.svg?svelte'
 // Body
 import BodyCollaredShirt from './svg/body/collared-shirt.svg?svelte'
 import BodyCrewShirt from './svg/body/crew-shirt.svg?svelte'
@@ -19,8 +20,8 @@ import EyesRound from './svg/eyes/round.svg?svelte'
 import EyesSmiling from './svg/eyes/smiling.svg?svelte'
 import EyesStandard from './svg/eyes/standard.svg?svelte'
 // Face Hair
-import FaceHairBeard from './svg/face-hair/beard.svg?svelte'
-import FaceHairScruff from './svg/face-hair/scruff.svg?svelte'
+import FaceHairBeard from './svg/faceHair/beard.svg?svelte'
+import FaceHairScruff from './svg/faceHair/scruff.svg?svelte'
 // Glasses
 import GlassesRound from './svg/glasses/round.svg?svelte'
 import GlassesSquare from './svg/glasses/square.svg?svelte'

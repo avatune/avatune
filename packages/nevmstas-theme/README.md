@@ -1,6 +1,6 @@
 # @avatune/nevmstas-theme
 
-Avatar theme for Avatune using Nevmstas design assets.
+Avatar theme for Avatune using nevmstas design assets.
 
 ## Installation
 
