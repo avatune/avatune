@@ -30,7 +30,6 @@ export function PredictionFileInput({
 
   useEffect(() => {
     const initLibrary = async () => {
-      console.log('initLibrary')
       if (initializingRef.current) return
       initializingRef.current = true
 
@@ -109,8 +108,6 @@ export function PredictionFileInput({
           predictorsRef.current.skinTone.predictFromImage(canvas),
           predictorsRef.current.hairLength.predict(imageTensor),
         ])
-
-        console.log('Face detected:', skinTone.faceDetected)
 
         const predictions: Predictions = {
           hairColor: hairColor.color,

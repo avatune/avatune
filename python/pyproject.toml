@@ -18,7 +18,6 @@ dependencies = [
     "kagglehub>=0.2.0",
     "datasets>=4.3.0",
     "marimo>=0.17.2",
-    "skin-tone-classifier>=1.2.6",
 ]
 
 [project.optional-dependencies]
