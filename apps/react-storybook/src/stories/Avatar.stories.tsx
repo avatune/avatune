@@ -1,12 +1,13 @@
+import fatinVerseTheme from '@avatune/fatin-verse-theme/react'
 import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
 import miniavsTheme from '@avatune/miniavs-theme/react'
 import nevmstasTheme from '@avatune/nevmstas-theme/react'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/react'
-import yanliuTheme from '@avatune/yanliu-theme/react'
 import type { AvatarProps } from '@avatune/react'
 import { Avatar } from '@avatune/react'
 import type { ReactAvatarItem, Theme } from '@avatune/types'
+import yanliuTheme from '@avatune/yanliu-theme/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const meta = {
@@ -23,6 +24,7 @@ type ExtractStoryArgs<T extends Theme<ReactAvatarItem>> = Omit<
   'theme'
 >
 
+type FatinVerseArgs = ExtractStoryArgs<typeof fatinVerseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
@@ -37,7 +39,12 @@ const getArgTypes = <T extends Theme<ReactAvatarItem>>(theme: T) => {
   }
 
   for (const [category, items] of Object.entries(theme)) {
-    const excludeCategories = ['style', 'predictorMappings', 'colorPalettes', 'connectedColors']
+    const excludeCategories = [
+      'style',
+      'predictorMappings',
+      'colorPalettes',
+      'connectedColors',
+    ]
     if (excludeCategories.includes(category)) continue
 
     argTypes[`${category}Color`] = { control: { type: 'color' } }
@@ -48,6 +55,14 @@ const getArgTypes = <T extends Theme<ReactAvatarItem>>(theme: T) => {
   }
 
   return argTypes as StoryObj<Args>['argTypes']
+}
+
+export const FatinVerse: StoryObj<FatinVerseArgs> = {
+  argTypes: getArgTypes(fatinVerseTheme),
+  render: (args) => <Avatar theme={fatinVerseTheme} {...args} />,
+  args: {
+    size: 300,
+  },
 }
 
 export const Kyute: StoryObj<KyuteArgs> = {
@@ -99,12 +114,13 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
-  'Kyute': kyuteTheme,
-  'Micah': micahTheme,
-  'Miniavs': miniavsTheme,
-  'Nevmstas': nevmstasTheme,
-  'Pacovqzz': pacovqzzTheme,
-  'Yanliu': yanliuTheme,
+  FatinVerse: fatinVerseTheme,
+  Kyute: kyuteTheme,
+  Micah: micahTheme,
+  Miniavs: miniavsTheme,
+  Nevmstas: nevmstasTheme,
+  Pacovqzz: pacovqzzTheme,
+  Yanliu: yanliuTheme,
 } as const
 
 export const Seed: StoryObj<{
