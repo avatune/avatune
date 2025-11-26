@@ -17,6 +17,7 @@
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/react-native": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/yanliu-theme": "workspace:*",
@@ -104,6 +105,7 @@
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/react": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/yanliu-theme": "workspace:*",
@@ -163,6 +165,7 @@
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/typescript-config": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -184,6 +187,7 @@
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/vue": "workspace:*",
         "@avatune/yanliu-theme": "workspace:*",
@@ -211,6 +215,8 @@
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-assets": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-assets": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/yanliu-assets": "workspace:*",
@@ -539,6 +545,55 @@
         "svelte",
         "vue",
       ],
+    },
+    "packages/pacovqzz-assets": {
+      "name": "@avatune/pacovqzz-assets",
+      "version": "0.0.0",
+      "dependencies": {
+        "colord": "^2.9.3",
+      },
+      "devDependencies": {
+        "@avatune/rsbuild-plugin-raw-svg": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
+        "@rsbuild/core": "^1.5.17",
+        "@rsbuild/plugin-react": "^1.4.1",
+        "@rsbuild/plugin-svelte": "^1.0.10",
+        "@rsbuild/plugin-svgr": "^1.2.2",
+        "@rsbuild/plugin-vue": "^1.2.0",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^24.9.1",
+        "react": "19.1.0",
+        "svelte": "^5.0.0",
+        "svgo": "^4.0.0",
+        "typescript": "^5.9.3",
+        "vue": "^3.5.22",
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0",
+        "svelte": ">=5.0.0",
+        "vue": "^3.5.22",
+      },
+      "optionalPeers": [
+        "react",
+        "svelte",
+        "vue",
+      ],
+    },
+    "packages/pacovqzz-theme": {
+      "name": "@avatune/pacovqzz-theme",
+      "version": "0.0.0",
+      "dependencies": {
+        "@avatune/pacovqzz-assets": "workspace:*",
+        "@avatune/theme-builder": "workspace:*",
+        "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
+      },
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rslib/core": "^0.16.1",
+        "typescript": "^5.9.3",
+      },
     },
     "packages/react": {
       "name": "@avatune/react",
@@ -920,6 +975,10 @@
     "@avatune/nevmstas-assets": ["@avatune/nevmstas-assets@workspace:packages/nevmstas-assets"],
 
     "@avatune/nevmstas-theme": ["@avatune/nevmstas-theme@workspace:packages/nevmstas-theme"],
+
+    "@avatune/pacovqzz-assets": ["@avatune/pacovqzz-assets@workspace:packages/pacovqzz-assets"],
+
+    "@avatune/pacovqzz-theme": ["@avatune/pacovqzz-theme@workspace:packages/pacovqzz-theme"],
 
     "@avatune/predictor-storybook": ["@avatune/predictor-storybook@workspace:apps/predictor-storybook"],
 
@@ -3641,6 +3700,8 @@
 
     "@avatune/nevmstas-assets/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
 
+    "@avatune/pacovqzz-assets/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
+
     "@avatune/rsbuild-plugin-raw-svg/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
 
     "@avatune/svelte-storybook/vite": ["vite@6.4.1", "", { "dependencies": { "esbuild": "^0.25.0", "fdir": "^6.4.4", "picomatch": "^4.0.2", "postcss": "^8.5.3", "rollup": "^4.34.9", "tinyglobby": "^0.2.13" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^18.0.0 || ^20.0.0 || >=22.0.0", "jiti": ">=1.21.0", "less": "*", "lightningcss": "^1.21.0", "sass": "*", "sass-embedded": "*", "stylus": "*", "sugarss": "*", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g=="],
@@ -3986,6 +4047,8 @@
     "@avatune/miniavs-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "@avatune/nevmstas-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
+
+    "@avatune/pacovqzz-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "@avatune/rsbuild-plugin-raw-svg/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 

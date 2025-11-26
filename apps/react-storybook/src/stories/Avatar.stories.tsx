@@ -2,6 +2,7 @@ import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
 import miniavsTheme from '@avatune/miniavs-theme/react'
 import nevmstasTheme from '@avatune/nevmstas-theme/react'
+import pacovqzzTheme from '@avatune/pacovqzz-theme/react'
 import yanliuTheme from '@avatune/yanliu-theme/react'
 import type { AvatarProps } from '@avatune/react'
 import { Avatar } from '@avatune/react'
@@ -26,6 +27,7 @@ type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
 type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
+type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const getArgTypes = <T extends Theme<ReactAvatarItem>>(theme: T) => {
@@ -80,6 +82,14 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Pacovqzz: StoryObj<PacovqzzArgs> = {
+  argTypes: getArgTypes(pacovqzzTheme),
+  render: (args) => <Avatar theme={pacovqzzTheme} {...args} />,
+  args: {
+    size: 300,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => <Avatar theme={yanliuTheme} {...args} />,
@@ -93,6 +103,7 @@ const themes = {
   'Micah': micahTheme,
   'Miniavs': miniavsTheme,
   'Nevmstas': nevmstasTheme,
+  'Pacovqzz': pacovqzzTheme,
   'Yanliu': yanliuTheme,
 } as const
 

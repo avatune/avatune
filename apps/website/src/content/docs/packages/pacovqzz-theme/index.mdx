@@ -1,0 +1,259 @@
+---
+title: "@avatune/pacovqzz-theme"
+description: "Avatar theme for Avatune using Pacovqzz assets."
+source: "packages/pacovqzz-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import {
+  bodyHoodie,
+  bodyOverall,
+  bodyOvershirt1,
+  bodyOvershirt2,
+  bodyPufferJacket,
+  bodyTshirt1,
+  bodyTshirt2,
+  mouthApathetic,
+  mouthBeard,
+  mouthBristle1,
+  mouthBristle2,
+  mouthConfused,
+  mouthHappt,
+  mouthMeh,
+  mouthMustache,
+  headStandard,
+  eyesApathetic,
+  eyesGlasses,
+  eyesHeartSunglasses,
+  eyesMatrixSunglasses,
+  eyesOpened,
+  eyesRoundSunglasses,
+  eyesStandard,
+  hairCurly,
+  hairCurlyBandana,
+  hairLong,
+  hairLongBeanie,
+  hairMedium,
+  hairMediumCap,
+  hairMohawk,
+  hairShort,
+} from '@avatune/pacovqzz-assets/svg';
+
+> Source: `packages/pacovqzz-theme/README.md`
+
+Avatar theme for Avatune using pacovqzz design assets.
+
+## Installation
+
+<InstallTabs packages="@avatune/pacovqzz-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/pacovqzz-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/pacovqzz-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/pacovqzz-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/pacovqzz-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="curly"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="hoodie"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Pacovqzz style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/pacovqzz-assets`](https://www.npmjs.com/package/@avatune/pacovqzz-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/pacovqzz-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyOverall} title="overall" hideCaption /> | `overall` |
+| <AssetPreview svg={bodyOvershirt1} title="overshirt1" hideCaption /> | `overshirt1` |
+| <AssetPreview svg={bodyOvershirt2} title="overshirt2" hideCaption /> | `overshirt2` |
+| <AssetPreview svg={bodyPufferJacket} title="pufferJacket" hideCaption /> | `pufferJacket` |
+| <AssetPreview svg={bodyTshirt1} title="tshirt1" hideCaption /> | `tshirt1` |
+| <AssetPreview svg={bodyTshirt2} title="tshirt2" hideCaption /> | `tshirt2` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesApathetic} title="apathetic" hideCaption /> | `apathetic` |
+| <AssetPreview svg={eyesGlasses} title="glasses" hideCaption /> | `glasses` |
+| <AssetPreview svg={eyesHeartSunglasses} title="heartSunglasses" hideCaption /> | `heartSunglasses` |
+| <AssetPreview svg={eyesMatrixSunglasses} title="matrixSunglasses" hideCaption /> | `matrixSunglasses` |
+| <AssetPreview svg={eyesOpened} title="opened" hideCaption /> | `opened` |
+| <AssetPreview svg={eyesRoundSunglasses} title="roundSunglasses" hideCaption /> | `roundSunglasses` |
+| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairCurly} title="curly" hideCaption /> | `curly` |
+| <AssetPreview svg={hairCurlyBandana} title="curlyBandana" hideCaption /> | `curlyBandana` |
+| <AssetPreview svg={hairLong} title="long" hideCaption /> | `long` |
+| <AssetPreview svg={hairLongBeanie} title="longBeanie" hideCaption /> | `longBeanie` |
+| <AssetPreview svg={hairMedium} title="medium" hideCaption /> | `medium` |
+| <AssetPreview svg={hairMediumCap} title="mediumCap" hideCaption /> | `mediumCap` |
+| <AssetPreview svg={hairMohawk} title="mohawk" hideCaption /> | `mohawk` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthApathetic} title="apathetic" hideCaption /> | `apathetic` |
+| <AssetPreview svg={mouthBeard} title="beard" hideCaption /> | `beard` |
+| <AssetPreview svg={mouthBristle1} title="bristle1" hideCaption /> | `bristle1` |
+| <AssetPreview svg={mouthBristle2} title="bristle2" hideCaption /> | `bristle2` |
+| <AssetPreview svg={mouthConfused} title="confused" hideCaption /> | `confused` |
+| <AssetPreview svg={mouthHappt} title="happt" hideCaption /> | `happt` |
+| <AssetPreview svg={mouthMeh} title="meh" hideCaption /> | `meh` |
+| <AssetPreview svg={mouthMustache} title="mustache" hideCaption /> | `mustache` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+This project uses avatar design assets licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Original designs by [Francisco Antonio Vázquez Olivares](https://www.figma.com/community/file/1234987134113618061).
+Modifications were made to adapt them for composable SVG avatars.
+
+For full details, see [CREDITS.md](credits).
+
+## Related Packages
+
+- [`@avatune/pacovqzz-assets`](..//pacovqzz-assets) - SVG assets used by this theme
+- [`@avatune/react`](..//react) - React avatar renderer
+- [`@avatune/vue`](..//vue) - Vue avatar renderer
+- [`@avatune/svelte`](..//svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](..//vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

@@ -2,6 +2,7 @@ import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
+import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
@@ -26,6 +27,7 @@ type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
 type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
+type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
@@ -92,6 +94,17 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Pacovqzz: StoryObj<PacovqzzArgs> = {
+  argTypes: getArgTypes(pacovqzzTheme),
+  render: (args) => ({
+    Component: Avatar,
+    props: { theme: pacovqzzTheme, ...args },
+  }),
+  args: {
+    size: 300,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => ({
@@ -108,6 +121,7 @@ const themes = {
   'Micah': micahTheme,
   'Miniavs': miniavsTheme,
   'Nevmstas': nevmstasTheme,
+  'Pacovqzz': pacovqzzTheme,
   'Yanliu': yanliuTheme,
 } as const
 

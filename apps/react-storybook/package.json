@@ -13,6 +13,7 @@
     "@avatune/yanliu-theme": "workspace:*",
     "@avatune/micah-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/pacovqzz-theme": "workspace:*",
     "@avatune/react": "workspace:*",
     "@avatune/types": "workspace:*",
     "react": "^19.1.0",

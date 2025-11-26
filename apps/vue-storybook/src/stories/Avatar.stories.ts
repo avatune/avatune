@@ -2,6 +2,7 @@ import kyuteTheme from '@avatune/kyute-theme/vue'
 import micahTheme from '@avatune/micah-theme/vue'
 import miniavsTheme from '@avatune/miniavs-theme/vue'
 import nevmstasTheme from '@avatune/nevmstas-theme/vue'
+import pacovqzzTheme from '@avatune/pacovqzz-theme/vue'
 import yanliuTheme from '@avatune/yanliu-theme/vue'
 import type { Theme, VueAvatarItem } from '@avatune/types'
 import type { AvatarProps } from '@avatune/vue'
@@ -21,6 +22,7 @@ type KyuteArgs = Omit<AvatarProps<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarProps<typeof micahTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
 type NevmstasArgs = Omit<AvatarProps<typeof nevmstasTheme>, 'theme'>
+type PacovqzzArgs = Omit<AvatarProps<typeof pacovqzzTheme>, 'theme'>
 type YanliuArgs = Omit<AvatarProps<typeof yanliuTheme>, 'theme'>
 
 const getArgTypes = <T extends Theme<VueAvatarItem>>(theme: T) => {
@@ -90,6 +92,18 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Pacovqzz: StoryObj<PacovqzzArgs> = {
+  argTypes: getArgTypes(pacovqzzTheme),
+  render: (args: PacovqzzArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: pacovqzzTheme }),
+    template: '<Avatar :theme="theme" v-bind="args" />',
+  }),
+  args: {
+    size: 300,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args: YanliuArgs) => ({
@@ -107,6 +121,7 @@ const themes = {
   'Micah': micahTheme,
   'Miniavs': miniavsTheme,
   'Nevmstas': nevmstasTheme,
+  'Pacovqzz': pacovqzzTheme,
   'Yanliu': yanliuTheme,
 } as const
 

@@ -152,6 +152,11 @@ const createBuilder = <T extends AvatarItem, IdMap extends CategoryIdMap>(
 
     setOptional: (category: keyof CategoryIdMap) => {
       const noneItem = createNoneItem()
+      const hasNone = state.items[category]?.none
+      if (hasNone) {
+        return createBuilder(state)
+      }
+
       return createBuilder(addItem(category, 'none', noneItem))
     },
 
