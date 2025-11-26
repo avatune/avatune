@@ -278,7 +278,10 @@ export function selectItems<I extends AvatarItem, T extends Theme<I>>(
   style: T['style']
   seed?: string | number
 } {
-  const random = seededRandom(config.seed ?? 'avatune')
+  const seed = predictions
+    ? JSON.stringify(predictions)
+    : (config.seed ?? 'avatune')
+  const random = seededRandom(seed)
 
   const selected: Partial<Record<AvatarPartCategory, I>> = {}
   const identifiers: Partial<Record<AvatarPartCategory, string>> = {}
