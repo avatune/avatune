@@ -163,7 +163,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
   
   sections.push('### Theme License')
   sections.push('')
-  sections.push('This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).')
+  sections.push('This theme package is licensed under MIT (see [LICENSE.md](license)).')
   sections.push('')
 
   if (hasCredits && creditsContent) {
@@ -171,7 +171,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
     sections.push('')
     sections.push(creditsContent)
     sections.push('')
-    sections.push(`For full details, see [CREDITS.md](CREDITS.md).`)
+    sections.push(`For full details, see [CREDITS.md](credits).`)
     sections.push('')
   } else {
     sections.push('### Design Assets License')
