@@ -4,7 +4,35 @@ description: "Avatar theme for Avatune using miniavs design assets."
 source: "packages/miniavs-theme/README.md"
 ---
 
-import InstallTabs from '../../../../components/docs/install-tabs.astro'
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import {
+  bodyGolf,
+  bodyStandard,
+  eyesConfident,
+  eyesHappy,
+  eyesStandard,
+  faceDetailsBlushes,
+  faceHairFreddy,
+  faceHairHorshoe,
+  faceHairPencilThin,
+  faceHairPencilThinBeard,
+  glassesGlasses,
+  hairBaldness,
+  hairClassic1,
+  hairClassic2,
+  hairCurly,
+  hairElvis,
+  hairLong,
+  hairPonyTail,
+  hairSlaughter,
+  hairStylish,
+  headStandard,
+  headThin,
+  headWide,
+  mouthStandard,
+  mouthToothless,
+} from '@avatune/miniavs-assets/svg';
 
 > Source: `packages/miniavs-theme/README.md`
 
@@ -100,30 +128,125 @@ You can override specific avatar parts:
 
 ## Design Assets
 
-This theme uses assets from the [`@avatune/miniavs-assets`](../packages/miniavs-assets) package.
+This theme uses Miniavs style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
 
-## License
+The assets are available in the [`@avatune/miniavs-assets`](https://www.npmjs.com/package/@avatune/miniavs-assets) package.
 
-This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).
+### Using Assets Directly
 
-The design assets used in this theme have their own license and attribution:
+#### SVG Paths
 
-This project uses avatar design assets licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+```typescript
+import { hair, eyes, mouth } from '@avatune/miniavs-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/miniavs-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/miniavs-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/miniavs-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyGolf} title="golf" hideCaption /> | `golf` |
+| <AssetPreview svg={bodyStandard} title="standard" hideCaption /> | `standard` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesConfident} title="confident" hideCaption /> | `confident` |
+| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
+| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
+
+#### FaceDetails
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceDetailsBlushes} title="blushes" hideCaption /> | `blushes` |
+
+#### FaceHair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairFreddy} title="freddy" hideCaption /> | `freddy` |
+| <AssetPreview svg={faceHairHorshoe} title="horshoe" hideCaption /> | `horshoe` |
+| <AssetPreview svg={faceHairPencilThin} title="pencilThin" hideCaption /> | `pencilThin` |
+| <AssetPreview svg={faceHairPencilThinBeard} title="pencilThinBeard" hideCaption /> | `pencilThinBeard` |
+
+#### Glasses
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={glassesGlasses} title="glasses" hideCaption /> | `glasses` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBaldness} title="baldness" hideCaption /> | `baldness` |
+| <AssetPreview svg={hairClassic1} title="classic1" hideCaption /> | `classic1` |
+| <AssetPreview svg={hairClassic2} title="classic2" hideCaption /> | `classic2` |
+| <AssetPreview svg={hairCurly} title="curly" hideCaption /> | `curly` |
+| <AssetPreview svg={hairElvis} title="elvis" hideCaption /> | `elvis` |
+| <AssetPreview svg={hairLong} title="long" hideCaption /> | `long` |
+| <AssetPreview svg={hairPonyTail} title="ponyTail" hideCaption /> | `ponyTail` |
+| <AssetPreview svg={hairSlaughter} title="slaughter" hideCaption /> | `slaughter` |
+| <AssetPreview svg={hairStylish} title="stylish" hideCaption /> | `stylish` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={headThin} title="thin" hideCaption /> | `thin` |
+| <AssetPreview svg={headWide} title="wide" hideCaption /> | `wide` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={mouthToothless} title="toothless" hideCaption /> | `toothless` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](LICENSE.md)).
+
+### Design Assets License
+
+The design assets used in this theme are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 Original designs by [Webpixels](https://www.figma.com/community/file/923211396597067458/miniavs-free-avatar-creator).
 Modifications were made to adapt them for composable SVG avatars.
 
-For full details, see:
-- [CREDITS.md](../packages/miniavs-assets/CREDITS.md) - Asset attribution
-- Asset package license in [`@avatune/miniavs-assets`](../packages/miniavs-assets)
+For full details, see [CREDITS.md](CREDITS.md).
 
 ## Related Packages
 
-- [`@avatune/miniavs-assets`](../packages/miniavs-assets) - SVG assets used by this theme
-- [`@avatune/react`](../packages/react) - React avatar renderer
-- [`@avatune/vue`](../packages/vue) - Vue avatar renderer
-- [`@avatune/svelte`](../packages/svelte) - Svelte avatar renderer
-- [`@avatune/vanilla`](../packages/vanilla) - Vanilla JavaScript avatar renderer
+- [`@avatune/miniavs-assets`](https://www.npmjs.com/package/@avatune/miniavs-assets) - SVG assets used by this theme
+- [`@avatune/react`](../react) - React avatar renderer
+- [`@avatune/vue`](../vue) - Vue avatar renderer
+- [`@avatune/svelte`](../svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](../vanilla) - Vanilla JavaScript avatar renderer
 
 ## Development
 

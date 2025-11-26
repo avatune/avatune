@@ -1,0 +1,322 @@
+---
+title: "Avatune API"
+description: "REST API for generating avatar SVGs on-demand via Cloudflare Workers."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The Avatune API provides a REST endpoint for generating avatar SVGs on-demand, deployed on Cloudflare Workers at [https://api.avatune.dev](https://api.avatune.dev).
+
+## Live API Endpoint
+
+```
+https://api.avatune.dev/
+```
+
+<Aside type="tip">
+  The API is deployed globally on Cloudflare's edge network for fast response times worldwide.
+</Aside>
+
+## API Usage
+
+### Basic Request
+
+```bash
+GET https://api.avatune.dev/?theme=nevmstas&hair=short
+```
+
+### Example Response
+
+The API returns an SVG image that can be used directly in `<img>` tags or embedded in your HTML:
+
+```html
+<img src="https://api.avatune.dev/?theme=yanliu&seed=user123" alt="Avatar" />
+```
+
+### Live Examples
+
+- [Nevmstas theme with short hair](https://api.avatune.dev/?theme=nevmstas&hair=short)
+- [Yanliu theme with seed](https://api.avatune.dev/?theme=yanliu&seed=123)
+- [Miniavs theme custom size](https://api.avatune.dev/?theme=miniavs&size=300)
+- [Micah theme with custom colors](https://api.avatune.dev/?theme=micah&hair=dannyPhantom&hairColor=%23FF5733)
+
+## Parameters
+
+### Required Parameters
+
+| Parameter | Description | Example |
+|-----------|-------------|---------|
+| `theme` | Theme name | `yanliu`, `nevmstas`, `miniavs`, `micah`, `kyute` |
+
+### Optional Parameters
+
+| Parameter | Description | Default |
+|-----------|-------------|---------|
+| `size` | Avatar size in pixels | Theme default |
+| `seed` | Random seed for generation | Random |
+| `backgroundColor` | Background color (hex) | Theme default |
+
+### Theme-Specific Parameters
+
+You can override any avatar part using theme-specific parameters:
+
+#### Yanliu Theme
+```bash
+https://api.avatune.dev/?theme=yanliu&hair=braids&body=blouse&hairColor=%23FF5733
+```
+
+Available parameters:
+- `hair` - Hair style (e.g., `braids`, `hijab`, `puff`)
+- `hairColor` - Hair color (hex)
+- `body` - Clothing style (e.g., `blouse`, `teeBasic`)
+- `bodyColor` - Clothing color (hex)
+- `forelock` - Forelock style
+- `glasses` - Glasses style
+- And more...
+
+#### Nevmstas Theme
+```bash
+https://api.avatune.dev/?theme=nevmstas&hair=short&eyes=boring
+```
+
+Available parameters:
+- `hair` - Hair style (e.g., `short`, `long`, `bobRounded`)
+- `hairColor` - Hair color (hex)
+- `body` - Clothing style (e.g., `shirt`, `sweater`)
+- `eyes` - Eye style (e.g., `boring`, `dots`)
+- And more...
+
+#### Miniavs Theme
+```bash
+https://api.avatune.dev/?theme=miniavs&hair=elvis&body=golf
+```
+
+Available parameters:
+- `hair` - Hair style (e.g., `elvis`, `curly`, `baldness`)
+- `hairColor` - Hair color (hex)
+- `body` - Clothing style (e.g., `golf`, `standard`)
+- `eyes` - Eye style (e.g., `happy`, `confident`)
+- And more...
+
+#### Micah Theme
+```bash
+https://api.avatune.dev/?theme=micah&hair=dannyPhantom&body=collaredShirt
+```
+
+Available parameters:
+- `hair` - Hair style (e.g., `dannyPhantom`, `pixie`, `full`)
+- `hairColor` - Hair color (hex)
+- `body` - Clothing style (e.g., `collaredShirt`, `crewShirt`)
+- `nose` - Nose style (e.g., `curve`, `round`)
+- And more...
+
+#### Kyute Theme
+```bash
+https://api.avatune.dev/?theme=kyute&hair=bob&body=casual
+```
+
+Available parameters:
+- `hair` - Hair style (e.g., `bob`, `curly`, `elvis`)
+- `hairColor` - Hair color (hex)
+- `body` - Clothing style (e.g., `casual`, `shirt`)
+- `glasses` - Glasses style (e.g., `round`, `aviator`)
+- And more...
+
+<Aside type="note">
+  For a complete list of available assets for each theme, see the individual [theme documentation](../packages/yanliu-theme).
+</Aside>
+
+## Rate Limiting
+
+The API enforces rate limits per IP address + User-Agent to ensure fair usage:
+
+- **100 requests per hour**
+- **1,000 requests per day**
+
+Limits reset automatically via KV TTL expiration.
+
+### Rate Limit Response
+
+When rate limits are exceeded, the API returns:
+
+- **Status Code**: `429 Too Many Requests`
+- **Header**: `Retry-After: 3600` (seconds until reset)
+- **Response Body**:
+```json
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 3600
+}
+```
+
+## Caching
+
+All successful responses include cache headers for optimal performance:
+
+```
+Cache-Control: public, max-age=31536000, immutable
+```
+
+This means:
+- Responses are cached for 1 year
+- Content is immutable (won't change)
+- Can be cached by browsers and CDNs
+
+<Aside type="tip">
+  Use the `seed` parameter to generate consistent avatars for the same user across requests.
+</Aside>
+
+## CORS
+
+The API supports Cross-Origin Resource Sharing (CORS), allowing requests from any origin:
+
+```
+Access-Control-Allow-Origin: *
+```
+
+## Error Responses
+
+### Invalid Theme
+
+```json
+{
+  "error": "Invalid theme. Available themes: yanliu, nevmstas, miniavs, micah, kyute"
+}
+```
+
+**Status Code**: `400 Bad Request`
+
+### Rate Limit Exceeded
+
+```json
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 3600
+}
+```
+
+**Status Code**: `429 Too Many Requests`
+
+## Integration Examples
+
+### HTML Image Tag
+
+```html
+<img 
+  src="https://api.avatune.dev/?theme=yanliu&seed=user-123" 
+  alt="User Avatar"
+  width="200"
+  height="200"
+/>
+```
+
+### JavaScript Fetch
+
+```javascript
+const avatarUrl = `https://api.avatune.dev/?theme=nevmstas&seed=${userId}&size=300`;
+const response = await fetch(avatarUrl);
+const svgText = await response.text();
+```
+
+### React Component
+
+```tsx
+function UserAvatar({ userId, theme = 'yanliu', size = 200 }) {
+  const avatarUrl = `https://api.avatune.dev/?theme=${theme}&seed=${userId}&size=${size}`;
+  
+  return (
+    <img 
+      src={avatarUrl} 
+      alt="Avatar" 
+      width={size} 
+      height={size}
+    />
+  );
+}
+```
+
+### Vue Component
+
+```vue
+<template>
+  <img 
+    :src="avatarUrl" 
+    alt="Avatar"
+    :width="size"
+    :height="size"
+  />
+</template>
+
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  userId: String,
+  theme: { type: String, default: 'yanliu' },
+  size: { type: Number, default: 200 }
+});
+
+const avatarUrl = computed(() => 
+  `https://api.avatune.dev/?theme=${props.theme}&seed=${props.userId}&size=${props.size}`
+);
+</script>
+```
+
+### CSS Background
+
+```css
+.avatar {
+  width: 200px;
+  height: 200px;
+  background-image: url('https://api.avatune.dev/?theme=miniavs&seed=user-456');
+  background-size: cover;
+  border-radius: 50%;
+}
+```
+
+## Infrastructure
+
+The Avatune API is built with:
+
+- **Cloudflare Workers** - Edge computing for low latency
+- **Cloudflare KV** - Distributed key-value storage for rate limiting
+- **Global CDN** - Deployed to 300+ locations worldwide
+
+## Self-Hosting
+
+Want to run your own instance? Check out the source code:
+
+```bash
+cd apps/cloudflare-worker
+bun install
+bun run dev
+```
+
+For deployment instructions, see the [GitHub repository](https://github.com/avatune/avatune/tree/main/apps/cloudflare-worker).
+
+## Best Practices
+
+1. **Use Seeds for Consistency**: Always use the same `seed` parameter for a specific user to ensure their avatar remains consistent
+2. **Cache Responses**: Take advantage of the long cache headers to minimize API calls
+3. **Respect Rate Limits**: Implement proper error handling for 429 responses
+4. **URL Encode Parameters**: Always URL encode color values and other special characters
+
+### Example with URL Encoding
+
+```javascript
+const params = new URLSearchParams({
+  theme: 'yanliu',
+  seed: 'user-123',
+  hairColor: '#FF5733',  // Will be properly encoded
+  backgroundColor: '#3498DB'
+});
+
+const url = `https://api.avatune.dev/?${params}`;
+```
+
+## Support
+
+For issues or questions about the API:
+- [GitHub Issues](https://github.com/avatune/avatune/issues)
+- [Documentation](https://avatune.dev)
+

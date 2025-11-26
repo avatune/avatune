@@ -30,6 +30,10 @@ export default defineConfig({
           ],
         },
         {
+          label: 'API',
+          items: [{ label: 'REST API', slug: 'api' }],
+        },
+        {
           label: 'Frameworks',
           items: [
             { label: 'React', slug: 'packages/react' },
@@ -46,24 +50,16 @@ export default defineConfig({
               label: 'Yanliu',
               slug: 'packages/yanliu-theme',
             },
-            {
-              label: 'Yanliu Assets',
-              slug: 'packages/yanliu-assets',
-            },
             { label: 'Miniavs', slug: 'packages/miniavs-theme' },
-            { label: 'Miniavs Assets', slug: 'packages/miniavs-assets' },
             {
               label: 'Nevmstas',
               slug: 'packages/nevmstas-theme',
             },
-            { label: 'Nevmstas Assets', slug: 'packages/nevmstas-assets' },
             {
               label: 'Micah',
               slug: 'packages/micah-theme',
             },
-            { label: 'Micah Assets', slug: 'packages/micah-assets' },
             { label: 'Kyute', slug: 'packages/kyute-theme' },
-            { label: 'Kyute Assets', slug: 'packages/kyute-assets' },
           ],
         },
         {
