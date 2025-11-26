@@ -398,7 +398,7 @@ function generateReactNativeStory(themes: string[]): string {
   return `${themeImports}
 import type { AvatarProps } from '@avatune/react-native'
 import { Avatar } from '@avatune/react-native'
-import type { ReactNativeAvatarItem, ReactNativeTheme } from '@avatune/types'
+import type { ReactNativeAvatarItem, ReactNativeTheme, Theme } from '@avatune/types'
 import type { Meta, StoryObj } from '@storybook/react-native'
 
 const meta = {

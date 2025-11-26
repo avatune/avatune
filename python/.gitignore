@@ -1,4 +1,4 @@
-# Python-generated files
+ # Python-generated files
 __pycache__/
 *.py[oc]
 build/
@@ -17,3 +17,6 @@ wheels/
 
 # Data
 data
+
+# Marimo
+__marimo__/

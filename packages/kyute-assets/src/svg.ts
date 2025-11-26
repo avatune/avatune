@@ -68,46 +68,39 @@ import mouthSmirk from './svg/mouth/smirk.svg?raw'
 import mouthWideOpen from './svg/mouth/wideOpen.svg?raw'
 
 export {
-// Body
+  // Body
   bodyCasual,
   bodyShirt,
   bodyTshirt,
   bodyTurtleneck,
-
-// Ears
+  // Ears
   earsStandard,
-
-// Eyebrows
+  // Eyebrows
   eyebrowsThick1,
   eyebrowsThick2,
   eyebrowsThickSad,
   eyebrowsThin,
   eyebrowsThinCurly,
   eyebrowsThinWide,
-
-// Eyes
+  // Eyes
   eyesBig,
   eyesHuge,
   eyesMedium,
   eyesOval,
   eyesStandard,
-
-// FaceDetails
+  // FaceDetails
   faceDetailsBlushes,
   faceDetailsFreckles,
-
-// FaceHair
+  // FaceHair
   faceHairBeard,
   faceHairBigBeard,
   faceHairMustache,
-
-// Glasses
+  // Glasses
   glassesAviator,
   glassesHarry,
   glassesRound,
   glassesStandard,
-
-// Hair
+  // Hair
   hairBob,
   hairCurly,
   hairCurlyMedium,
@@ -121,11 +114,9 @@ export {
   hairStylish,
   hairThick,
   hairTopKnot,
-
-// Head
+  // Head
   headStandard,
-
-// Mouth
+  // Mouth
   mouthLips1,
   mouthLips2,
   mouthLipsSmile,

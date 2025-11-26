@@ -106,9 +106,11 @@ export function PredictionFileInput({
       try {
         const [hairColor, skinTone, hairLength] = await Promise.all([
           predictorsRef.current.hairColor.predict(imageTensor),
-          predictorsRef.current.skinTone.predict(imageTensor),
+          predictorsRef.current.skinTone.predictFromImage(canvas),
           predictorsRef.current.hairLength.predict(imageTensor),
         ])
+
+        console.log('Face detected:', skinTone.faceDetected)
 
         const predictions: Predictions = {
           hairColor: hairColor.color,

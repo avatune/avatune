@@ -21,6 +21,7 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
+    "@avatune/face-detector": "workspace:*",
     "@avatune/types": "workspace:*"
   },
   "devDependencies": {
@@ -33,6 +34,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
+    "@mediapipe/tasks-vision": "^0.10.18",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",
     "@tensorflow/tfjs-backend-webgl": "^4.22.0"

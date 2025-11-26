@@ -379,6 +379,16 @@ wheels = [
 ]
 
 [[package]]
+name = "colormath"
+version = "3.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "networkx" },
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ce/cf/70ea34103a76cc6fb1892289bda321cd0cc73b1a5500ee7fe9ef9f64acef/colormath-3.0.0.tar.gz", hash = "sha256:3d4605af344527da0e4f9f504fad7ddbebda35322c566a6c72e28edb1ff31217", size = 39761, upload-time = "2017-12-27T20:15:11.537Z" }
+
+[[package]]
 name = "comm"
 version = "0.2.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1721,6 +1731,15 @@ wheels = [
 ]
 
 [[package]]
+name = "networkx"
+version = "3.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e8/fc/7b6fd4d22c8c4dc5704430140d8b3f520531d4fe7328b8f8d03f5a7950e8/networkx-3.6.tar.gz", hash = "sha256:285276002ad1f7f7da0f7b42f004bcba70d381e936559166363707fdad3d72ad", size = 2511464, upload-time = "2025-11-24T03:03:47.158Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/c7/d64168da60332c17d24c0d2f08bdf3987e8d1ae9d84b5bbd0eec2eb26a55/networkx-3.6-py3-none-any.whl", hash = "sha256:cdb395b105806062473d3be36458d8f1459a4e4b98e236a66c3a48996e07684f", size = 2063713, upload-time = "2025-11-24T03:03:45.21Z" },
+]
+
+[[package]]
 name = "numpy"
 version = "2.1.3"
 source = { registry = "https://pypi.org/simple" }
@@ -2295,8 +2314,8 @@ dependencies = [
     { name = "pillow" },
     { name = "scikit-learn" },
     { name = "seaborn" },
+    { name = "skin-tone-classifier" },
     { name = "tensorflow" },
-    { name = "tensorflow-metal" },
     { name = "tensorflowjs" },
 ]
 
@@ -2321,8 +2340,8 @@ requires-dist = [
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.2.0" },
     { name = "scikit-learn", specifier = ">=1.4.0" },
     { name = "seaborn", specifier = ">=0.13.0" },
+    { name = "skin-tone-classifier", specifier = ">=1.2.6" },
     { name = "tensorflow", specifier = ">=2.15.0" },
-    { name = "tensorflow-metal", specifier = ">=1.1.0" },
     { name = "tensorflowjs", specifier = ">=4.17.0" },
 ]
 provides-extras = ["dev"]
@@ -2663,6 +2682,24 @@ wheels = [
 ]
 
 [[package]]
+name = "skin-tone-classifier"
+version = "1.2.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama" },
+    { name = "colormath" },
+    { name = "numpy" },
+    { name = "opencv-python" },
+    { name = "packaging" },
+    { name = "requests" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/93/57/5f808b719f808f5ab2bcf440bd2220368dc29a0d09f524b774e8d6c98d8e/skin_tone_classifier-1.2.6.tar.gz", hash = "sha256:80f16598172f5e2ed5720361960fae175fb68fa09971c7065c3301d1003802fa", size = 140037, upload-time = "2025-03-12T14:18:13.132Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d8/e4/a21bd06c4086a0b9b21d584f79fe66bf6e2da882883b386769274521902f/skin_tone_classifier-1.2.6-py3-none-any.whl", hash = "sha256:2e7980c40a7752b629befed9b8da8822f0137ae4075e69563cd876e150034100", size = 118707, upload-time = "2025-03-12T14:18:11.673Z" },
+]
+
+[[package]]
 name = "sniffio"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2793,18 +2830,6 @@ dependencies = [
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e5/50/00dba77925bf2a0a1e45d7bcf8a69a1d2534fb4bb277d9010bd148d2235e/tensorflow_hub-0.16.1-py2.py3-none-any.whl", hash = "sha256:e10c184b3d08daeafada11ffea2dd46781725b6bef01fad1f74d6634ad05311f", size = 30771, upload-time = "2024-01-30T14:49:07.005Z" },
-]
-
-[[package]]
-name = "tensorflow-metal"
-version = "1.2.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-    { name = "wheel" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/dc/bf/988b619322d5617a928e7f31cbb1ed8dd7f375f69dfa73dab26409a00382/tensorflow_metal-1.2.0-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:4bece0ecb154b713b9f5ad4aec676a366d312822161e3cf0e1dea737c64cec04", size = 1357400, upload-time = "2025-01-31T00:52:57.924Z" },
 ]
 
 [[package]]

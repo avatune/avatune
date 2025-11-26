@@ -36,7 +36,8 @@ export default defineConfig({
       '@tensorflow/tfjs': '@tensorflow/tfjs',
       '@tensorflow/tfjs-backend-webgl': '@tensorflow/tfjs-backend-webgl',
       '@tensorflow/tfjs-backend-wasm': '@tensorflow/tfjs-backend-wasm',
+      '@mediapipe/tasks-vision': '@mediapipe/tasks-vision',
     },
   },
-  plugins: [pluginCopyTfjsModel({ modelName: 'skin_tone' })],
+  plugins: [pluginCopyTfjsModel({ modelName: 'ethnicity' })],
 })

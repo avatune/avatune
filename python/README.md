@@ -15,11 +15,8 @@ notebooks/
 │   ├── 01_prepare.py
 │   └── 02_train.py
 │
-└── skin_tone/
-    ├── 01_explore.py
-    ├── 02_prepare.py
-    ├── 03_prepare_3class.py
-    └── 04_train.py
+└── ethnicity/
+    └── 01_train.py          # Training + TFJS export
 ```
 
 ## Running Notebooks
@@ -41,11 +38,13 @@ marimo run python/notebooks/hair_color/03_train.py
 
 ## Models
 
-| Model       | Classes                   | Dataset       | Accuracy |
-| ----------- | ------------------------- | ------------- | -------- |
-| Hair Color  | black, brown, blond, gray | CelebA        | ~79%     |
-| Skin Tone   | dark, medium, light       | FairFace      | ~68%     |
-| Hair Length | short, medium, long       | CelebAMask-HQ | ~82%     |
+| Model       | Classes                                                                             | Dataset       | Accuracy |
+| ----------- | ----------------------------------------------------------------------------------- | ------------- | -------- |
+| Hair Color  | black, brown, blond, gray                                                           | CelebA        | ~79%     |
+| Ethnicity   | black, east_asian, indian, latino_hispanic, middle_eastern, southeast_asian, white  | FairFace      | ~75%     |
+| Hair Length | short, medium, long                                                                 | CelebAMask-HQ | ~82%     |
+
+The ethnicity model is used by `@avatune/skin-tone-predictor` to map predictions to skin tones (dark/medium/light).
 
 All models use MobileNetV2 architecture with 128x128 input images.
 
@@ -81,9 +80,14 @@ Standard workflow for each model:
 
 Example for hair color:
 ```bash
-marimo run python/notebooks/hair_color/01_explore.py
-marimo run python/notebooks/hair_color/02_prepare.py
-marimo run python/notebooks/hair_color/03_train.py
+marimo edit python/notebooks/hair_color/01_explore.py
+marimo edit python/notebooks/hair_color/02_prepare.py
+marimo edit python/notebooks/hair_color/03_train.py
+```
+
+Example for ethnicity:
+```bash
+marimo edit python/notebooks/ethnicity/01_train.py
 ```
 
 After training, TFJS models are ready for use in the TypeScript predictor packages.

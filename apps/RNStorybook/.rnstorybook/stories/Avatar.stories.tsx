@@ -5,7 +5,11 @@ import nevmstasTheme from '@avatune/nevmstas-theme/react-native'
 import yanliuTheme from '@avatune/yanliu-theme/react-native'
 import type { AvatarProps } from '@avatune/react-native'
 import { Avatar } from '@avatune/react-native'
-import type { ReactNativeAvatarItem, ReactNativeTheme } from '@avatune/types'
+import type {
+  ReactNativeAvatarItem,
+  ReactNativeTheme,
+  Theme,
+} from '@avatune/types'
 import type { Meta, StoryObj } from '@storybook/react-native'
 
 const meta = {
@@ -35,7 +39,12 @@ const getArgTypes = <T extends Theme<ReactNativeAvatarItem>>(theme: T) => {
   }
 
   for (const [category, items] of Object.entries(theme)) {
-    const excludeCategories = ['style', 'predictorMappings', 'colorPalettes', 'connectedColors']
+    const excludeCategories = [
+      'style',
+      'predictorMappings',
+      'colorPalettes',
+      'connectedColors',
+    ]
     if (excludeCategories.includes(category)) continue
 
     argTypes[`${category}Color`] = { control: { type: 'color' } }
@@ -89,11 +98,11 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
-  'Kyute': kyuteTheme,
-  'Micah': micahTheme,
-  'Miniavs': miniavsTheme,
-  'Nevmstas': nevmstasTheme,
-  'Yanliu': yanliuTheme,
+  Kyute: kyuteTheme,
+  Micah: micahTheme,
+  Miniavs: miniavsTheme,
+  Nevmstas: nevmstasTheme,
+  Yanliu: yanliuTheme,
 } as const
 
 export const Seed: StoryObj<{

@@ -1,0 +1,32 @@
+{
+  "name": "@avatune/face-detector",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "check-types": "tsc --noEmit",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.18"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@rslib/core": "^0.16.0",
+    "@types/node": "^22.18.11",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT"
+}

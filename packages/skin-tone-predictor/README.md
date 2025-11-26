@@ -1,8 +1,8 @@
 # @avatune/skin-tone-predictor
 
-Browser-based skin tone prediction using TensorFlow.js. Classifies skin tone into 4 categories: dark, medium, light.
+Browser-based skin tone prediction using TensorFlow.js. Predicts ethnicity (7 classes) and maps to skin tone (dark, medium, light).
 
-Tiny model (~110KB) with blazingly fast loading and inference in the browser.
+Uses an ethnicity classifier trained on FairFace dataset, then maps predictions to skin tones for more accurate results.
 
 ## Installation
 
@@ -21,7 +21,7 @@ The predictor requires TFJS model files to be publicly accessible. Three files m
 
 The model files are bundled in this package at `dist/model/`. Copy them to your public directory.
 
-Source models are available at `python/models/skin_tone/tfjs/` in the monorepo.
+Source models are available at `python/models/ethnicity/tfjs/` in the monorepo.
 
 ### Setup with Vite
 
@@ -75,8 +75,11 @@ const result = await predictor.predict(imageTensor)
 console.log(result)
 // {
 //   tone: 'medium',
-//   confidence: 0.84,
-//   probabilities: { dark: 0.08, medium: 0.84, light: 0.06 }
+//   confidence: 0.72,
+//   probabilities: { dark: 0.08, medium: 0.72, light: 0.20 },
+//   ethnicity: 'indian',
+//   ethnicityConfidence: 0.65,
+//   faceDetected: true
 // }
 ```
 
@@ -107,9 +110,12 @@ Predicts skin tone from an image tensor.
 **Returns:**
 ```ts
 {
-  tone: string         // Predicted class: 'dark' | 'medium' | 'light'
-  confidence: number   // Confidence score [0, 1]
-  probabilities: Record<string, number>  // Scores for all classes
+  tone: string                           // Mapped skin tone: 'dark' | 'medium' | 'light'
+  confidence: number                     // Skin tone confidence [0, 1]
+  probabilities: Record<string, number>  // Aggregated skin tone probabilities
+  ethnicity: string                      // Predicted ethnicity class
+  ethnicityConfidence: number            // Ethnicity prediction confidence [0, 1]
+  faceDetected: boolean                  // Whether a face was detected
 }
 ```
 
@@ -117,11 +123,22 @@ Predicts skin tone from an image tensor.
 
 - Architecture: MobileNetV2-based CNN
 - Input: 128x128 RGB images
-- Classes: 3 (dark, medium, light)
+- Model classes: 7 ethnicities (black, east_asian, indian, latino_hispanic, middle_eastern, southeast_asian, white)
+- Output: Mapped to 3 skin tones (dark, medium, light)
 - Training: FairFace dataset
-- Accuracy: ~68%
-- Model size: ~110KB (uint8 quantized)
 - Format: TensorFlow.js with uint8 quantization
+
+### Ethnicity to Skin Tone Mapping
+
+| Ethnicity        | Skin Tone |
+| ---------------- | --------- |
+| black            | dark      |
+| east_asian       | light     |
+| indian           | medium    |
+| latino_hispanic  | medium    |
+| middle_eastern   | medium    |
+| southeast_asian  | medium    |
+| white            | light     |
 
 ## License
 

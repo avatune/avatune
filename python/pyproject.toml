@@ -6,7 +6,6 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "tensorflow>=2.15.0",
-    "tensorflow-metal>=1.1.0",
     "tensorflowjs>=4.17.0",
     "opencv-python>=4.9.0",
     "numpy>=1.26.0",
@@ -19,6 +18,7 @@ dependencies = [
     "kagglehub>=0.2.0",
     "datasets>=4.3.0",
     "marimo>=0.17.2",
+    "skin-tone-classifier>=1.2.6",
 ]
 
 [project.optional-dependencies]
