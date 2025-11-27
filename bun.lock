@@ -13,6 +13,7 @@
       "name": "@avatune/rn-storybook",
       "version": "0.0.1",
       "dependencies": {
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
@@ -74,6 +75,7 @@
       "name": "@avatune/predictor-storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/hair-color-predictor": "workspace:*",
         "@avatune/hair-length-predictor": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
@@ -138,10 +140,12 @@
       "name": "@avatune/svelte-storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
         "@avatune/nevmstas-theme": "workspace:*",
+        "@avatune/pacovqzz-theme": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/yanliu-theme": "workspace:*",
@@ -163,6 +167,7 @@
       "name": "@avatune/vanilla-storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
@@ -185,6 +190,7 @@
       "name": "@avatune/vue-storybook",
       "version": "0.0.0",
       "dependencies": {
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
         "@avatune/miniavs-theme": "workspace:*",
@@ -209,6 +215,8 @@
         "@astrojs/mdx": "^4.3.11",
         "@astrojs/starlight": "^0.36.2",
         "@astrojs/svelte": "^7.2.2",
+        "@avatune/fatin-verse-assets": "workspace:*",
+        "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-assets": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-assets": "workspace:*",

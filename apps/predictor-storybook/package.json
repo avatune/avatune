@@ -10,6 +10,7 @@
   "dependencies": {
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
+    "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
     "@avatune/micah-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",

@@ -1,8 +1,10 @@
 <script lang="ts">
+import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
+import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import { Avatar } from '@avatune/svelte'
 import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import { onDestroy, onMount } from 'svelte'
@@ -16,6 +18,8 @@ const themes = [
   { label: 'Yanliu', theme: yanliuTheme },
   { label: 'Micah', theme: micahTheme },
   { label: 'Kyute', theme: kyuteTheme },
+  { label: 'Pacovqzz', theme: pacovqzzTheme },
+  { label: 'Fatin Verse', theme: fatinVerseTheme },
 ]
 
 let counterElement: HTMLDivElement | null = null

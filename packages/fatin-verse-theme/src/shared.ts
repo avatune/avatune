@@ -28,15 +28,15 @@ export enum Layer {
 }
 
 const getHeadPosition = (size: number) => ({
-  x: size * percentage('22%'),
-  y: size * percentage('35%'),
+  x: size * percentage('8%'),
+  y: size * percentage('3%'),
 })
 
 const fromHeadOffset = fromHead(getHeadPosition)
 
 export default createTheme<BaseAvatarItem>()
   .withStyle({
-    size: 500,
+    size: 350,
     borderRadius: '100%',
   })
   .connectColors('head', ['ears'])

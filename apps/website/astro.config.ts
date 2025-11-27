@@ -50,6 +50,10 @@ export default defineConfig({
               label: 'Yanliu',
               slug: 'packages/yanliu-theme',
             },
+            {
+              label: 'Fatin Verse',
+              slug: 'packages/fatin-verse-theme',
+            },
             { label: 'Miniavs', slug: 'packages/miniavs-theme' },
             {
               label: 'Nevmstas',

@@ -1,3 +1,4 @@
+import fatinVerseTheme from '@avatune/fatin-verse-theme/react-native'
 import kyuteTheme from '@avatune/kyute-theme/react-native'
 import micahTheme from '@avatune/micah-theme/react-native'
 import miniavsTheme from '@avatune/miniavs-theme/react-native'
@@ -18,11 +19,20 @@ const meta = {
 
 export default meta
 
+export const FatinVerse: StoryObj<FatinVerseArgs> = {
+  argTypes: getArgTypes(fatinVerseTheme),
+  render: (args) => <Avatar theme={fatinVerseTheme} {...args} />,
+  args: {
+    size: 300,
+  },
+}
+
 type ExtractStoryArgs<T extends ReactNativeTheme> = Omit<
   AvatarProps<T>,
   'theme'
 >
 
+type FatinVerseArgs = ExtractStoryArgs<typeof fatinVerseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
@@ -99,12 +109,13 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
-  'Kyute': kyuteTheme,
-  'Micah': micahTheme,
-  'Miniavs': miniavsTheme,
-  'Nevmstas': nevmstasTheme,
-  'Pacovqzz': pacovqzzTheme,
-  'Yanliu': yanliuTheme,
+  FatinVerse: fatinVerseTheme,
+  Kyute: kyuteTheme,
+  Micah: micahTheme,
+  Miniavs: miniavsTheme,
+  Nevmstas: nevmstasTheme,
+  Pacovqzz: pacovqzzTheme,
+  Yanliu: yanliuTheme,
 } as const
 
 export const Seed: StoryObj<{

@@ -1,12 +1,13 @@
+import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
-import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
 import type { SvelteAvatarItem, Theme } from '@avatune/types'
+import yanliuTheme from '@avatune/yanliu-theme/svelte'
 import type { Meta, StoryObj } from '@storybook/svelte-vite'
 
 const meta = {
@@ -23,6 +24,7 @@ type ExtractStoryArgs<T extends Theme<SvelteAvatarItem>> = Omit<
   'theme'
 >
 
+type FatinVerseArgs = ExtractStoryArgs<typeof fatinVerseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
@@ -37,7 +39,12 @@ const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
   }
 
   for (const [category, items] of Object.entries(theme)) {
-    const excludeCategories = ['style', 'predictorMappings', 'colorPalettes', 'connectedColors']
+    const excludeCategories = [
+      'style',
+      'predictorMappings',
+      'colorPalettes',
+      'connectedColors',
+    ]
     if (excludeCategories.includes(category)) continue
 
     argTypes[`${category}Color`] = { control: { type: 'color' } }
@@ -48,6 +55,17 @@ const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
   }
 
   return argTypes as StoryObj<Args>['argTypes']
+}
+
+export const FatinVerse: StoryObj<FatinVerseArgs> = {
+  argTypes: getArgTypes(fatinVerseTheme),
+  render: (args) => ({
+    Component: Avatar,
+    props: { theme: fatinVerseTheme, ...args },
+  }),
+  args: {
+    size: 300,
+  },
 }
 
 export const Kyute: StoryObj<KyuteArgs> = {
@@ -117,12 +135,13 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
-  'Kyute': kyuteTheme,
-  'Micah': micahTheme,
-  'Miniavs': miniavsTheme,
-  'Nevmstas': nevmstasTheme,
-  'Pacovqzz': pacovqzzTheme,
-  'Yanliu': yanliuTheme,
+  FatinVerse: fatinVerseTheme,
+  Kyute: kyuteTheme,
+  Micah: micahTheme,
+  Miniavs: miniavsTheme,
+  Nevmstas: nevmstasTheme,
+  Pacovqzz: pacovqzzTheme,
+  Yanliu: yanliuTheme,
 } as const
 
 export const Seed: StoryObj = {

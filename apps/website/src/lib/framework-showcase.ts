@@ -11,6 +11,8 @@ export type FrameworkThemeId =
   | 'nevmstas'
   | 'micah'
   | 'kyute'
+  | 'pacovqzz'
+  | 'fatinVerse'
 
 export interface FrameworkShowcaseEntry {
   id: string
@@ -48,7 +50,7 @@ const frameworkDefinitions: FrameworkDefinition[] = [
     description: 'Hooks, config helpers, and starter kit.',
     language: 'tsx',
     filePath: 'src/components/Avatar.tsx',
-    themeId: 'yanliu',
+    themeId: 'pacovqzz',
     logo: { src: reactLogo.src, alt: 'React logo' },
     getSnippet: (seed: string) => `import { Avatar } from '@avatune/react'
 import theme from '@avatune/yanliu-theme/react'

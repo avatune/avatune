@@ -1,8 +1,10 @@
 <script lang="ts">
+import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
 import miniavsTheme from '@avatune/miniavs-theme/svelte'
 import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
+import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import { Avatar } from '@avatune/svelte'
 import yanliuTheme from '@avatune/yanliu-theme/svelte'
 
@@ -23,6 +25,8 @@ const themeMap: Record<FrameworkThemeId, unknown> = {
   nevmstas: nevmstasTheme,
   micah: micahTheme,
   kyute: kyuteTheme,
+  pacovqzz: pacovqzzTheme,
+  fatinVerse: fatinVerseTheme,
 }
 
 let selectedFrameworkId = entries[0]?.id ?? 'react'

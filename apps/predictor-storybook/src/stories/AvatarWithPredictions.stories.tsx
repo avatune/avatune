@@ -1,3 +1,4 @@
+import fatinVerseTheme from '@avatune/fatin-verse-theme/react'
 import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
 import miniavsTheme from '@avatune/miniavs-theme/react'
@@ -10,6 +11,7 @@ import { useState } from 'react'
 import { PredictionFileInput } from '../components/PredictionFileInput'
 
 const themes = {
+  FatinVerse: fatinVerseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,
   Miniavs: miniavsTheme,

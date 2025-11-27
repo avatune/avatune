@@ -8,6 +8,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
     "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
