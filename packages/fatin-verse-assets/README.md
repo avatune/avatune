@@ -26,6 +26,12 @@ import { hair, eyes, mouth } from '@avatune/fatin-verse-assets';
 import { HairShort, EyesBoring, MouthSmile } from '@avatune/fatin-verse-assets/react';
 ```
 
+### React Native Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/fatin-verse-assets/react-native';
+```
+
 ### Svelte Components
 
 ```typescript
@@ -160,8 +166,12 @@ Build the library:
 bun run build
 ```
 
-Build in watch mode:
+Build per-platform in watch mode:
 
 ```bash
-bun dev
+# Web targets (React/Vue/Svelte/SVG)
+bun run dev:web
+
+# React Native components
+bun run dev:native
 ```

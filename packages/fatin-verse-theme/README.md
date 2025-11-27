@@ -10,7 +10,7 @@ npm install @avatune/fatin-verse-theme
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, React Native, Vue, Svelte, and Vanilla JavaScript.
 
 ### React
 
@@ -19,6 +19,23 @@ import { Avatar } from '@avatune/react'
 import theme from '@avatune/fatin-verse-theme/react'
 
 function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### React Native
+
+```tsx
+import { Avatar } from '@avatune/react-native'
+import theme from '@avatune/fatin-verse-theme/react-native'
+
+export function ProfileAvatar() {
   return (
     <Avatar
       theme={theme}
@@ -106,6 +123,7 @@ The design assets used in this theme are separately licensed. See the asset pack
 
 - [`@avatune/fatin-verse-assets`](../packages/fatin-verse-assets) - SVG assets used by this theme
 - [`@avatune/react`](../packages/react) - React avatar renderer
+- [`@avatune/react-native`](../packages/react-native) - React Native avatar renderer
 - [`@avatune/vue`](../packages/vue) - Vue avatar renderer
 - [`@avatune/svelte`](../packages/svelte) - Svelte avatar renderer
 - [`@avatune/vanilla`](../packages/vanilla) - Vanilla JavaScript avatar renderer

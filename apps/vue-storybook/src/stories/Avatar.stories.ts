@@ -9,6 +9,7 @@ import type { AvatarProps } from '@avatune/vue'
 import { Avatar } from '@avatune/vue'
 import yanliuTheme from '@avatune/yanliu-theme/vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { computed } from 'vue'
 
 const meta = {
   title: 'Avatar',
@@ -158,22 +159,19 @@ export const Seed: StoryObj<{
     seed: { control: { type: 'text' } },
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
   },
-  render: ({
-    theme: themeName,
-    seed,
-    size = 300,
-  }: {
+  render: (args: {
     theme: keyof typeof themes
     seed?: string | number
     size?: number
   }) => ({
     components: { Avatar },
-    setup: () => ({
-      theme: themes[themeName],
-      seed,
-      size,
-    }),
-    template: '<Avatar :theme="theme" :seed="seed" :size="size" />',
+    setup: () => {
+      const theme = computed(() => themes[args.theme])
+      const size = computed(() => args.size ?? 300)
+
+      return { args, theme, size }
+    },
+    template: '<Avatar :theme="theme" :seed="args.seed" :size="size" />',
   }),
   args: {
     theme: Object.keys(themes)[0] as keyof typeof themes,

@@ -17,6 +17,7 @@ export default defineConfig({
       react: './src/react.ts',
       vue: './src/vue.ts',
       svelte: './src/svelte.ts',
+      'react-native': './src/react-native.ts',
     },
   },
 })
