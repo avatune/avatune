@@ -1,7 +1,3 @@
-// This file calculates combinations at build time by importing themes
-// The calculations happen when this module is loaded (at build time, not runtime)
-
-// Import themes
 import fatinVerseTheme from '@avatune/fatin-verse-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
