@@ -1,5 +1,7 @@
 ---
+import { TOTAL_COMBINATIONS } from '../../lib/infinite-possibilities-data'
 import AvatarBackground from '../client/avatar-background.svelte'
+import InlineCounter from '../client/inline-counter.svelte'
 
 interface Props {
   primaryDocsLink?: string
@@ -8,31 +10,38 @@ interface Props {
 const { primaryDocsLink = '/welcome' } = Astro.props as Props
 ---
 
-<section class="relative isolate flex h-[80vh] min-h-[600px] w-full items-center justify-center overflow-hidden bg-slate-950">
+<section class="relative isolate flex min-h-[90vh] w-full flex-col items-center justify-center overflow-hidden bg-slate-950 py-20">
   <AvatarBackground client:only />
 
-  <div class="relative z-20 mx-auto max-w-4xl px-6 text-center">
-    <span class="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-pink-200 backdrop-blur-sm">
+  <div class="relative z-20 mx-auto flex w-full max-w-4xl flex-col items-center gap-8 px-6 text-center">
+    <span class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-pink-200 backdrop-blur-sm">
       New · Unified avatar design system
     </span>
 
-    <h1 class="mb-8 text-5xl font-bold leading-tight tracking-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl">
+    <h1 class="mb-6 text-5xl font-bold leading-tight tracking-tight text-white drop-shadow-2xl sm:text-6xl lg:text-7xl">
       <span class="text-pink-400">Avatune</span> — Build expressive avatars fast
     </h1>
 
-    <p class="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-slate-300 drop-shadow-md sm:text-2xl">
-      Design, theme, and ship production-ready avatars with Avatune’s frameworks, themes, and predictive tooling.
+    <p class="mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-300 drop-shadow-md sm:text-xl">
+      Create unique, production-ready avatars with our powerful frameworks, beautiful themes, and intelligent predictive tooling. Mix and match to create{' '}
+      <InlineCounter
+        client:only
+        totalCombinations={TOTAL_COMBINATIONS}
+        duration={4000}
+        startOnMount={true}
+      />{' '}
+      unique combinations. No design skills required.
     </p>
 
     <div class="flex flex-wrap justify-center gap-4">
       <a
-        class="inline-flex items-center justify-center rounded-full bg-pink-400 px-8 py-4 text-lg font-bold text-slate-950 transition hover:scale-105 hover:bg-pink-300 hover:shadow-lg hover:shadow-pink-400/20"
+        class="inline-flex items-center justify-center rounded-full bg-pink-400 px-8 py-4 text-base font-bold text-slate-950 transition-all duration-200 hover:scale-105 hover:bg-pink-300 hover:shadow-lg hover:shadow-pink-400/20 active:scale-95"
         href={primaryDocsLink}
       >
-        Explore the docs
+        Get Started
       </a>
       <a
-        class="inline-flex items-center justify-center rounded-full border border-white/30 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition hover:border-white hover:bg-white/5 hover:text-pink-100"
+        class="inline-flex items-center justify-center rounded-full border border-white/30 px-8 py-4 text-base font-bold text-white backdrop-blur-sm transition-all duration-200 hover:border-white hover:bg-white/5 hover:text-pink-100 active:scale-95"
         href="https://github.com/avatune/avatune"
         target="_blank"
         rel="noreferrer"
