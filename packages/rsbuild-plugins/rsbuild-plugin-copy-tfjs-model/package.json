@@ -2,7 +2,10 @@
   "name": "@avatune/rsbuild-plugin-copy-tfjs-model",
   "version": "1.0.1",
   "description": "Rsbuild plugin to copy TensorFlow.js models during build",
-  "private": true,
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/avatune/avatune.git"

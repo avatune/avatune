@@ -290,7 +290,7 @@
     },
     "packages/assets/kyute-assets": {
       "name": "@avatune/kyute-assets",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "dependencies": {
         "colord": "^2.9.3",
       },
@@ -868,7 +868,7 @@
     },
     "packages/themes/kyute-theme": {
       "name": "@avatune/kyute-theme",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "dependencies": {
         "@avatune/kyute-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -976,7 +976,7 @@
     },
     "packages/themes/pacovqzz-theme": {
       "name": "@avatune/pacovqzz-theme",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "dependencies": {
         "@avatune/pacovqzz-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
