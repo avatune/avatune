@@ -15,7 +15,9 @@
     "generate:readme-and-website-docs": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts",
     "generate:root-readme": "bun scripts/generate-root-readme.ts",
     "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-root-readme.ts",
-    "prepare": "husky"
+    "prepare": "husky",
+    "release:version": "changeset version && bun update",
+    "release:publish": "changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.2.3",
