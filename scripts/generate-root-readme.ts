@@ -108,7 +108,7 @@ function generateReadme(
   return `# Avatune
 
 <p align="center">
-  <img src="https://github.com/avatune/avatune/blob/main/logo.png?raw=true" alt="Avatune Logo" width="200" />
+  <img src="https://github.com/avatune/avatune/blob/main/apps/website/public/favicon.png?raw=true" alt="Avatune Logo" width="200" />
 </p>
 
 **Production-ready avatar system with AI-powered generation and framework-native components.**
