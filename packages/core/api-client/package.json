@@ -1,6 +1,6 @@
 {
   "name": "@avatune/api-client",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Typed API client for Avatune REST API",
   "private": false,
   "publishConfig": {

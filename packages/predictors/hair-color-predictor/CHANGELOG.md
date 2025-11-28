@@ -1,5 +1,15 @@
 # @avatune/hair-color-predictor
 
+## 1.2.1
+
+### Patch Changes
+
+- [`1220140`](https://github.com/avatune/avatune/commit/1220140f0ac80b30da50aa8a59fda694d48b2455) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix unresolve dev, peer and prod dependencies
+
+- Updated dependencies [[`1220140`](https://github.com/avatune/avatune/commit/1220140f0ac80b30da50aa8a59fda694d48b2455)]:
+  - @avatune/types@1.2.1
+  - @avatune/face-detector@1.2.1
+
 ## 1.2.0
 
 ### Minor Changes
