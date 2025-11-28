@@ -77,7 +77,14 @@ async function setupNpmAuth() {
 
   const npmrcPath = join(homedir(), '.npmrc')
   await writeFile(npmrcPath, `//registry.npmjs.org/:_authToken=${token}\n`)
-  console.log('🔑 Configured npm authentication\n')
+  console.log('🔑 Configured npm authentication')
+
+  try {
+    await $`bunx npm login`.quiet()
+    console.log('✅ npm login successful\n')
+  } catch {
+    console.log('⚠️  npm login skipped (may already be logged in)\n')
+  }
 }
 
 async function main() {
