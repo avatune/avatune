@@ -1,5 +1,11 @@
 # @avatune/pacovqzz-assets
 
+## 1.1.0
+
+### Minor Changes
+
+- [#35](https://github.com/avatune/avatune/pull/35) [`c35e6de`](https://github.com/avatune/avatune/commit/c35e6de0e83b18ff1dd324c9b293c9730cdec040) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix corrupted dev dependencies
+
 ## 1.0.2
 
 ### Patch Changes
