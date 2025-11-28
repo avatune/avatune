@@ -17,7 +17,7 @@ export default defineConfig({
       title: '',
       favicon: '/favicon.png',
       logo: {
-        src: './src/assets/avatune-logo.png',
+        src: './public/favicon.png',
         alt: 'Avatune Logo',
       },
       social: [
