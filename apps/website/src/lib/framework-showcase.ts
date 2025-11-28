@@ -138,7 +138,7 @@ export function AvatarPreview() {
 `,
   },
   {
-    id: 'vanilla',
+    id: 'js',
     label: 'Vanilla JS',
     description: 'Framework-agnostic utilities and CSS tokens.',
     language: 'ts',

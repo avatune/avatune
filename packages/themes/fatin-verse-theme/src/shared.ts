@@ -147,7 +147,7 @@ export default createTheme<BaseAvatarItem>()
   })
   .addItem('hair', 'longStraight', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
-    layer: Layer.HairBehind,
+    layer: Layer.Hair,
   })
   .addItem('hair', 'longWave', {
     position: fromHeadOffset(-percentage('0%'), percentage('0%')),
@@ -159,7 +159,7 @@ export default createTheme<BaseAvatarItem>()
   })
   .addItem('hair', 'shortCurly', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
-    layer: Layer.Head,
+    layer: Layer.Hair,
   })
   .addItem('hair', 'shortFlip', {
     position: fromHeadOffset(percentage('0%'), -percentage('0%')),
