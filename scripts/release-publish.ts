@@ -68,27 +68,18 @@ async function publishPackage(dir: string): Promise<boolean> {
   }
 }
 
-async function setupNpmAuth() {
-  const token = process.env.NPM_TOKEN
+function setupNpmAuth() {
+  const token = process.env.NPM_CONFIG_TOKEN
   if (!token) {
-    console.log('⚠️  NPM_TOKEN not set, skipping .npmrc setup')
+    console.log('⚠️  NPM_CONFIG_TOKEN not set, skipping .npmrc setup')
     return
   }
 
-  const npmrcPath = join(homedir(), '.npmrc')
-  await writeFile(npmrcPath, `//registry.npmjs.org/:_authToken=${token}\n`)
-  console.log('🔑 Configured npm authentication')
-
-  try {
-    await $`bunx npm login`.quiet()
-    console.log('✅ npm login successful\n')
-  } catch {
-    console.log('⚠️  npm login skipped (may already be logged in)\n')
-  }
+  console.log('🔑 Configured npm authentication\n')
 }
 
 async function main() {
-  await setupNpmAuth()
+  setupNpmAuth()
 
   console.log('🔍 Finding packages...\n')
 
