@@ -42,6 +42,9 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: bun changeset publish
+          version: bun changeset version && bun update
+          commit: "chore: update versions"
+          title: "chore: update versions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

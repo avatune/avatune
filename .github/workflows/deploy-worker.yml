@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "apps/cloudflare-worker/**"
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
