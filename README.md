@@ -39,14 +39,14 @@ pnpm add @avatune/micah-theme @avatune/react
 ```tsx
 import { Avatar } from '@avatune/react'
 import pacovqzz from '@avatune/pacovqzz-theme/react'
-import fatin-verse from '@avatune/fatin-verse-theme/react'
+import fatinverse from '@avatune/fatin-verse-theme/react'
 import micah from '@avatune/micah-theme/react'
 
 function App() {
   return (
     <div className="flex justify-between items-center">
       <Avatar theme={pacovqzz} seed="seed" size={200} />
-      <Avatar theme={fatin-verse} seed="seed" size={200} />
+      <Avatar theme={fatinverse} seed="seed" size={200} />
       <Avatar theme={micah} seed="seed" size={200} />
     </div>
   )

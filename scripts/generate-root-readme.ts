@@ -147,16 +147,16 @@ pnpm add @avatune/${previewTheme3} @avatune/react
 
 \`\`\`tsx
 import { Avatar } from '@avatune/react'
-import ${previewTheme.replace('-theme', '')} from '@avatune/${previewTheme}/react'
-import ${previewTheme2.replace('-theme', '')} from '@avatune/${previewTheme2}/react'
-import ${previewTheme3.replace('-theme', '')} from '@avatune/${previewTheme3}/react'
+import ${previewTheme.replace('-theme', '').replace('-', '')} from '@avatune/${previewTheme}/react'
+import ${previewTheme2.replace('-theme', '').replace('-', '')} from '@avatune/${previewTheme2}/react'
+import ${previewTheme3.replace('-theme', '').replace('-', '')} from '@avatune/${previewTheme3}/react'
 
 function App() {
   return (
     <div className="flex justify-between items-center">
-      <Avatar theme={${previewTheme.replace('-theme', '')}} seed="seed" size={200} />
-      <Avatar theme={${previewTheme2.replace('-theme', '')}} seed="seed" size={200} />
-      <Avatar theme={${previewTheme3.replace('-theme', '')}} seed="seed" size={200} />
+      <Avatar theme={${previewTheme.replace('-theme', '').replace('-', '')}} seed="seed" size={200} />
+      <Avatar theme={${previewTheme2.replace('-theme', '').replace('-', '')}} seed="seed" size={200} />
+      <Avatar theme={${previewTheme3.replace('-theme', '').replace('-', '')}} seed="seed" size={200} />
     </div>
   )
 }
