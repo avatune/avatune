@@ -24,8 +24,6 @@ const AVATAR_COUNT = 20
 const MIN_SIZE = 80
 const MAX_SIZE = 180
 const FADE_DURATION = 2000
-const LIFETIME_MIN = 10000
-const LIFETIME_MAX = 20000
 
 interface ActiveAvatar {
   id: number
@@ -36,7 +34,6 @@ interface ActiveAvatar {
   seed: string
   rotation: number
   endRotation: number
-  lifetime: number
 }
 
 let activeAvatars: ActiveAvatar[] = []
@@ -45,7 +42,6 @@ let containerWidth = 0
 let containerHeight = 0
 
 const creationTimers = new Set<ReturnType<typeof setTimeout>>()
-const removalTimers = new Map<number, ReturnType<typeof setTimeout>>()
 
 const getRandomInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min
@@ -95,26 +91,11 @@ const scheduleCreation = (callback: () => void, delay = 0) => {
   creationTimers.add(timer)
 }
 
-const scheduleAvatarRemoval = (avatar: ActiveAvatar) => {
-  const timer = setTimeout(() => {
-    removalTimers.delete(avatar.id)
-    activeAvatars = activeAvatars.filter((a) => a.id !== avatar.id)
-    createAvatar()
-  }, avatar.lifetime)
-
-  removalTimers.set(avatar.id, timer)
-}
-
-const clearTimers = () => {
+const clearCreationTimers = () => {
   creationTimers.forEach((timer) => {
     clearTimeout(timer)
   })
   creationTimers.clear()
-
-  removalTimers.forEach((timer) => {
-    clearTimeout(timer)
-  })
-  removalTimers.clear()
 }
 
 function createAvatar() {
@@ -138,11 +119,9 @@ function createAvatar() {
     seed: randomSeed(),
     rotation: getRandomInt(-15, 15),
     endRotation: getRandomInt(-5, 5),
-    lifetime: getRandomInt(LIFETIME_MIN, LIFETIME_MAX),
   }
 
   activeAvatars = [...activeAvatars, newAvatar]
-  scheduleAvatarRemoval(newAvatar)
 }
 
 const ensureAvatarPool = () => {
@@ -174,7 +153,7 @@ onMount(() => {
 
   return () => {
     document.removeEventListener('visibilitychange', handleVisibilityChange)
-    clearTimers()
+    clearCreationTimers()
   }
 })
 </script>
