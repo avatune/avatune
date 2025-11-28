@@ -5,6 +5,7 @@ source: "packages/vue/README.md"
 ---
 
 import InstallTabs from '../../../../components/docs/install-tabs.astro'
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte'
 
 > Source: `packages/vue/README.md`
 
@@ -16,15 +17,17 @@ Vue component for rendering avatars from themes.
 
 ## Usage
 
+<AvatarUsagePreview client:only="svelte" themeId="miniavs" seed="user@example.com" size={200} />
+
 ```vue
 <script setup>
 import { Avatar } from '@avatune/vue'
-import { nevmstasTheme } from '@avatune/nevmstas-theme/vue'
+import theme from '@avatune/miniavs-theme/vue'
 </script>
 
 <template>
   <Avatar
-    :theme="nevmstasTheme"
+    :theme="theme"
     seed="user@example.com"
     :size="200"
   />

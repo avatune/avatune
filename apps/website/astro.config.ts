@@ -14,7 +14,12 @@ export default defineConfig({
   integrations: [
     starlight({
       customCss: ['./src/styles/global.css'],
-      title: 'Avatune Docs',
+      title: '',
+      favicon: '/favicon.png',
+      logo: {
+        src: './src/assets/avatune-logo.png',
+        alt: 'Avatune Logo',
+      },
       social: [
         {
           icon: 'github',
@@ -27,7 +32,8 @@ export default defineConfig({
           label: 'Overview',
           items: [
             { label: 'Welcome', slug: 'welcome' },
-            { label: 'Why Avatune', slug: 'why-avatune' },
+            { label: 'Getting Started', slug: 'getting-started' },
+            { label: 'Playground', slug: 'playground' },
           ],
         },
         {

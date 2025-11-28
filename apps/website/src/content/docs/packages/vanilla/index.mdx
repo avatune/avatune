@@ -5,6 +5,7 @@ source: "packages/vanilla/README.md"
 ---
 
 import InstallTabs from '../../../../components/docs/install-tabs.astro'
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte'
 
 > Source: `packages/vanilla/README.md`
 
@@ -16,18 +17,21 @@ Vanilla JavaScript function for rendering avatars from themes.
 
 ## Usage
 
+<AvatarUsagePreview client:only="svelte" themeId="micah" seed="user@example.com" size={200} />
+
 ```ts
 import { avatar } from '@avatune/vanilla'
-import { nevmstasTheme } from '@avatune/nevmstas-theme/vanilla'
+import theme from '@avatune/micah-theme/vanilla'
 
 const svgString = avatar({
-  theme: nevmstasTheme,
+  theme,
   seed: 'user@example.com',
   size: 200
 })
 
 document.getElementById('avatar-container').innerHTML = svgString
 ```
+
 
 ## API
 

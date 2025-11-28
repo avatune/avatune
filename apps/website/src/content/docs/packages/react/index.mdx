@@ -5,6 +5,7 @@ source: "packages/react/README.md"
 ---
 
 import InstallTabs from '../../../../components/docs/install-tabs.astro'
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte'
 
 > Source: `packages/react/README.md`
 
@@ -16,20 +17,23 @@ React component for rendering avatars from themes.
 
 ## Usage
 
+<AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="user@example.com" size={200} />
+
 ```tsx
 import { Avatar } from '@avatune/react'
-import { nevmstasTheme } from '@avatune/nevmstas-theme/react'
+import theme from '@avatune/yanliu-theme/react'
 
 function App() {
   return (
     <Avatar
-      theme={nevmstasTheme}
+      theme={theme}
       seed="user@example.com"
       size={200}
     />
   )
 }
 ```
+
 
 ## Props
 

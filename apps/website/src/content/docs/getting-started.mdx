@@ -1,0 +1,172 @@
+---
+title: Getting Started
+description: Quick path to installing Avatune and rendering your first avatar.
+---
+
+import AvatarUsagePreview from '../../components/docs/avatar-usage-preview.svelte'
+import { TabItem, Tabs } from '@astrojs/starlight/components'
+
+Follow these steps to go from zero to a rendered avatar using Avatune’s component packages. The examples below use React, but the same flow applies to Vue, Svelte, Vanilla JS, and React Native (see the Frameworks section in the sidebar for framework-specific snippets).
+
+## Install the renderer + a theme
+
+Use your preferred package manager to install the renderer for your framework and at least one theme:
+
+<Tabs>
+  <TabItem label="React">
+```bash
+# yarn
+yarn add @avatune/react @avatune/yanliu-theme
+```
+
+```bash
+# bun
+bun add @avatune/react @avatune/yanliu-theme
+```
+
+```bash
+# npm
+npm install @avatune/react @avatune/yanliu-theme
+```
+
+```bash
+# pnpm
+pnpm add @avatune/react @avatune/yanliu-theme
+```
+  </TabItem>
+  <TabItem label="Vue">
+```bash
+# yarn
+yarn add @avatune/vue @avatune/miniavs-theme
+```
+
+```bash
+# bun
+bun add @avatune/vue @avatune/miniavs-theme
+```
+
+```bash
+# npm
+npm install @avatune/vue @avatune/miniavs-theme
+```
+
+```bash
+# pnpm
+pnpm add @avatune/vue @avatune/miniavs-theme
+```
+  </TabItem>
+  <TabItem label="Svelte">
+```bash
+# yarn
+yarn add @avatune/svelte @avatune/micah-theme
+```
+
+```bash
+# bun
+bun add @avatune/svelte @avatune/micah-theme
+```
+
+```bash
+# npm
+npm install @avatune/svelte @avatune/micah-theme
+```
+
+```bash
+# pnpm
+pnpm add @avatune/svelte @avatune/micah-theme
+```
+  </TabItem>
+  <TabItem label="Vanilla">
+```bash
+# yarn
+yarn add @avatune/vanilla @avatune/kyute-theme
+```
+
+```bash
+# bun
+bun add @avatune/vanilla @avatune/kyute-theme
+```
+
+```bash
+# npm
+npm install @avatune/vanilla @avatune/kyute-theme
+```
+
+```bash
+# pnpm
+pnpm add @avatune/vanilla @avatune/kyute-theme
+```
+  </TabItem>
+  <TabItem label="React Native">
+```bash
+# yarn
+yarn add @avatune/react-native react-native-svg @avatune/pacovqzz-theme
+```
+
+```bash
+# bun
+bun add @avatune/react-native react-native-svg @avatune/pacovqzz-theme
+```
+
+```bash
+# npm
+npm install @avatune/react-native react-native-svg @avatune/pacovqzz-theme
+```
+
+```bash
+# pnpm
+pnpm add @avatune/react-native react-native-svg @avatune/pacovqzz-theme
+```
+  </TabItem>
+</Tabs>
+
+## Render your first avatar
+
+<AvatarUsagePreview client:only="svelte" themeId="pacovqzz" seed="user@example.com" size={160} />
+
+Import the `Avatar` component and the theme, then pass a seed to generate a deterministic avatar:
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/yanliu-theme/react'
+
+export function ExampleAvatar() {
+  return (
+    <Avatar
+      theme={theme}
+      seed="user@example.com"
+      size={200}
+    />
+  )
+}
+```
+
+Avatars render as inline SVG, so they respond instantly to prop changes (size, colors, parts, etc.).
+
+## Customize the look
+
+Each renderer exposes the same prop surface:
+
+- Select specific parts by name (`hair="braids"`, `eyes="happy"`)
+- Override colors with CSS values (`hairColor="#ff6b6b"`)
+- Provide layout tweaks via `className` / `class` / `style`
+
+Themes ship with documented part names inside their respective docs (e.g., `packages/yanliu-theme`).
+
+## Explore more frameworks
+
+Need another stack? Head to:
+
+- `packages/react-native` for mobile apps
+- `packages/vue`, `packages/svelte`, `packages/vanilla` for web alternatives
+
+Each page includes installation commands and live previews showing the same seed as the code sample.
+
+## Next steps
+
+- Browse available themes under **Themes** for different art styles.
+- Call the **REST API** to render avatars server-side without bundling themes.
+- Experiment with **Predictors** (hair color, length, skin tone) to seed avatars from AI-generated palettes.
+
+Whenever you are ready for deeper customization—such as mixing assets or building a new theme—jump into the relevant package docs linked in the sidebar.
+

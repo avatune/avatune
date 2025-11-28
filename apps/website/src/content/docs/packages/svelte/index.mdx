@@ -5,6 +5,7 @@ source: "packages/svelte/README.md"
 ---
 
 import InstallTabs from '../../../../components/docs/install-tabs.astro'
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte'
 
 > Source: `packages/svelte/README.md`
 
@@ -15,6 +16,8 @@ Svelte component for rendering avatars from themes.
 <InstallTabs packages="@avatune/svelte" />
 
 ## Usage
+
+<AvatarUsagePreview client:only="svelte" themeId="nevmstas" seed="user@example.com" size={200} />
 
 ```svelte
 <script>
