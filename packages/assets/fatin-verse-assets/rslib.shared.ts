@@ -21,11 +21,23 @@ export const svgoConfig: SvgoConfig = {
   ],
 }
 
+const idReplacements = ['mask0_29_1163', 'path-3-inside-1_16_410']
+
 export const getReplaceAttrValues = (
   colorPropName = 'color',
   uidPropName = 'uid',
-) => ({
-  '#000': `{${colorPropName}}`,
-  mask0_29_1163: `{${uidPropName} + '-' + '${uid()}'}`,
-  'path-3-inside-1_16_410': `{${uidPropName} + '-' + '${uid()}'}`,
-})
+) => {
+  const replacements: Record<string, string> = {
+    '#000': `{${colorPropName}}`,
+  }
+
+  for (const id of idReplacements) {
+    const uniqueId = uid()
+    const replacement = `{${uidPropName} + '-' + '${uniqueId}'}`
+    replacements[id] = replacement
+    replacements[`url(#${id})`] =
+      `{'url(#' + ${uidPropName} + '-' + '${uniqueId}' + ')'}`
+  }
+
+  return replacements
+}
