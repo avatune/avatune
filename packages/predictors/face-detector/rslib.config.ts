@@ -31,6 +31,7 @@ export default defineConfig({
   ],
   output: {
     target: 'web',
+    minify: true,
     externals: {
       '@mediapipe/tasks-vision': '@mediapipe/tasks-vision',
     },

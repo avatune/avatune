@@ -1,5 +1,5 @@
-import { defineConfig } from '@rslib/core'
 import { pluginCopyTfjsModel } from '@avatune/rsbuild-plugin-copy-tfjs-model'
+import { defineConfig } from '@rslib/core'
 
 export default defineConfig({
   source: {
@@ -32,6 +32,7 @@ export default defineConfig({
   ],
   output: {
     target: 'node',
+    minify: true,
     externals: {
       '@tensorflow/tfjs': '@tensorflow/tfjs',
       '@tensorflow/tfjs-backend-webgl': '@tensorflow/tfjs-backend-webgl',

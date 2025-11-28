@@ -20,6 +20,7 @@ export default defineConfig({
   },
   output: {
     target: 'node',
+    minify: true,
     externals: {
       '@avatune/types': '@avatune/types',
     },

@@ -32,6 +32,7 @@ export default defineConfig({
   ],
   output: {
     target: 'node',
+    minify: true,
     externals: {
       '@tensorflow/tfjs': '@tensorflow/tfjs',
       '@tensorflow/tfjs-backend-webgl': '@tensorflow/tfjs-backend-webgl',

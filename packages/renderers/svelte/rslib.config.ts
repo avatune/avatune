@@ -19,5 +19,8 @@ export default defineConfig({
       index: './src/index.ts',
     },
   },
+  output: {
+    minify: true,
+  },
   plugins: [pluginSvelte()],
 })

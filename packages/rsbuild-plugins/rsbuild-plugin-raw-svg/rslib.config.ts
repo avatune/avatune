@@ -19,6 +19,7 @@ export default defineConfig({
     },
   },
   output: {
+    minify: true,
     copy: [{ from: './src/loader.mjs', to: 'loader.mjs' }],
   },
 })
