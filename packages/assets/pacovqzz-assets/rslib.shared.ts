@@ -10,7 +10,6 @@ export const svgoConfig: SvgoConfig = {
       name: 'preset-default',
       params: {
         overrides: {
-          removeViewBox: false,
           cleanupIds: false,
         },
       },
