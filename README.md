@@ -1,7 +1,7 @@
 # Avatune
 
 <p align="center">
-  <img src="https://github.com/avatune/avatune/blob/main/apps/website/public/favicon.png?raw=true" alt="Avatune Logo" width="300" />
+<img src="https://github.com/avatune/avatune/blob/main/assets/logo.png?raw=true" alt="Avatune Logo" width="300" />
 </p>
 
 **Production-ready avatar system with AI-powered generation and framework-native components.**
@@ -18,17 +18,24 @@ Generate beautiful, customizable avatars with machine learning prediction or man
 
 ## Quick Start
 
+### Install Theme and Renderer
+
 ```bash
-# Install a theme and renderer for your framework
 npm install @avatune/fatin-verse-theme @avatune/react
 ```
+
+### Use Native SVG Components
+
+<p align="center">
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview.svg" alt="Preview" />
+</p>
 
 ```tsx
 import { Avatar } from '@avatune/react'
 import theme from '@avatune/fatin-verse-theme/react'
 
 function App() {
-  return <Avatar theme={theme} seed="unique-identifier" size={300} />
+  return <Avatar theme={theme} seed="seed" size={300} />
 }
 ```
 
