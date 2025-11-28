@@ -1,5 +1,11 @@
 # @avatune/fatin-verse-assets
 
+## 1.0.2
+
+### Patch Changes
+
+- [#28](https://github.com/avatune/avatune/pull/28) [`4f5c9e2`](https://github.com/avatune/avatune/commit/4f5c9e25b2fcf928de49db71bc0e128384a1686a) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix masks overlap in the assets
+
 ## 1.0.1
 
 ### Patch Changes
