@@ -1,5 +1,17 @@
 # @avatune/svelte
 
+## 1.2.0
+
+### Minor Changes
+
+- [#38](https://github.com/avatune/avatune/pull/38) [`36e34bf`](https://github.com/avatune/avatune/commit/36e34bfc7544eef350b857ca23aa0a8bfc80e7f5) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix unresolved workspace dependencies
+
+### Patch Changes
+
+- Updated dependencies [[`36e34bf`](https://github.com/avatune/avatune/commit/36e34bfc7544eef350b857ca23aa0a8bfc80e7f5)]:
+  - @avatune/types@1.2.0
+  - @avatune/utils@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes
