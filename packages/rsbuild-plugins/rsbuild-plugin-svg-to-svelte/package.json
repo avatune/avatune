@@ -1,6 +1,6 @@
 {
   "name": "@avatune/rsbuild-plugin-svg-to-svelte",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rsbuild plugin to transform SVG files into Svelte components",
   "private": true,
   "repository": {
