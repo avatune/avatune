@@ -101,7 +101,7 @@ function generateReadme(
 
   // License/Credits section
   if (license || credits) {
-    const baseUrl = `https://github.com/avatune/avatune/blob/main/packages/assets/${packageName}`
+    const baseUrl = `https://github.com/avatune /avatune/blob/main/packages/assets/${packageName}`
     sections.push('## License & Credits')
     sections.push('')
     if (license) {

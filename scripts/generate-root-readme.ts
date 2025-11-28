@@ -107,6 +107,10 @@ function generateReadme(
 
   return `# Avatune
 
+<p align="center">
+  <img src="https://github.com/avatune/avatune/blob/main/logo.png?raw=true" alt="Avatune Logo" width="200" />
+</p>
+
 **Production-ready avatar system with AI-powered generation and framework-native components.**
 
 Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with React, Vue, Svelte, and Vanilla JavaScript.

@@ -94,11 +94,11 @@ You can override specific avatar parts:
 
 ## Design Assets
 
-This theme uses assets from the [`@avatune/kyute-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/kyute-assets) package.
+This theme uses assets from the [`@avatune/kyute-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/kyute-assets) package.
 
 ## License
 
-This theme package is licensed under MIT (see [LICENSE.md](https://github.com/AvatuneAI/avatune/blob/main/LICENSE.md)).
+This theme package is licensed under MIT (see [LICENSE.md](https://github.com/avatune/avatune/blob/main/LICENSE.md)).
 
 The design assets used in this theme have their own license and attribution:
 
@@ -108,16 +108,16 @@ Original designs by [Aaron Gitlin](https://www.figma.com/community/file/80091249
 Modifications were made to adapt them for composable SVG avatars.
 
 For full details, see:
-- [CREDITS.md](https://github.com/AvatuneAI/avatune/blob/main/packages/assets/kyute-assets/CREDITS.md) - Asset attribution
-- Asset package license in [`@avatune/kyute-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/kyute-assets)
+- [CREDITS.md](https://github.com/avatune/avatune/blob/main/packages/assets/kyute-assets/CREDITS.md) - Asset attribution
+- Asset package license in [`@avatune/kyute-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/kyute-assets)
 
 ## Related Packages
 
-- [`@avatune/kyute-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/kyute-assets) - SVG assets used by this theme
-- [`@avatune/react`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/react) - React avatar renderer
-- [`@avatune/vue`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
-- [`@avatune/svelte`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
-- [`@avatune/vanilla`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+- [`@avatune/kyute-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/kyute-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
 
 ## Development
 

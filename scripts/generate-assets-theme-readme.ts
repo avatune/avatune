@@ -80,7 +80,7 @@ function generateREADME(theme: ThemeInfo): string {
   sections.push('')
 
   // Design Assets
-  const assetsPackageUrl = `https://github.com/AvatuneAI/avatune/tree/main/packages/assets/${assetsPackageName}`
+  const assetsPackageUrl = `https://github.com/avatune/avatune/tree/main/packages/assets/${assetsPackageName}`
   sections.push('## Design Assets')
   sections.push('')
   sections.push(
@@ -89,8 +89,8 @@ function generateREADME(theme: ThemeInfo): string {
   sections.push('')
 
   // License
-  const licenseUrl = 'https://github.com/AvatuneAI/avatune/blob/main/LICENSE.md'
-  const creditsUrl = `https://github.com/AvatuneAI/avatune/blob/main/packages/assets/${assetsPackageName}/CREDITS.md`
+  const licenseUrl = 'https://github.com/avatune/avatune/blob/main/LICENSE.md'
+  const creditsUrl = `https://github.com/avatune/avatune/blob/main/packages/assets/${assetsPackageName}/CREDITS.md`
   sections.push('## License')
   sections.push('')
   sections.push(

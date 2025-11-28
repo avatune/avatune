@@ -574,7 +574,7 @@ bun dev
 export function generateRelatedPackagesSection(
   assetsPackageName: string,
 ): string {
-  const baseUrl = 'https://github.com/AvatuneAI/avatune/tree/main/packages'
+  const baseUrl = 'https://github.com/avatune/avatune/tree/main/packages'
   const assetsUrl = `${baseUrl}/assets/${assetsPackageName}`
   const renderersUrl = `${baseUrl}/renderers`
 
