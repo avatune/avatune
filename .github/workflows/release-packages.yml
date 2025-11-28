@@ -10,6 +10,7 @@ on:
       - "bun.lock"
       - ".changeset/**"
       - ".changeset/config.json"
+  workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
