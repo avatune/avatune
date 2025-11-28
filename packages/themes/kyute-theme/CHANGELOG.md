@@ -1,5 +1,14 @@
 # @avatune/kyute-theme
 
+## 1.0.3
+
+### Patch Changes
+
+- [#30](https://github.com/avatune/avatune/pull/30) [`8c219fc`](https://github.com/avatune/avatune/commit/8c219fc3f77e9587f39b55ebeca9e77cfe05aff1) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix no react native bundle available
+
+- Updated dependencies [[`8c219fc`](https://github.com/avatune/avatune/commit/8c219fc3f77e9587f39b55ebeca9e77cfe05aff1)]:
+  - @avatune/kyute-assets@1.0.3
+
 ## 1.0.2
 
 ### Patch Changes
