@@ -17,12 +17,13 @@
     "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-root-readme.ts",
     "prepare": "husky",
     "release:version": "changeset version && bun update",
-    "release:publish": "changeset publish"
+    "release:publish": "bun scripts/release-publish.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.8",
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
+    "@types/bun": "^1.3.3",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "turbo": "^2.6.1",
