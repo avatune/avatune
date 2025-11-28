@@ -4,7 +4,7 @@ Yanliu style SVG assets for avatar generation.
 
 ## Description
 
-This package provides SVG assets in Yanliu style for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+This package provides SVG assets in yanliu style for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
 
 ## Installation
 
@@ -44,102 +44,102 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/yanliu-assets/vue';
 
 | Preview | Filename |
 |---------|----------|
-| ![blouse](./src/svg/body/blouse.svg) | `blouse` |
-| ![flowerCardigan](./src/svg/body/flowerCardigan.svg) | `flowerCardigan` |
-| ![simpleCardigan](./src/svg/body/simpleCardigan.svg) | `simpleCardigan` |
-| ![simpleOverall](./src/svg/body/simpleOverall.svg) | `simpleOverall` |
-| ![striped](./src/svg/body/striped.svg) | `striped` |
-| ![sweaterVest](./src/svg/body/sweaterVest.svg) | `sweaterVest` |
-| ![sweaterWavy](./src/svg/body/sweaterWavy.svg) | `sweaterWavy` |
-| ![teeBasic](./src/svg/body/teeBasic.svg) | `teeBasic` |
-| ![teeButtoned](./src/svg/body/teeButtoned.svg) | `teeButtoned` |
-| ![teePocket](./src/svg/body/teePocket.svg) | `teePocket` |
-| ![teeRound](./src/svg/body/teeRound.svg) | `teeRound` |
+| ![blouse](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/blouse.svg) | `blouse` |
+| ![flowerCardigan](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/flowerCardigan.svg) | `flowerCardigan` |
+| ![simpleCardigan](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/simpleCardigan.svg) | `simpleCardigan` |
+| ![simpleOverall](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/simpleOverall.svg) | `simpleOverall` |
+| ![striped](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/striped.svg) | `striped` |
+| ![sweaterVest](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/sweaterVest.svg) | `sweaterVest` |
+| ![sweaterWavy](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/sweaterWavy.svg) | `sweaterWavy` |
+| ![teeBasic](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/teeBasic.svg) | `teeBasic` |
+| ![teeButtoned](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/teeButtoned.svg) | `teeButtoned` |
+| ![teePocket](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/teePocket.svg) | `teePocket` |
+| ![teeRound](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/body/teeRound.svg) | `teeRound` |
 
 ### Ears
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/ears/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/ears/standard.svg) | `standard` |
 
 ### Eyes
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/eyes/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/eyes/standard.svg) | `standard` |
 
 ### FaceDetails
 
 | Preview | Filename |
 |---------|----------|
-| ![blushes](./src/svg/faceDetails/blushes.svg) | `blushes` |
+| ![blushes](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/faceDetails/blushes.svg) | `blushes` |
 
 ### FaceHair
 
 | Preview | Filename |
 |---------|----------|
-| ![bigBeard](./src/svg/faceHair/bigBeard.svg) | `bigBeard` |
-| ![chevronMustache](./src/svg/faceHair/chevronMustache.svg) | `chevronMustache` |
-| ![mustache](./src/svg/faceHair/mustache.svg) | `mustache` |
+| ![bigBeard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/faceHair/bigBeard.svg) | `bigBeard` |
+| ![chevronMustache](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/faceHair/chevronMustache.svg) | `chevronMustache` |
+| ![mustache](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/faceHair/mustache.svg) | `mustache` |
 
 ### Forelock
 
 | Preview | Filename |
 |---------|----------|
-| ![bubble](./src/svg/forelock/bubble.svg) | `bubble` |
-| ![curve](./src/svg/forelock/curve.svg) | `curve` |
-| ![short](./src/svg/forelock/short.svg) | `short` |
-| ![split](./src/svg/forelock/split.svg) | `split` |
-| ![straight](./src/svg/forelock/straight.svg) | `straight` |
-| ![underCut](./src/svg/forelock/underCut.svg) | `underCut` |
+| ![bubble](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/bubble.svg) | `bubble` |
+| ![curve](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/curve.svg) | `curve` |
+| ![short](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/short.svg) | `short` |
+| ![split](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/split.svg) | `split` |
+| ![straight](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/straight.svg) | `straight` |
+| ![underCut](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/forelock/underCut.svg) | `underCut` |
 
 ### Glasses
 
 | Preview | Filename |
 |---------|----------|
-| ![glass](./src/svg/glasses/glass.svg) | `glass` |
+| ![glass](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/glasses/glass.svg) | `glass` |
 
 ### Hair
 
 | Preview | Filename |
 |---------|----------|
-| ![braids](./src/svg/hair/braids.svg) | `braids` |
-| ![hijab](./src/svg/hair/hijab.svg) | `hijab` |
-| ![medium](./src/svg/hair/medium.svg) | `medium` |
-| ![puff](./src/svg/hair/puff.svg) | `puff` |
-| ![straightLong](./src/svg/hair/straightLong.svg) | `straightLong` |
-| ![straightMedium](./src/svg/hair/straightMedium.svg) | `straightMedium` |
+| ![braids](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/braids.svg) | `braids` |
+| ![hijab](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/hijab.svg) | `hijab` |
+| ![medium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/medium.svg) | `medium` |
+| ![puff](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/puff.svg) | `puff` |
+| ![straightLong](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/straightLong.svg) | `straightLong` |
+| ![straightMedium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hair/straightMedium.svg) | `straightMedium` |
 
 ### Hats
 
 | Preview | Filename |
 |---------|----------|
-| ![beanie](./src/svg/hats/beanie.svg) | `beanie` |
-| ![hat](./src/svg/hats/hat.svg) | `hat` |
+| ![beanie](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hats/beanie.svg) | `beanie` |
+| ![hat](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/hats/hat.svg) | `hat` |
 
 ### Head
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/head/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/head/standard.svg) | `standard` |
 
 ### Mouth
 
 | Preview | Filename |
 |---------|----------|
-| ![smile](./src/svg/mouth/smile.svg) | `smile` |
+| ![smile](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/mouth/smile.svg) | `smile` |
 
 ### Neck
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/neck/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/neck/standard.svg) | `standard` |
 
 ### Noses
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/noses/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/yanliu-assets/src/svg/noses/standard.svg) | `standard` |
 
 ## License & Credits
 

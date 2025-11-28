@@ -80,18 +80,21 @@ function generateREADME(theme: ThemeInfo): string {
   sections.push('')
 
   // Design Assets
+  const assetsPackageUrl = `https://github.com/AvatuneAI/avatune/tree/main/packages/assets/${assetsPackageName}`
   sections.push('## Design Assets')
   sections.push('')
   sections.push(
-    `This theme uses assets from the [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName}) package.`,
+    `This theme uses assets from the [\`@avatune/${assetsPackageName}\`](${assetsPackageUrl}) package.`,
   )
   sections.push('')
 
   // License
+  const licenseUrl = 'https://github.com/AvatuneAI/avatune/blob/main/LICENSE.md'
+  const creditsUrl = `https://github.com/AvatuneAI/avatune/blob/main/packages/assets/${assetsPackageName}/CREDITS.md`
   sections.push('## License')
   sections.push('')
   sections.push(
-    'This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).',
+    `This theme package is licensed under MIT (see [LICENSE.md](${licenseUrl})).`,
   )
   sections.push('')
   if (hasCredits && creditsContent) {
@@ -102,11 +105,9 @@ function generateREADME(theme: ThemeInfo): string {
     sections.push(creditsContent)
     sections.push('')
     sections.push('For full details, see:')
+    sections.push(`- [CREDITS.md](${creditsUrl}) - Asset attribution`)
     sections.push(
-      `- [CREDITS.md](../packages/${assetsPackageName}/CREDITS.md) - Asset attribution`,
-    )
-    sections.push(
-      `- Asset package license in [\`@avatune/${assetsPackageName}\`](../packages/${assetsPackageName})`,
+      `- Asset package license in [\`@avatune/${assetsPackageName}\`](${assetsPackageUrl})`,
     )
     sections.push('')
   } else {
@@ -117,7 +118,7 @@ function generateREADME(theme: ThemeInfo): string {
   }
 
   // Related Packages
-  sections.push(generateRelatedPackagesSection(assetsPackageName, true))
+  sections.push(generateRelatedPackagesSection(assetsPackageName))
   sections.push('')
 
   // Development

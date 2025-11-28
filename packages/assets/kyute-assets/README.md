@@ -44,100 +44,100 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/kyute-assets/vue';
 
 | Preview | Filename |
 |---------|----------|
-| ![casual](./src/svg/body/casual.svg) | `casual` |
-| ![shirt](./src/svg/body/shirt.svg) | `shirt` |
-| ![tshirt](./src/svg/body/tshirt.svg) | `tshirt` |
-| ![turtleneck](./src/svg/body/turtleneck.svg) | `turtleneck` |
+| ![casual](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/body/casual.svg) | `casual` |
+| ![shirt](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/body/shirt.svg) | `shirt` |
+| ![tshirt](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/body/tshirt.svg) | `tshirt` |
+| ![turtleneck](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/body/turtleneck.svg) | `turtleneck` |
 
 ### Ears
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/ears/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/ears/standard.svg) | `standard` |
 
 ### Eyebrows
 
 | Preview | Filename |
 |---------|----------|
-| ![thick1](./src/svg/eyebrows/thick1.svg) | `thick1` |
-| ![thick2](./src/svg/eyebrows/thick2.svg) | `thick2` |
-| ![thickSad](./src/svg/eyebrows/thickSad.svg) | `thickSad` |
-| ![thin](./src/svg/eyebrows/thin.svg) | `thin` |
-| ![thinCurly](./src/svg/eyebrows/thinCurly.svg) | `thinCurly` |
-| ![thinWide](./src/svg/eyebrows/thinWide.svg) | `thinWide` |
+| ![thick1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thick1.svg) | `thick1` |
+| ![thick2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thick2.svg) | `thick2` |
+| ![thickSad](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thickSad.svg) | `thickSad` |
+| ![thin](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thin.svg) | `thin` |
+| ![thinCurly](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thinCurly.svg) | `thinCurly` |
+| ![thinWide](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyebrows/thinWide.svg) | `thinWide` |
 
 ### Eyes
 
 | Preview | Filename |
 |---------|----------|
-| ![big](./src/svg/eyes/big.svg) | `big` |
-| ![huge](./src/svg/eyes/huge.svg) | `huge` |
-| ![medium](./src/svg/eyes/medium.svg) | `medium` |
-| ![oval](./src/svg/eyes/oval.svg) | `oval` |
-| ![standard](./src/svg/eyes/standard.svg) | `standard` |
+| ![big](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyes/big.svg) | `big` |
+| ![huge](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyes/huge.svg) | `huge` |
+| ![medium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyes/medium.svg) | `medium` |
+| ![oval](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyes/oval.svg) | `oval` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/eyes/standard.svg) | `standard` |
 
 ### FaceDetails
 
 | Preview | Filename |
 |---------|----------|
-| ![blushes](./src/svg/faceDetails/blushes.svg) | `blushes` |
-| ![freckles](./src/svg/faceDetails/freckles.svg) | `freckles` |
+| ![blushes](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/faceDetails/blushes.svg) | `blushes` |
+| ![freckles](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/faceDetails/freckles.svg) | `freckles` |
 
 ### FaceHair
 
 | Preview | Filename |
 |---------|----------|
-| ![beard](./src/svg/faceHair/beard.svg) | `beard` |
-| ![bigBeard](./src/svg/faceHair/bigBeard.svg) | `bigBeard` |
-| ![mustache](./src/svg/faceHair/mustache.svg) | `mustache` |
+| ![beard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/faceHair/beard.svg) | `beard` |
+| ![bigBeard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/faceHair/bigBeard.svg) | `bigBeard` |
+| ![mustache](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/faceHair/mustache.svg) | `mustache` |
 
 ### Glasses
 
 | Preview | Filename |
 |---------|----------|
-| ![aviator](./src/svg/glasses/aviator.svg) | `aviator` |
-| ![harry](./src/svg/glasses/harry.svg) | `harry` |
-| ![round](./src/svg/glasses/round.svg) | `round` |
-| ![standard](./src/svg/glasses/standard.svg) | `standard` |
+| ![aviator](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/glasses/aviator.svg) | `aviator` |
+| ![harry](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/glasses/harry.svg) | `harry` |
+| ![round](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/glasses/round.svg) | `round` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/glasses/standard.svg) | `standard` |
 
 ### Hair
 
 | Preview | Filename |
 |---------|----------|
-| ![bob](./src/svg/hair/bob.svg) | `bob` |
-| ![curly](./src/svg/hair/curly.svg) | `curly` |
-| ![curlyMedium](./src/svg/hair/curlyMedium.svg) | `curlyMedium` |
-| ![elvis](./src/svg/hair/elvis.svg) | `elvis` |
-| ![long](./src/svg/hair/long.svg) | `long` |
-| ![longThick](./src/svg/hair/longThick.svg) | `longThick` |
-| ![longWavy](./src/svg/hair/longWavy.svg) | `longWavy` |
-| ![ponyTail](./src/svg/hair/ponyTail.svg) | `ponyTail` |
-| ![rapunzel](./src/svg/hair/rapunzel.svg) | `rapunzel` |
-| ![short](./src/svg/hair/short.svg) | `short` |
-| ![stylish](./src/svg/hair/stylish.svg) | `stylish` |
-| ![thick](./src/svg/hair/thick.svg) | `thick` |
-| ![topKnot](./src/svg/hair/topKnot.svg) | `topKnot` |
+| ![bob](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/bob.svg) | `bob` |
+| ![curly](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/curly.svg) | `curly` |
+| ![curlyMedium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/curlyMedium.svg) | `curlyMedium` |
+| ![elvis](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/elvis.svg) | `elvis` |
+| ![long](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/long.svg) | `long` |
+| ![longThick](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/longThick.svg) | `longThick` |
+| ![longWavy](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/longWavy.svg) | `longWavy` |
+| ![ponyTail](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/ponyTail.svg) | `ponyTail` |
+| ![rapunzel](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/rapunzel.svg) | `rapunzel` |
+| ![short](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/short.svg) | `short` |
+| ![stylish](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/stylish.svg) | `stylish` |
+| ![thick](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/thick.svg) | `thick` |
+| ![topKnot](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/hair/topKnot.svg) | `topKnot` |
 
 ### Head
 
 | Preview | Filename |
 |---------|----------|
-| ![standard](./src/svg/head/standard.svg) | `standard` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/head/standard.svg) | `standard` |
 
 ### Mouth
 
 | Preview | Filename |
 |---------|----------|
-| ![lips1](./src/svg/mouth/lips1.svg) | `lips1` |
-| ![lips2](./src/svg/mouth/lips2.svg) | `lips2` |
-| ![lipsSmile](./src/svg/mouth/lipsSmile.svg) | `lipsSmile` |
-| ![open](./src/svg/mouth/open.svg) | `open` |
-| ![openDimples](./src/svg/mouth/openDimples.svg) | `openDimples` |
-| ![smile1](./src/svg/mouth/smile1.svg) | `smile1` |
-| ![smile2](./src/svg/mouth/smile2.svg) | `smile2` |
-| ![smileOpen](./src/svg/mouth/smileOpen.svg) | `smileOpen` |
-| ![smirk](./src/svg/mouth/smirk.svg) | `smirk` |
-| ![wideOpen](./src/svg/mouth/wideOpen.svg) | `wideOpen` |
+| ![lips1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/lips1.svg) | `lips1` |
+| ![lips2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/lips2.svg) | `lips2` |
+| ![lipsSmile](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/lipsSmile.svg) | `lipsSmile` |
+| ![open](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/open.svg) | `open` |
+| ![openDimples](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/openDimples.svg) | `openDimples` |
+| ![smile1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/smile1.svg) | `smile1` |
+| ![smile2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/smile2.svg) | `smile2` |
+| ![smileOpen](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/smileOpen.svg) | `smileOpen` |
+| ![smirk](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/smirk.svg) | `smirk` |
+| ![wideOpen](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/kyute-assets/src/svg/mouth/wideOpen.svg) | `wideOpen` |
 
 ## License & Credits
 

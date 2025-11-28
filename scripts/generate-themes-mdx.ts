@@ -212,7 +212,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
   }
 
   // Related Packages
-  sections.push(generateRelatedPackagesSection(assetsPackageName, false))
+  sections.push(generateRelatedPackagesSection(assetsPackageName))
   sections.push('')
 
   // Development

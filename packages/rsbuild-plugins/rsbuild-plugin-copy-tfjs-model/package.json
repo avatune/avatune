@@ -5,11 +5,11 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AvatuneAI/avatune.git"
+    "url": "git+https://github.com/avatune/avatune.git"
   },
   "homepage": "https://avatune.dev",
   "bugs": {
-    "url": "https://github.com/AvatuneAI/avatune/issues"
+    "url": "https://github.com/avatune/avatune/issues"
   },
   "author": "Avatune Team (https://avatune.dev)",
   "contributors": [

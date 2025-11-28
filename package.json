@@ -14,6 +14,7 @@
     "generate:theme-website-docs": "bun scripts/generate-themes-mdx.ts",
     "generate:readme-and-website-docs": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts",
     "generate:root-readme": "bun scripts/generate-root-readme.ts",
+    "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-root-readme.ts",
     "prepare": "husky"
   },
   "devDependencies": {

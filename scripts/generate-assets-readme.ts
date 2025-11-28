@@ -23,7 +23,7 @@ function generateReadme(
   packageDir: string,
 ): string {
   const { license, credits } = findLicenseOrCredits(packageDir)
-  const assetsTable = generateAssetsTable(assets)
+  const assetsTable = generateAssetsTable(assets, packageName)
 
   // Extract style from package name (e.g., "nevmstas" from "nevmstas-assets")
   const styleName = packageName
@@ -101,14 +101,19 @@ function generateReadme(
 
   // License/Credits section
   if (license || credits) {
+    const baseUrl = `https://github.com/avatune/avatune/blob/main/packages/assets/${packageName}`
     sections.push('## License & Credits')
     sections.push('')
     if (license) {
-      sections.push(`See [${license}](${license}) for license information.`)
+      sections.push(
+        `See [${license}](${baseUrl}/${license}) for license information.`,
+      )
       sections.push('')
     }
     if (credits) {
-      sections.push(`See [${credits}](${credits}) for attribution and credits.`)
+      sections.push(
+        `See [${credits}](${baseUrl}/${credits}) for attribution and credits.`,
+      )
       sections.push('')
     }
   }

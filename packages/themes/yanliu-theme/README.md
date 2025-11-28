@@ -94,11 +94,11 @@ You can override specific avatar parts:
 
 ## Design Assets
 
-This theme uses assets from the [`@avatune/yanliu-assets`](../packages/yanliu-assets) package.
+This theme uses assets from the [`@avatune/yanliu-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/yanliu-assets) package.
 
 ## License
 
-This theme package is licensed under MIT (see [LICENSE.md](../../LICENSE.md)).
+This theme package is licensed under MIT (see [LICENSE.md](https://github.com/AvatuneAI/avatune/blob/main/LICENSE.md)).
 
 The design assets used in this theme have their own license and attribution:
 
@@ -108,16 +108,16 @@ Original designs by [Yan Liu](https://www.figma.com/community/file/9736660767957
 Modifications were made to adapt them for composable SVG avatars.
 
 For full details, see:
-- [CREDITS.md](../packages/yanliu-assets/CREDITS.md) - Asset attribution
-- Asset package license in [`@avatune/yanliu-assets`](../packages/yanliu-assets)
+- [CREDITS.md](https://github.com/AvatuneAI/avatune/blob/main/packages/assets/yanliu-assets/CREDITS.md) - Asset attribution
+- Asset package license in [`@avatune/yanliu-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/yanliu-assets)
 
 ## Related Packages
 
-- [`@avatune/yanliu-assets`](../packages/yanliu-assets) - SVG assets used by this theme
-- [`@avatune/react`](../packages/react) - React avatar renderer
-- [`@avatune/vue`](../packages/vue) - Vue avatar renderer
-- [`@avatune/svelte`](../packages/svelte) - Svelte avatar renderer
-- [`@avatune/vanilla`](../packages/vanilla) - Vanilla JavaScript avatar renderer
+- [`@avatune/yanliu-assets`](https://github.com/AvatuneAI/avatune/tree/main/packages/assets/yanliu-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](https://github.com/AvatuneAI/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
 
 ## Development
 

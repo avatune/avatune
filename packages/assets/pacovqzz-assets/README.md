@@ -1,6 +1,6 @@
 # @avatune/pacovqzz-assets
 
-Kyute style SVG assets for avatar generation.
+Pacovqzz style SVG assets for avatar generation.
 
 ## Description
 
@@ -9,7 +9,7 @@ This package provides SVG assets in pacovqzz style for creating customizable ava
 ## Installation
 
 ```bash
-npm install @avatune/kyute-assets
+npm install @avatune/pacovqzz-assets
 ```
 
 ## Usage
@@ -17,127 +17,84 @@ npm install @avatune/kyute-assets
 ### SVG Paths
 
 ```typescript
-import { hair, eyes, mouth } from '@avatune/kyute-assets';
+import { hair, eyes, mouth } from '@avatune/pacovqzz-assets';
 ```
 
 ### React Components
 
 ```typescript
-import { HairShort, EyesBoring, MouthSmile } from '@avatune/kyute-assets/react';
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/react';
 ```
 
 ### Svelte Components
 
 ```typescript
-import { HairShort, EyesBoring, MouthSmile } from '@avatune/kyute-assets/svelte';
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/svelte';
 ```
 
 ### Vue Components
 
 ```typescript
-import { HairShort, EyesBoring, MouthSmile } from '@avatune/kyute-assets/vue';
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pacovqzz-assets/vue';
 ```
 
 ## Available Assets
 
 ### Body
 
-| Preview                                      | Filename     |
-| -------------------------------------------- | ------------ |
-| ![casual](./src/svg/body/casual.svg)         | `casual`     |
-| ![shirt](./src/svg/body/shirt.svg)           | `shirt`      |
-| ![tshirt](./src/svg/body/tshirt.svg)         | `tshirt`     |
-| ![turtleneck](./src/svg/body/turtleneck.svg) | `turtleneck` |
-
-### Ears
-
-| Preview                                  | Filename   |
-| ---------------------------------------- | ---------- |
-| ![standard](./src/svg/ears/standard.svg) | `standard` |
-
-### Eyebrows
-
-| Preview                                        | Filename    |
-| ---------------------------------------------- | ----------- |
-| ![thick1](./src/svg/eyebrows/thick1.svg)       | `thick1`    |
-| ![thick2](./src/svg/eyebrows/thick2.svg)       | `thick2`    |
-| ![thickSad](./src/svg/eyebrows/thickSad.svg)   | `thickSad`  |
-| ![thin](./src/svg/eyebrows/thin.svg)           | `thin`      |
-| ![thinCurly](./src/svg/eyebrows/thinCurly.svg) | `thinCurly` |
-| ![thinWide](./src/svg/eyebrows/thinWide.svg)   | `thinWide`  |
+| Preview | Filename |
+|---------|----------|
+| ![hoodie](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/hoodie.svg) | `hoodie` |
+| ![overall](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/overall.svg) | `overall` |
+| ![overshirt1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/overshirt1.svg) | `overshirt1` |
+| ![overshirt2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/overshirt2.svg) | `overshirt2` |
+| ![pufferJacket](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/pufferJacket.svg) | `pufferJacket` |
+| ![tshirt1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/tshirt1.svg) | `tshirt1` |
+| ![tshirt2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/body/tshirt2.svg) | `tshirt2` |
 
 ### Eyes
 
-| Preview                                  | Filename   |
-| ---------------------------------------- | ---------- |
-| ![big](./src/svg/eyes/big.svg)           | `big`      |
-| ![huge](./src/svg/eyes/huge.svg)         | `huge`     |
-| ![medium](./src/svg/eyes/medium.svg)     | `medium`   |
-| ![oval](./src/svg/eyes/oval.svg)         | `oval`     |
-| ![standard](./src/svg/eyes/standard.svg) | `standard` |
-
-### FaceDetails
-
-| Preview                                         | Filename   |
-| ----------------------------------------------- | ---------- |
-| ![blushes](./src/svg/faceDetails/blushes.svg)   | `blushes`  |
-| ![freckles](./src/svg/faceDetails/freckles.svg) | `freckles` |
-
-### FaceHair
-
-| Preview                                      | Filename   |
-| -------------------------------------------- | ---------- |
-| ![beard](./src/svg/faceHair/beard.svg)       | `beard`    |
-| ![bigBeard](./src/svg/faceHair/bigBeard.svg) | `bigBeard` |
-| ![mustache](./src/svg/faceHair/mustache.svg) | `mustache` |
-
-### Glasses
-
-| Preview                                     | Filename   |
-| ------------------------------------------- | ---------- |
-| ![aviator](./src/svg/glasses/aviator.svg)   | `aviator`  |
-| ![harry](./src/svg/glasses/harry.svg)       | `harry`    |
-| ![round](./src/svg/glasses/round.svg)       | `round`    |
-| ![standard](./src/svg/glasses/standard.svg) | `standard` |
+| Preview | Filename |
+|---------|----------|
+| ![apathetic](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/apathetic.svg) | `apathetic` |
+| ![glasses](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/glasses.svg) | `glasses` |
+| ![heartSunglasses](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/heartSunglasses.svg) | `heartSunglasses` |
+| ![matrixSunglasses](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/matrixSunglasses.svg) | `matrixSunglasses` |
+| ![opened](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/opened.svg) | `opened` |
+| ![roundSunglasses](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/roundSunglasses.svg) | `roundSunglasses` |
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/eyes/standard.svg) | `standard` |
 
 ### Hair
 
-| Preview                                        | Filename      |
-| ---------------------------------------------- | ------------- |
-| ![bob](./src/svg/hair/bob.svg)                 | `bob`         |
-| ![curly](./src/svg/hair/curly.svg)             | `curly`       |
-| ![curlyMedium](./src/svg/hair/curlyMedium.svg) | `curlyMedium` |
-| ![elvis](./src/svg/hair/elvis.svg)             | `elvis`       |
-| ![long](./src/svg/hair/long.svg)               | `long`        |
-| ![longThick](./src/svg/hair/longThick.svg)     | `longThick`   |
-| ![longWavy](./src/svg/hair/longWavy.svg)       | `longWavy`    |
-| ![ponyTail](./src/svg/hair/ponyTail.svg)       | `ponyTail`    |
-| ![rapunzel](./src/svg/hair/rapunzel.svg)       | `rapunzel`    |
-| ![short](./src/svg/hair/short.svg)             | `short`       |
-| ![stylish](./src/svg/hair/stylish.svg)         | `stylish`     |
-| ![thick](./src/svg/hair/thick.svg)             | `thick`       |
-| ![topKnot](./src/svg/hair/topKnot.svg)         | `topKnot`     |
+| Preview | Filename |
+|---------|----------|
+| ![curly](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/curly.svg) | `curly` |
+| ![curlyBandana](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/curlyBandana.svg) | `curlyBandana` |
+| ![long](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/long.svg) | `long` |
+| ![longBeanie](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/longBeanie.svg) | `longBeanie` |
+| ![medium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/medium.svg) | `medium` |
+| ![mediumCap](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/mediumCap.svg) | `mediumCap` |
+| ![mohawk](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/mohawk.svg) | `mohawk` |
+| ![short](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/hair/short.svg) | `short` |
 
 ### Head
 
-| Preview                                  | Filename   |
-| ---------------------------------------- | ---------- |
-| ![standard](./src/svg/head/standard.svg) | `standard` |
+| Preview | Filename |
+|---------|----------|
+| ![standard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/head/standard.svg) | `standard` |
 
 ### Mouth
 
-| Preview                                         | Filename      |
-| ----------------------------------------------- | ------------- |
-| ![lips1](./src/svg/mouth/lips1.svg)             | `lips1`       |
-| ![lips2](./src/svg/mouth/lips2.svg)             | `lips2`       |
-| ![lipsSmile](./src/svg/mouth/lipsSmile.svg)     | `lipsSmile`   |
-| ![open](./src/svg/mouth/open.svg)               | `open`        |
-| ![openDimples](./src/svg/mouth/openDimples.svg) | `openDimples` |
-| ![smile1](./src/svg/mouth/smile1.svg)           | `smile1`      |
-| ![smile2](./src/svg/mouth/smile2.svg)           | `smile2`      |
-| ![smileOpen](./src/svg/mouth/smileOpen.svg)     | `smileOpen`   |
-| ![smirk](./src/svg/mouth/smirk.svg)             | `smirk`       |
-| ![wideOpen](./src/svg/mouth/wideOpen.svg)       | `wideOpen`    |
+| Preview | Filename |
+|---------|----------|
+| ![apathetic](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/apathetic.svg) | `apathetic` |
+| ![beard](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/beard.svg) | `beard` |
+| ![bristle1](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/bristle1.svg) | `bristle1` |
+| ![bristle2](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/bristle2.svg) | `bristle2` |
+| ![confused](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/confused.svg) | `confused` |
+| ![happt](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/happt.svg) | `happt` |
+| ![meh](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/meh.svg) | `meh` |
+| ![mustache](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/pacovqzz-assets/src/svg/mouth/mustache.svg) | `mustache` |
 
 ## License & Credits
 

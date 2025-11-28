@@ -125,7 +125,7 @@ const myTheme = createTheme()
 
 ## License
 
-See [LICENSE.md](LICENSE.md) for license information.
+See [LICENSE.md](https://github.com/avatune/avatune/blob/main/LICENSE.md) for license information.
 
 ## Credits
 

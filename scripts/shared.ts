@@ -415,11 +415,16 @@ container?.appendChild(svg)`,
 /**
  * Generates a markdown table of assets with image previews
  * @param assets Category assets to generate table for
+ * @param packageName Name of the assets package (e.g., 'kyute-assets')
  * @returns Formatted markdown table string
  */
-export function generateAssetsTable(assets: CategoryAssets): string {
+export function generateAssetsTable(
+  assets: CategoryAssets,
+  packageName: string,
+): string {
   const lines: string[] = []
   const sortedCategories = Object.keys(assets).sort()
+  const baseUrl = `https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/${packageName}/src/svg`
 
   for (const category of sortedCategories) {
     const categoryFiles = assets[category]
@@ -430,8 +435,8 @@ export function generateAssetsTable(assets: CategoryAssets): string {
     lines.push('|---------|----------|')
 
     for (const asset of categoryFiles) {
-      const svgPath = `./src/svg/${category}/${asset.filename}`
-      lines.push(`| ![${asset.name}](${svgPath}) | \`${asset.name}\` |`)
+      const svgUrl = `${baseUrl}/${category}/${asset.filename}`
+      lines.push(`| ![${asset.name}](${svgUrl}) | \`${asset.name}\` |`)
     }
 
     lines.push('')
@@ -568,15 +573,16 @@ bun dev
  */
 export function generateRelatedPackagesSection(
   assetsPackageName: string,
-  isForReadme: boolean = true,
 ): string {
-  const prefix = isForReadme ? '../packages' : '../'
+  const baseUrl = 'https://github.com/AvatuneAI/avatune/tree/main/packages'
+  const assetsUrl = `${baseUrl}/assets/${assetsPackageName}`
+  const renderersUrl = `${baseUrl}/renderers`
 
   return `## Related Packages
 
-- [\`@avatune/${assetsPackageName}\`](${prefix}/${assetsPackageName}) - SVG assets used by this theme
-- [\`@avatune/react\`](${prefix}/react) - React avatar renderer
-- [\`@avatune/vue\`](${prefix}/vue) - Vue avatar renderer
-- [\`@avatune/svelte\`](${prefix}/svelte) - Svelte avatar renderer
-- [\`@avatune/vanilla\`](${prefix}/vanilla) - Vanilla JavaScript avatar renderer`
+- [\`@avatune/${assetsPackageName}\`](${assetsUrl}) - SVG assets used by this theme
+- [\`@avatune/react\`](${renderersUrl}/react) - React avatar renderer
+- [\`@avatune/vue\`](${renderersUrl}/vue) - Vue avatar renderer
+- [\`@avatune/svelte\`](${renderersUrl}/svelte) - Svelte avatar renderer
+- [\`@avatune/vanilla\`](${renderersUrl}/vanilla) - Vanilla JavaScript avatar renderer`
 }
