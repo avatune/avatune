@@ -48,7 +48,7 @@ import {
   MouthSmileOpen,
   MouthSmirk,
   MouthWideOpen,
-} from '@avatune/kyute-assets/react'
+} from '@avatune/kyute-assets/react-native'
 import type { ReactNativeAvatarItem } from '@avatune/types'
 import shared from './shared'
 
