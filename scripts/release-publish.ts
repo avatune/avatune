@@ -45,7 +45,7 @@ async function publishPackage(dir: string): Promise<boolean> {
   console.log(`📦 Publishing ${name}...`)
 
   try {
-    await $`cd ${dir} && bun publish --dry-run --access public`.quiet()
+    await $`cd ${dir} && bun publish --access public`.quiet()
     console.log(`✅ Published ${name}`)
     return true
   } catch (error) {
