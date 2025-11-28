@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 
-import { readdir, stat } from 'node:fs/promises'
+import { readdir, stat, writeFile } from 'node:fs/promises'
+import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { $ } from 'bun'
 
@@ -45,21 +46,43 @@ async function publishPackage(dir: string): Promise<boolean> {
   console.log(`📦 Publishing ${name}...`)
 
   try {
-    await $`cd ${dir} && bun publish --access public`.quiet()
+    await $`cd ${dir} && bun publish --access public`
     console.log(`✅ Published ${name}`)
     return true
-  } catch (error) {
-    const message = error instanceof Error ? error.message : String(error)
-    if (message.includes('already exists')) {
+  } catch (error: unknown) {
+    const shellError = error as { stderr?: Buffer; stdout?: Buffer }
+    const stderr = shellError.stderr?.toString() || ''
+    const stdout = shellError.stdout?.toString() || ''
+    const output = stderr || stdout
+
+    if (
+      output.includes('already exists') ||
+      output.includes('previously published')
+    ) {
       console.log(`⏭️  ${name} already published`)
       return true
     }
-    console.error(`❌ Failed to publish ${name}: ${message}`)
+    console.error(`❌ Failed to publish ${name}`)
+    if (output) console.error(`   ${output.trim().split('\n').join('\n   ')}`)
     return false
   }
 }
 
+async function setupNpmAuth() {
+  const token = process.env.NPM_TOKEN
+  if (!token) {
+    console.log('⚠️  NPM_TOKEN not set, skipping .npmrc setup')
+    return
+  }
+
+  const npmrcPath = join(homedir(), '.npmrc')
+  await writeFile(npmrcPath, `//registry.npmjs.org/:_authToken=${token}\n`)
+  console.log('🔑 Configured npm authentication\n')
+}
+
 async function main() {
+  await setupNpmAuth()
+
   console.log('🔍 Finding packages...\n')
 
   const packageDirs = await findPackageDirs(PACKAGES_ROOT)
