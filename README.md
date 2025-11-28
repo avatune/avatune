@@ -21,21 +21,35 @@ Generate beautiful, customizable avatars with machine learning prediction or man
 ### Install Theme and Renderer
 
 ```bash
-npm install @avatune/fatin-verse-theme @avatune/react
+npm install @avatune/pacovqzz-theme @avatune/react
+# or
+yarn add @avatune/fatin-verse-theme @avatune/react
+# or
+pnpm add @avatune/micah-theme @avatune/react
 ```
 
 ### Use Native SVG Components
 
 <p align="center">
-  <img src="https://github.com/avatune/avatune/blob/main/assets/preview.svg" alt="Preview" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-1.svg" alt="Preview #1" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-2.svg" alt="Preview #2" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-3.svg" alt="Preview #3" />
 </p>
 
 ```tsx
 import { Avatar } from '@avatune/react'
-import theme from '@avatune/fatin-verse-theme/react'
+import pacovqzz from '@avatune/pacovqzz-theme/react'
+import fatin-verse from '@avatune/fatin-verse-theme/react'
+import micah from '@avatune/micah-theme/react'
 
 function App() {
-  return <Avatar theme={theme} seed="seed" size={300} />
+  return (
+    <div className="flex justify-between items-center">
+      <Avatar theme={pacovqzz} seed="seed" size={200} />
+      <Avatar theme={fatin-verse} seed="seed" size={200} />
+      <Avatar theme={micah} seed="seed" size={200} />
+    </div>
+  )
 }
 ```
 

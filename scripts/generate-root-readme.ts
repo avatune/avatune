@@ -103,7 +103,9 @@ function generateReadme(
   renderers: PackageInfo[],
   predictors: PackageInfo[],
 ): string {
-  const firstTheme = themes[0]?.packageName || 'yanliu-theme'
+  const previewTheme = 'pacovqzz-theme'
+  const previewTheme2 = 'fatin-verse-theme'
+  const previewTheme3 = 'micah-theme'
 
   return `# Avatune
 
@@ -128,21 +130,35 @@ Generate beautiful, customizable avatars with machine learning prediction or man
 ### Install Theme and Renderer
 
 \`\`\`bash
-npm install @avatune/${firstTheme} @avatune/react
+npm install @avatune/${previewTheme} @avatune/react
+# or
+yarn add @avatune/${previewTheme2} @avatune/react
+# or
+pnpm add @avatune/${previewTheme3} @avatune/react
 \`\`\`
 
 ### Use Native SVG Components
 
 <p align="center">
-  <img src="https://github.com/avatune/avatune/blob/main/assets/preview.svg" alt="Preview" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-1.svg" alt="Preview #1" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-2.svg" alt="Preview #2" />
+  <img src="https://github.com/avatune/avatune/blob/main/assets/preview-3.svg" alt="Preview #3" />
 </p>
 
 \`\`\`tsx
 import { Avatar } from '@avatune/react'
-import theme from '@avatune/${firstTheme}/react'
+import ${previewTheme.replace('-theme', '')} from '@avatune/${previewTheme}/react'
+import ${previewTheme2.replace('-theme', '')} from '@avatune/${previewTheme2}/react'
+import ${previewTheme3.replace('-theme', '')} from '@avatune/${previewTheme3}/react'
 
 function App() {
-  return <Avatar theme={theme} seed="seed" size={300} />
+  return (
+    <div className="flex justify-between items-center">
+      <Avatar theme={${previewTheme.replace('-theme', '')}} seed="seed" size={200} />
+      <Avatar theme={${previewTheme2.replace('-theme', '')}} seed="seed" size={200} />
+      <Avatar theme={${previewTheme3.replace('-theme', '')}} seed="seed" size={200} />
+    </div>
+  )
 }
 \`\`\`
 
