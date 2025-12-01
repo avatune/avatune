@@ -1,5 +1,13 @@
 # @avatune/yanliu-theme
 
+## 1.2.3
+
+### Patch Changes
+
+- Updated dependencies [[`59a6232`](https://github.com/avatune/avatune/commit/59a623268a311cadf4e62e4a7b365d5dbaff22c5)]:
+  - @avatune/utils@1.3.0
+  - @avatune/theme-builder@1.2.2
+
 ## 1.2.2
 
 ### Patch Changes

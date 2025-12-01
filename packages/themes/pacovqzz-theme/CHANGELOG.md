@@ -1,5 +1,14 @@
 # @avatune/pacovqzz-theme
 
+## 1.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`ee59944`](https://github.com/avatune/avatune/commit/ee5994447689e0ac0cf967c0129f35bc844ec2b9), [`59a6232`](https://github.com/avatune/avatune/commit/59a623268a311cadf4e62e4a7b365d5dbaff22c5)]:
+  - @avatune/pacovqzz-assets@1.2.2
+  - @avatune/utils@1.3.0
+  - @avatune/theme-builder@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes

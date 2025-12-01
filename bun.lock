@@ -443,7 +443,7 @@
     },
     "packages/assets/pacovqzz-assets": {
       "name": "@avatune/pacovqzz-assets",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "colord": "^2.9.3",
       },
@@ -541,7 +541,7 @@
     },
     "packages/core/theme-builder": {
       "name": "@avatune/theme-builder",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -575,7 +575,7 @@
     },
     "packages/core/utils": {
       "name": "@avatune/utils",
-      "version": "1.2.1",
+      "version": "1.3.0",
       "dependencies": {
         "@avatune/types": "workspace:*",
       },
@@ -668,7 +668,7 @@
     },
     "packages/renderers/react": {
       "name": "@avatune/react",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -689,7 +689,7 @@
     },
     "packages/renderers/react-native": {
       "name": "@avatune/react-native",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -713,7 +713,7 @@
     },
     "packages/renderers/svelte": {
       "name": "@avatune/svelte",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -732,7 +732,7 @@
     },
     "packages/renderers/vanilla": {
       "name": "@avatune/vanilla",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -746,7 +746,7 @@
     },
     "packages/renderers/vue": {
       "name": "@avatune/vue",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/types": "workspace:*",
         "@avatune/utils": "workspace:*",
@@ -839,7 +839,7 @@
     },
     "packages/themes/fatin-verse-theme": {
       "name": "@avatune/fatin-verse-theme",
-      "version": "1.2.2",
+      "version": "1.2.3",
       "dependencies": {
         "@avatune/fatin-verse-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -869,7 +869,7 @@
     },
     "packages/themes/kyute-theme": {
       "name": "@avatune/kyute-theme",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/kyute-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -899,7 +899,7 @@
     },
     "packages/themes/micah-theme": {
       "name": "@avatune/micah-theme",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/micah-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -929,7 +929,7 @@
     },
     "packages/themes/miniavs-theme": {
       "name": "@avatune/miniavs-theme",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/miniavs-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -944,7 +944,7 @@
     },
     "packages/themes/nevmstas-theme": {
       "name": "@avatune/nevmstas-theme",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "dependencies": {
         "@avatune/nevmstas-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -977,7 +977,7 @@
     },
     "packages/themes/pacovqzz-theme": {
       "name": "@avatune/pacovqzz-theme",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "dependencies": {
         "@avatune/pacovqzz-assets": "workspace:*",
         "@avatune/theme-builder": "workspace:*",
@@ -992,7 +992,7 @@
     },
     "packages/themes/yanliu-theme": {
       "name": "@avatune/yanliu-theme",
-      "version": "1.2.2",
+      "version": "1.2.3",
       "dependencies": {
         "@avatune/theme-builder": "workspace:*",
         "@avatune/types": "workspace:*",

@@ -1,5 +1,11 @@
 # @avatune/utils
 
+## 1.3.0
+
+### Minor Changes
+
+- [`59a6232`](https://github.com/avatune/avatune/commit/59a623268a311cadf4e62e4a7b365d5dbaff22c5) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix seed sequence breaks avatars when changing a color
+
 ## 1.2.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @avatune/pacovqzz-assets
 
+## 1.2.2
+
+### Patch Changes
+
+- [`ee59944`](https://github.com/avatune/avatune/commit/ee5994447689e0ac0cf967c0129f35bc844ec2b9) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix tshirt1 is not filled with color
+
 ## 1.2.1
 
 ### Patch Changes

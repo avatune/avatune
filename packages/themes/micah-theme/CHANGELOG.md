@@ -1,5 +1,15 @@
 # @avatune/micah-theme
 
+## 1.2.2
+
+### Patch Changes
+
+- [`a2a9b3b`](https://github.com/avatune/avatune/commit/a2a9b3bd73ce2fd5432136fb144a383787ccc3aa) Thanks [@teimurjan](https://github.com/teimurjan)! - Add more skin colors
+
+- Updated dependencies [[`59a6232`](https://github.com/avatune/avatune/commit/59a623268a311cadf4e62e4a7b365d5dbaff22c5)]:
+  - @avatune/utils@1.3.0
+  - @avatune/theme-builder@1.2.2
+
 ## 1.2.1
 
 ### Patch Changes
