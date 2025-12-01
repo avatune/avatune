@@ -27,6 +27,33 @@ import {
 } from './shared'
 
 /**
+ * Maps theme package name to theme ID used in AvatarUsagePreview component
+ */
+function getThemeId(packageName: string): string {
+  // Remove '-theme' suffix and convert to theme ID format
+  const baseName = packageName.replace(/-theme$/, '')
+
+  // Special case for fatin-verse -> fatinVerse
+  if (baseName === 'fatin-verse') {
+    return 'fatinVerse'
+  }
+
+  return baseName
+}
+
+/**
+ * Generates the Examples section with avatar previews
+ */
+function generateExamplesSection(themeId: string): string {
+  return `
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-1" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-2" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-3" size={200} />
+</div>`
+}
+
+/**
  * Generates the MDX frontmatter for a theme documentation page
  */
 function generateFrontmatter(theme: ThemeInfo): string {
@@ -67,6 +94,9 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push(
     "import InstallTabs from '../../../../components/docs/install-tabs.astro';",
   )
+  sections.push(
+    "import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';",
+  )
 
   // Get assets for import generation
   const packagesDir = join(process.cwd(), 'packages')
@@ -86,6 +116,11 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push(
     `Avatar theme for Avatune using ${displayName.toLowerCase()} design assets.`,
   )
+  sections.push('')
+
+  // Examples
+  const themeId = getThemeId(packageName)
+  sections.push(generateExamplesSection(themeId))
   sections.push('')
 
   // Installation

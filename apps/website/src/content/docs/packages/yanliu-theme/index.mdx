@@ -6,6 +6,7 @@ source: "packages/themes/yanliu-theme/README.md"
 
 import AssetPreview from '../../../../components/docs/asset-preview.astro';
 import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   forelockBubble,
   forelockCurve,
@@ -48,6 +49,13 @@ import {
 > Source: `packages/assets/yanliu-theme/README.md`
 
 Avatar theme for Avatune using yanliu design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="123" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="1234" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="12345" size={200} />
+</div>
 
 ## Installation
 
