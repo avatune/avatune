@@ -1,5 +1,16 @@
 # @avatune/nevmstas-theme
 
+## 1.3.0
+
+### Minor Changes
+
+- [#48](https://github.com/avatune/avatune/pull/48) [`6c3a8c8`](https://github.com/avatune/avatune/commit/6c3a8c80c9b4fd387c50d4e3fe6657e0f65ae447) Thanks [@nevmstas](https://github.com/nevmstas)! - remove CupCurly asset
+
+### Patch Changes
+
+- Updated dependencies [[`6c3a8c8`](https://github.com/avatune/avatune/commit/6c3a8c80c9b4fd387c50d4e3fe6657e0f65ae447)]:
+  - @avatune/nevmstas-assets@1.3.0
+
 ## 1.2.1
 
 ### Patch Changes

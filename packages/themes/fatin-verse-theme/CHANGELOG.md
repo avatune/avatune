@@ -1,5 +1,11 @@
 # @avatune/fatin-verse-theme
 
+## 1.2.2
+
+### Patch Changes
+
+- [#48](https://github.com/avatune/avatune/pull/48) [`6c3a8c8`](https://github.com/avatune/avatune/commit/6c3a8c80c9b4fd387c50d4e3fe6657e0f65ae447) Thanks [@nevmstas](https://github.com/nevmstas)! - add licence and credits
+
 ## 1.2.1
 
 ### Patch Changes
