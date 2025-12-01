@@ -78,7 +78,6 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/nevmstas-assets/vue'
 |---------|----------|
 | ![bobRounded](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/bobRounded.svg) | `bobRounded` |
 | ![bobStraight](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/bobStraight.svg) | `bobStraight` |
-| ![cupCurly](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/cupCurly.svg) | `cupCurly` |
 | ![long](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/long.svg) | `long` |
 | ![medium](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/medium.svg) | `medium` |
 | ![short](https://raw.githubusercontent.com/avatune/avatune/main/packages/assets/nevmstas-assets/src/svg/hair/short.svg) | `short` |
@@ -112,7 +111,7 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/nevmstas-assets/vue'
 
 ## License & Credits
 
-See [LICENSE.md](LICENSE.md) for license information.
+See [LICENSE.md](https://github.com/avatune /avatune/blob/main/packages/assets/nevmstas-assets/LICENSE.md) for license information.
 
 ## Development
 

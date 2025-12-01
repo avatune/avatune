@@ -167,11 +167,11 @@ export default createTheme<BaseAvatarItem>()
     layer: 30,
   })
   .addItem('faceHair', 'chevronMustache', {
-    position: fromHeadOffset(percentage('12.78%'), percentage('45%')),
+    position: fromHeadOffset(percentage('14%'), percentage('48.5%')),
     layer: 30,
   })
   .addItem('faceHair', 'mustache', {
-    position: fromHeadOffset(percentage('13.89%'), percentage('45%')),
+    position: fromHeadOffset(percentage('16%'), percentage('49%')),
     layer: 30,
   })
   .setOptional('faceHair')
@@ -207,7 +207,7 @@ export default createTheme<BaseAvatarItem>()
   })
   // Mouth
   .addItem('mouth', 'smile', {
-    position: fromHeadOffset(percentage('20%'), percentage('52%')),
+    position: fromHeadOffset(percentage('21%'), percentage('52%')),
     layer: 22,
   })
   // Neck
@@ -217,6 +217,6 @@ export default createTheme<BaseAvatarItem>()
   })
   // Noses
   .addItem('noses', 'standard', {
-    position: fromHeadOffset(percentage('21%'), percentage('42%')),
+    position: fromHeadOffset(percentage('22%'), percentage('42%')),
     layer: 22,
   })

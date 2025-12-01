@@ -21,7 +21,6 @@ import EyesOpenRounded from './svg/eyes/openRounded.svg?native'
 // Hair
 import HairBobRounded from './svg/hair/bobRounded.svg?native'
 import HairBobStraight from './svg/hair/bobStraight.svg?native'
-import HairCupCurly from './svg/hair/cupCurly.svg?native'
 import HairLong from './svg/hair/long.svg?native'
 import HairMedium from './svg/hair/medium.svg?native'
 import HairShort from './svg/hair/short.svg?native'
@@ -64,7 +63,6 @@ export {
   // Hair
   HairBobRounded,
   HairBobStraight,
-  HairCupCurly,
   HairLong,
   HairMedium,
   HairShort,

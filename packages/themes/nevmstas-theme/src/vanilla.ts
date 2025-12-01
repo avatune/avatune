@@ -13,7 +13,6 @@ import {
   eyesOpenRounded,
   hairBobRounded,
   hairBobStraight,
-  hairCupCurly,
   hairLong,
   hairMedium,
   hairShort,
@@ -58,7 +57,6 @@ export default shared
   .withComponents('hair', {
     bobRounded: { code: hairBobRounded },
     bobStraight: { code: hairBobStraight },
-    cupCurly: { code: hairCupCurly },
     short: { code: hairShort },
     long: { code: hairLong },
     medium: { code: hairMedium },

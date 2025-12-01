@@ -24,7 +24,7 @@ export default createTheme<BaseAvatarItem>()
   .connectColors('head', ['ears'])
   .connectColors('hair', ['eyebrows'])
   .mapPrediction('hair', 'short', ['short'])
-  .mapPrediction('hair', 'medium', ['medium', 'cupCurly'])
+  .mapPrediction('hair', 'medium', ['medium'])
   .mapPrediction('hair', 'long', ['long', 'bobRounded', 'bobStraight'])
   .mapPrediction('hairColor', 'black', [HairColor.Black, HairColor.DarkBrown])
   .mapPrediction('hairColor', 'brown', [HairColor.Brown, HairColor.LightBrown])
@@ -74,6 +74,7 @@ export default createTheme<BaseAvatarItem>()
     SkinTones.Medium,
     SkinTones.Light,
     SkinTones.VeryLight,
+    SkinTones.VeryLight2,
   ])
   .addColors('body', [
     ClothingColors.Black,
@@ -157,10 +158,6 @@ export default createTheme<BaseAvatarItem>()
   })
   .addItem('hair', 'bobStraight', {
     position: fromHeadOffset(percentage('0%'), -percentage('0%')),
-    layer: 5,
-  })
-  .addItem('hair', 'cupCurly', {
-    position: fromHeadOffset(-percentage('9.88%'), -percentage('9.76%')),
     layer: 5,
   })
   .addItem('hair', 'short', {
