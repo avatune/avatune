@@ -6,6 +6,7 @@ source: "packages/themes/micah-theme/README.md"
 
 import AssetPreview from '../../../../components/docs/asset-preview.astro';
 import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   accessoriesHoopEarRing,
   accessoriesStudEarRing,
@@ -50,6 +51,12 @@ import {
 > Source: `packages/assets/micah-theme/README.md`
 
 Avatar theme for Avatune using micah design assets.
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-55" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-32" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-35" size={200} />
+</div>
 
 ## Installation
 

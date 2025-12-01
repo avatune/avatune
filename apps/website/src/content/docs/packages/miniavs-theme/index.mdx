@@ -6,6 +6,7 @@ source: "packages/themes/miniavs-theme/README.md"
 
 import AssetPreview from '../../../../components/docs/asset-preview.astro';
 import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   faceDetailsBlushes,
   bodyGolf,
@@ -37,6 +38,12 @@ import {
 > Source: `packages/assets/miniavs-theme/README.md`
 
 Avatar theme for Avatune using miniavs design assets.
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="miniavs" seed="example-1" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="miniavs" seed="example-2" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="miniavs" seed="example-3" size={200} />
+</div>
 
 ## Installation
 
