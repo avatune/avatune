@@ -1,4 +1,4 @@
-# @avatune/pawel-olek-woman-theme
+# @avatune/pawel-olek-man-theme
 
 ## 2.0.0
 
@@ -17,9 +17,3 @@
   - @avatune/types@2.0.0
   - @avatune/theme-builder@1.2.3
   - @avatune/utils@1.3.1
-
-## 1.0.1
-
-### Patch Changes
-
-- [`ee8a268`](https://github.com/avatune/avatune/commit/ee8a268ed67ba12574dcfe48131f5be77b84bb9f) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix hijab positioning
