@@ -1,5 +1,11 @@
 # @avatune/nevmstas-theme
 
+## 1.3.2
+
+### Patch Changes
+
+- [`b229c58`](https://github.com/avatune/avatune/commit/b229c5856450004646497efca1061ef259e753a4) Thanks [@teimurjan](https://github.com/teimurjan)! - Added license and correct peer dependencies
+
 ## 1.3.1
 
 ### Patch Changes

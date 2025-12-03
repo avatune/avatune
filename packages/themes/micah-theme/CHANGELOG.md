@@ -1,5 +1,11 @@
 # @avatune/micah-theme
 
+## 1.2.3
+
+### Patch Changes
+
+- [`b229c58`](https://github.com/avatune/avatune/commit/b229c5856450004646497efca1061ef259e753a4) Thanks [@teimurjan](https://github.com/teimurjan)! - Added license and correct peer dependencies
+
 ## 1.2.2
 
 ### Patch Changes
