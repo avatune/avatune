@@ -115,6 +115,7 @@
       "name": "@avatune/react-storybook",
       "version": "1.0.0",
       "dependencies": {
+        "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
@@ -153,6 +154,7 @@
       "name": "@avatune/svelte-storybook",
       "version": "1.0.0",
       "dependencies": {
+        "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
@@ -182,6 +184,7 @@
       "name": "@avatune/vanilla-storybook",
       "version": "1.0.0",
       "dependencies": {
+        "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
@@ -207,6 +210,7 @@
       "name": "@avatune/vue-storybook",
       "version": "1.0.0",
       "dependencies": {
+        "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-theme": "workspace:*",
@@ -235,6 +239,8 @@
         "@astrojs/starlight": "^0.36.2",
         "@astrojs/starlight-tailwind": "^4.0.2",
         "@astrojs/svelte": "^7.2.2",
+        "@avatune/ashley-seo-assets": "workspace:*",
+        "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-assets": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
         "@avatune/kyute-assets": "workspace:*",
@@ -265,6 +271,44 @@
       "devDependencies": {
         "shiki": "^3.15.0",
       },
+    },
+    "packages/assets/ashley-seo-assets": {
+      "name": "@avatune/ashley-seo-assets",
+      "version": "1.0.0",
+      "dependencies": {
+        "colord": "^2.9.3",
+      },
+      "devDependencies": {
+        "@avatune/rsbuild-plugin-raw-svg": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
+        "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
+        "@rsbuild/core": "^1.5.17",
+        "@rsbuild/plugin-react": "^1.4.1",
+        "@rsbuild/plugin-svelte": "^1.0.10",
+        "@rsbuild/plugin-svgr": "^1.2.2",
+        "@rsbuild/plugin-vue": "^1.2.0",
+        "@rslib/core": "^0.16.1",
+        "@types/node": "^24.9.1",
+        "react": "19.1.0",
+        "svelte": "^5.0.0",
+        "svgo": "^4.0.0",
+        "typescript": "^5.9.3",
+        "vue": "^3.5.22",
+      },
+      "peerDependencies": {
+        "react": ">=18.0.0",
+        "react-native": ">=0.74.0",
+        "react-native-svg": ">=15.0.0",
+        "svelte": ">=5.0.0",
+        "vue": "^3.5.22",
+      },
+      "optionalPeers": [
+        "react",
+        "react-native",
+        "react-native-svg",
+        "svelte",
+        "vue",
+      ],
     },
     "packages/assets/fatin-verse-assets": {
       "name": "@avatune/fatin-verse-assets",
@@ -890,6 +934,21 @@
         "@vue/compiler-sfc": "^3.5.22",
       },
     },
+    "packages/themes/ashley-seo-theme": {
+      "name": "@avatune/ashley-seo-theme",
+      "version": "1.0.0",
+      "dependencies": {
+        "@avatune/ashley-seo-assets": "workspace:*",
+        "@avatune/theme-builder": "workspace:*",
+        "@avatune/types": "workspace:*",
+        "@avatune/utils": "workspace:*",
+      },
+      "devDependencies": {
+        "@avatune/typescript-config": "workspace:*",
+        "@rslib/core": "^0.16.1",
+        "typescript": "^5.9.3",
+      },
+    },
     "packages/themes/fatin-verse-theme": {
       "name": "@avatune/fatin-verse-theme",
       "version": "1.2.4",
@@ -1198,6 +1257,10 @@
     "@astrojs/telemetry": ["@astrojs/telemetry@3.3.0", "", { "dependencies": { "ci-info": "^4.2.0", "debug": "^4.4.0", "dlv": "^1.1.3", "dset": "^3.1.4", "is-docker": "^3.0.0", "is-wsl": "^3.1.0", "which-pm-runs": "^1.1.0" } }, "sha512-UFBgfeldP06qu6khs/yY+q1cDAaArM2/7AEIqQ9Cuvf7B1hNLq0xDrZkct+QoIGyjq56y8IaE2I3CTvG99mlhQ=="],
 
     "@avatune/api-client": ["@avatune/api-client@workspace:packages/core/api-client"],
+
+    "@avatune/ashley-seo-assets": ["@avatune/ashley-seo-assets@workspace:packages/assets/ashley-seo-assets"],
+
+    "@avatune/ashley-seo-theme": ["@avatune/ashley-seo-theme@workspace:packages/themes/ashley-seo-theme"],
 
     "@avatune/cloudflare-worker": ["@avatune/cloudflare-worker@workspace:apps/cloudflare-worker"],
 
@@ -4113,6 +4176,8 @@
 
     "@astrojs/telemetry/ci-info": ["ci-info@4.3.1", "", {}, "sha512-Wdy2Igu8OcBpI2pZePZ5oWjPC38tmDVx5WKUXKwlLYkA0ozo85sLsLvkBbBn/sZaSCMFOGZJ14fvW9t5/d7kdA=="],
 
+    "@avatune/ashley-seo-assets/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
+
     "@avatune/fatin-verse-assets/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
 
     "@avatune/kyute-assets/@types/node": ["@types/node@24.10.1", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GNWcUTRBgIRJD5zj+Tq0fKOJ5XZajIiBroOF0yvj2bSU1WvNdYS/dn9UxwsujGW4JX06dnHyjV2y9rRaybH0iQ=="],
@@ -4524,6 +4589,8 @@
     "youch/cookie": ["cookie@0.7.2", "", {}, "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w=="],
 
     "@astrojs/svelte/vite/esbuild": ["esbuild@0.25.12", "", { "optionalDependencies": { "@esbuild/aix-ppc64": "0.25.12", "@esbuild/android-arm": "0.25.12", "@esbuild/android-arm64": "0.25.12", "@esbuild/android-x64": "0.25.12", "@esbuild/darwin-arm64": "0.25.12", "@esbuild/darwin-x64": "0.25.12", "@esbuild/freebsd-arm64": "0.25.12", "@esbuild/freebsd-x64": "0.25.12", "@esbuild/linux-arm": "0.25.12", "@esbuild/linux-arm64": "0.25.12", "@esbuild/linux-ia32": "0.25.12", "@esbuild/linux-loong64": "0.25.12", "@esbuild/linux-mips64el": "0.25.12", "@esbuild/linux-ppc64": "0.25.12", "@esbuild/linux-riscv64": "0.25.12", "@esbuild/linux-s390x": "0.25.12", "@esbuild/linux-x64": "0.25.12", "@esbuild/netbsd-arm64": "0.25.12", "@esbuild/netbsd-x64": "0.25.12", "@esbuild/openbsd-arm64": "0.25.12", "@esbuild/openbsd-x64": "0.25.12", "@esbuild/openharmony-arm64": "0.25.12", "@esbuild/sunos-x64": "0.25.12", "@esbuild/win32-arm64": "0.25.12", "@esbuild/win32-ia32": "0.25.12", "@esbuild/win32-x64": "0.25.12" }, "bin": { "esbuild": "bin/esbuild" } }, "sha512-bbPBYYrtZbkt6Os6FiTLCTFxvq4tt3JKall1vRwshA3fdVztsLAatFaZobhkBC8/BrPetoa0oksYoKXoG4ryJg=="],
+
+    "@avatune/ashley-seo-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 
     "@avatune/fatin-verse-assets/@types/node/undici-types": ["undici-types@7.16.0", "", {}, "sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw=="],
 

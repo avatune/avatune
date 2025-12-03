@@ -1,0 +1,108 @@
+import {
+  AccessoriesCatEars,
+  AccessoriesClownNose,
+  AccessoriesFaceMask,
+  AccessoriesGlasses,
+  AccessoriesMustache,
+  AccessoriesSailormoonCrown,
+  AccessoriesSleepMask,
+  AccessoriesSunglasses,
+  EyesAngry,
+  EyesCherry,
+  EyesConfused,
+  EyesNormal,
+  EyesSad,
+  EyesSleepy,
+  EyesStarstruck,
+  EyesWinking,
+  FaceHairBeard,
+  FaceHairChinHair,
+  FaceHairFuzz,
+  FaceHairMustache,
+  HairBangs,
+  HairBowlCutHair,
+  HairBraids,
+  HairBunHair,
+  HairCurlyBob,
+  HairCurlyShortHair,
+  HairDreads,
+  HairFroBun,
+  HairHalfShavedHead,
+  HairHijab,
+  HairMohawk,
+  HairShavedHead,
+  HairShortHair,
+  HairStraightHair,
+  HairWavyBob,
+  HeadStandart,
+  MouthAwkwardSmile,
+  MouthBraces,
+  MouthGapSmile,
+  MouthKawaii,
+  MouthOpenedSmile,
+  MouthOpenSad,
+  MouthTeethSmile,
+  MouthUnimpressed,
+} from '@avatune/ashley-seo-assets/react'
+import type { ReactAvatarItem } from '@avatune/types'
+import shared from './shared'
+
+export default shared
+  .toFramework<ReactAvatarItem>()
+  .withComponents('accessories', {
+    catEars: { Component: AccessoriesCatEars },
+    clownNose: { Component: AccessoriesClownNose },
+    faceMask: { Component: AccessoriesFaceMask },
+    glasses: { Component: AccessoriesGlasses },
+    mustache: { Component: AccessoriesMustache },
+    sailormoonCrown: { Component: AccessoriesSailormoonCrown },
+    sleepMask: { Component: AccessoriesSleepMask },
+    sunglasses: { Component: AccessoriesSunglasses },
+  })
+  .withComponents('eyes', {
+    angry: { Component: EyesAngry },
+    cherry: { Component: EyesCherry },
+    confused: { Component: EyesConfused },
+    normal: { Component: EyesNormal },
+    sad: { Component: EyesSad },
+    sleepy: { Component: EyesSleepy },
+    starstruck: { Component: EyesStarstruck },
+    winking: { Component: EyesWinking },
+  })
+  .withComponents('faceHair', {
+    beard: { Component: FaceHairBeard },
+    chinHair: { Component: FaceHairChinHair },
+    fuzz: { Component: FaceHairFuzz },
+    mustache: { Component: FaceHairMustache },
+  })
+  .withComponents('hair', {
+    bangs: { Component: HairBangs },
+    bowlCutHair: { Component: HairBowlCutHair },
+    braids: { Component: HairBraids },
+    bunHair: { Component: HairBunHair },
+    curlyBob: { Component: HairCurlyBob },
+    curlyShortHair: { Component: HairCurlyShortHair },
+    dreads: { Component: HairDreads },
+    froBun: { Component: HairFroBun },
+    halfShavedHead: { Component: HairHalfShavedHead },
+    hijab: { Component: HairHijab },
+    mohawk: { Component: HairMohawk },
+    shavedHead: { Component: HairShavedHead },
+    shortHair: { Component: HairShortHair },
+    straightHair: { Component: HairStraightHair },
+    wavyBob: { Component: HairWavyBob },
+  })
+  .withComponents('head', {
+    standart: { Component: HeadStandart },
+  })
+  .withComponents('mouth', {
+    awkwardSmile: { Component: MouthAwkwardSmile },
+    braces: { Component: MouthBraces },
+    gapSmile: { Component: MouthGapSmile },
+    kawaii: { Component: MouthKawaii },
+    openedSmile: { Component: MouthOpenedSmile },
+    openSad: { Component: MouthOpenSad },
+    teethSmile: { Component: MouthTeethSmile },
+    unimpressed: { Component: MouthUnimpressed },
+  })
+  .build()

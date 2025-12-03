@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@avatune/fatin-verse-theme": "workspace:*",
+    "@avatune/ashley-seo-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
     "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",

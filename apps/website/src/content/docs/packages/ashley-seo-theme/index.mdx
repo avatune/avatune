@@ -1,0 +1,298 @@
+---
+title: "@avatune/ashley-seo-theme"
+description: "Avatar theme for Avatune using Ashley Seo assets."
+source: "packages/themes/ashley-seo-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
+import {
+  accessoriesCatEars,
+  accessoriesClownNose,
+  accessoriesFaceMask,
+  accessoriesGlasses,
+  accessoriesMustache,
+  accessoriesSailormoonCrown,
+  accessoriesSleepMask,
+  accessoriesSunglasses,
+  mouthAwkwardSmile,
+  mouthBraces,
+  mouthGapSmile,
+  mouthKawaii,
+  mouthOpenedSmile,
+  mouthOpenSad,
+  mouthTeethSmile,
+  mouthUnimpressed,
+  headStandart,
+  faceHairBeard,
+  faceHairChinHair,
+  faceHairFuzz,
+  faceHairMustache,
+  eyesAngry,
+  eyesCherry,
+  eyesConfused,
+  eyesNormal,
+  eyesSad,
+  eyesSleepy,
+  eyesStarstruck,
+  eyesWinking,
+  hairBangs,
+  hairBowlCutHair,
+  hairBraids,
+  hairBunHair,
+  hairCurlyBob,
+  hairCurlyShortHair,
+  hairDreads,
+  hairFroBun,
+  hairHalfShavedHead,
+  hairHijab,
+  hairMohawk,
+  hairShavedHead,
+  hairShortHair,
+  hairStraightHair,
+  hairWavyBob,
+} from '@avatune/ashley-seo-assets/svg';
+
+> Source: `packages/assets/ashley-seo-theme/README.md`
+
+Avatar theme for Avatune using ashley seo design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="ashley-seo" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="ashley-seo" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="ashley-seo" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+<InstallTabs packages="@avatune/ashley-seo-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/ashley-seo-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/ashley-seo-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/ashley-seo-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/ashley-seo-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="bangs"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="sweaterVest"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Ashley Seo style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/ashley-seo-assets`](https://www.npmjs.com/package/@avatune/ashley-seo-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/ashley-seo-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashley-seo-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashley-seo-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashley-seo-assets/vue';
+```
+
+### Available Assets
+
+#### Accessories
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={accessoriesCatEars} title="catEars" hideCaption /> | `catEars` |
+| <AssetPreview svg={accessoriesClownNose} title="clownNose" hideCaption /> | `clownNose` |
+| <AssetPreview svg={accessoriesFaceMask} title="faceMask" hideCaption /> | `faceMask` |
+| <AssetPreview svg={accessoriesGlasses} title="glasses" hideCaption /> | `glasses` |
+| <AssetPreview svg={accessoriesMustache} title="mustache" hideCaption /> | `mustache` |
+| <AssetPreview svg={accessoriesSailormoonCrown} title="sailormoonCrown" hideCaption /> | `sailormoonCrown` |
+| <AssetPreview svg={accessoriesSleepMask} title="sleepMask" hideCaption /> | `sleepMask` |
+| <AssetPreview svg={accessoriesSunglasses} title="sunglasses" hideCaption /> | `sunglasses` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesAngry} title="angry" hideCaption /> | `angry` |
+| <AssetPreview svg={eyesCherry} title="cherry" hideCaption /> | `cherry` |
+| <AssetPreview svg={eyesConfused} title="confused" hideCaption /> | `confused` |
+| <AssetPreview svg={eyesNormal} title="normal" hideCaption /> | `normal` |
+| <AssetPreview svg={eyesSad} title="sad" hideCaption /> | `sad` |
+| <AssetPreview svg={eyesSleepy} title="sleepy" hideCaption /> | `sleepy` |
+| <AssetPreview svg={eyesStarstruck} title="starstruck" hideCaption /> | `starstruck` |
+| <AssetPreview svg={eyesWinking} title="winking" hideCaption /> | `winking` |
+
+#### FaceHair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairBeard} title="beard" hideCaption /> | `beard` |
+| <AssetPreview svg={faceHairChinHair} title="chinHair" hideCaption /> | `chinHair` |
+| <AssetPreview svg={faceHairFuzz} title="fuzz" hideCaption /> | `fuzz` |
+| <AssetPreview svg={faceHairMustache} title="mustache" hideCaption /> | `mustache` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBangs} title="bangs" hideCaption /> | `bangs` |
+| <AssetPreview svg={hairBowlCutHair} title="bowlCutHair" hideCaption /> | `bowlCutHair` |
+| <AssetPreview svg={hairBraids} title="braids" hideCaption /> | `braids` |
+| <AssetPreview svg={hairBunHair} title="bunHair" hideCaption /> | `bunHair` |
+| <AssetPreview svg={hairCurlyBob} title="curlyBob" hideCaption /> | `curlyBob` |
+| <AssetPreview svg={hairCurlyShortHair} title="curlyShortHair" hideCaption /> | `curlyShortHair` |
+| <AssetPreview svg={hairDreads} title="dreads" hideCaption /> | `dreads` |
+| <AssetPreview svg={hairFroBun} title="froBun" hideCaption /> | `froBun` |
+| <AssetPreview svg={hairHalfShavedHead} title="halfShavedHead" hideCaption /> | `halfShavedHead` |
+| <AssetPreview svg={hairHijab} title="hijab" hideCaption /> | `hijab` |
+| <AssetPreview svg={hairMohawk} title="mohawk" hideCaption /> | `mohawk` |
+| <AssetPreview svg={hairShavedHead} title="shavedHead" hideCaption /> | `shavedHead` |
+| <AssetPreview svg={hairShortHair} title="shortHair" hideCaption /> | `shortHair` |
+| <AssetPreview svg={hairStraightHair} title="straightHair" hideCaption /> | `straightHair` |
+| <AssetPreview svg={hairWavyBob} title="wavyBob" hideCaption /> | `wavyBob` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headStandart} title="standart" hideCaption /> | `standart` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthAwkwardSmile} title="awkwardSmile" hideCaption /> | `awkwardSmile` |
+| <AssetPreview svg={mouthBraces} title="braces" hideCaption /> | `braces` |
+| <AssetPreview svg={mouthGapSmile} title="gapSmile" hideCaption /> | `gapSmile` |
+| <AssetPreview svg={mouthKawaii} title="kawaii" hideCaption /> | `kawaii` |
+| <AssetPreview svg={mouthOpenedSmile} title="openedSmile" hideCaption /> | `openedSmile` |
+| <AssetPreview svg={mouthOpenSad} title="openSad" hideCaption /> | `openSad` |
+| <AssetPreview svg={mouthTeethSmile} title="teethSmile" hideCaption /> | `teethSmile` |
+| <AssetPreview svg={mouthUnimpressed} title="unimpressed" hideCaption /> | `unimpressed` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+This project uses avatar design assets licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Original designs by [Ashley Gaunt-Seo](https://www.figma.com/community/file/881358461963645496/custom-avatar).
+Modifications were made to adapt them for composable SVG avatars.
+
+For full details, see [CREDITS.md](credits).
+
+## Related Packages
+
+- [`@avatune/ashley-seo-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/ashley-seo-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

@@ -36,6 +36,8 @@
     "@avatune/pawel-olek-assets": "workspace:*",
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
+    "@avatune/ashley-seo-assets": "workspace:*",
+    "@avatune/ashley-seo-theme": "workspace:*",
     "@avatune/svelte": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-assets": "workspace:*",

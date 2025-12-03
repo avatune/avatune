@@ -1,0 +1,108 @@
+import {
+  accessoriesCatEars,
+  accessoriesClownNose,
+  accessoriesFaceMask,
+  accessoriesGlasses,
+  accessoriesMustache,
+  accessoriesSailormoonCrown,
+  accessoriesSleepMask,
+  accessoriesSunglasses,
+  eyesAngry,
+  eyesCherry,
+  eyesConfused,
+  eyesNormal,
+  eyesSad,
+  eyesSleepy,
+  eyesStarstruck,
+  eyesWinking,
+  faceHairBeard,
+  faceHairChinHair,
+  faceHairFuzz,
+  faceHairMustache,
+  hairBangs,
+  hairBowlCutHair,
+  hairBraids,
+  hairBunHair,
+  hairCurlyBob,
+  hairCurlyShortHair,
+  hairDreads,
+  hairFroBun,
+  hairHalfShavedHead,
+  hairHijab,
+  hairMohawk,
+  hairShavedHead,
+  hairShortHair,
+  hairStraightHair,
+  hairWavyBob,
+  headStandart,
+  mouthAwkwardSmile,
+  mouthBraces,
+  mouthGapSmile,
+  mouthKawaii,
+  mouthOpenedSmile,
+  mouthOpenSad,
+  mouthTeethSmile,
+  mouthUnimpressed,
+} from '@avatune/ashley-seo-assets'
+import type { VanillaAvatarItem, VanillaTheme } from '@avatune/types'
+import shared from './shared'
+
+export default shared
+  .toFramework<VanillaAvatarItem>()
+  .withComponents('accessories', {
+    catEars: { code: accessoriesCatEars },
+    clownNose: { code: accessoriesClownNose },
+    faceMask: { code: accessoriesFaceMask },
+    glasses: { code: accessoriesGlasses },
+    mustache: { code: accessoriesMustache },
+    sailormoonCrown: { code: accessoriesSailormoonCrown },
+    sleepMask: { code: accessoriesSleepMask },
+    sunglasses: { code: accessoriesSunglasses },
+  })
+  .withComponents('eyes', {
+    angry: { code: eyesAngry },
+    cherry: { code: eyesCherry },
+    confused: { code: eyesConfused },
+    normal: { code: eyesNormal },
+    sad: { code: eyesSad },
+    sleepy: { code: eyesSleepy },
+    starstruck: { code: eyesStarstruck },
+    winking: { code: eyesWinking },
+  })
+  .withComponents('faceHair', {
+    beard: { code: faceHairBeard },
+    chinHair: { code: faceHairChinHair },
+    fuzz: { code: faceHairFuzz },
+    mustache: { code: faceHairMustache },
+  })
+  .withComponents('hair', {
+    bangs: { code: hairBangs },
+    bowlCutHair: { code: hairBowlCutHair },
+    braids: { code: hairBraids },
+    bunHair: { code: hairBunHair },
+    curlyBob: { code: hairCurlyBob },
+    curlyShortHair: { code: hairCurlyShortHair },
+    dreads: { code: hairDreads },
+    froBun: { code: hairFroBun },
+    halfShavedHead: { code: hairHalfShavedHead },
+    hijab: { code: hairHijab },
+    mohawk: { code: hairMohawk },
+    shavedHead: { code: hairShavedHead },
+    shortHair: { code: hairShortHair },
+    straightHair: { code: hairStraightHair },
+    wavyBob: { code: hairWavyBob },
+  })
+  .withComponents('head', {
+    standart: { code: headStandart },
+  })
+  .withComponents('mouth', {
+    awkwardSmile: { code: mouthAwkwardSmile },
+    braces: { code: mouthBraces },
+    gapSmile: { code: mouthGapSmile },
+    kawaii: { code: mouthKawaii },
+    openedSmile: { code: mouthOpenedSmile },
+    openSad: { code: mouthOpenSad },
+    teethSmile: { code: mouthTeethSmile },
+    unimpressed: { code: mouthUnimpressed },
+  })
+  .build()

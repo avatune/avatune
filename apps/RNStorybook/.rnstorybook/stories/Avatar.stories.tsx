@@ -1,3 +1,4 @@
+import ashleyseoTheme from '@avatune/ashley-seo-theme/react-native'
 import fatinverseTheme from '@avatune/fatin-verse-theme/react-native'
 import kyuteTheme from '@avatune/kyute-theme/react-native'
 import micahTheme from '@avatune/micah-theme/react-native'
@@ -30,6 +31,7 @@ type ExtractStoryArgs<T extends ReactNativeTheme> = Omit<
   'theme'
 >
 
+type AshleySeoArgs = ExtractStoryArgs<typeof ashleyseoTheme>
 type FatinVerseArgs = ExtractStoryArgs<typeof fatinverseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
@@ -68,6 +70,14 @@ const getArgTypes = <T extends Theme<ReactNativeAvatarItem>>(theme: T) => {
   } as const
 
   return argTypes as StoryObj<Args>['argTypes']
+}
+
+export const AshleySeo: StoryObj<AshleySeoArgs> = {
+  argTypes: getArgTypes(ashleyseoTheme),
+  render: (args) => <Avatar theme={ashleyseoTheme} {...args} />,
+  args: {
+    size: 300,
+  },
 }
 
 export const FatinVerse: StoryObj<FatinVerseArgs> = {
@@ -143,6 +153,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
+  'Ashley Seo': ashleyseoTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,

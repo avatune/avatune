@@ -1,3 +1,4 @@
+import ashleyseoTheme from '@avatune/ashley-seo-theme/svelte'
 import fatinverseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -26,6 +27,7 @@ type ExtractStoryArgs<T extends Theme<SvelteAvatarItem>> = Omit<
   'theme'
 >
 
+type AshleySeoArgs = ExtractStoryArgs<typeof ashleyseoTheme>
 type FatinVerseArgs = ExtractStoryArgs<typeof fatinverseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
@@ -64,6 +66,17 @@ const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
   } as const
 
   return argTypes as StoryObj<Args>['argTypes']
+}
+
+export const AshleySeo: StoryObj<AshleySeoArgs> = {
+  argTypes: getArgTypes(ashleyseoTheme),
+  render: (args) => ({
+    Component: Avatar,
+    props: { theme: ashleyseoTheme, ...args },
+  }),
+  args: {
+    size: 300,
+  },
 }
 
 export const FatinVerse: StoryObj<FatinVerseArgs> = {
@@ -166,6 +179,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 }
 
 const themes = {
+  'Ashley Seo': ashleyseoTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,
