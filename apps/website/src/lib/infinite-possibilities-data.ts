@@ -1,3 +1,4 @@
+import ashleySeoTheme from '@avatune/ashley-seo-theme/vanilla'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
@@ -5,7 +6,7 @@ import nevmstasTheme from '@avatune/nevmstas-theme/vanilla'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vanilla'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/vanilla'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
-import type { AvatarPartCategory, VanillaTheme } from '@avatune/types'
+import type { VanillaTheme } from '@avatune/types'
 import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 
 /**
@@ -15,28 +16,17 @@ import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 function calculateCombinations(theme: VanillaTheme): number {
   let combinations = 1
 
-  const categoryNames: AvatarPartCategory[] = [
-    'accessories',
-    'glasses',
-    'hats',
-    'hair',
-    'faceDetails',
-    'body',
-    'ears',
-    'eyebrows',
-    'eyes',
-    'faceHair',
-    'forelock',
-    'head',
-    'mouth',
-    'neck',
-    'noses',
-  ]
-
   // Multiply all item options across all categories
-  for (const category of categoryNames) {
-    const collection = theme[category]
-    if (!collection) continue
+  for (const key of Object.keys(theme)) {
+    const collection = theme[key as keyof typeof theme]
+    if (
+      !collection ||
+      key === 'style' ||
+      key === 'colorPalettes' ||
+      key === 'predictorMappings' ||
+      key === 'connectedColors'
+    )
+      continue
 
     const itemCount = Object.keys(collection).length
     if (itemCount > 0) {
@@ -47,19 +37,17 @@ function calculateCombinations(theme: VanillaTheme): number {
   return combinations
 }
 
-// Calculate combinations for each theme at build time
-export const COMBINATIONS: Record<string, number> = {
-  miniavs: calculateCombinations(miniavsTheme),
-  yanliu: calculateCombinations(yanliuTheme),
-  nevmstas: calculateCombinations(nevmstasTheme),
-  micah: calculateCombinations(micahTheme),
-  pacovqzz: calculateCombinations(pacovqzzTheme),
-  fatinVerse: calculateCombinations(fatinVerseTheme),
-  pawelOlekMan: calculateCombinations(pawelOlekManTheme),
-  pawelOlekWoman: calculateCombinations(pawelOlekWomanTheme),
-}
-
-export const TOTAL_COMBINATIONS = Object.values(COMBINATIONS).reduce(
-  (sum, count) => sum + count,
-  0,
-)
+export const TOTAL_COMBINATIONS = [
+  miniavsTheme,
+  yanliuTheme,
+  nevmstasTheme,
+  micahTheme,
+  pacovqzzTheme,
+  fatinVerseTheme,
+  pawelOlekManTheme,
+  pawelOlekWomanTheme,
+  ashleySeoTheme,
+].reduce((acc, theme) => {
+  console.log(theme, calculateCombinations(theme))
+  return acc + calculateCombinations(theme)
+}, 0)

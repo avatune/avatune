@@ -44,7 +44,7 @@ import {
   MouthTeethSmile,
   MouthUnimpressed,
 } from '@avatune/ashley-seo-assets/svelte'
-import type { SvelteAvatarItem, SvelteTheme } from '@avatune/types'
+import type { SvelteAvatarItem } from '@avatune/types'
 import shared from './shared'
 
 export default shared

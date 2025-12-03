@@ -63,6 +63,10 @@ export default defineConfig({
               slug: 'packages/nevmstas-theme',
             },
             {
+              label: 'Ashley Seo',
+              slug: 'packages/ashley-seo-theme',
+            },
+            {
               label: 'Micah',
               slug: 'packages/micah-theme',
             },

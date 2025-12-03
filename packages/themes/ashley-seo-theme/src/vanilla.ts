@@ -44,7 +44,7 @@ import {
   mouthTeethSmile,
   mouthUnimpressed,
 } from '@avatune/ashley-seo-assets'
-import type { VanillaAvatarItem, VanillaTheme } from '@avatune/types'
+import type { VanillaAvatarItem } from '@avatune/types'
 import shared from './shared'
 
 export default shared

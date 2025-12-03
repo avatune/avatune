@@ -1,4 +1,5 @@
 <script lang="ts">
+import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -20,6 +21,7 @@ const themes = [
   pacovqzzTheme,
   fatinVerseTheme,
   pawelOlekManTheme,
+  ashleySeoTheme,
 ]
 
 const AVATAR_COUNT = 20

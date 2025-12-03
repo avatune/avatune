@@ -44,7 +44,7 @@ import {
   MouthTeethSmile,
   MouthUnimpressed,
 } from '@avatune/ashley-seo-assets/vue'
-import type { VueAvatarItem, VueTheme } from '@avatune/types'
+import type { VueAvatarItem } from '@avatune/types'
 import shared from './shared'
 
 export default shared

@@ -4,8 +4,8 @@ import { percentage } from '@avatune/utils'
 import { AccentColors, BackgroundColors, HairColors, SkinTones } from './colors'
 
 const getHeadPosition = (size: number) => ({
-  x: size * percentage('15%'),
-  y: size * percentage('13%'),
+  x: size * percentage('12%'),
+  y: size * percentage('12%'),
 })
 
 const fromHeadOffset = fromHead(getHeadPosition)
@@ -50,12 +50,38 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.Red,
     BackgroundColors.Purpose,
   ])
-  .addColors('hair', [HairColors.Black, HairColors.Red, HairColors.Brown])
-  .addColors('head', [SkinTones.Dark, SkinTones.Yellow, SkinTones.White])
-  .addColors('faceHair', [HairColors.Black, HairColors.Brown, HairColors.Red])
-  .addColors('eyes', [AccentColors.EyeBlack])
+  .addColors('hair', [
+    HairColors.Black,
+    HairColors.Red,
+    HairColors.Brown,
+    HairColors.Main,
+    HairColors.Secondary,
+    HairColors.Secondary2,
+    HairColors.Teal,
+    HairColors.DarkGray,
+    HairColors.Purple,
+  ])
+  .addColors('head', [
+    SkinTones.Dark,
+    SkinTones.Yellow,
+    SkinTones.White,
+    SkinTones.Main,
+  ])
+  .addColors('faceHair', [
+    HairColors.Black,
+    HairColors.Brown,
+    HairColors.Red,
+    HairColors.Main,
+    HairColors.Secondary,
+    HairColors.Secondary2,
+  ])
+  .addColors('eyes', [
+    AccentColors.EyeBlack,
+    AccentColors.EyeMain,
+    AccentColors.EyeDetail,
+  ])
   .addColors('accessories', [AccentColors.AccessoryBlack])
-  .addColors('mouth', [AccentColors.MouthPink])
+  .addColors('mouth', [AccentColors.MouthPink, AccentColors.MouthMain])
   // Accessories
   .addItem('accessories', 'catEars', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
@@ -204,7 +230,7 @@ export default createTheme<BaseAvatarItem>()
   })
   // Head
   .addItem('head', 'standart', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(-percentage('0%'), percentage('0%')),
     layer: 1,
   })
   // Mouth
