@@ -166,6 +166,7 @@ export function generateSnippet(
   frameworkId: string,
   themeInfo: ThemeInfo,
   selections: Record<string, string>,
+  seed: string = 'my-avatar',
 ): string {
   const frameworkSuffix =
     frameworkId === 'js'
@@ -194,7 +195,7 @@ function App() {
     <Avatar
       theme={theme}
       size={300}
-      seed="my-avatar"${propsStr}
+      seed="${seed}"${propsStr}
     />
   )
 }`
@@ -253,7 +254,7 @@ export function AvatarPreview() {
     <Avatar
       theme={theme}
       size={300}
-      seed="my-avatar"${propsStr}
+      seed="${seed}"${propsStr}
     />
   )
 }`
@@ -271,7 +272,7 @@ const container = document.getElementById('avatar-container')
 const svg = avatar({
   theme,
   size: 300,
-  seed: 'my-avatar',${propsStr}
+  seed: '${seed}',${propsStr}
 })
 
 container?.appendChild(svg)`

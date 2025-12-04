@@ -15,20 +15,19 @@ const predictions: Predictions = {
 const steps = [
   {
     id: 'skinTone',
-    label: 'Detect Skin Tone',
+    label: 'Skin Tone',
     prediction: predictions.skinTone,
   },
   {
     id: 'hairLength',
-    label: 'Detect Hair Length',
+    label: 'Hair Length',
     prediction: predictions.hairLength,
   },
   {
     id: 'hairColor',
-    label: 'Detect Hair Color',
+    label: 'Hair Color',
     prediction: predictions.hairColor,
   },
-  { id: 'combine', label: 'Mix it up', prediction: 'avatar' },
 ]
 
 function getHeadComponent(
@@ -71,25 +70,24 @@ function getHairColors(theme: ThemeType): string[] {
   return colorMap[predictions.hairColor] ?? []
 }
 
-const HeadComponent = getHeadComponent(kyuteTheme)
 const skinToneColors = getSkinToneColors(kyuteTheme)
 const hairItems = getHairItems(kyuteTheme)
 const hairColors = getHairColors(kyuteTheme)
 </script>
 
-<section class="rounded-2xl border border-white/10 bg-slate-950/80 p-4 shadow-xl shadow-pink-500/5 sm:p-6">
+<section class="rounded-2xl border border-white/10 bg-slate-950/80 py-10 px-2 shadow-xl shadow-pink-500/5 sm:py-10 sm:px-6">
   <div class="mb-4 text-center">
     <p class="text-xs font-semibold uppercase tracking-[0.3em] text-pink-200/80">Prediction Flow</p>
     <h3 class="mt-1 text-xl font-semibold text-white sm:text-2xl">Or try out experimental</h3>
   </div>
 
-  <div class="grid items-center gap-3 lg:grid-cols-[180px_auto_1fr_auto_120px]">
+  <div class="flex flex-col items-center gap-4 lg:flex-row lg:justify-between">
     <!-- Photo -->
     <div class="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-slate-900/50 p-3">
-      <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Input</p>
-      <div class="h-32 w-32 overflow-hidden rounded-lg">
+      <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Upload a photo</p>
+      <div class="h-60 w-50 overflow-hidden rounded-lg">
         <img
-          class="h-full w-full object-cover"
+          class="h-full w-full object-cover rounded-lg object-top"
           src={photo1.src}
           alt="Portrait for prediction"
           loading="lazy"
@@ -99,17 +97,20 @@ const hairColors = getHairColors(kyuteTheme)
       </div>
     </div>
 
-    <!-- Connector line: Input -> Steps -->
-    <div class="hidden items-center lg:flex">
-      <div class="h-px w-10 bg-pink-500/50"></div>
+    <!-- Connector: Photo -> Steps with Arrow and Text -->
+    <div class="flex flex-col items-center justify-center gap-2">
+      <p class="text-xs font-medium text-white">Let's detect!</p>
+      <svg class="h-8 w-12 rotate-90 text-pink-300 lg:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
     </div>
 
     <!-- Steps -->
-    <div class="space-y-2">
+    <div class="flex flex-col justify-around gap-2">
       {#each steps as step, index}
-        <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-slate-900/30 px-3 py-2">
+        <div class="flex items-center gap-3 rounded-full border border-white/10 bg-slate-900/30 px-3 py-4">
           <!-- Step number -->
-          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-500/20 text-[10px] font-bold text-pink-200">
+          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-400 text-[10px] font-bold text-white">
             {index + 1}
           </div>
 
@@ -117,11 +118,7 @@ const hairColors = getHairColors(kyuteTheme)
           <div class="min-w-[120px]">
             <p class="text-xs font-medium text-slate-300">{step.label}</p>
             <p class="text-[10px] text-slate-500">
-              {#if step.id === 'combine'}
-                Generate
-              {:else}
-                <span class="text-white">{step.prediction}</span>
-              {/if}
+              <span class="text-white text-xs">{step.prediction}</span>
             </p>
           </div>
 
@@ -129,11 +126,7 @@ const hairColors = getHairColors(kyuteTheme)
           <div class="flex flex-1 items-center justify-end gap-1.5">
             {#if step.id === 'skinTone'}
               {#each skinToneColors.slice(0, 3) as color}
-                {#if HeadComponent}
-                  <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-slate-800/80">
-                      <HeadComponent color={color} />
-                  </div>
-                {/if}
+                <div class={`w-10 h-10 rounded-full`} style={`background-color: ${color}`}></div>
               {/each}
             {:else if step.id === 'hairLength'}
               {#each hairItems.slice(0, 3) as item}
@@ -146,33 +139,26 @@ const hairColors = getHairColors(kyuteTheme)
               {/each}
             {:else if step.id === 'hairColor'}
               {#each hairColors.slice(0, 3) as color}
-                {@const firstHair = hairItems[0]}
-                {@const HairComponent = firstHair ? getHairComponent(kyuteTheme, firstHair) : null}
-                {#if HairComponent}
-                  <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-slate-800/80">
-                      <HairComponent color={color} />
-                  </div>
-                {/if}
+                <div class={`w-10 h-10 rounded-full`} style={`background-color: ${color}`}></div>
               {/each}
-            {:else if step.id === 'combine'}
-              <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-slate-800/80">
-                <Avatar theme={kyuteTheme} size={40} predictions={predictions} />
-              </div>
             {/if}
           </div>
         </div>
       {/each}
     </div>
 
-    <!-- Connector line: Steps -> Result -->
-    <div class="hidden items-center lg:flex">
-      <div class="h-px w-10 bg-pink-500/50"></div>
+    <!-- Connector: Steps -> Result with Arrow and Text -->
+    <div class="flex flex-col items-center justify-center gap-2">
+      <p class="text-xs font-medium text-white">Mix it up!</p>
+      <svg class="h-8 w-12 rotate-90 text-pink-300 lg:rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
     </div>
 
     <!-- Result -->
-    <div class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-slate-900/30 p-3">
+    <div class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-slate-900/30 p-3 w-full max-w-[240px] lg:w-60">
       <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Result</p>
-      <Avatar theme={kyuteTheme} size={80} predictions={predictions} />
+      <Avatar theme={kyuteTheme} size={220} predictions={predictions} />
       <p class="mt-2 text-center text-[10px] text-slate-500">
         {predictions.hairLength}, {predictions.hairColor}, {predictions.skinTone}
       </p>
