@@ -33,6 +33,15 @@ const { framework, highlightedCode }: Props = $props()
 		margin: 0;
 		padding: 1rem;
 		background: transparent !important;
+		overflow-x: auto;
+	}
+
+	:global(.shiki code) {
+		display: block;
+		width: 100%;
+		font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+		font-size: 0.875rem;
+		line-height: 1.5;
 	}
 </style>
 

@@ -9,7 +9,7 @@ import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/svelte'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/svelte'
 import yanliuTheme from '@avatune/yanliu-theme/svelte'
-import { codeToHtml } from 'shiki'
+import { createHighlighter } from 'shiki'
 import {
   extractCategories,
   frameworks,
@@ -42,6 +42,7 @@ let selections: Record<string, string> = {}
 let highlightedCode = ''
 let selectedCategoryTab: string | null = null
 let seed = 'my-avatar'
+let highlighter: Awaited<ReturnType<typeof createHighlighter>> | null = null
 
 $: selectedThemeInfo =
   themeInfos.find((t) => t.id === selectedThemeId) ?? themeInfos[0]
@@ -62,12 +63,30 @@ $: if (selectedCategoryTab === 'seed' && categories.length === 0) {
   selectedCategoryTab = null
 }
 
-$: updateHighlightedCode(
-  selectedFrameworkId,
-  selectedThemeInfo,
-  selections,
-  seed,
-)
+// Initialize Shiki highlighter
+createHighlighter({
+  themes: ['github-dark'],
+  langs: ['tsx', 'html', 'ts', 'javascript', 'typescript'],
+}).then((h) => {
+  highlighter = h
+  // Trigger initial code highlighting after highlighter is ready
+  updateHighlightedCode(
+    selectedFrameworkId,
+    selectedThemeInfo,
+    selections,
+    seed,
+  )
+})
+
+// Update highlighted code when dependencies change (only if highlighter is ready)
+$: if (highlighter) {
+  updateHighlightedCode(
+    selectedFrameworkId,
+    selectedThemeInfo,
+    selections,
+    seed,
+  )
+}
 
 async function updateHighlightedCode(
   frameworkId: string,
@@ -75,6 +94,20 @@ async function updateHighlightedCode(
   currentSelections: Record<string, string>,
   currentSeed: string,
 ) {
+  if (!highlighter) {
+    // Highlighter not ready yet, use plain text
+    const framework =
+      frameworks.find((f) => f.id === frameworkId) ?? frameworks[0]
+    const snippet = generateSnippet(
+      frameworkId,
+      themeInfo,
+      currentSelections,
+      currentSeed,
+    )
+    highlightedCode = `<pre class="shiki"><code>${snippet.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`
+    return
+  }
+
   const framework =
     frameworks.find((f) => f.id === frameworkId) ?? frameworks[0]
   const snippet = generateSnippet(
@@ -83,19 +116,22 @@ async function updateHighlightedCode(
     currentSelections,
     currentSeed,
   )
-  // Use typescript for vue/svelte as shiki may not have these languages loaded
+  // Use html for vue/svelte, tsx for react/react-native, ts for vanilla js
   const lang =
     framework.language === 'vue' || framework.language === 'svelte'
       ? 'html'
-      : framework.language
+      : framework.language === 'tsx'
+        ? 'tsx'
+        : 'typescript'
   try {
-    const html = await codeToHtml(snippet, {
+    const html = highlighter.codeToHtml(snippet, {
       lang,
       theme: 'github-dark',
     })
     highlightedCode = html
-  } catch {
+  } catch (error) {
     // Fallback to plain text if highlighting fails
+    console.error('Code highlighting failed:', error)
     highlightedCode = `<pre class="shiki"><code>${snippet.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`
   }
 }
