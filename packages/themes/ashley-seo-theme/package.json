@@ -1,6 +1,6 @@
 {
   "name": "@avatune/ashley-seo-theme",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"

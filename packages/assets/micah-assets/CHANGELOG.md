@@ -1,5 +1,11 @@
 # @avatune/micah-assets
 
+## 3.0.0
+
+### Major Changes
+
+- [#56](https://github.com/avatune/avatune/pull/56) [`a8d770a`](https://github.com/avatune/avatune/commit/a8d770af3abcee350d42f9cbb7c6bc4e22a23f6a) Thanks [@nevmstas](https://github.com/nevmstas)! - Export Svelte as raw Svelte component to work with SSR/SSG
+
 ## 2.0.0
 
 ### Major Changes

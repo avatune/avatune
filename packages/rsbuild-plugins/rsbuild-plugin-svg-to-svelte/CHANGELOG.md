@@ -1,5 +1,11 @@
 # @avatune/rsbuild-plugin-svg-to-svelte
 
+## 1.2.0
+
+### Minor Changes
+
+- [#56](https://github.com/avatune/avatune/pull/56) [`a8d770a`](https://github.com/avatune/avatune/commit/a8d770af3abcee350d42f9cbb7c6bc4e22a23f6a) Thanks [@nevmstas](https://github.com/nevmstas)! - Add raw Svelte export support
+
 ## 1.1.1
 
 ### Patch Changes
