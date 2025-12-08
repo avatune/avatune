@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "@avatune/root",
@@ -244,6 +243,8 @@
         "@avatune/ashley-seo-theme": "workspace:*",
         "@avatune/fatin-verse-assets": "workspace:*",
         "@avatune/fatin-verse-theme": "workspace:*",
+        "@avatune/hair-color-predictor": "workspace:*",
+        "@avatune/hair-length-predictor": "workspace:*",
         "@avatune/kyute-assets": "workspace:*",
         "@avatune/kyute-theme": "workspace:*",
         "@avatune/micah-assets": "workspace:*",
@@ -257,12 +258,15 @@
         "@avatune/pawel-olek-assets": "workspace:*",
         "@avatune/pawel-olek-man-theme": "workspace:*",
         "@avatune/pawel-olek-woman-theme": "workspace:*",
+        "@avatune/skin-tone-predictor": "workspace:*",
         "@avatune/svelte": "workspace:*",
         "@avatune/types": "workspace:*",
         "@avatune/yanliu-assets": "workspace:*",
         "@avatune/yanliu-theme": "workspace:*",
         "@tailwindcss/vite": "^4.1.17",
         "@tensorflow/tfjs": "^4.22.0",
+        "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+        "@tensorflow/tfjs-backend-webgl": "^4.22.0",
         "astro": "^5.6.1",
         "sharp": "^0.34.2",
         "svelte": "^5.43.14",

@@ -1,79 +1,182 @@
 <script lang="ts">
-import kyuteTheme from '@avatune/kyute-theme/svelte'
-import { Avatar } from '@avatune/svelte'
 import type { Predictions } from '@avatune/types'
-import photo1 from '../../assets/prediction-2.jpg'
+import { onDestroy } from 'svelte'
+import { createImageFromFile, validateImageFile } from '../../lib/file-handler'
+import {
+  initializePredictors,
+  type Predictors,
+  predictFromImage,
+} from '../../lib/predictors'
+import { getTheme } from '../../lib/themes'
+import PhotoUpload from './photo-upload.svelte'
+import PredictionSteps from './prediction-steps.svelte'
+import ResultPreview from './result-preview.svelte'
 
-type ThemeType = typeof kyuteTheme
+let selectedThemeId = 'kyute'
+let imageUrl: string | null = null
+let isDragging = false
+let isProcessing = false
+let predictions: Predictions | null = null
+let error: string | null = null
+let fileInput: HTMLInputElement | null = null
+let isThemeDropdownOpen = false
+let themeDropdownButton: HTMLButtonElement | null = null
+let themeDropdownMenu: HTMLDivElement | null = null
+let predictors: Predictors | null = null
 
-const predictions: Predictions = {
+const defaultPredictions: Predictions = {
   skinTone: 'medium',
   hairLength: 'medium',
   hairColor: 'brown',
 }
 
-const steps = [
-  {
-    id: 'skinTone',
-    label: 'Skin Tone',
-    prediction: predictions.skinTone,
-  },
-  {
-    id: 'hairLength',
-    label: 'Hair Length',
-    prediction: predictions.hairLength,
-  },
-  {
-    id: 'hairColor',
-    label: 'Hair Color',
-    prediction: predictions.hairColor,
-  },
-]
+$: currentPredictions = predictions || defaultPredictions
+$: currentTheme = getTheme(selectedThemeId)
 
-function getHeadComponent(
-  theme: ThemeType,
-): typeof kyuteTheme.head.standard.Component | null {
-  const headCategory = theme.head as Record<
-    string,
-    { Component: typeof kyuteTheme.head.standard.Component }
-  >
-  const firstKey = Object.keys(headCategory)[0]
-  return firstKey ? (headCategory[firstKey]?.Component ?? null) : null
+// Initialize predictors
+async function initPredictors() {
+  try {
+    predictors = await initializePredictors()
+  } catch (err) {
+    console.error('Failed to load predictors:', err)
+    error = 'Failed to load prediction models. Please refresh the page.'
+  }
 }
 
-function getHairComponent(
-  theme: ThemeType,
-  item: string,
-): typeof kyuteTheme.hair.bob.Component | null {
-  const hairCategory = theme.hair as Record<
-    string,
-    { Component: typeof kyuteTheme.hair.bob.Component }
-  >
-  return hairCategory?.[item]?.Component ?? null
+initPredictors()
+
+function handleDragOver(e: DragEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+  isDragging = true
 }
 
-function getSkinToneColors(theme: ThemeType): string[] {
-  const skinToneMap = theme.predictorMappings?.skinTone
-  if (!skinToneMap || !predictions.skinTone) return []
-  return skinToneMap[predictions.skinTone] ?? []
+function handleDragLeave(e: DragEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+  isDragging = false
 }
 
-function getHairItems(theme: ThemeType): string[] {
-  const hairMap = theme.predictorMappings?.hair
-  if (!hairMap || !predictions.hairLength) return []
-  return hairMap[predictions.hairLength] ?? []
+function handleDrop(e: DragEvent) {
+  e.preventDefault()
+  e.stopPropagation()
+  isDragging = false
+
+  const files = e.dataTransfer?.files
+  if (files && files.length > 0) {
+    handleFile(files[0])
+    if (fileInput) {
+      fileInput.value = ''
+    }
+  }
 }
 
-function getHairColors(theme: ThemeType): string[] {
-  const colorMap = theme.predictorMappings?.hairColor
-  if (!colorMap || !predictions.hairColor) return []
-  return colorMap[predictions.hairColor] ?? []
+function handlePaste(e: ClipboardEvent) {
+  const items = e.clipboardData?.items
+  if (!items) return
+
+  for (let i = 0; i < items.length; i++) {
+    if (items[i].type.indexOf('image') !== -1) {
+      const file = items[i].getAsFile()
+      if (file) {
+        handleFile(file)
+        if (fileInput) {
+          fileInput.value = ''
+        }
+      }
+      break
+    }
+  }
 }
 
-const skinToneColors = getSkinToneColors(kyuteTheme)
-const hairItems = getHairItems(kyuteTheme)
-const hairColors = getHairColors(kyuteTheme)
+async function handleFile(file: File) {
+  error = null
+
+  if (!validateImageFile(file)) {
+    error = 'Please upload an image file'
+    if (imageUrl) {
+      URL.revokeObjectURL(imageUrl)
+      imageUrl = null
+    }
+    return
+  }
+
+  if (imageUrl) {
+    URL.revokeObjectURL(imageUrl)
+  }
+
+  try {
+    imageUrl = URL.createObjectURL(file)
+    await processImage(file)
+  } catch (err) {
+    if (imageUrl) {
+      URL.revokeObjectURL(imageUrl)
+      imageUrl = null
+    }
+    error = 'Failed to load image. Please try a different file.'
+  }
+}
+
+async function processImage(file: File) {
+  if (!predictors) {
+    error = 'Predictors not loaded yet. Please wait...'
+    return
+  }
+
+  isProcessing = true
+  error = null
+
+  try {
+    const img = await createImageFromFile(file)
+    predictions = await predictFromImage(predictors, img)
+  } catch (err) {
+    console.error('Prediction error:', err)
+    error = 'Failed to process image. Please try again with a different image.'
+    predictions = null
+    if (imageUrl) {
+      URL.revokeObjectURL(imageUrl)
+      imageUrl = null
+    }
+  } finally {
+    isProcessing = false
+  }
+}
+
+onDestroy(() => {
+  if (imageUrl) {
+    URL.revokeObjectURL(imageUrl)
+  }
+})
+
+function handleClickOutside(event: MouseEvent) {
+  const target = event.target as Node
+  if (
+    isThemeDropdownOpen &&
+    themeDropdownButton &&
+    themeDropdownMenu &&
+    !themeDropdownButton.contains(target) &&
+    !themeDropdownMenu.contains(target)
+  ) {
+    isThemeDropdownOpen = false
+  }
+}
+
+function selectTheme(themeId: string) {
+  selectedThemeId = themeId
+  isThemeDropdownOpen = false
+}
+
+function handleImageError() {
+  if (imageUrl) {
+    URL.revokeObjectURL(imageUrl)
+    imageUrl = null
+  }
+  error =
+    'Failed to load image. The file may be corrupted or in an unsupported format.'
+}
 </script>
+
+<svelte:window onpaste={handlePaste} />
 
 <section class="rounded-2xl border border-white/10 bg-slate-950/80 py-10 px-2 shadow-xl shadow-pink-500/5 sm:py-10 sm:px-6">
   <div class="mb-4 text-center">
@@ -83,19 +186,18 @@ const hairColors = getHairColors(kyuteTheme)
 
   <div class="flex flex-col items-center gap-4 lg:flex-row lg:justify-between">
     <!-- Photo -->
-    <div class="flex flex-col items-center justify-center rounded-xl border border-dashed border-white/20 bg-slate-900/50 p-3">
-      <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Upload a photo</p>
-      <div class="h-60 w-50 overflow-hidden rounded-lg">
-        <img
-          class="h-full w-full object-cover rounded-lg object-top"
-          src={photo1.src}
-          alt="Portrait for prediction"
-          loading="lazy"
-          width={photo1.width}
-          height={photo1.height}
-        />
-      </div>
-    </div>
+    <PhotoUpload
+      bind:imageUrl
+      bind:isDragging
+      bind:isProcessing
+      bind:error
+      bind:fileInput
+      onFileSelect={handleFile}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+      onImageError={handleImageError}
+    />
 
     <!-- Connector: Photo -> Steps with Arrow and Text -->
     <div class="flex flex-col items-center justify-center gap-2">
@@ -106,46 +208,7 @@ const hairColors = getHairColors(kyuteTheme)
     </div>
 
     <!-- Steps -->
-    <div class="flex flex-col justify-around gap-2">
-      {#each steps as step, index}
-        <div class="flex items-center gap-3 rounded-full border border-white/10 bg-slate-900/30 px-3 py-4">
-          <!-- Step number -->
-          <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pink-400 text-[10px] font-bold text-white">
-            {index + 1}
-          </div>
-
-          <!-- Step label -->
-          <div class="min-w-[120px]">
-            <p class="text-xs font-medium text-slate-300">{step.label}</p>
-            <p class="text-[10px] text-slate-500">
-              <span class="text-white text-xs">{step.prediction}</span>
-            </p>
-          </div>
-
-          <!-- Asset previews -->
-          <div class="flex flex-1 items-center justify-end gap-1.5">
-            {#if step.id === 'skinTone'}
-              {#each skinToneColors.slice(0, 3) as color}
-                <div class={`w-10 h-10 rounded-full`} style={`background-color: ${color}`}></div>
-              {/each}
-            {:else if step.id === 'hairLength'}
-              {#each hairItems.slice(0, 3) as item}
-                {@const HairComponent = getHairComponent(kyuteTheme, item)}
-                {#if HairComponent}
-                  <div class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-slate-800/80">
-                      <HairComponent color="#8B7355" />
-                  </div>
-                {/if}
-              {/each}
-            {:else if step.id === 'hairColor'}
-              {#each hairColors.slice(0, 3) as color}
-                <div class={`w-10 h-10 rounded-full`} style={`background-color: ${color}`}></div>
-              {/each}
-            {/if}
-          </div>
-        </div>
-      {/each}
-    </div>
+    <PredictionSteps predictions={currentPredictions} theme={currentTheme} themeName={selectedThemeId} />
 
     <!-- Connector: Steps -> Result with Arrow and Text -->
     <div class="flex flex-col items-center justify-center gap-2">
@@ -156,12 +219,15 @@ const hairColors = getHairColors(kyuteTheme)
     </div>
 
     <!-- Result -->
-    <div class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-slate-900/30 p-3 w-full max-w-[240px] lg:w-60">
-      <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Result</p>
-      <Avatar theme={kyuteTheme} size={220} predictions={predictions} />
-      <p class="mt-2 text-center text-[10px] text-slate-500">
-        {predictions.hairLength}, {predictions.hairColor}, {predictions.skinTone}
-      </p>
-    </div>
+    <ResultPreview
+      predictions={currentPredictions}
+      bind:selectedThemeId
+      bind:isThemeDropdownOpen
+      bind:themeDropdownButton
+      bind:themeDropdownMenu
+      onThemeSelect={selectTheme}
+      onDropdownToggle={() => (isThemeDropdownOpen = !isThemeDropdownOpen)}
+      onClickOutside={handleClickOutside}
+    />
   </div>
 </section>
