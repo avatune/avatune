@@ -1,33 +1,9 @@
 <script lang="ts">
-import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
-import kyuteTheme from '@avatune/kyute-theme/svelte'
-import micahTheme from '@avatune/micah-theme/svelte'
-import miniavsTheme from '@avatune/miniavs-theme/svelte'
-import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
-import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import { Avatar } from '@avatune/svelte'
-import yanliuTheme from '@avatune/yanliu-theme/svelte'
+import type { FrameworkShowcaseEntry } from '../../lib/framework-showcase'
+import { getTheme } from '../../lib/themes'
 
-import type {
-  FrameworkShowcaseEntry,
-  FrameworkThemeId,
-} from '../../lib/framework-showcase'
-
-type FrameworkTab = FrameworkShowcaseEntry & {
-  themeId: FrameworkThemeId
-}
-
-export let entries: FrameworkTab[] = []
-
-const themeMap: Record<FrameworkThemeId, unknown> = {
-  yanliu: yanliuTheme,
-  miniavs: miniavsTheme,
-  nevmstas: nevmstasTheme,
-  micah: micahTheme,
-  kyute: kyuteTheme,
-  pacovqzz: pacovqzzTheme,
-  fatinVerse: fatinVerseTheme,
-}
+export let entries: FrameworkShowcaseEntry[] = []
 
 let selectedFrameworkId = entries[0]?.id ?? 'react'
 
@@ -37,9 +13,7 @@ const selectFramework = (id: string) => {
 
 $: selectedFramework =
   entries.find((entry) => entry.id === selectedFrameworkId) ?? entries[0]
-$: selectedTheme = selectedFramework
-  ? themeMap[selectedFramework.themeId]
-  : themeMap.yanliu
+$: selectedTheme = getTheme(selectedFramework?.themeId ?? 'yanliu')
 $: selectedSeed = selectedFramework?.id ?? 'avatune'
 </script>
 

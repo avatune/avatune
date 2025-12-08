@@ -1,12 +1,7 @@
 <script lang="ts">
 import { Avatar } from '@avatune/svelte'
-import type { Predictions, SvelteTheme } from '@avatune/types'
-import {
-  getTheme,
-  getThemeInfo,
-  type ThemeInfo,
-  themeInfos,
-} from '../../lib/themes'
+import type { Predictions } from '@avatune/types'
+import { getTheme, getThemeInfo, themeInfos } from '../../lib/themes'
 
 export let predictions: Predictions
 export let selectedThemeId: string

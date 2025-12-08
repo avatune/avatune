@@ -13,20 +13,45 @@ Uses an ethnicity classifier trained on FairFace dataset, then maps predictions 
 npm install @avatune/skin-tone-predictor @tensorflow/tfjs
 ```
 
+## Usage
+
+```ts
+import { createSkinTonePredictor } from '@avatune/skin-tone-predictor'
+
+// Uses jsDelivr CDN by default - no setup required!
+const predictor = createSkinTonePredictor()
+await predictor.loadModel()
+
+const result = await predictor.predictFromImage(imageElement)
+console.log(result)
+// {
+//   tone: 'medium',
+//   confidence: 0.72,
+//   probabilities: { dark: 0.08, medium: 0.72, light: 0.20 },
+//   ethnicity: 'indian',
+//   ethnicityConfidence: 0.65,
+//   faceDetected: true
+// }
+```
+
 ## Model Files
 
-The predictor requires TFJS model files to be publicly accessible. Three files must exist in the same directory:
+By default, models are loaded from jsDelivr CDN (`https://cdn.jsdelivr.net/npm/@avatune/skin-tone-predictor@1.2.2/dist/model`). No setup required!
+
+### Self-hosting (Optional)
+
+If you prefer to self-host the model files, copy them from `dist/model/` to your public directory:
 - `model.json` - Model architecture and weights manifest
 - `classes.json` - Class labels
 - `group1-shard1of1.bin` - Model weights
 
-### Getting the Model
+Then pass the path to the predictor:
 
-The model files are bundled in this package at `dist/model/`. Copy them to your public directory.
+```ts
+const predictor = createSkinTonePredictor('/models/skin-tone')
+```
 
-Source models are available at `python/models/ethnicity/tfjs/` in the monorepo.
-
-### Setup with Vite
+### Setup with Vite (Optional)
 
 ```ts
 import { copyFileSync, mkdirSync, readdirSync } from 'node:fs'
@@ -60,42 +85,16 @@ export default defineConfig({
 })
 ```
 
-See [apps/predictor-storybook/.storybook/vite.config.ts](../../apps/predictor-storybook/.storybook/vite.config.ts) for a working example.
-
-## Usage
-
-```ts
-import { createSkinTonePredictor } from '@avatune/skin-tone-predictor'
-import * as tf from '@tensorflow/tfjs'
-
-const predictor = createSkinTonePredictor('/models/skin-tone')
-await predictor.loadModel()
-
-// Create image tensor (normalized to [0, 1])
-const imageTensor = tf.browser.fromPixels(imageElement).div(255)
-
-const result = await predictor.predict(imageTensor)
-console.log(result)
-// {
-//   tone: 'medium',
-//   confidence: 0.72,
-//   probabilities: { dark: 0.08, medium: 0.72, light: 0.20 },
-//   ethnicity: 'indian',
-//   ethnicityConfidence: 0.65,
-//   faceDetected: true
-// }
-```
-
 ## API
 
 ### Constructor
 
 ```ts
-createSkinTonePredictor(modelDir: string)
+createSkinTonePredictor(modelDir?: string)
 ```
 
 **Parameters:**
-- `modelDir` - Path to directory containing model files (relative to public directory)
+- `modelDir` (optional) - Path to directory containing model files. Defaults to jsDelivr CDN
 
 ### Methods
 

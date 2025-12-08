@@ -88,7 +88,10 @@ export const transformSvgToSvelteSource = (
   // Apply class/style replacements only if needed
   let finalSvg = cleanSvg
   if (hasClass) {
-    finalSvg = finalSvg.replace(/class="([^"]*)"/, 'class="{className || \'$1\'}"')
+    finalSvg = finalSvg.replace(
+      /class="([^"]*)"/,
+      'class="{className || \'$1\'}"',
+    )
   }
   if (hasStyle) {
     finalSvg = finalSvg.replace(/style="([^"]*)"/, 'style="{style || \'$1\'}"')

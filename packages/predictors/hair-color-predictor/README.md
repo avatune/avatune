@@ -13,20 +13,43 @@ Tiny model (~110KB) with blazingly fast loading and inference in the browser.
 npm install @avatune/hair-color-predictor @tensorflow/tfjs
 ```
 
+## Usage
+
+```ts
+import { createHairColorPredictor } from '@avatune/hair-color-predictor'
+
+// Uses jsDelivr CDN by default - no setup required!
+const predictor = createHairColorPredictor()
+await predictor.loadModel()
+
+const result = await predictor.predictFromImage(imageElement)
+console.log(result)
+// {
+//   color: 'brown',
+//   confidence: 0.87,
+//   probabilities: { black: 0.05, brown: 0.87, blond: 0.06, gray: 0.02 },
+//   faceDetected: true
+// }
+```
+
 ## Model Files
 
-The predictor requires TFJS model files to be publicly accessible. Three files must exist in the same directory:
+By default, models are loaded from jsDelivr CDN (`https://cdn.jsdelivr.net/npm/@avatune/hair-color-predictor@1.2.2/dist/model`). No setup required!
+
+### Self-hosting (Optional)
+
+If you prefer to self-host the model files, copy them from `dist/model/` to your public directory:
 - `model.json` - Model architecture and weights manifest
 - `classes.json` - Class labels
 - `group1-shard1of1.bin` - Model weights
 
-### Getting the Model
+Then pass the path to the predictor:
 
-The model files are bundled in this package at `dist/model/`. Copy them to your public directory.
+```ts
+const predictor = createHairColorPredictor('/models/hair-color')
+```
 
-Source models are available at `python/models/hair_color/tfjs/` in the monorepo.
-
-### Setup with Vite
+### Setup with Vite (Optional)
 
 ```ts
 import { copyFileSync, mkdirSync, readdirSync } from 'node:fs'
@@ -60,39 +83,16 @@ export default defineConfig({
 })
 ```
 
-See [apps/predictor-storybook/.storybook/vite.config.ts](../../apps/predictor-storybook/.storybook/vite.config.ts) for a working example.
-
-## Usage
-
-```ts
-import { createHairColorPredictor } from '@avatune/hair-color-predictor'
-import * as tf from '@tensorflow/tfjs'
-
-const predictor = createHairColorPredictor('/models/hair-color')
-await predictor.loadModel()
-
-// Create image tensor (normalized to [0, 1])
-const imageTensor = tf.browser.fromPixels(imageElement).div(255)
-
-const result = await predictor.predict(imageTensor)
-console.log(result)
-// {
-//   color: 'brown',
-//   confidence: 0.87,
-//   probabilities: { black: 0.05, brown: 0.87, blond: 0.06, gray: 0.02 }
-// }
-```
-
 ## API
 
 ### Structure
 
 ```ts
-createHairColorPredictor(modelDir: string)
+createHairColorPredictor(modelDir?: string)
 ```
 
 **Parameters:**
-- `modelDir` - Path to directory containing model files (relative to public directory)
+- `modelDir` (optional) - Path to directory containing model files. Defaults to jsDelivr CDN
 
 ### Functions
 

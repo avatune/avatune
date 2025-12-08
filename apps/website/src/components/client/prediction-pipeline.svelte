@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Predictions } from '@avatune/types'
-import { onDestroy } from 'svelte'
+import { onDestroy, onMount } from 'svelte'
 import { createImageFromFile, validateImageFile } from '../../lib/file-handler'
 import {
   initializePredictors,
@@ -33,17 +33,16 @@ const defaultPredictions: Predictions = {
 $: currentPredictions = predictions || defaultPredictions
 $: currentTheme = getTheme(selectedThemeId)
 
-// Initialize predictors
-async function initPredictors() {
-  try {
-    predictors = await initializePredictors()
-  } catch (err) {
-    console.error('Failed to load predictors:', err)
-    error = 'Failed to load prediction models. Please refresh the page.'
-  }
-}
-
-initPredictors()
+onMount(() => {
+  initializePredictors()
+    .then((p) => {
+      predictors = p
+    })
+    .catch((err) => {
+      console.error('Failed to load predictors:', err)
+      error = 'Failed to load prediction models. Please refresh the page.'
+    })
+})
 
 function handleDragOver(e: DragEvent) {
   e.preventDefault()

@@ -109,7 +109,9 @@ function canvasToTensor(canvas: HTMLCanvasElement): tf.Tensor3D {
   })
 }
 
-export function createHairLengthPredictor(modelDir: string) {
+export function createHairLengthPredictor(
+  modelDir: string = 'https://cdn.jsdelivr.net/npm/@avatune/hair-length-predictor@1.2.2/dist/model',
+) {
   let modelStatePromise: Promise<ModelState> | null = null
 
   const faceDetector = createFaceDetector()

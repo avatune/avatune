@@ -10,9 +10,9 @@ export type Predictors = {
 }
 
 export async function initializePredictors(): Promise<Predictors> {
-  const hairColorPredictor = createHairColorPredictor('/models/hair-color')
-  const hairLengthPredictor = createHairLengthPredictor('/models/hair-length')
-  const skinTonePredictor = createSkinTonePredictor('/models/skin-tone')
+  const hairColorPredictor = createHairColorPredictor()
+  const hairLengthPredictor = createHairLengthPredictor()
+  const skinTonePredictor = createSkinTonePredictor()
 
   await Promise.all([
     hairColorPredictor.loadModel(),
@@ -27,17 +27,28 @@ export async function initializePredictors(): Promise<Predictors> {
   }
 }
 
+function yieldToMain(): Promise<void> {
+  return new Promise((resolve) => {
+    if ('scheduler' in globalThis && 'yield' in (globalThis as any).scheduler) {
+      ;(globalThis as any).scheduler.yield().then(resolve)
+    } else {
+      setTimeout(resolve, 0)
+    }
+  })
+}
+
 export async function predictFromImage(
   predictors: Predictors,
   image: HTMLImageElement,
 ): Promise<Predictions> {
-  const [hairColorResult, hairLengthResult, skinToneResult] = await Promise.all(
-    [
-      predictors.hairColor.predictFromImage(image),
-      predictors.hairLength.predictFromImage(image),
-      predictors.skinTone.predictFromImage(image),
-    ],
-  )
+  // Run predictions sequentially with yielding to prevent UI freeze
+  const hairColorResult = await predictors.hairColor.predictFromImage(image)
+  await yieldToMain()
+
+  const hairLengthResult = await predictors.hairLength.predictFromImage(image)
+  await yieldToMain()
+
+  const skinToneResult = await predictors.skinTone.predictFromImage(image)
 
   return {
     hairColor: hairColorResult.color,
