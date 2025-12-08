@@ -38,6 +38,17 @@ export default defineConfig({
 export { AvatarComponent as Avatar }
 `
           fs.writeFileSync(path.join(distDir, 'svelte.js'), svelteContent)
+
+          // Create svelte.d.ts with proper types
+          const svelteDtsContent = `export { Avatar, type AvatarProps } from './index.js';
+`
+          fs.writeFileSync(path.join(distDir, 'svelte.d.ts'), svelteDtsContent)
+
+          // Remove index.js - only keep index.d.ts for type references
+          const indexJsPath = path.join(distDir, 'index.js')
+          if (fs.existsSync(indexJsPath)) {
+            fs.unlinkSync(indexJsPath)
+          }
         })
       },
     },

@@ -29,12 +29,12 @@
   "exports": {
     ".": {
       "svelte": "./dist/svelte.js",
-      "types": "./dist/index.d.ts",
+      "types": "./dist/svelte.d.ts",
       "import": "./dist/svelte.js"
     }
   },
   "svelte": "./dist/svelte.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/svelte.d.ts",
   "files": [
     "dist"
   ],

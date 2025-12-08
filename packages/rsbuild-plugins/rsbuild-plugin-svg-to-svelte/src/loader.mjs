@@ -67,17 +67,40 @@ export const transformSvgToSvelteSource = (
     .replace(/<!DOCTYPE[^>]*>/, '') // Remove DOCTYPE
     .trim()
 
-  // Generate Svelte component source
+  // Detect which props/imports are actually used in the processed SVG
+  const usesColord = cleanSvg.includes('colord(')
+  const usesUid = cleanSvg.includes('uid')
+  const usesColor = cleanSvg.includes('{color}') || cleanSvg.includes('(color)')
+  const hasClass = /class="[^"]*"/.test(cleanSvg)
+  const hasStyle = /style="[^"]*"/.test(cleanSvg)
+
+  // Build imports conditionally
   const imports = options.imports || ''
+  const conditionalImports = usesColord ? imports : ''
+
+  // Build props list conditionally - only include props that are used
+  const props = []
+  if (hasClass) props.push("export let className = '';")
+  if (hasStyle) props.push("export let style = '';")
+  if (usesColor) props.push("export let color = 'currentColor';")
+  if (usesUid) props.push("export let uid = '';")
+
+  // Apply class/style replacements only if needed
+  let finalSvg = cleanSvg
+  if (hasClass) {
+    finalSvg = finalSvg.replace(/class="([^"]*)"/, 'class="{className || \'$1\'}"')
+  }
+  if (hasStyle) {
+    finalSvg = finalSvg.replace(/style="([^"]*)"/, 'style="{style || \'$1\'}"')
+  }
+
+  // Generate Svelte component source
   const svelteSource = `<script>
-  ${imports}
-  export let className = '';
-  export let style = '';
-  export let color = 'currentColor';
-  export let uid = '';
+  ${conditionalImports}
+  ${props.join('\n  ')}
 </script>
 
-${cleanSvg.replace(/class="([^"]*)"/, 'class="{className || \'$1\'}"').replace(/style="([^"]*)"/, 'style="{style || \'$1\'}"')}
+${finalSvg}
 `
 
   return { svelteSource, raw: svg }
