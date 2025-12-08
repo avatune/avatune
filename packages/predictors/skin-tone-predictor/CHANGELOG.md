@@ -1,5 +1,11 @@
 # @avatune/skin-tone-predictor
 
+## 1.2.3
+
+### Patch Changes
+
+- [#59](https://github.com/avatune/avatune/pull/59) [`72eac8d`](https://github.com/avatune/avatune/commit/72eac8dc140efa90a6c19be2d5cdc985b1066de8) Thanks [@nevmstas](https://github.com/nevmstas)! - Use default model dir jsdelivr CDN
+
 ## 1.2.2
 
 ### Patch Changes
