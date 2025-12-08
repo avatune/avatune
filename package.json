@@ -41,7 +41,8 @@
     "packages/themes/*",
     "packages/renderers/*",
     "packages/predictors/*",
-    "packages/rsbuild-plugins/*"
+    "packages/rsbuild-plugins/*",
+    "examples/*"
   ],
   "lint-staged": {
     "*.{js,ts,tsx,jsx,json,md,css,html,vue,svelte}": [

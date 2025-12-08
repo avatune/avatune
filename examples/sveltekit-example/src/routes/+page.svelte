@@ -4,11 +4,7 @@
 </script>
 
 <div class="container">
-	<Avatar size={64} {theme} seed="https://github.com/shadcn.png?12" />
-	<Avatar size={64} {theme} seed="https://github.com/shadcn.png?34" />
-	<Avatar size={64} {theme} seed="https://github.com/shadcn.png?56" />
-	<Avatar size={64} {theme} seed="https://github.com/shadcn.png?78" />
-	<Avatar size={64} {theme} seed="https://github.com/shadcn.png?90" />
+	<Avatar {theme} body="hoodie" head="standard" hair="short" eyes="standard" mouth="happy" />
 </div>
 
 <style>

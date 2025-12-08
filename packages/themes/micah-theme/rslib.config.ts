@@ -38,7 +38,7 @@ export default defineConfig({
         },
       },
       output: {
-        externals: [/@avatune\/.*-assets\/svelte/],
+        externals: [/@avatune\/.*/],
       },
     },
   ],

@@ -38,7 +38,9 @@ export default defineConfig({
         },
       },
       output: {
-        externals: [/@avatune\/.*-assets\/svelte/],
+        // Keep all @avatune dependencies external so SvelteKit resolves them
+        // and compiles Svelte components with correct SSR mode
+        externals: [/@avatune\/.*/],
       },
     },
   ],

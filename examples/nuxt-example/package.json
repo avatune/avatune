@@ -10,8 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@avatune/pacovqzz-theme": "^1.2.3",
-    "@avatune/vue": "^1.2.2",
+    "@avatune/pacovqzz-theme": "workspace:*",
+    "@avatune/vue": "workspace:*",
     "nuxt": "^4.2.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"

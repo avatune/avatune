@@ -9,8 +9,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@avatune/pacovqzz-theme": "^1.2.3",
-    "@avatune/react": "^1.2.2",
+    "@avatune/pacovqzz-theme": "workspace:*",
+    "@avatune/react": "workspace:*",
     "next": "16.0.5",
     "react": "19.2.0",
     "react-dom": "19.2.0"

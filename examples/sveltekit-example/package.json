@@ -21,7 +21,7 @@
     "vite": "^7.2.2"
   },
   "dependencies": {
-    "@avatune/pacovqzz-theme": "^1.2.4",
-    "@avatune/svelte": "^1.2.2"
+    "@avatune/pacovqzz-theme": "workspace:*",
+    "@avatune/svelte": "workspace:*"
   }
 }
