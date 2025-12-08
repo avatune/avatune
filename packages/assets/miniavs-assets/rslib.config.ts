@@ -28,7 +28,6 @@ export default defineConfig({
     entry: {
       react: './src/react.ts',
       svg: './src/svg.ts',
-      svelte: './src/svelte.ts',
       vue: './src/vue.ts',
     },
   },
@@ -64,6 +63,10 @@ ${variables.exports};
       svgoConfig,
       imports: colordImport,
       replaceAttrValues: getReplaceAttrValues('color'),
+      emitSvelteFiles: {
+        svgDir: './src/svg',
+        outDir: './dist/svelte',
+      },
     }),
     pluginVue(),
     pluginSvelte(),

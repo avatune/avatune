@@ -76,12 +76,12 @@ import MouthSmirkRight from './svg/mouth/smirk-right.svg?svelte'
 import MouthTinyDot from './svg/mouth/tiny-dot.svg?svelte'
 
 // Nose
-import NoseNoseCurve from './svg/nose/curve.svg?svelte'
-import NoseNoseLong from './svg/nose/long.svg?svelte'
-import NoseNosePointy from './svg/nose/pointy.svg?svelte'
-import NoseNoseRound from './svg/nose/round.svg?svelte'
-import NoseNoseSmall from './svg/nose/small.svg?svelte'
-import NoseNoseSoft from './svg/nose/soft.svg?svelte'
+import NoseCurve from './svg/nose/curve.svg?svelte'
+import NoseLong from './svg/nose/long.svg?svelte'
+import NosePointy from './svg/nose/pointy.svg?svelte'
+import NoseRound from './svg/nose/round.svg?svelte'
+import NoseSmall from './svg/nose/small.svg?svelte'
+import NoseSoft from './svg/nose/soft.svg?svelte'
 
 export {
   // Accessories
@@ -154,10 +154,10 @@ export {
   MouthSmirkRight,
   MouthTinyDot,
   // Nose
-  NoseNoseCurve,
-  NoseNoseLong,
-  NoseNosePointy,
-  NoseNoseRound,
-  NoseNoseSmall,
-  NoseNoseSoft,
+  NoseCurve,
+  NoseLong,
+  NosePointy,
+  NoseRound,
+  NoseSmall,
+  NoseSoft,
 }

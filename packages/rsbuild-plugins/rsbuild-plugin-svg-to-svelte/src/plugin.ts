@@ -1,10 +1,20 @@
 // plugin.ts
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core'
 import type { Config as SvgoConfig } from 'svgo'
+// @ts-expect-error - loader.mjs exports transformSvgToSvelteSource
+import { transformSvgToSvelteSource } from './loader.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export type EmitSvelteFilesOptions = {
+  /** Source directory containing SVG files organized in category folders */
+  svgDir: string
+  /** Output directory for .svelte files (default: 'dist/svelte') */
+  outDir?: string
+}
 
 export type PluginOptions = {
   svgoConfig?: SvgoConfig
@@ -15,9 +25,23 @@ export type PluginOptions = {
   debug?: boolean
   imports?: string
   replaceAttrValues?: Record<string, string>
+  /** Emit raw .svelte files for SSR compatibility */
+  emitSvelteFiles?: EmitSvelteFilesOptions
 }
 
 const SVG_REGEX = /\.svg$/
+
+function toPascalCase(str: string): string {
+  return str
+    .replace(/\.svg$/, '')
+    .split(/[-_]/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join('')
+}
+
+function capitalizeFirst(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
 
 const getDefaultSvgoConfig = (): SvgoConfig =>
   ({
@@ -237,5 +261,120 @@ export const pluginSvgToSvelte = (
 
       if (debug) console.log(`[${PLUGIN_NAME}] svg rules configured`)
     })
+
+    // Emit raw .svelte files for SSR compatibility
+    if (options.emitSvelteFiles) {
+      api.onAfterBuild(async () => {
+        const { svgDir = 'svg', outDir = 'dist/svelte' } =
+          options.emitSvelteFiles ?? {}
+        const debug = !!options.debug
+
+        if (!fs.existsSync(svgDir)) {
+          console.warn(`[${PLUGIN_NAME}] svgDir not found: ${svgDir}`)
+          return
+        }
+
+        const svgoConfig = options.svgoConfig || getDefaultSvgoConfig()
+        const replaceAttrValues = options.replaceAttrValues
+          ? Object.entries(options.replaceAttrValues).reduce(
+              (acc, [key, value]) => {
+                acc[key] = value
+                acc[key.toLowerCase()] = value
+                return acc
+              },
+              options.replaceAttrValues,
+            )
+          : undefined
+
+        const transformOptions = {
+          svgo: options.svgo ?? true,
+          svgoConfig,
+          imports: options.imports,
+          replaceAttrValues,
+        }
+
+        // Ensure output directory exists
+        fs.mkdirSync(outDir, { recursive: true })
+
+        // Parse src/svelte.ts to get the correct export names
+        // This handles cases where manual naming differs from auto-generated names
+        const svelteSourcePath = path.join(path.dirname(svgDir), 'svelte.ts')
+        const exportNameMap = new Map<string, string>() // svgPath -> exportName
+
+        if (fs.existsSync(svelteSourcePath)) {
+          const sourceContent = fs.readFileSync(svelteSourcePath, 'utf-8')
+          // Match: import ComponentName from './svg/category/file.svg?svelte'
+          const importRegex =
+            /import\s+(\w+)\s+from\s+['"]\.\/svg\/([^'"]+)\.svg\?svelte['"]/g
+          let match = importRegex.exec(sourceContent)
+          while (match !== null) {
+            const exportName = match[1]
+            const relativePath = match[2]
+            if (exportName && relativePath) {
+              exportNameMap.set(relativePath, exportName)
+            }
+
+            match = importRegex.exec(sourceContent)
+          }
+        }
+
+        // Find all SVG files organized by category
+        const categories = fs.readdirSync(svgDir).filter((item) => {
+          const itemPath = path.join(svgDir, item)
+          return fs.statSync(itemPath).isDirectory()
+        })
+
+        const exports: string[] = []
+
+        for (const category of categories) {
+          const categoryPath = path.join(svgDir, category)
+          const files = fs
+            .readdirSync(categoryPath)
+            .filter((f) => f.endsWith('.svg'))
+
+          for (const file of files) {
+            const svgPath = path.join(categoryPath, file)
+            const svgContent = fs.readFileSync(svgPath, 'utf-8')
+            const baseName = file.replace(/\.svg$/, '')
+            const relativePath = `${category}/${baseName}`
+
+            // Use name from source file if available, otherwise generate from path
+            const componentName =
+              exportNameMap.get(relativePath) ||
+              `${capitalizeFirst(category)}${toPascalCase(baseName)}`
+            const svelteFileName = `${componentName}.svelte`
+
+            // Transform SVG to Svelte source
+            const { svelteSource } = transformSvgToSvelteSource(
+              svgContent,
+              transformOptions,
+              svgPath,
+            )
+
+            // Write .svelte file
+            const outPath = path.join(outDir, svelteFileName)
+            fs.writeFileSync(outPath, svelteSource, 'utf-8')
+
+            exports.push(
+              `export { default as ${componentName} } from './${svelteFileName}'`,
+            )
+
+            if (debug) {
+              console.log(`[${PLUGIN_NAME}] emitted ${svelteFileName}`)
+            }
+          }
+        }
+
+        // Write index.js that re-exports all components
+        const indexContent = `${exports.join('\n')}\n`
+        fs.writeFileSync(path.join(outDir, 'index.js'), indexContent, 'utf-8')
+
+        if (debug) {
+          console.log(
+            `[${PLUGIN_NAME}] emitted ${exports.length} .svelte files to ${outDir}`,
+          )
+        }
+      })
+    }
   },
 })

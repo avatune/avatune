@@ -50,10 +50,9 @@
       "require": "./dist/vue.cjs"
     },
     "./svelte": {
-      "types": "./dist/svelte.d.ts",
       "svelte": "./dist/svelte.js",
-      "import": "./dist/svelte.js",
-      "require": "./dist/svelte.cjs"
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.js"
     },
     "./react-native": {
       "types": "./dist/react-native.d.ts",

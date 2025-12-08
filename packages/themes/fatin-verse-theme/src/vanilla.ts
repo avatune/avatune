@@ -60,12 +60,12 @@ import {
   mouthSmirkLeft,
   mouthSmirkRight,
   mouthTinyDot,
-  noseNoseCurve,
-  noseNoseLong,
-  noseNosePointy,
-  noseNoseRound,
-  noseNoseSmall,
-  noseNoseSoft,
+  noseCurve,
+  noseLong,
+  nosePointy,
+  noseRound,
+  noseSmall,
+  noseSoft,
 } from '@avatune/fatin-verse-assets'
 import type { VanillaAvatarItem } from '@avatune/types'
 import shared from './shared'
@@ -152,11 +152,11 @@ export default shared
     tinyDot: { code: mouthTinyDot },
   })
   .withComponents('nose', {
-    noseCurve: { code: noseNoseCurve },
-    noseLong: { code: noseNoseLong },
-    nosePointy: { code: noseNosePointy },
-    noseRound: { code: noseNoseRound },
-    noseSmall: { code: noseNoseSmall },
-    noseSoft: { code: noseNoseSoft },
+    noseCurve: { code: noseCurve },
+    noseLong: { code: noseLong },
+    nosePointy: { code: nosePointy },
+    noseRound: { code: noseRound },
+    noseSmall: { code: noseSmall },
+    noseSoft: { code: noseSoft },
   })
   .build()

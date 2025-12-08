@@ -60,12 +60,12 @@ import {
   MouthSmirkLeft,
   MouthSmirkRight,
   MouthTinyDot,
-  NoseNoseCurve,
-  NoseNoseLong,
-  NoseNosePointy,
-  NoseNoseRound,
-  NoseNoseSmall,
-  NoseNoseSoft,
+  NoseCurve,
+  NoseLong,
+  NosePointy,
+  NoseRound,
+  NoseSmall,
+  NoseSoft,
 } from '@avatune/fatin-verse-assets/react-native'
 import type { ReactNativeAvatarItem } from '@avatune/types'
 import shared from './shared'
@@ -152,11 +152,11 @@ export default shared
     tinyDot: { Component: MouthTinyDot },
   })
   .withComponents('nose', {
-    noseCurve: { Component: NoseNoseCurve },
-    noseLong: { Component: NoseNoseLong },
-    nosePointy: { Component: NoseNosePointy },
-    noseRound: { Component: NoseNoseRound },
-    noseSmall: { Component: NoseNoseSmall },
-    noseSoft: { Component: NoseNoseSoft },
+    noseCurve: { Component: NoseCurve },
+    noseLong: { Component: NoseLong },
+    nosePointy: { Component: NosePointy },
+    noseRound: { Component: NoseRound },
+    noseSmall: { Component: NoseSmall },
+    noseSoft: { Component: NoseSoft },
   })
   .build()

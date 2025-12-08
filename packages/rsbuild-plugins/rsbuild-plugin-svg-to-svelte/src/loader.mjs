@@ -22,9 +22,15 @@ const applyReplacements = (svg, replacements = {}) => {
   return result
 }
 
-const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
+/**
+ * Transform SVG to Svelte component source (not compiled)
+ */
+export const transformSvgToSvelteSource = (
+  contents,
+  options = {},
+  resourcePath = '',
+) => {
   let svg = String(contents)
-  const resourcePath = state.filePath || state.filename || ''
 
   // Apply SVGO optimization FIRST
   if (options.svgo !== false) {
@@ -74,17 +80,27 @@ const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
 ${cleanSvg.replace(/class="([^"]*)"/, 'class="{className || \'$1\'}"').replace(/style="([^"]*)"/, 'style="{style || \'$1\'}"')}
 `
 
-  // Compile Svelte component to JavaScript
+  return { svelteSource, raw: svg }
+}
+
+const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
+  const resourcePath = state.filePath || state.filename || ''
+  const { svelteSource, raw } = transformSvgToSvelteSource(
+    contents,
+    options,
+    resourcePath,
+  )
+
+  // Compile Svelte component to JavaScript for bundled output
   const compiled = compile(svelteSource, {
     filename: resourcePath,
-    generate: 'dom',
-    hydratable: false,
+    generate: 'client',
     css: 'injected',
   })
 
   // Export compiled component + raw SVG
   const out = `${compiled.js.code}
-export const raw = ${JSON.stringify(svg)};
+export const raw = ${JSON.stringify(raw)};
 `
 
   return out

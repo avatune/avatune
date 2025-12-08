@@ -28,13 +28,12 @@
   "type": "module",
   "exports": {
     ".": {
+      "svelte": "./dist/svelte.js",
       "types": "./dist/index.d.ts",
-      "svelte": "./dist/index.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/svelte.js"
     }
   },
-  "svelte": "./dist/index.js",
+  "svelte": "./dist/svelte.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"

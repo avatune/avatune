@@ -15,7 +15,7 @@ import EyebrowsEyelashesDown from './svg/eyebrows/eyelashes-down.svg?native'
 import EyebrowsEyelashesUp from './svg/eyebrows/eyelashes-up.svg?native'
 import EyebrowsUp from './svg/eyebrows/up.svg?native'
 // Eyes
-import Eyeshadow from './svg/eyes/eyeshadow.svg?native'
+import EyesEyeshadow from './svg/eyes/eyeshadow.svg?native'
 import EyesRound from './svg/eyes/round.svg?native'
 import EyesSmiling from './svg/eyes/smiling.svg?native'
 import EyesStandard from './svg/eyes/standard.svg?native'
@@ -66,7 +66,7 @@ export {
   EyebrowsEyelashesUp,
   EyebrowsUp,
   // Eyes
-  Eyeshadow,
+  EyesEyeshadow,
   EyesRound,
   EyesSmiling,
   EyesStandard,

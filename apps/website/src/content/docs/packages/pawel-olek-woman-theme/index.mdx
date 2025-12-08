@@ -4,14 +4,22 @@ description: "Avatar theme for Avatune using Pawel Olek Woman assets."
 source: "packages/themes/pawel-olek-woman-theme/README.md"
 ---
 
-import AssetPreview from "../../../../components/docs/asset-preview.astro";
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   faceDetailsChinDimple1,
   faceDetailsChinDimple2,
   faceDetailsChinDimple3,
   faceDetailsChinDimple4,
+  noseManBig,
+  noseManBigWide,
+  noseManSmall,
+  noseManStandard,
+  noseManWide,
+  noseWomanBig,
+  noseWomanSmall,
+  noseWomanStandard,
   mouthChin,
   mouthPhiltrum1,
   mouthPhiltrum2,
@@ -50,14 +58,6 @@ import {
   headManStandard,
   headWomanChin,
   headWomanStandard,
-  noseManBig,
-  noseManBigWide,
-  noseManSmall,
-  noseManStandard,
-  noseManWide,
-  noseWomanBig,
-  noseWomanSmall,
-  noseWomanStandard,
   eyesManBig,
   eyesManEyelashes,
   eyesManEyelids,
@@ -82,31 +82,17 @@ import {
   hairWomanLowBun,
   hairWomanMedium,
   hairWomanStickBun,
-} from "@avatune/pawel-olek-assets/svg";
+} from '@avatune/pawel-olek-assets/svg';
 
 > Source: `packages/assets/pawel-olek-woman-theme/README.md`
 
 Avatar theme for Avatune using pawel olek woman design assets.
 
+
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="pawel-olek-woman"
-    seed="example-12345"
-    size={200}
-  />
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="pawel-olek-woman"
-    seed="example-678910"
-    size={200}
-  />
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="pawel-olek-woman"
-    seed="example-101112131415"
-    size={200}
-  />
+  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
@@ -120,8 +106,8 @@ This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla
 ### React
 
 ```tsx
-import { Avatar } from "@avatune/react";
-import theme from "@avatune/pawel-olek-woman-theme/react";
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/pawel-olek-woman-theme/react'
 
 function App() {
   return (
@@ -130,7 +116,7 @@ function App() {
       size={300}
       seed="optional-seed-for-random-generation"
     />
-  );
+  )
 }
 ```
 
@@ -138,8 +124,8 @@ function App() {
 
 ```vue
 <script setup lang="ts">
-import { Avatar } from "@avatune/vue";
-import theme from "@avatune/pawel-olek-woman-theme/vue";
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/pawel-olek-woman-theme/vue'
 </script>
 
 <template>
@@ -169,17 +155,17 @@ import theme from "@avatune/pawel-olek-woman-theme/vue";
 ### Vanilla JavaScript
 
 ```typescript
-import { avatar } from "@avatune/vanilla";
-import theme from "@avatune/pawel-olek-woman-theme/vanilla";
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/pawel-olek-woman-theme/vanilla'
 
-const container = document.getElementById("avatar-container");
+const container = document.getElementById('avatar-container')
 const svg = avatar({
   theme,
   size: 300,
-  seed: "optional-seed-for-random-generation",
-});
+  seed: 'optional-seed-for-random-generation',
+})
 
-container?.appendChild(svg);
+container?.appendChild(svg)
 ```
 
 ## Customization
@@ -190,10 +176,10 @@ You can override specific avatar parts:
 <Avatar
   theme={theme}
   size={300}
-  hair="bob" // Choose specific hair style
-  hairColor="#FF5733" // Custom hair color
-  body="sweaterVest" // Choose specific clothing
-  bodyColor="#3498DB" // Custom clothing color
+  hair="bob"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="sweaterVest"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
 />
 ```
 
@@ -208,74 +194,62 @@ The assets are available in the [`@avatune/pawel-olek-assets`](https://www.npmjs
 #### SVG Paths
 
 ```typescript
-import { hair, eyes, mouth } from "@avatune/pawel-olek-assets";
+import { hair, eyes, mouth } from '@avatune/pawel-olek-assets';
 ```
 
 #### React Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/pawel-olek-assets/react";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pawel-olek-assets/react';
 ```
 
 #### Svelte Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/pawel-olek-assets/svelte";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pawel-olek-assets/svelte';
 ```
 
 #### Vue Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/pawel-olek-assets/vue";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/pawel-olek-assets/vue';
 ```
 
 ### Available Assets
 
 #### Ears
 
-| Preview                                                                            | Filename            |
-| ---------------------------------------------------------------------------------- | ------------------- |
-| <AssetPreview svg={earsManBig} title="manBig" hideCaption />                       | `manBig`            |
-| <AssetPreview svg={earsManBiten} title="manBiten" hideCaption />                   | `manBiten`          |
-| <AssetPreview svg={earsManRingEarring} title="manRingEarring" hideCaption />       | `manRingEarring`    |
-| <AssetPreview svg={earsManSmall} title="manSmall" hideCaption />                   | `manSmall`          |
-| <AssetPreview svg={earsManStandard} title="manStandard" hideCaption />             | `manStandard`       |
-| <AssetPreview svg={earsManStudEarrings} title="manStudEarrings" hideCaption />     | `manStudEarrings`   |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={earsManBig} title="manBig" hideCaption /> | `manBig` |
+| <AssetPreview svg={earsManBiten} title="manBiten" hideCaption /> | `manBiten` |
+| <AssetPreview svg={earsManRingEarring} title="manRingEarring" hideCaption /> | `manRingEarring` |
+| <AssetPreview svg={earsManSmall} title="manSmall" hideCaption /> | `manSmall` |
+| <AssetPreview svg={earsManStandard} title="manStandard" hideCaption /> | `manStandard` |
+| <AssetPreview svg={earsManStudEarrings} title="manStudEarrings" hideCaption /> | `manStudEarrings` |
 | <AssetPreview svg={earsWomanDropEarrings} title="womanDropEarrings" hideCaption /> | `womanDropEarrings` |
-| <AssetPreview svg={earsWomanSharp} title="womanSharp" hideCaption />               | `womanSharp`        |
-| <AssetPreview svg={earsWomanStandard} title="womanStandard" hideCaption />         | `womanStandard`     |
+| <AssetPreview svg={earsWomanSharp} title="womanSharp" hideCaption /> | `womanSharp` |
+| <AssetPreview svg={earsWomanStandard} title="womanStandard" hideCaption /> | `womanStandard` |
 
 #### Eyes
 
-| Preview                                                                    | Filename        |
-| -------------------------------------------------------------------------- | --------------- |
-| <AssetPreview svg={eyesManBig} title="manBig" hideCaption />               | `manBig`        |
-| <AssetPreview svg={eyesManEyelashes} title="manEyelashes" hideCaption />   | `manEyelashes`  |
-| <AssetPreview svg={eyesManEyelids} title="manEyelids" hideCaption />       | `manEyelids`    |
-| <AssetPreview svg={eyesManHappy} title="manHappy" hideCaption />           | `manHappy`      |
-| <AssetPreview svg={eyesManSmall} title="manSmall" hideCaption />           | `manSmall`      |
-| <AssetPreview svg={eyesManStandard} title="manStandard" hideCaption />     | `manStandard`   |
-| <AssetPreview svg={eyesWomanBig} title="womanBig" hideCaption />           | `womanBig`      |
-| <AssetPreview svg={eyesWomanHappy} title="womanHappy" hideCaption />       | `womanHappy`    |
-| <AssetPreview svg={eyesWomanSmall} title="womanSmall" hideCaption />       | `womanSmall`    |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesManBig} title="manBig" hideCaption /> | `manBig` |
+| <AssetPreview svg={eyesManEyelashes} title="manEyelashes" hideCaption /> | `manEyelashes` |
+| <AssetPreview svg={eyesManEyelids} title="manEyelids" hideCaption /> | `manEyelids` |
+| <AssetPreview svg={eyesManHappy} title="manHappy" hideCaption /> | `manHappy` |
+| <AssetPreview svg={eyesManSmall} title="manSmall" hideCaption /> | `manSmall` |
+| <AssetPreview svg={eyesManStandard} title="manStandard" hideCaption /> | `manStandard` |
+| <AssetPreview svg={eyesWomanBig} title="womanBig" hideCaption /> | `womanBig` |
+| <AssetPreview svg={eyesWomanHappy} title="womanHappy" hideCaption /> | `womanHappy` |
+| <AssetPreview svg={eyesWomanSmall} title="womanSmall" hideCaption /> | `womanSmall` |
 | <AssetPreview svg={eyesWomanStandard} title="womanStandard" hideCaption /> | `womanStandard` |
 
 #### FaceDetails
 
-| Preview                                                                       | Filename      |
-| ----------------------------------------------------------------------------- | ------------- |
+| Preview | Filename |
+|---------|----------|
 | <AssetPreview svg={faceDetailsChinDimple1} title="chinDimple1" hideCaption /> | `chinDimple1` |
 | <AssetPreview svg={faceDetailsChinDimple2} title="chinDimple2" hideCaption /> | `chinDimple2` |
 | <AssetPreview svg={faceDetailsChinDimple3} title="chinDimple3" hideCaption /> | `chinDimple3` |
@@ -283,78 +257,78 @@ import {
 
 #### Glasses
 
-| Preview                                                                     | Filename       |
-| --------------------------------------------------------------------------- | -------------- |
-| <AssetPreview svg={glassesManBrow} title="manBrow" hideCaption />           | `manBrow`      |
-| <AssetPreview svg={glassesManPatch} title="manPatch" hideCaption />         | `manPatch`     |
-| <AssetPreview svg={glassesManRound} title="manRound" hideCaption />         | `manRound`     |
-| <AssetPreview svg={glassesManSquare} title="manSquare" hideCaption />       | `manSquare`    |
-| <AssetPreview svg={glassesManStylish} title="manStylish" hideCaption />     | `manStylish`   |
-| <AssetPreview svg={glassesWomanPatch} title="womanPatch" hideCaption />     | `womanPatch`   |
-| <AssetPreview svg={glassesWomanRound} title="womanRound" hideCaption />     | `womanRound`   |
-| <AssetPreview svg={glassesWomanSquare} title="womanSquare" hideCaption />   | `womanSquare`  |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={glassesManBrow} title="manBrow" hideCaption /> | `manBrow` |
+| <AssetPreview svg={glassesManPatch} title="manPatch" hideCaption /> | `manPatch` |
+| <AssetPreview svg={glassesManRound} title="manRound" hideCaption /> | `manRound` |
+| <AssetPreview svg={glassesManSquare} title="manSquare" hideCaption /> | `manSquare` |
+| <AssetPreview svg={glassesManStylish} title="manStylish" hideCaption /> | `manStylish` |
+| <AssetPreview svg={glassesWomanPatch} title="womanPatch" hideCaption /> | `womanPatch` |
+| <AssetPreview svg={glassesWomanRound} title="womanRound" hideCaption /> | `womanRound` |
+| <AssetPreview svg={glassesWomanSquare} title="womanSquare" hideCaption /> | `womanSquare` |
 | <AssetPreview svg={glassesWomanStylish} title="womanStylish" hideCaption /> | `womanStylish` |
 
 #### Hair
 
-| Preview                                                                          | Filename           |
-| -------------------------------------------------------------------------------- | ------------------ |
-| <AssetPreview svg={hairBeanie} title="beanie" hideCaption />                     | `beanie`           |
-| <AssetPreview svg={hairHijab} title="hijab" hideCaption />                       | `hijab`            |
-| <AssetPreview svg={hairManBald} title="manBald" hideCaption />                   | `manBald`          |
-| <AssetPreview svg={hairManCurly} title="manCurly" hideCaption />                 | `manCurly`         |
-| <AssetPreview svg={hairManElvis} title="manElvis" hideCaption />                 | `manElvis`         |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBeanie} title="beanie" hideCaption /> | `beanie` |
+| <AssetPreview svg={hairHijab} title="hijab" hideCaption /> | `hijab` |
+| <AssetPreview svg={hairManBald} title="manBald" hideCaption /> | `manBald` |
+| <AssetPreview svg={hairManCurly} title="manCurly" hideCaption /> | `manCurly` |
+| <AssetPreview svg={hairManElvis} title="manElvis" hideCaption /> | `manElvis` |
 | <AssetPreview svg={hairManMediumTopknot} title="manMediumTopknot" hideCaption /> | `manMediumTopknot` |
-| <AssetPreview svg={hairManMessy} title="manMessy" hideCaption />                 | `manMessy`         |
-| <AssetPreview svg={hairManShortTopknot} title="manShortTopknot" hideCaption />   | `manShortTopknot`  |
-| <AssetPreview svg={hairManStylish} title="manStylish" hideCaption />             | `manStylish`       |
-| <AssetPreview svg={hairWomanBob} title="womanBob" hideCaption />                 | `womanBob`         |
-| <AssetPreview svg={hairWomanlong} title="womanlong" hideCaption />               | `womanlong`        |
-| <AssetPreview svg={hairWomanLowBun} title="womanLowBun" hideCaption />           | `womanLowBun`      |
-| <AssetPreview svg={hairWomanMedium} title="womanMedium" hideCaption />           | `womanMedium`      |
-| <AssetPreview svg={hairWomanStickBun} title="womanStickBun" hideCaption />       | `womanStickBun`    |
+| <AssetPreview svg={hairManMessy} title="manMessy" hideCaption /> | `manMessy` |
+| <AssetPreview svg={hairManShortTopknot} title="manShortTopknot" hideCaption /> | `manShortTopknot` |
+| <AssetPreview svg={hairManStylish} title="manStylish" hideCaption /> | `manStylish` |
+| <AssetPreview svg={hairWomanBob} title="womanBob" hideCaption /> | `womanBob` |
+| <AssetPreview svg={hairWomanlong} title="womanlong" hideCaption /> | `womanlong` |
+| <AssetPreview svg={hairWomanLowBun} title="womanLowBun" hideCaption /> | `womanLowBun` |
+| <AssetPreview svg={hairWomanMedium} title="womanMedium" hideCaption /> | `womanMedium` |
+| <AssetPreview svg={hairWomanStickBun} title="womanStickBun" hideCaption /> | `womanStickBun` |
 
 #### Head
 
-| Preview                                                                              | Filename             |
-| ------------------------------------------------------------------------------------ | -------------------- |
-| <AssetPreview svg={headManBeardMustache} title="manBeardMustache" hideCaption />     | `manBeardMustache`   |
-| <AssetPreview svg={headManBeardSharp} title="manBeardSharp" hideCaption />           | `manBeardSharp`      |
-| <AssetPreview svg={headManBeardSlim} title="manBeardSlim" hideCaption />             | `manBeardSlim`       |
-| <AssetPreview svg={headManBeardStandard} title="manBeardStandard" hideCaption />     | `manBeardStandard`   |
-| <AssetPreview svg={headManBristle} title="manBristle" hideCaption />                 | `manBristle`         |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headManBeardMustache} title="manBeardMustache" hideCaption /> | `manBeardMustache` |
+| <AssetPreview svg={headManBeardSharp} title="manBeardSharp" hideCaption /> | `manBeardSharp` |
+| <AssetPreview svg={headManBeardSlim} title="manBeardSlim" hideCaption /> | `manBeardSlim` |
+| <AssetPreview svg={headManBeardStandard} title="manBeardStandard" hideCaption /> | `manBeardStandard` |
+| <AssetPreview svg={headManBristle} title="manBristle" hideCaption /> | `manBristle` |
 | <AssetPreview svg={headManBristleMustache} title="manBristleMustache" hideCaption /> | `manBristleMustache` |
-| <AssetPreview svg={headManChin} title="manChin" hideCaption />                       | `manChin`            |
-| <AssetPreview svg={headManSharp} title="manSharp" hideCaption />                     | `manSharp`           |
-| <AssetPreview svg={headManStandard} title="manStandard" hideCaption />               | `manStandard`        |
-| <AssetPreview svg={headWomanChin} title="womanChin" hideCaption />                   | `womanChin`          |
-| <AssetPreview svg={headWomanStandard} title="womanStandard" hideCaption />           | `womanStandard`      |
+| <AssetPreview svg={headManChin} title="manChin" hideCaption /> | `manChin` |
+| <AssetPreview svg={headManSharp} title="manSharp" hideCaption /> | `manSharp` |
+| <AssetPreview svg={headManStandard} title="manStandard" hideCaption /> | `manStandard` |
+| <AssetPreview svg={headWomanChin} title="womanChin" hideCaption /> | `womanChin` |
+| <AssetPreview svg={headWomanStandard} title="womanStandard" hideCaption /> | `womanStandard` |
 
 #### Mouth
 
-| Preview                                                             | Filename    |
-| ------------------------------------------------------------------- | ----------- |
-| <AssetPreview svg={mouthChin} title="chin" hideCaption />           | `chin`      |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthChin} title="chin" hideCaption /> | `chin` |
 | <AssetPreview svg={mouthPhiltrum1} title="philtrum1" hideCaption /> | `philtrum1` |
 | <AssetPreview svg={mouthPhiltrum2} title="philtrum2" hideCaption /> | `philtrum2` |
-| <AssetPreview svg={mouthSad} title="sad" hideCaption />             | `sad`       |
-| <AssetPreview svg={mouthSmall} title="small" hideCaption />         | `small`     |
-| <AssetPreview svg={mouthSmile} title="smile" hideCaption />         | `smile`     |
-| <AssetPreview svg={mouthTongue1} title="tongue1" hideCaption />     | `tongue1`   |
-| <AssetPreview svg={mouthTongue2} title="tongue2" hideCaption />     | `tongue2`   |
-| <AssetPreview svg={mouthVampire} title="vampire" hideCaption />     | `vampire`   |
+| <AssetPreview svg={mouthSad} title="sad" hideCaption /> | `sad` |
+| <AssetPreview svg={mouthSmall} title="small" hideCaption /> | `small` |
+| <AssetPreview svg={mouthSmile} title="smile" hideCaption /> | `smile` |
+| <AssetPreview svg={mouthTongue1} title="tongue1" hideCaption /> | `tongue1` |
+| <AssetPreview svg={mouthTongue2} title="tongue2" hideCaption /> | `tongue2` |
+| <AssetPreview svg={mouthVampire} title="vampire" hideCaption /> | `vampire` |
 
 #### Nose
 
-| Preview                                                                    | Filename        |
-| -------------------------------------------------------------------------- | --------------- |
-| <AssetPreview svg={noseManBig} title="manBig" hideCaption />               | `manBig`        |
-| <AssetPreview svg={noseManBigWide} title="manBigWide" hideCaption />       | `manBigWide`    |
-| <AssetPreview svg={noseManSmall} title="manSmall" hideCaption />           | `manSmall`      |
-| <AssetPreview svg={noseManStandard} title="manStandard" hideCaption />     | `manStandard`   |
-| <AssetPreview svg={noseManWide} title="manWide" hideCaption />             | `manWide`       |
-| <AssetPreview svg={noseWomanBig} title="womanBig" hideCaption />           | `womanBig`      |
-| <AssetPreview svg={noseWomanSmall} title="womanSmall" hideCaption />       | `womanSmall`    |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseManBig} title="manBig" hideCaption /> | `manBig` |
+| <AssetPreview svg={noseManBigWide} title="manBigWide" hideCaption /> | `manBigWide` |
+| <AssetPreview svg={noseManSmall} title="manSmall" hideCaption /> | `manSmall` |
+| <AssetPreview svg={noseManStandard} title="manStandard" hideCaption /> | `manStandard` |
+| <AssetPreview svg={noseManWide} title="manWide" hideCaption /> | `manWide` |
+| <AssetPreview svg={noseWomanBig} title="womanBig" hideCaption /> | `womanBig` |
+| <AssetPreview svg={noseWomanSmall} title="womanSmall" hideCaption /> | `womanSmall` |
 | <AssetPreview svg={noseWomanStandard} title="womanStandard" hideCaption /> | `womanStandard` |
 
 ## License & Credits

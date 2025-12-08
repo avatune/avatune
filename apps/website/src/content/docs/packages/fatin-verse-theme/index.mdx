@@ -4,9 +4,9 @@ description: "Avatar theme for Avatune using Fatin Verse assets."
 source: "packages/themes/fatin-verse-theme/README.md"
 ---
 
-import AssetPreview from "../../../../components/docs/asset-preview.astro";
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   accessoriesBeautyMark,
   accessoriesCap,
@@ -30,6 +30,12 @@ import {
   bodyStripedOverall,
   bodySuit,
   bodyTurtleneck,
+  noseCurve,
+  noseLong,
+  nosePointy,
+  noseRound,
+  noseSmall,
+  noseSoft,
   mouthNeutralLine,
   mouthSmileSmall,
   mouthSmileSoft,
@@ -47,12 +53,6 @@ import {
   headWide,
   faceHairBeard,
   faceHairMustache,
-  noseNoseCurve,
-  noseNoseLong,
-  noseNosePointy,
-  noseNoseRound,
-  noseNoseSmall,
-  noseNoseSoft,
   eyesFocused,
   eyesHappy,
   eyesNeutral,
@@ -75,31 +75,17 @@ import {
   hairSpiky,
   hairTightCurls,
   hairVolumized,
-} from "@avatune/fatin-verse-assets/svg";
+} from '@avatune/fatin-verse-assets/svg';
 
 > Source: `packages/assets/fatin-verse-theme/README.md`
 
 Avatar theme for Avatune using fatin verse design assets.
 
+
 <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="fatin-verse"
-    seed="example-12345"
-    size={200}
-  />
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="fatin-verse"
-    seed="example-678910"
-    size={200}
-  />
-  <AvatarUsagePreview
-    client:only="svelte"
-    themeId="fatin-verse"
-    seed="example-101112131415"
-    size={200}
-  />
+  <AvatarUsagePreview client:only="svelte" themeId="fatin-verse" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="fatin-verse" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="fatin-verse" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
@@ -113,8 +99,8 @@ This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla
 ### React
 
 ```tsx
-import { Avatar } from "@avatune/react";
-import theme from "@avatune/fatin-verse-theme/react";
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/fatin-verse-theme/react'
 
 function App() {
   return (
@@ -123,7 +109,7 @@ function App() {
       size={300}
       seed="optional-seed-for-random-generation"
     />
-  );
+  )
 }
 ```
 
@@ -131,8 +117,8 @@ function App() {
 
 ```vue
 <script setup lang="ts">
-import { Avatar } from "@avatune/vue";
-import theme from "@avatune/fatin-verse-theme/vue";
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/fatin-verse-theme/vue'
 </script>
 
 <template>
@@ -162,17 +148,17 @@ import theme from "@avatune/fatin-verse-theme/vue";
 ### Vanilla JavaScript
 
 ```typescript
-import { avatar } from "@avatune/vanilla";
-import theme from "@avatune/fatin-verse-theme/vanilla";
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/fatin-verse-theme/vanilla'
 
-const container = document.getElementById("avatar-container");
+const container = document.getElementById('avatar-container')
 const svg = avatar({
   theme,
   size: 300,
-  seed: "optional-seed-for-random-generation",
-});
+  seed: 'optional-seed-for-random-generation',
+})
 
-container?.appendChild(svg);
+container?.appendChild(svg)
 ```
 
 ## Customization
@@ -183,10 +169,10 @@ You can override specific avatar parts:
 <Avatar
   theme={theme}
   size={300}
-  hair="curlyPuff" // Choose specific hair style
-  hairColor="#FF5733" // Custom hair color
-  body="hoodie" // Choose specific clothing
-  bodyColor="#3498DB" // Custom clothing color
+  hair="curlyPuff"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="hoodie"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
 />
 ```
 
@@ -201,152 +187,140 @@ The assets are available in the [`@avatune/fatin-verse-assets`](https://www.npmj
 #### SVG Paths
 
 ```typescript
-import { hair, eyes, mouth } from "@avatune/fatin-verse-assets";
+import { hair, eyes, mouth } from '@avatune/fatin-verse-assets';
 ```
 
 #### React Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/fatin-verse-assets/react";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/fatin-verse-assets/react';
 ```
 
 #### Svelte Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/fatin-verse-assets/svelte";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/fatin-verse-assets/svelte';
 ```
 
 #### Vue Components
 
 ```typescript
-import {
-  HairShort,
-  EyesBoring,
-  MouthSmile,
-} from "@avatune/fatin-verse-assets/vue";
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/fatin-verse-assets/vue';
 ```
 
 ### Available Assets
 
 #### Accessories
 
-| Preview                                                                            | Filename         |
-| ---------------------------------------------------------------------------------- | ---------------- |
-| <AssetPreview svg={accessoriesBeautyMark} title="beauty-mark" hideCaption />       | `beauty-mark`    |
-| <AssetPreview svg={accessoriesCap} title="cap" hideCaption />                      | `cap`            |
-| <AssetPreview svg={accessoriesEarpieceLeft} title="earpiece-left" hideCaption />   | `earpiece-left`  |
-| <AssetPreview svg={accessoriesEarringRight} title="earring-right" hideCaption />   | `earring-right`  |
-| <AssetPreview svg={accessoriesGlassesRound} title="glasses-round" hideCaption />   | `glasses-round`  |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={accessoriesBeautyMark} title="beauty-mark" hideCaption /> | `beauty-mark` |
+| <AssetPreview svg={accessoriesCap} title="cap" hideCaption /> | `cap` |
+| <AssetPreview svg={accessoriesEarpieceLeft} title="earpiece-left" hideCaption /> | `earpiece-left` |
+| <AssetPreview svg={accessoriesEarringRight} title="earring-right" hideCaption /> | `earring-right` |
+| <AssetPreview svg={accessoriesGlassesRound} title="glasses-round" hideCaption /> | `glasses-round` |
 | <AssetPreview svg={accessoriesGlassesSquare} title="glasses-square" hideCaption /> | `glasses-square` |
-| <AssetPreview svg={accessoriesHeadsetMic} title="headset-mic" hideCaption />       | `headset-mic`    |
-| <AssetPreview svg={accessoriesMask} title="mask" hideCaption />                    | `mask`           |
-| <AssetPreview svg={accessoriesVisorGlasses} title="visor-glasses" hideCaption />   | `visor-glasses`  |
+| <AssetPreview svg={accessoriesHeadsetMic} title="headset-mic" hideCaption /> | `headset-mic` |
+| <AssetPreview svg={accessoriesMask} title="mask" hideCaption /> | `mask` |
+| <AssetPreview svg={accessoriesVisorGlasses} title="visor-glasses" hideCaption /> | `visor-glasses` |
 
 #### Body
 
-| Preview                                                                       | Filename          |
-| ----------------------------------------------------------------------------- | ----------------- |
-| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption />                  | `hoodie`          |
-| <AssetPreview svg={bodyJacket} title="jacket" hideCaption />                  | `jacket`          |
-| <AssetPreview svg={bodyScarfTop} title="scarf-top" hideCaption />             | `scarf-top`       |
-| <AssetPreview svg={bodyShirtTie} title="shirt-tie" hideCaption />             | `shirt-tie`       |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyJacket} title="jacket" hideCaption /> | `jacket` |
+| <AssetPreview svg={bodyScarfTop} title="scarf-top" hideCaption /> | `scarf-top` |
+| <AssetPreview svg={bodyShirtTie} title="shirt-tie" hideCaption /> | `shirt-tie` |
 | <AssetPreview svg={bodyStripedOverall} title="striped-overall" hideCaption /> | `striped-overall` |
-| <AssetPreview svg={bodySuit} title="suit" hideCaption />                      | `suit`            |
-| <AssetPreview svg={bodyTurtleneck} title="turtleneck" hideCaption />          | `turtleneck`      |
+| <AssetPreview svg={bodySuit} title="suit" hideCaption /> | `suit` |
+| <AssetPreview svg={bodyTurtleneck} title="turtleneck" hideCaption /> | `turtleneck` |
 
 #### Eyebrows
 
-| Preview                                                               | Filename      |
-| --------------------------------------------------------------------- | ------------- |
-| <AssetPreview svg={eyebrowsAngled} title="brow-angled" hideCaption /> | `brow-angled` |
-| <AssetPreview svg={eyebrowsFlat} title="brow-flat" hideCaption />     | `brow-flat`   |
-| <AssetPreview svg={eyebrowsRaised} title="brow-raised" hideCaption /> | `brow-raised` |
-| <AssetPreview svg={eyebrowsSoft} title="brow-soft" hideCaption />     | `brow-soft`   |
-| <AssetPreview svg={eyebrowsThick} title="brow-thick" hideCaption />   | `brow-thick`  |
-| <AssetPreview svg={eyebrowsThin} title="brow-thin" hideCaption />     | `brow-thin`   |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyebrowsAngled} title="angled" hideCaption /> | `angled` |
+| <AssetPreview svg={eyebrowsFlat} title="flat" hideCaption /> | `flat` |
+| <AssetPreview svg={eyebrowsRaised} title="raised" hideCaption /> | `raised` |
+| <AssetPreview svg={eyebrowsSoft} title="soft" hideCaption /> | `soft` |
+| <AssetPreview svg={eyebrowsThick} title="thick" hideCaption /> | `thick` |
+| <AssetPreview svg={eyebrowsThin} title="thin" hideCaption /> | `thin` |
 
 #### Eyes
 
-| Preview                                                                 | Filename         |
-| ----------------------------------------------------------------------- | ---------------- |
-| <AssetPreview svg={eyesFocused} title="eyes-focused" hideCaption />     | `eyes-focused`   |
-| <AssetPreview svg={eyesHappy} title="eyes-happy" hideCaption />         | `eyes-happy`     |
-| <AssetPreview svg={eyesNeutral} title="eyes-neutral" hideCaption />     | `eyes-neutral`   |
-| <AssetPreview svg={eyesSurprised} title="eyes-surprised" hideCaption /> | `eyes-surprised` |
-| <AssetPreview svg={eyesWide} title="eyes-wide" hideCaption />           | `eyes-wide`      |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesFocused} title="focused" hideCaption /> | `focused` |
+| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
+| <AssetPreview svg={eyesNeutral} title="neutral" hideCaption /> | `neutral` |
+| <AssetPreview svg={eyesSurprised} title="surprised" hideCaption /> | `surprised` |
+| <AssetPreview svg={eyesWide} title="wide" hideCaption /> | `wide` |
 
 #### FaceHair
 
-| Preview                                                              | Filename   |
-| -------------------------------------------------------------------- | ---------- |
-| <AssetPreview svg={faceHairBeard} title="beard" hideCaption />       | `beard`    |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairBeard} title="beard" hideCaption /> | `beard` |
 | <AssetPreview svg={faceHairMustache} title="mustache" hideCaption /> | `mustache` |
 
 #### Hair
 
-| Preview                                                                   | Filename        |
-| ------------------------------------------------------------------------- | --------------- |
-| <AssetPreview svg={hairCurlyPuff} title="curly-puff" hideCaption />       | `curly-puff`    |
-| <AssetPreview svg={hairCurlyTop} title="curly-top" hideCaption />         | `curly-top`     |
-| <AssetPreview svg={hairCurvedLong} title="curved-long" hideCaption />     | `curved-long`   |
-| <AssetPreview svg={hairDoubleBuns} title="double-buns" hideCaption />     | `double-buns`   |
-| <AssetPreview svg={hairLongBraid} title="long-braid" hideCaption />       | `long-braid`    |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairCurlyPuff} title="curly-puff" hideCaption /> | `curly-puff` |
+| <AssetPreview svg={hairCurlyTop} title="curly-top" hideCaption /> | `curly-top` |
+| <AssetPreview svg={hairCurvedLong} title="curved-long" hideCaption /> | `curved-long` |
+| <AssetPreview svg={hairDoubleBuns} title="double-buns" hideCaption /> | `double-buns` |
+| <AssetPreview svg={hairLongBraid} title="long-braid" hideCaption /> | `long-braid` |
 | <AssetPreview svg={hairLongStraight} title="long-straight" hideCaption /> | `long-straight` |
-| <AssetPreview svg={hairLongWave} title="long-wave" hideCaption />         | `long-wave`     |
-| <AssetPreview svg={hairLowBun} title="low-bun" hideCaption />             | `low-bun`       |
-| <AssetPreview svg={hairShortCurly} title="short-curly" hideCaption />     | `short-curly`   |
-| <AssetPreview svg={hairShortFlip} title="short-flip" hideCaption />       | `short-flip`    |
-| <AssetPreview svg={hairShortMessy} title="short-messy" hideCaption />     | `short-messy`   |
-| <AssetPreview svg={hairShortWave} title="short-wave" hideCaption />       | `short-wave`    |
+| <AssetPreview svg={hairLongWave} title="long-wave" hideCaption /> | `long-wave` |
+| <AssetPreview svg={hairLowBun} title="low-bun" hideCaption /> | `low-bun` |
+| <AssetPreview svg={hairShortCurly} title="short-curly" hideCaption /> | `short-curly` |
+| <AssetPreview svg={hairShortFlip} title="short-flip" hideCaption /> | `short-flip` |
+| <AssetPreview svg={hairShortMessy} title="short-messy" hideCaption /> | `short-messy` |
+| <AssetPreview svg={hairShortWave} title="short-wave" hideCaption /> | `short-wave` |
 | <AssetPreview svg={hairSidePonytail} title="side-ponytail" hideCaption /> | `side-ponytail` |
-| <AssetPreview svg={hairSideSweep} title="side-sweep" hideCaption />       | `side-sweep`    |
-| <AssetPreview svg={hairSpiky} title="spiky" hideCaption />                | `spiky`         |
-| <AssetPreview svg={hairTightCurls} title="tight-curls" hideCaption />     | `tight-curls`   |
-| <AssetPreview svg={hairVolumized} title="volumized" hideCaption />        | `volumized`     |
+| <AssetPreview svg={hairSideSweep} title="side-sweep" hideCaption /> | `side-sweep` |
+| <AssetPreview svg={hairSpiky} title="spiky" hideCaption /> | `spiky` |
+| <AssetPreview svg={hairTightCurls} title="tight-curls" hideCaption /> | `tight-curls` |
+| <AssetPreview svg={hairVolumized} title="volumized" hideCaption /> | `volumized` |
 
 #### Head
 
-| Preview                                                          | Filename   |
-| ---------------------------------------------------------------- | ---------- |
-| <AssetPreview svg={headDiamond} title="diamond" hideCaption />   | `diamond`  |
-| <AssetPreview svg={headHeart} title="heart" hideCaption />       | `heart`    |
-| <AssetPreview svg={headOval} title="oval" hideCaption />         | `oval`     |
-| <AssetPreview svg={headPear} title="pear" hideCaption />         | `pear`     |
-| <AssetPreview svg={headRound} title="round" hideCaption />       | `round`    |
-| <AssetPreview svg={headSquare} title="square" hideCaption />     | `square`   |
-| <AssetPreview svg={headThin} title="thin" hideCaption />         | `thin`     |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headDiamond} title="diamond" hideCaption /> | `diamond` |
+| <AssetPreview svg={headHeart} title="heart" hideCaption /> | `heart` |
+| <AssetPreview svg={headOval} title="oval" hideCaption /> | `oval` |
+| <AssetPreview svg={headPear} title="pear" hideCaption /> | `pear` |
+| <AssetPreview svg={headRound} title="round" hideCaption /> | `round` |
+| <AssetPreview svg={headSquare} title="square" hideCaption /> | `square` |
+| <AssetPreview svg={headThin} title="thin" hideCaption /> | `thin` |
 | <AssetPreview svg={headTriangle} title="triangle" hideCaption /> | `triangle` |
-| <AssetPreview svg={headWide} title="wide" hideCaption />         | `wide`     |
+| <AssetPreview svg={headWide} title="wide" hideCaption /> | `wide` |
 
 #### Mouth
 
-| Preview                                                                  | Filename       |
-| ------------------------------------------------------------------------ | -------------- |
+| Preview | Filename |
+|---------|----------|
 | <AssetPreview svg={mouthNeutralLine} title="neutral-line" hideCaption /> | `neutral-line` |
-| <AssetPreview svg={mouthSmileSmall} title="smile-small" hideCaption />   | `smile-small`  |
-| <AssetPreview svg={mouthSmileSoft} title="smile-soft" hideCaption />     | `smile-soft`   |
-| <AssetPreview svg={mouthSmirkLeft} title="smirk-left" hideCaption />     | `smirk-left`   |
-| <AssetPreview svg={mouthSmirkRight} title="smirk-right" hideCaption />   | `smirk-right`  |
-| <AssetPreview svg={mouthTinyDot} title="tiny-dot" hideCaption />         | `tiny-dot`     |
+| <AssetPreview svg={mouthSmileSmall} title="smile-small" hideCaption /> | `smile-small` |
+| <AssetPreview svg={mouthSmileSoft} title="smile-soft" hideCaption /> | `smile-soft` |
+| <AssetPreview svg={mouthSmirkLeft} title="smirk-left" hideCaption /> | `smirk-left` |
+| <AssetPreview svg={mouthSmirkRight} title="smirk-right" hideCaption /> | `smirk-right` |
+| <AssetPreview svg={mouthTinyDot} title="tiny-dot" hideCaption /> | `tiny-dot` |
 
 #### Nose
 
-| Preview                                                               | Filename      |
-| --------------------------------------------------------------------- | ------------- |
-| <AssetPreview svg={noseNoseCurve} title="nose-curve" hideCaption />   | `nose-curve`  |
-| <AssetPreview svg={noseNoseLong} title="nose-long" hideCaption />     | `nose-long`   |
-| <AssetPreview svg={noseNosePointy} title="nose-pointy" hideCaption /> | `nose-pointy` |
-| <AssetPreview svg={noseNoseRound} title="nose-round" hideCaption />   | `nose-round`  |
-| <AssetPreview svg={noseNoseSmall} title="nose-small" hideCaption />   | `nose-small`  |
-| <AssetPreview svg={noseNoseSoft} title="nose-soft" hideCaption />     | `nose-soft`   |
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseCurve} title="curve" hideCaption /> | `curve` |
+| <AssetPreview svg={noseLong} title="long" hideCaption /> | `long` |
+| <AssetPreview svg={nosePointy} title="pointy" hideCaption /> | `pointy` |
+| <AssetPreview svg={noseRound} title="round" hideCaption /> | `round` |
+| <AssetPreview svg={noseSmall} title="small" hideCaption /> | `small` |
+| <AssetPreview svg={noseSoft} title="soft" hideCaption /> | `soft` |
 
 ## License & Credits
 

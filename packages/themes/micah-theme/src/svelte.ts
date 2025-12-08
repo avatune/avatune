@@ -10,7 +10,7 @@ import {
   EyebrowsEyelashesDown,
   EyebrowsEyelashesUp,
   EyebrowsUp,
-  Eyeshadow,
+  EyesEyeshadow,
   EyesRound,
   EyesSmiling,
   EyesStandard,
@@ -63,7 +63,7 @@ export default shared
     up: { Component: EyebrowsUp },
   })
   .withComponents('eyes', {
-    eyeshadow: { Component: Eyeshadow },
+    eyeshadow: { Component: EyesEyeshadow },
     round: { Component: EyesRound },
     smiling: { Component: EyesSmiling },
     standard: { Component: EyesStandard },
