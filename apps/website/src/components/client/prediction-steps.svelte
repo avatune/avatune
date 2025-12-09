@@ -84,7 +84,7 @@ $: faceHairItems = getFaceHairItems(theme, predictions)
           {#each hairColors.slice(0, 3) as color}
             <div class="w-10 h-10 rounded-full" style={`background-color: ${color}`}></div>
           {/each}
-        {:else if step.id === 'facialHair'}
+        {:else if step.id === 'faceHair'}
           {#if faceHairItems.length > 0}
             {#each faceHairItems.slice(0, 3) as item (item + '-facialHair-' + themeName)}
               {@const FaceHairComponent = getFaceHairComponent(theme, item)}

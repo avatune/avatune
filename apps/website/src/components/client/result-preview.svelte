@@ -19,7 +19,9 @@ $: selectedThemeInfo = getThemeInfo(selectedThemeId)
 
 <div class="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-slate-900/30 p-3 w-full max-w-[240px] lg:w-60">
   <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">Result</p>
-  <Avatar theme={svelteTheme} size={220} {predictions} />
+  {#key selectedThemeId}
+    <Avatar theme={svelteTheme} size={220} {predictions} />
+  {/key}
   <div class="mt-4 w-full">
     <label for="theme-dropdown-button" class="mb-2 block text-xs font-medium text-slate-400">Theme</label>
     <div class="relative">
@@ -34,7 +36,9 @@ $: selectedThemeInfo = getThemeInfo(selectedThemeId)
       >
         <div class="flex items-center gap-2">
           <div class="h-6 w-6 rounded overflow-hidden shrink-0">
-            <Avatar theme={svelteTheme} size={24} {predictions} />
+            {#key selectedThemeId}
+              <Avatar theme={svelteTheme} size={24} {predictions} />
+            {/key}
           </div>
           <span>{selectedThemeInfo.label}</span>
         </div>
@@ -57,7 +61,9 @@ $: selectedThemeInfo = getThemeInfo(selectedThemeId)
               class="w-full px-3 py-2 text-left text-xs text-white transition-colors flex items-center gap-2 {selectedThemeId === themeInfo.id ? 'bg-pink-500/20' : 'bg-transparent hover:bg-slate-700/50'}"
             >
               <div class="h-8 w-8 rounded overflow-hidden shrink-0">
-                <Avatar theme={theme} size={32} {predictions} />
+                {#key themeInfo.id}
+                  <Avatar theme={theme} size={32} {predictions} />
+                {/key}
               </div>
               <span class="flex-1">{themeInfo.label}</span>
               {#if selectedThemeId === themeInfo.id}
