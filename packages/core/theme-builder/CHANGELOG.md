@@ -1,5 +1,13 @@
 # @avatune/theme-builder
 
+## 1.2.5
+
+### Patch Changes
+
+- Updated dependencies [[`96556c4`](https://github.com/avatune/avatune/commit/96556c4e15164e3173d01634640c4fd80672b5ab)]:
+  - @avatune/types@2.1.0
+  - @avatune/utils@1.4.0
+
 ## 1.2.4
 
 ### Patch Changes
