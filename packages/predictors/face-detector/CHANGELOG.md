@@ -1,5 +1,11 @@
 # @avatune/face-detector
 
+## 1.2.2
+
+### Patch Changes
+
+- [#57](https://github.com/avatune/avatune/pull/57) [`b536c61`](https://github.com/avatune/avatune/commit/b536c61afef0a3c8f851d48bb6c50d913b47bb64) Thanks [@nevmstas](https://github.com/nevmstas)! - Add cropFaceForFacialHair
+
 ## 1.2.1
 
 ### Patch Changes

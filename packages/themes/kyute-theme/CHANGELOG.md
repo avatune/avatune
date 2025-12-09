@@ -1,5 +1,16 @@
 # @avatune/kyute-theme
 
+## 2.0.1
+
+### Patch Changes
+
+- [#57](https://github.com/avatune/avatune/pull/57) [`b536c61`](https://github.com/avatune/avatune/commit/b536c61afef0a3c8f851d48bb6c50d913b47bb64) Thanks [@nevmstas](https://github.com/nevmstas)! - Improve prediction set
+
+- Updated dependencies [[`b536c61`](https://github.com/avatune/avatune/commit/b536c61afef0a3c8f851d48bb6c50d913b47bb64)]:
+  - @avatune/types@2.0.1
+  - @avatune/utils@1.3.2
+  - @avatune/theme-builder@1.2.4
+
 ## 2.0.0
 
 ### Major Changes
