@@ -96,6 +96,7 @@ Train custom TensorFlow.js models or use pre-trained predictors:
 | Predictor | Package | Description |
 |-----------|---------|-------------|
 | Face Detector | [`@avatune/face-detector`](./packages/predictors/face-detector) | Detect faces in images |
+| Facial Hair Predictor | [`@avatune/facial-hair-predictor`](./packages/predictors/facial-hair-predictor) | ML predictor |
 | Hair Color Predictor | [`@avatune/hair-color-predictor`](./packages/predictors/hair-color-predictor) | Predict hair color from images |
 | Hair Length Predictor | [`@avatune/hair-length-predictor`](./packages/predictors/hair-length-predictor) | Predict hair length from images |
 | Skin Tone Predictor | [`@avatune/skin-tone-predictor`](./packages/predictors/skin-tone-predictor) | Predict skin tone from images |

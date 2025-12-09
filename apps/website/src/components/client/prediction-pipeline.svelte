@@ -28,6 +28,7 @@ const defaultPredictions: Predictions = {
   skinTone: 'medium',
   hairLength: 'medium',
   hairColor: 'brown',
+  facialHair: 'facial_hair',
 }
 
 $: currentPredictions = predictions || defaultPredictions
@@ -128,6 +129,7 @@ async function processImage(file: File) {
   try {
     const img = await createImageFromFile(file)
     predictions = await predictFromImage(predictors, img)
+    console.log('New predictions:', predictions)
   } catch (err) {
     console.error('Prediction error:', err)
     error = 'Failed to process image. Please try again with a different image.'

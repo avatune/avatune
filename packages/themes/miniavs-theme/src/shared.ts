@@ -22,9 +22,14 @@ export default createTheme<BaseAvatarItem>()
     borderRadius: '100%',
   })
   .connectColors('hair', ['faceHair'])
-  .mapPrediction('hair', 'short', ['classic1', 'classic2', 'baldness'])
+  .mapPrediction('hair', 'short', [
+    'classic1',
+    'classic2',
+    'baldness',
+    'slaughter',
+  ])
   .mapPrediction('hair', 'medium', ['elvis', 'stylish', 'curly'])
-  .mapPrediction('hair', 'long', ['long', 'ponyTail', 'slaughter'])
+  .mapPrediction('hair', 'long', ['long', 'ponyTail'])
   .mapPrediction('hairColor', 'black', [HairColors.Black])
   .mapPrediction('hairColor', 'brown', [HairColors.Brown])
   .mapPrediction('hairColor', 'blond', [HairColors.Red])
@@ -32,6 +37,13 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Yellow])
   .mapPrediction('skinTone', 'light', [SkinTones.White])
+  .mapPrediction('facialHair', 'none', ['none'])
+  .mapPrediction('facialHair', 'facial_hair', [
+    'freddy',
+    'horshoe',
+    'pencilThin',
+    'pencilThinBeard',
+  ])
   .addColors('background', [
     BackgroundColors.Purple,
     BackgroundColors.LightBlue,

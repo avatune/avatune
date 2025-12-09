@@ -1,3 +1,4 @@
+import { createFacialHairPredictor } from '@avatune/facial-hair-predictor'
 import { createHairColorPredictor } from '@avatune/hair-color-predictor'
 import { createHairLengthPredictor } from '@avatune/hair-length-predictor'
 import { createSkinTonePredictor } from '@avatune/skin-tone-predictor'
@@ -7,23 +8,27 @@ export type Predictors = {
   hairColor: ReturnType<typeof createHairColorPredictor>
   hairLength: ReturnType<typeof createHairLengthPredictor>
   skinTone: ReturnType<typeof createSkinTonePredictor>
+  facialHair: ReturnType<typeof createFacialHairPredictor>
 }
 
 export async function initializePredictors(): Promise<Predictors> {
   const hairColorPredictor = createHairColorPredictor()
   const hairLengthPredictor = createHairLengthPredictor()
   const skinTonePredictor = createSkinTonePredictor()
+  const facialHairPredictor = createFacialHairPredictor()
 
   await Promise.all([
     hairColorPredictor.loadModel(),
     hairLengthPredictor.loadModel(),
     skinTonePredictor.loadModel(),
+    facialHairPredictor.loadModel(),
   ])
 
   return {
     hairColor: hairColorPredictor,
     hairLength: hairLengthPredictor,
     skinTone: skinTonePredictor,
+    facialHair: facialHairPredictor,
   }
 }
 
@@ -49,10 +54,14 @@ export async function predictFromImage(
   await yieldToMain()
 
   const skinToneResult = await predictors.skinTone.predictFromImage(image)
+  await yieldToMain()
+
+  const facialHairResult = await predictors.facialHair.predictFromImage(image)
 
   return {
     hairColor: hairColorResult.color,
     hairLength: hairLengthResult.length,
     skinTone: skinToneResult.tone,
+    facialHair: facialHairResult.facialHair,
   }
 }

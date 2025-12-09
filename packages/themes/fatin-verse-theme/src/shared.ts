@@ -45,29 +45,28 @@ export default createTheme<BaseAvatarItem>()
     'shortCurly',
     'shortFlip',
     'shortMessy',
-    'shortWave',
     'spiky',
-    'curlyPuff',
     'curlyTop',
-  ])
-  .mapPrediction('hair', 'medium', [
+    'sidePonytail',
     'sideSweep',
     'tightCurls',
-    'volumized',
-    'lowBun',
-    'doubleBuns',
   ])
+  .mapPrediction('hair', 'medium', ['lowBun', 'shortWave'])
   .mapPrediction('hair', 'long', [
+    'doubleBuns',
+    'curlyPuff',
     'longStraight',
     'longWave',
     'longBraid',
     'curvedLong',
-    'sidePonytail',
+    'volumized',
   ])
   .mapPrediction('hairColor', 'black', [HairColors.Black])
   .mapPrediction('skinTone', 'dark', [SkinTones.Black])
   .mapPrediction('skinTone', 'medium', [SkinTones.Black])
   .mapPrediction('skinTone', 'light', [SkinTones.Black])
+  .mapPrediction('facialHair', 'none', ['none'])
+  .mapPrediction('facialHair', 'facial_hair', ['beard', 'mustache'])
   .addColors('background', [BackgroundColors.Green])
   .addColors('background', [BackgroundColors.Blue])
   .addColors('background', [BackgroundColors.Yellow])

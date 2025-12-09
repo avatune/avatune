@@ -187,14 +187,24 @@ function getPredictorIdentifiers<I extends AvatarItem, T extends Theme<I>>(
   predictions: Predictions,
   theme: T,
 ): string[] | undefined {
-  if (category !== 'hair' || !theme.predictorMappings?.hair) {
-    return undefined
+  const { predictorMappings } = theme
+  if (!predictorMappings) return undefined
+
+  // Hair category uses hairLength predictor
+  if (category === 'hair' && predictorMappings.hair) {
+    const { hairLength } = predictions
+    if (!hairLength) return undefined
+    return predictorMappings.hair[hairLength]
   }
 
-  const { hairLength } = predictions
-  if (!hairLength) return undefined
+  // FaceHair category uses facialHair predictor
+  if (category === 'faceHair' && predictorMappings.facialHair) {
+    const { facialHair } = predictions
+    if (!facialHair) return undefined
+    return predictorMappings.facialHair[facialHair]
+  }
 
-  return theme.predictorMappings.hair[hairLength]
+  return undefined
 }
 
 /**

@@ -17,23 +17,20 @@ export default createTheme<BaseAvatarItem>()
   })
   .connectColors('hair', ['faceHair'])
   .mapPrediction('hair', 'short', [
-    'shortHair',
-    'shavedHead',
-    'bangs',
-    'mohawk',
-  ])
-  .mapPrediction('hair', 'medium', [
     'bowlCutHair',
+    'shortHair',
     'curlyShortHair',
-    'straightHair',
-    'wavyBob',
+    'mohawk',
+    'shavedHead',
   ])
+  .mapPrediction('hair', 'medium', ['dreads', 'straightHair'])
   .mapPrediction('hair', 'long', [
+    'wavyBob',
+    'bangs',
     'braids',
     'bunHair',
     'curlyBob',
     'froBun',
-    'dreads',
   ])
   .mapPrediction('hairColor', 'black', [HairColors.Black])
   .mapPrediction('hairColor', 'brown', [HairColors.Brown])
@@ -42,6 +39,13 @@ export default createTheme<BaseAvatarItem>()
   .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
   .mapPrediction('skinTone', 'medium', [SkinTones.Yellow])
   .mapPrediction('skinTone', 'light', [SkinTones.White])
+  .mapPrediction('facialHair', 'none', ['none'])
+  .mapPrediction('facialHair', 'facial_hair', [
+    'beard',
+    'chinHair',
+    'fuzz',
+    'mustache',
+  ])
   .addColors('background', [
     BackgroundColors.Purple,
     BackgroundColors.LightBlue,

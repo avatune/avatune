@@ -31,3 +31,22 @@ export function getHairColors(
   if (!colorMap || !predictions.hairColor) return []
   return colorMap[predictions.hairColor] ?? []
 }
+
+export function getFacialHairItems(
+  theme: SvelteTheme,
+  predictions: Predictions,
+): string[] {
+  const facialHairMap = theme.predictorMappings?.facialHair
+  if (!facialHairMap || !predictions.facialHair) return []
+  return facialHairMap[predictions.facialHair] ?? []
+}
+
+export function getFacialHairComponent(
+  theme: SvelteTheme,
+  item: string,
+): unknown {
+  const faceHairCategory = theme.faceHair as
+    | Record<string, { Component: unknown }>
+    | undefined
+  return faceHairCategory?.[item]?.Component ?? null
+}

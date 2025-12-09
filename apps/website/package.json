@@ -42,6 +42,7 @@
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-assets": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
+    "@avatune/facial-hair-predictor": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
     "@avatune/skin-tone-predictor": "workspace:*",

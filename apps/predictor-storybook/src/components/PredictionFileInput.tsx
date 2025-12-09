@@ -1,3 +1,4 @@
+import { createFacialHairPredictor } from '@avatune/facial-hair-predictor'
 import { createHairColorPredictor } from '@avatune/hair-color-predictor'
 import { createHairLengthPredictor } from '@avatune/hair-length-predictor'
 import { createSkinTonePredictor } from '@avatune/skin-tone-predictor'
@@ -21,6 +22,7 @@ export function PredictionFileInput({
     hairColor: ReturnType<typeof createHairColorPredictor>
     hairLength: ReturnType<typeof createHairLengthPredictor>
     skinTone: ReturnType<typeof createSkinTonePredictor>
+    facialHair: ReturnType<typeof createFacialHairPredictor>
   } | null>(null)
 
   const [initialized, setInitialized] = useState(false)
@@ -38,12 +40,14 @@ export function PredictionFileInput({
         const hairColor = createHairColorPredictor('/models/hair_color')
         const skinTone = createSkinTonePredictor('/models/skin_tone')
         const hairLength = createHairLengthPredictor('/models/hair_length')
+        const facialHair = createFacialHairPredictor('/models/facial_hair')
         await Promise.all([
           hairColor.loadModel(),
           skinTone.loadModel(),
           hairLength.loadModel(),
+          facialHair.loadModel(),
         ])
-        predictorsRef.current = { hairColor, hairLength, skinTone }
+        predictorsRef.current = { hairColor, hairLength, skinTone, facialHair }
         setInitialized(true)
       } catch (err) {
         const errorMsg = `Failed to initialize: ${err}`
@@ -95,16 +99,18 @@ export function PredictionFileInput({
       canvas.height = height
       ctx.drawImage(img, 0, 0, width, height)
 
-      const [hairColor, skinTone, hairLength] = await Promise.all([
+      const [hairColor, skinTone, hairLength, facialHair] = await Promise.all([
         predictorsRef.current.hairColor.predictFromImage(canvas),
         predictorsRef.current.skinTone.predictFromImage(canvas),
         predictorsRef.current.hairLength.predictFromImage(canvas),
+        predictorsRef.current.facialHair.predictFromImage(canvas),
       ])
 
       const predictions: Predictions = {
         hairColor: hairColor.color,
         hairLength: hairLength.length,
         skinTone: skinTone.tone,
+        facialHair: facialHair.facialHair,
       }
 
       onPredictSuccess?.(predictions)

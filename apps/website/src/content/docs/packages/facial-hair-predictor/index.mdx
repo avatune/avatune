@@ -1,0 +1,133 @@
+---
+title: "@avatune/facial-hair-predictor"
+description: "Browser-based facial hair prediction using TensorFlow.js. Classifies into 2 categories: none, facial_hair."
+source: "packages/facial-hair-predictor/README.md"
+---
+
+import InstallTabs from '../../../../components/docs/install-tabs.astro'
+
+> Source: `packages/facial-hair-predictor/README.md`
+
+Browser-based facial hair prediction using TensorFlow.js. Classifies faces into 2 categories: none (clean-shaven) or facial_hair (beard, mustache, etc.).
+
+Tiny model (~2.3MB) with fast loading and inference in the browser.
+
+## Installation
+
+<InstallTabs packages="@avatune/facial-hair-predictor @tensorflow/tfjs" />
+
+## Usage
+
+```ts
+import { createFacialHairPredictor } from '@avatune/facial-hair-predictor'
+
+// Uses jsDelivr CDN by default - no setup required!
+const predictor = createFacialHairPredictor()
+await predictor.loadModel()
+
+const result = await predictor.predictFromImage(imageElement)
+console.log(result)
+// {
+//   facialHair: 'facial_hair',
+//   confidence: 0.92,
+//   probabilities: { none: 0.08, facial_hair: 0.92 },
+//   faceDetected: true
+// }
+```
+
+## Model Files
+
+By default, models are loaded from jsDelivr CDN (`https://cdn.jsdelivr.net/npm/@avatune/facial-hair-predictor@1.0.0/dist/model`). No setup required!
+
+### Self-hosting (Optional)
+
+If you prefer to self-host the model files, copy them from `dist/model/` to your public directory:
+- `model.json` - Model architecture and weights manifest
+- `classes.json` - Class labels
+- `group1-shard1of1.bin` - Model weights
+
+Then pass the path to the predictor:
+
+```ts
+const predictor = createFacialHairPredictor('/models/facial-hair')
+```
+
+### Setup with Vite (Optional)
+
+```ts
+import { copyFileSync, mkdirSync, readdirSync } from 'node:fs'
+import { join } from 'node:path'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    {
+      name: 'copy-tfjs-models',
+      buildStart() {
+        const srcDir = join(__dirname, 'node_modules', '@avatune', 'facial-hair-predictor', 'dist', 'model')
+        const destDir = join(__dirname, 'public', 'models', 'facial-hair')
+
+        mkdirSync(destDir, { recursive: true })
+
+        copyFileSync(join(srcDir, 'model.json'), join(destDir, 'model.json'))
+        copyFileSync(join(srcDir, 'classes.json'), join(destDir, 'classes.json'))
+
+        const files = readdirSync(srcDir)
+        for (const file of files) {
+          if (file.endsWith('.bin')) {
+            copyFileSync(join(srcDir, file), join(destDir, file))
+          }
+        }
+
+        console.log('✓ Copied facial-hair model to public/models')
+      },
+    },
+  ],
+})
+```
+
+## API
+
+### Structure
+
+```ts
+createFacialHairPredictor(modelDir?: string)
+```
+
+**Parameters:**
+- `modelDir` (optional) - Path to directory containing model files. Defaults to jsDelivr CDN
+
+### Functions
+
+#### `loadModel(): Promise<void>`
+
+Loads the TFJS model and class labels. Call this once before making predictions.
+
+#### `predict(imageTensor: tf.Tensor3D): Promise<FacialHairResult>`
+
+Predicts facial hair presence from an image tensor.
+
+**Parameters:**
+- `imageTensor` - Normalized RGB image tensor [H, W, 3] with values in range [0, 1]
+
+**Returns:**
+```ts
+{
+  facialHair: string     // Predicted class: 'none' | 'facial_hair'
+  confidence: number     // Confidence score [0, 1]
+  probabilities: Record<string, number>  // Scores for all classes
+}
+```
+
+## Model Details
+
+- Architecture: MobileNetV2-based CNN
+- Input: 128x128 RGB images
+- Classes: 2 (none, facial_hair)
+- Training: CelebA dataset
+- Accuracy: ~83%
+- Format: TensorFlow.js with uint8 quantization
+
+## License
+
+See [LICENSE.md](LICENSE.md) for license information.

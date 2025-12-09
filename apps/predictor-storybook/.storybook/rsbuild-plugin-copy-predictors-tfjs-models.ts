@@ -13,7 +13,7 @@ export default {
       rmdirSync(publicDir, { recursive: true })
     } catch {}
 
-    const models = ['hair_color', 'hair_length', 'skin_tone']
+    const models = ['hair_color', 'hair_length', 'skin_tone', 'facial_hair']
 
     for (const modelName of models) {
       const predictorDist = join(

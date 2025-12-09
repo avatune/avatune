@@ -14,6 +14,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@avatune/facial-hair-predictor": "workspace:*",
     "@avatune/hair-color-predictor": "workspace:*",
     "@avatune/hair-length-predictor": "workspace:*",
     "@avatune/fatin-verse-theme": "workspace:*",

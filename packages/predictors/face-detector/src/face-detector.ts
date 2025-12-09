@@ -245,5 +245,18 @@ export function createFaceDetector(options: FaceDetectorOptions = {}) {
         left: 0.3,
       })
     },
+
+    async cropFaceForFacialHair(
+      image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement,
+    ): Promise<HTMLCanvasElement | null> {
+      // Focus on lower face area (chin, mustache, beard region)
+      // Less top padding, more bottom padding
+      return this.cropFace(image, {
+        top: 0.1,
+        right: 0.2,
+        bottom: 0.4,
+        left: 0.2,
+      })
+    },
   }
 }

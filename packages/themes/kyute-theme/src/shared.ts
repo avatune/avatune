@@ -39,15 +39,12 @@ export default createTheme<BaseAvatarItem>()
   })
   .connectColors('head', ['ears'])
   .connectColors('hair', ['faceHair', 'eyebrows'])
-  .mapPrediction('hair', 'short', ['short', 'bob', 'elvis'])
-  .mapPrediction('hair', 'medium', [
-    'curly',
-    'curlyMedium',
-    'stylish',
-    'thick',
-    'topKnot',
-  ])
+  .mapPrediction('hair', 'short', ['short', 'curly', 'stylish'])
+  .mapPrediction('hair', 'medium', ['curlyMedium', 'elvis'])
   .mapPrediction('hair', 'long', [
+    'topKnot',
+    'thick',
+    'bob',
     'long',
     'longThick',
     'longWavy',
@@ -75,6 +72,12 @@ export default createTheme<BaseAvatarItem>()
     SkinTones.Lighter,
     SkinTones.Lightest,
     SkinTones.Fair,
+  ])
+  .mapPrediction('facialHair', 'none', ['none'])
+  .mapPrediction('facialHair', 'facial_hair', [
+    'bigBeard',
+    'chevronMustache',
+    'mustache',
   ])
   .addColors('background', [
     BackgroundColors.Pink,

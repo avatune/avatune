@@ -28,6 +28,15 @@ export default createTheme<BaseAvatarItem>()
     borderWidth: 2,
     borderColor: AccentColors.Primary,
   })
+  .mapPrediction('hair', 'short', [
+    'bald',
+    'elvis',
+    'mediumTopknot',
+    'shortTopknot',
+    'stylish',
+  ])
+  .mapPrediction('hair', 'medium', ['medium', 'curly'])
+  .mapPrediction('hair', 'long', ['messy', 'beanie'])
   .addColors('background', [BackgroundColors.Default])
   .addColors('ears', [SkinTones.Light, SkinTones.Dark])
   .addColors('eyes', [AccentColors.Primary])

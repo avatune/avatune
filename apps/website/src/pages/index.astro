@@ -1,6 +1,5 @@
 ---
 import PredictionPipeline from '../components/client/prediction-pipeline.svelte'
-import AdvantagesSection from '../components/sections/advantages-section.astro'
 import FrameworkShowcaseSection from '../components/sections/framework-showcase-section.astro'
 import HeroSection from '../components/sections/hero-section.astro'
 import '../styles/global.css'
@@ -29,7 +28,26 @@ const primaryDocsLink = '/docs'
         <PredictionPipeline client:load />
       </section>
 
-      <AdvantagesSection />
+      <section class="mx-auto max-w-6xl text-center">
+        <div class="space-y-5">
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-200">Docs preview</p>
+          <h2 class="text-3xl font-semibold text-white">Ready to explore the full knowledge base?</h2>
+        </div>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href={primaryDocsLink}
+            class="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-base font-semibold text-slate-950 transition hover:bg-pink-100 no-underline"
+          >
+            Open Documentation
+          </a>
+          <a
+            href="/why-avatune"
+            class="inline-flex items-center justify-center rounded-full border border-white/30 px-6 py-3 text-base font-semibold text-white transition hover:border-white no-underline"
+          >
+            Learn Why Avatune
+          </a>
+        </div>
+      </section>
     </main>
 
     <footer class="border-t border-white/10 px-6 py-10 text-center text-sm text-slate-400 sm:px-12 lg:px-16">

@@ -1,0 +1,70 @@
+{
+  "name": "@avatune/facial-hair-predictor",
+  "version": "1.0.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avatune/avatune.git"
+  },
+  "homepage": "https://avatune.dev",
+  "bugs": {
+    "url": "https://github.com/avatune/avatune/issues"
+  },
+  "author": "Avatune Team (https://avatune.dev)",
+  "contributors": [
+    "Teimur Gasanov <me@teimurjan.dev> (https://github.com/teimurjan)",
+    "Stanislav Nevmyvaka <nevmyvakastas@gmail.com> (https://github.com/nevmstas)"
+  ],
+  "keywords": [
+    "avatune",
+    "avatar",
+    "ml",
+    "machine-learning",
+    "tensorflow",
+    "tfjs",
+    "prediction",
+    "facial-hair",
+    "beard"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "watch": "rslib build --watch",
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@avatune/face-detector": "workspace:*",
+    "@avatune/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@avatune/rsbuild-plugin-copy-tfjs-model": "workspace:*",
+    "@rslib/core": "^0.16.0",
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.22.0",
+    "@types/node": "^22.18.11",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@tensorflow/tfjs": "^4.22.0",
+    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.22.0"
+  },
+  "license": "MIT"
+}

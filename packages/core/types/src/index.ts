@@ -117,6 +117,8 @@ export type HairColorPredictorClass = 'black' | 'brown' | 'blond' | 'gray'
 
 export type SkinTonePredictorClass = 'dark' | 'medium' | 'light'
 
+export type FacialHairPredictorClass = 'none' | 'facial_hair'
+
 /**
  * Consolidated predictor results type
  */
@@ -124,6 +126,7 @@ export interface Predictions {
   hairLength?: HairLengthPredictorClass
   hairColor?: HairColorPredictorClass
   skinTone?: SkinTonePredictorClass
+  facialHair?: FacialHairPredictorClass
 }
 
 /**
@@ -156,6 +159,7 @@ export interface ThemePredictorMappings {
   hair?: PredictorMapping
   hairColor?: ColorMapping
   skinTone?: ColorMapping
+  facialHair?: PredictorMapping
 }
 
 /**
