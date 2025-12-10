@@ -61,7 +61,7 @@ $: categories = allCategories.filter(
   (cat) => cat.items.length > 1 || cat.optional,
 )
 $: avatarProps = Object.fromEntries(
-  Object.entries(selections).filter(([_, v]) => v && v !== 'none'),
+  Object.entries(selections).filter(([_, v]) => v),
 )
 $: if (selectedCategoryTab === null && categories.length > 0) {
   selectedCategoryTab = categories[0].id
@@ -108,9 +108,14 @@ function onItemSelect(category: string, item: string) {
 }
 
 function onItemDeselect(category: string) {
-  const newSelections = { ...selections }
-  delete newSelections[category]
-  selections = newSelections
+  const categoryInfo = categories.find((c) => c.id === category)
+  if (categoryInfo?.optional) {
+    selections = { ...selections, [category]: 'none' }
+  } else {
+    const newSelections = { ...selections }
+    delete newSelections[category]
+    selections = newSelections
+  }
 }
 
 function generateRandomSeed(): string {

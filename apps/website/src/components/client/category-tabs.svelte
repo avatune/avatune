@@ -122,7 +122,7 @@ function getPreviewProps(
 								<button
 									type="button"
 									class={`group flex flex-col items-center gap-2 rounded-lg border p-3 transition-all ${
-										!selections[activeCategory.id] || selections[activeCategory.id] === 'none'
+										selections[activeCategory.id] === 'none'
 											? 'border-pink-500/50 bg-pink-500/10 ring-1 ring-pink-500/30'
 											: 'border-white/10 bg-slate-800/60 hover:border-white/20 hover:bg-slate-700/60'
 									}`}
