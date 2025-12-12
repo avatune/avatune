@@ -121,28 +121,22 @@ const CategoryUploadStep = ({
         {CATEGORIES.map((category) => {
           const categoryAssets = getCategoryAssets(category.id)
           const isSelected = selectedCategory === category.id
-          // For head category, show headAsset count instead
+          // For head category, include the headAsset from Step 1 in the count
           const assetCount =
-            category.id === 'head' ? (headAsset ? 1 : 0) : categoryAssets.length
+            category.id === 'head'
+              ? categoryAssets.length + (headAsset ? 1 : 0)
+              : categoryAssets.length
 
           return (
             <button
               key={category.id}
               type="button"
               className={`w-full text-left rounded-lg border-2 p-6 transition-all ${
-                category.id === 'head'
-                  ? 'border-white/5 bg-slate-800/30 cursor-not-allowed opacity-60'
-                  : isSelected
-                    ? 'border-pink-400 bg-pink-500/20 cursor-pointer'
-                    : 'border-white/10 bg-slate-800/60 hover:border-white/20 hover:bg-slate-700/60 cursor-pointer'
+                isSelected
+                  ? 'border-pink-400 bg-pink-500/20 cursor-pointer'
+                  : 'border-white/10 bg-slate-800/60 hover:border-white/20 hover:bg-slate-700/60 cursor-pointer'
               }`}
-              onClick={() => {
-                // Don't allow selecting head category - it's uploaded in Step 1
-                if (category.id !== 'head') {
-                  setSelectedCategory(category.id)
-                }
-              }}
-              disabled={category.id === 'head'}
+              onClick={() => setSelectedCategory(category.id)}
               aria-label={`Select ${category.label} category`}
             >
               <h3 className="text-lg font-semibold mb-2">{category.label}</h3>
@@ -158,10 +152,10 @@ const CategoryUploadStep = ({
               )}
               {category.id === 'head' && headAsset && (
                 <div className="text-xs text-green-400 mt-2">
-                  ✓ Uploaded in Step 1
+                  ✓ 1 uploaded in Step 1
                 </div>
               )}
-              {isSelected && category.id !== 'head' && (
+              {isSelected && (
                 // biome-ignore lint/a11y/useSemanticElements: This div needs drag-and-drop functionality
                 <div
                   className={`mt-4 border-2 border-dashed rounded-lg p-4 text-center text-sm transition-all ${
