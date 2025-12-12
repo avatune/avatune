@@ -1,8 +1,10 @@
 import { useState } from 'react'
-import CategoryUploadStep from './components/CategoryUploadStep'
-import HeadUploadStep from './components/HeadUploadStep'
-import PreviewStep from './components/PreviewStep'
-import SaveThemeStep from './components/SaveThemeStep'
+import {
+  CategoryUploadStep,
+  HeadUploadStep,
+  PreviewStep,
+  SaveThemeStep,
+} from './components/steps'
 import type { Asset, ThemeData } from './types'
 
 type Step = 'head' | 'categories' | 'preview' | 'save'

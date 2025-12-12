@@ -4,7 +4,8 @@ import {
   CATEGORIES,
   type CategoryId,
   DEFAULT_LAYERS,
-} from '../types'
+} from '../../types'
+import { Badge, Button, Card, StepHeader } from '../ui'
 
 interface CategoryUploadStepProps {
   onAssetAdd: (asset: Asset) => void
@@ -41,6 +42,17 @@ const CategoryUploadStep = ({
       reader.readAsDataURL(file)
     })
 
+    // Get image dimensions
+    const { width, height } = await new Promise<{
+      width: number
+      height: number
+    }>((resolve) => {
+      const img = new Image()
+      img.onload = () =>
+        resolve({ width: img.naturalWidth, height: img.naturalHeight })
+      img.src = dataUrl
+    })
+
     const asset: Asset = {
       id: `${category}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       name: file.name.replace(/\.[^/.]+$/, ''),
@@ -50,6 +62,8 @@ const CategoryUploadStep = ({
       xPercent: 0,
       yPercent: 0,
       layer: DEFAULT_LAYERS[category],
+      width,
+      height,
     }
 
     onAssetAdd(asset)
@@ -101,21 +115,18 @@ const CategoryUploadStep = ({
 
   if (!headAsset) {
     return (
-      <div className="rounded-xl border border-white/10 bg-slate-900/40 backdrop-blur-sm p-8">
+      <Card>
         <p className="text-slate-300">Please upload a head asset first.</p>
-      </div>
+      </Card>
     )
   }
 
   return (
-    <div className="rounded-xl border border-white/10 bg-slate-900/40 backdrop-blur-sm p-8">
-      <h2 className="text-2xl font-semibold mb-4 text-white">
-        Step 2: Upload Category Assets
-      </h2>
-      <p className="text-slate-300 mb-8">
-        Choose a category and upload assets. You can upload multiple assets at
-        once by selecting multiple files or dragging multiple files.
-      </p>
+    <Card>
+      <StepHeader
+        title="Step 2: Upload Category Assets"
+        description="Choose a category and upload assets. You can upload multiple assets at once by selecting multiple files or dragging multiple files."
+      />
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 mb-8">
         {CATEGORIES.map((category) => {
@@ -140,11 +151,7 @@ const CategoryUploadStep = ({
               aria-label={`Select ${category.label} category`}
             >
               <h3 className="text-lg font-semibold mb-2">{category.label}</h3>
-              {category.optional && (
-                <span className="inline-block bg-white/10 px-2 py-1 rounded text-xs mb-2">
-                  Optional
-                </span>
-              )}
+              {category.optional && <Badge className="mb-2">Optional</Badge>}
               {assetCount > 0 && (
                 <div className="text-sm text-slate-400 mt-2">
                   {assetCount} asset(s)
@@ -199,16 +206,11 @@ const CategoryUploadStep = ({
       />
 
       <div className="flex gap-4 mt-8">
-        <button
-          type="button"
-          className="inline-flex items-center justify-center rounded-full bg-pink-400 px-6 py-3 text-base font-semibold text-white transition-all hover:bg-pink-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-          onClick={onNext}
-          disabled={existingAssets.length === 0}
-        >
+        <Button onClick={onNext} disabled={existingAssets.length === 0}>
           Continue to Preview
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   )
 }
 

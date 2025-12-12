@@ -29,6 +29,8 @@ export interface Asset {
   xPercent: number
   yPercent: number
   layer: number
+  width?: number
+  height?: number
 }
 
 export interface ThemeData {

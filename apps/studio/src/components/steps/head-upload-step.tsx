@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
-import type { Asset } from '../types'
+import type { Asset } from '../../types'
+import { Button, Card, StepHeader } from '../ui'
 
 interface HeadUploadStepProps {
   onUpload: (asset: Asset) => void
@@ -22,6 +23,17 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       reader.readAsDataURL(file)
     })
 
+    // Get image dimensions
+    const { width, height } = await new Promise<{
+      width: number
+      height: number
+    }>((resolve) => {
+      const img = new Image()
+      img.onload = () =>
+        resolve({ width: img.naturalWidth, height: img.naturalHeight })
+      img.src = dataUrl
+    })
+
     const asset: Asset = {
       id: `head-${Date.now()}`,
       name: file.name.replace(/\.[^/.]+$/, ''),
@@ -31,6 +43,8 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       xPercent: 0,
       yPercent: 0,
       layer: 1,
+      width,
+      height,
     }
 
     onUpload(asset)
@@ -62,14 +76,11 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
   }
 
   return (
-    <div className="rounded-xl border border-white/10 bg-slate-900/40 backdrop-blur-sm p-8">
-      <h2 className="text-2xl font-semibold mb-4 text-white">
-        Step 1: Upload Head Asset
-      </h2>
-      <p className="text-slate-300 mb-8">
-        Upload the base head asset. This will be used as the reference point for
-        positioning all other assets.
-      </p>
+    <Card>
+      <StepHeader
+        title="Step 1: Upload Head Asset"
+        description="Upload the base head asset. This will be used as the reference point for positioning all other assets."
+      />
 
       {headAsset ? (
         <div className="text-center">
@@ -81,13 +92,9 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
             />
           </div>
           <p className="font-medium mb-4">{headAsset.name}</p>
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-full border border-white/30 bg-white/5 px-6 py-3 text-base font-semibold text-white transition hover:border-white hover:bg-white/10"
-            onClick={() => fileInputRef.current?.click()}
-          >
+          <Button variant="ghost" onClick={() => fileInputRef.current?.click()}>
             Replace Head Asset
-          </button>
+          </Button>
         </div>
       ) : (
         <button
@@ -131,7 +138,7 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
           </div>
         </button>
       )}
-    </div>
+    </Card>
   )
 }
 
