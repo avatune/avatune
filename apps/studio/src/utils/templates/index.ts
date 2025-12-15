@@ -1,5 +1,4 @@
 export {
-  generateAssetsChangelog,
   generateAssetsGlobalDts,
   generateAssetsPackageJson,
   generateAssetsReadme,
@@ -10,7 +9,6 @@ export {
 } from './assetsPackageTemplates'
 
 export {
-  generateThemeChangelog,
   generateThemeColors,
   generateThemePackageJson,
   generateThemeReadme,

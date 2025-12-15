@@ -31,6 +31,18 @@ const PreviewStep = ({
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
   const [zoom, setZoom] = useState(1)
 
+  const PREVIEW_SIZE = 500
+  // Calculate theme canvas size based on zoom
+  // When zoom is 2x, assets appear twice as big, so theme size should be half
+  const calculatedSize = Math.round(PREVIEW_SIZE / zoom)
+
+  // Update theme size when zoom changes
+  const handleZoomChange = (newZoom: number) => {
+    setZoom(newZoom)
+    const newSize = Math.round(PREVIEW_SIZE / newZoom)
+    onThemeSettingsChange(newSize, themeData.borderRadius, themeData.themeName)
+  }
+
   // Get assets for selected category (excluding head)
   const getCategoryAssets = (categoryId: CategoryId | null) => {
     if (!categoryId) return []
@@ -167,18 +179,23 @@ const PreviewStep = ({
         <div className="flex items-center justify-center gap-3 mb-4">
           <button
             type="button"
-            onClick={() => setZoom((z) => Math.max(0.25, z - 0.25))}
+            onClick={() => handleZoomChange(Math.max(0.25, zoom - 0.25))}
             className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold"
             aria-label="Zoom out"
           >
             −
           </button>
-          <span className="text-sm text-slate-300 min-w-[60px] text-center font-mono">
-            {Math.round(zoom * 100)}%
-          </span>
+          <div className="text-center">
+            <span className="text-sm text-slate-300 min-w-[60px] font-mono block">
+              {Math.round(zoom * 100)}%
+            </span>
+            <span className="text-xs text-slate-500">
+              Size: {calculatedSize}px
+            </span>
+          </div>
           <button
             type="button"
-            onClick={() => setZoom((z) => Math.min(3, z + 0.25))}
+            onClick={() => handleZoomChange(Math.min(4, zoom + 0.25))}
             className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold"
             aria-label="Zoom in"
           >
@@ -186,7 +203,7 @@ const PreviewStep = ({
           </button>
           <button
             type="button"
-            onClick={() => setZoom(1)}
+            onClick={() => handleZoomChange(1)}
             className="px-3 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors text-xs"
             aria-label="Reset zoom"
           >
@@ -200,13 +217,9 @@ const PreviewStep = ({
           onSelectAsset={setSelectedAsset}
           onAssetUpdate={onAssetUpdate}
           borderRadius={themeData.borderRadius}
-          previewSize={Math.round(
-            Math.max(
-              themeData.headAsset?.width ?? 400,
-              themeData.headAsset?.height ?? 400,
-            ) * 3,
-          )}
+          previewSize={PREVIEW_SIZE}
           zoom={zoom}
+          onZoomChange={handleZoomChange}
         />
       </div>
 

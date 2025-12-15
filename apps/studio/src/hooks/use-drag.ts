@@ -1,75 +1,80 @@
-import { type RefObject, useCallback, useState } from 'react'
+import { type RefObject, useCallback, useEffect, useState } from 'react'
 import type { Asset } from '../types'
 
 interface UseDragOptions {
   canvasRef: RefObject<HTMLDivElement | null>
-  previewSize: number
   onAssetUpdate: (assetId: string, updates: Partial<Asset>) => void
-  selectedAsset: Asset | null
 }
 
 interface UseDragReturn {
   isDragging: boolean
   handleMouseDown: (e: React.MouseEvent, asset: Asset) => void
-  handleMouseMove: (e: React.MouseEvent) => void
-  handleMouseUp: () => void
 }
 
 export const useDrag = ({
   canvasRef,
-  previewSize,
   onAssetUpdate,
-  selectedAsset,
 }: UseDragOptions): UseDragReturn => {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+  const [draggedAsset, setDraggedAsset] = useState<Asset | null>(null)
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent, asset: Asset) => {
       e.stopPropagation()
+      e.preventDefault()
       setIsDragging(true)
+      setDraggedAsset(asset)
       const rect = canvasRef.current?.getBoundingClientRect()
       if (rect) {
+        // Store offset from click position to asset top-left
+        const assetX = rect.left + (asset.xPercent / 100) * rect.width
+        const assetY = rect.top + (asset.yPercent / 100) * rect.height
         setDragStart({
-          x: e.clientX - (rect.left + (asset.xPercent / 100) * previewSize),
-          y: e.clientY - (rect.top + (asset.yPercent / 100) * previewSize),
+          x: e.clientX - assetX,
+          y: e.clientY - assetY,
         })
       }
     },
-    [canvasRef, previewSize],
+    [canvasRef],
   )
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!isDragging || !selectedAsset || !canvasRef.current) return
+  // Use document-level events to handle drag even when mouse leaves canvas
+  useEffect(() => {
+    if (!isDragging || !draggedAsset) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!canvasRef.current) return
 
       const rect = canvasRef.current.getBoundingClientRect()
-      const x = ((e.clientX - rect.left - dragStart.x) / previewSize) * 100
-      const y = ((e.clientY - rect.top - dragStart.y) / previewSize) * 100
 
-      onAssetUpdate(selectedAsset.id, {
-        xPercent: Math.max(-50, Math.min(50, Math.round(x * 100) / 100)),
-        yPercent: Math.max(-50, Math.min(50, Math.round(y * 100) / 100)),
+      // Calculate position relative to canvas top-left (0-100%)
+      const x = ((e.clientX - dragStart.x - rect.left) / rect.width) * 100
+      const y = ((e.clientY - dragStart.y - rect.top) / rect.height) * 100
+
+      onAssetUpdate(draggedAsset.id, {
+        // Allow some overflow for positioning assets partially outside canvas
+        xPercent: Math.max(-20, Math.min(100, Math.round(x * 100) / 100)),
+        yPercent: Math.max(-20, Math.min(100, Math.round(y * 100) / 100)),
       })
-    },
-    [
-      isDragging,
-      selectedAsset,
-      canvasRef,
-      dragStart,
-      previewSize,
-      onAssetUpdate,
-    ],
-  )
+    }
 
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false)
-  }, [])
+    const handleMouseUp = () => {
+      setIsDragging(false)
+      setDraggedAsset(null)
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging, draggedAsset, canvasRef, dragStart, onAssetUpdate])
 
   return {
     isDragging,
     handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
   }
 }

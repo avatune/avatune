@@ -353,15 +353,3 @@ bun run check-types
 \`\`\`
 `
 }
-
-/**
- * Generates the theme CHANGELOG.md
- */
-export function generateThemeChangelog(themePackageName: string): string {
-  return `# @avatune/${themePackageName}
-
-## 1.0.0
-
-Initial release.
-`
-}

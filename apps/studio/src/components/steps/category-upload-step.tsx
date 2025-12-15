@@ -59,6 +59,7 @@ const CategoryUploadStep = ({
       file,
       dataUrl,
       category,
+      // Default position at 0%, 0% from top-left (same as head)
       xPercent: 0,
       yPercent: 0,
       layer: DEFAULT_LAYERS[category],

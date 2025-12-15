@@ -32,12 +32,22 @@ const App = () => {
   }
 
   const handleAssetUpdate = (assetId: string, updates: Partial<Asset>) => {
-    setThemeData((prev) => ({
-      ...prev,
-      assets: prev.assets.map((asset) =>
-        asset.id === assetId ? { ...asset, ...updates } : asset,
-      ),
-    }))
+    setThemeData((prev) => {
+      // Check if updating the head asset
+      if (prev.headAsset?.id === assetId) {
+        return {
+          ...prev,
+          headAsset: { ...prev.headAsset, ...updates },
+        }
+      }
+      // Otherwise update in assets array
+      return {
+        ...prev,
+        assets: prev.assets.map((asset) =>
+          asset.id === assetId ? { ...asset, ...updates } : asset,
+        ),
+      }
+    })
   }
 
   const handleAssetRemove = (assetId: string) => {

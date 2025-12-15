@@ -456,15 +456,3 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/${assetsPackageName}
 MIT
 `
 }
-
-/**
- * Generates the assets CHANGELOG.md
- */
-export function generateAssetsChangelog(assetsPackageName: string): string {
-  return `# @avatune/${assetsPackageName}
-
-## 1.0.0
-
-Initial release.
-`
-}

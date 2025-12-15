@@ -1,20 +1,41 @@
 import type { ThemeData } from '../../types'
 import { toKebabCase } from '../caseUtils'
 
+// Default color mappings for each category
+const CATEGORY_COLORS: Record<string, string[]> = {
+  head: ['SkinTones.Light', 'SkinTones.Medium', 'SkinTones.Dark'],
+  ears: ['SkinTones.Light', 'SkinTones.Medium', 'SkinTones.Dark'],
+  hair: ['AccentColors.Black', 'AccentColors.White', 'AccentColors.Canary'],
+  faceHair: ['AccentColors.Black', 'AccentColors.White', 'AccentColors.Canary'],
+  eyes: ['AccentColors.Black'],
+  eyebrows: ['AccentColors.Black'],
+  mouth: ['AccentColors.Black'],
+  nose: ['AccentColors.Black'],
+  glasses: ['AccentColors.Black'],
+  body: ['AccentColors.Lavender', 'AccentColors.Sky', 'AccentColors.Salmon'],
+  accessories: ['AccentColors.Canary'],
+  faceDetails: ['AccentColors.Black'],
+  forelock: ['AccentColors.Black', 'AccentColors.White', 'AccentColors.Canary'],
+  hats: ['AccentColors.Black', 'AccentColors.White'],
+}
+
 /**
  * Generates the shared.ts theme configuration code
+ *
+ * Both the studio and theme renderer use the same coordinate system:
+ * - Position represents percentage from canvas top-left (0-100%)
+ * - Assets are positioned by their top-left corner
+ * - Head position defines the reference point for other assets
+ * - Other assets use fromHeadOffset with their offset from head position
  */
 export function generateThemeFile(themeData: ThemeData): string {
-  // Head position is typically at center (0, 0) or slightly offset
-  // We'll use the head asset's position as the base reference
+  // Head position from studio (percentage from top-left, 0-100)
   const headXPercent = themeData.headAsset?.xPercent || 0
   const headYPercent = themeData.headAsset?.yPercent || 0
 
-  // Calculate head position relative to canvas center
-  // In the theme, head position is usually defined as an offset from top-left
-  // We'll use a standard position and adjust other assets relative to it
-  const headX = Math.abs(headXPercent) || 27
-  const headY = Math.abs(headYPercent) || 20
+  // Use head position directly - studio and theme use same coordinate system
+  const headX = headXPercent
+  const headY = headYPercent
 
   const lines: string[] = []
   lines.push("import { createTheme, fromHead } from '@avatune/theme-builder'")
@@ -27,8 +48,8 @@ export function generateThemeFile(themeData: ThemeData): string {
   lines.push("} from './colors'")
   lines.push('')
   lines.push('const getHeadPosition = (size: number) => ({')
-  lines.push(`  x: size * percentage('${headX}%'),`)
-  lines.push(`  y: size * percentage('${headY}%'),`)
+  lines.push(`  x: size * percentage('${headX.toFixed(2)}%'),`)
+  lines.push(`  y: size * percentage('${headY.toFixed(2)}%'),`)
   lines.push('})')
   lines.push('')
   lines.push('const fromHeadOffset = fromHead(getHeadPosition)')
@@ -54,7 +75,6 @@ export function generateThemeFile(themeData: ThemeData): string {
     }
   })
 
-  // Generate addItem calls
   const categoryOrder = [
     'accessories',
     'body',
@@ -62,13 +82,27 @@ export function generateThemeFile(themeData: ThemeData): string {
     'eyebrows',
     'eyes',
     'faceHair',
+    'faceDetails',
+    'forelock',
     'glasses',
     'hair',
+    'hats',
     'head',
     'mouth',
     'nose',
   ]
 
+  // Generate addColors calls for each category that has assets
+  lines.push('  // Colors')
+  for (const category of categoryOrder) {
+    const assets = assetsByCategory.get(category)
+    if (!assets || assets.length === 0) continue
+
+    const colors = CATEGORY_COLORS[category] || ['AccentColors.Black']
+    lines.push(`  .addColors('${category}', [${colors.join(', ')}])`)
+  }
+
+  // Generate addItem calls
   for (const category of categoryOrder) {
     const assets = assetsByCategory.get(category)
     if (!assets || assets.length === 0) continue

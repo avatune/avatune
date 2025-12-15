@@ -40,8 +40,9 @@ export const useKeyboardNavigation = ({
       }
 
       onAssetUpdate(selectedAsset.id, {
-        xPercent: Math.round(newX * 100) / 100,
-        yPercent: Math.round(newY * 100) / 100,
+        // Allow some overflow for positioning assets partially outside canvas
+        xPercent: Math.max(-20, Math.min(100, Math.round(newX * 100) / 100)),
+        yPercent: Math.max(-20, Math.min(100, Math.round(newY * 100) / 100)),
       })
     }
 

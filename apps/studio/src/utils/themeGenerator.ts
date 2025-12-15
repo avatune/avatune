@@ -115,7 +115,6 @@ export async function generateThemeFolder(
     'README.md',
     generateAssetsReadme(themeName, assetsPackageName),
   )
-  assetsFolder?.file('CHANGELOG.md', generateAssetsChangelog(assetsPackageName))
 
   // ============================================================================
   // THEME PACKAGE
@@ -155,7 +154,6 @@ export async function generateThemeFolder(
     'README.md',
     generateThemeReadme(themeName, themePackageName, assetsPackageName),
   )
-  themeFolder?.file('CHANGELOG.md', generateThemeChangelog(themePackageName))
 
   // ============================================================================
   // GENERATE AND DOWNLOAD ZIP

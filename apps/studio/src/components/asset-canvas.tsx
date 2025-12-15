@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useDrag } from '../hooks/use-drag'
 import { useKeyboardNavigation } from '../hooks/use-keyboard-navigation'
 import type { Asset } from '../types'
@@ -11,36 +11,58 @@ interface AssetCanvasProps {
   previewSize?: number
   borderRadius?: string
   zoom?: number
+  onZoomChange?: (zoom: number) => void
 }
 
-const getAssetPosition = (asset: Asset, previewSize: number) => {
-  const baseX = previewSize * 0.5
-  const baseY = previewSize * 0.5
+/**
+ * Calculate asset position in pixels from percentage.
+ * Uses top-left based positioning to match the theme renderer.
+ * xPercent/yPercent represent percentage from canvas top-left (0-100).
+ */
+const getAssetPosition = (asset: Asset, size: number) => {
   return {
-    left: baseX + (asset.xPercent / 100) * previewSize,
-    top: baseY + (asset.yPercent / 100) * previewSize,
+    left: (asset.xPercent / 100) * size,
+    top: (asset.yPercent / 100) * size,
   }
 }
+
+const MIN_ZOOM = 0.5
+const MAX_ZOOM = 10
 
 export const AssetCanvas = ({
   assets,
   selectedAsset,
   onSelectAsset,
   onAssetUpdate,
-  previewSize = 400,
+  previewSize = 200,
   borderRadius = '100%',
   zoom = 1,
+  onZoomChange,
 }: AssetCanvasProps) => {
   const canvasRef = useRef<HTMLDivElement>(null)
-  const scaledSize = previewSize * zoom
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const { isDragging, handleMouseDown, handleMouseMove, handleMouseUp } =
-    useDrag({
-      canvasRef,
-      previewSize: scaledSize,
-      onAssetUpdate,
-      selectedAsset,
-    })
+  const { isDragging, handleMouseDown } = useDrag({
+    canvasRef,
+    onAssetUpdate,
+  })
+
+  // Use native event listener with passive: false to prevent browser zoom
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || !onZoomChange) return
+
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey) return
+      e.preventDefault()
+      const delta = e.deltaY > 0 ? -0.1 : 0.1
+      const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom + delta))
+      onZoomChange(newZoom)
+    }
+
+    container.addEventListener('wheel', handleWheel, { passive: false })
+    return () => container.removeEventListener('wheel', handleWheel)
+  }, [zoom, onZoomChange])
 
   useKeyboardNavigation({
     selectedAsset,
@@ -51,24 +73,22 @@ export const AssetCanvas = ({
 
   return (
     <div
-      className="overflow-auto mx-auto"
+      ref={containerRef}
+      className="mx-auto relative"
       style={{
         maxWidth: '100%',
         maxHeight: '80vh',
       }}
     >
+      {/* Fixed-size canvas that clips content */}
       <div
         ref={canvasRef}
         className="relative bg-white/5 border-2 border-white/20 overflow-hidden mx-auto"
         style={{
-          width: scaledSize,
-          height: scaledSize,
+          width: previewSize,
+          height: previewSize,
           borderRadius,
-          transformOrigin: 'top left',
         }}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
         role="application"
         aria-label="Preview canvas for positioning assets"
       >
@@ -117,19 +137,18 @@ export const AssetCanvas = ({
           }}
         />
         {sortedAssets.map((asset) => {
-          const position = getAssetPosition(asset, scaledSize)
-          const isSelected = selectedAsset?.id === asset.id
+          const position = getAssetPosition(asset, previewSize)
 
           return (
             // biome-ignore lint/a11y/useSemanticElements: This is a draggable element, div is appropriate
             <div
               key={asset.id}
-              className={`transition-transform ${isSelected ? 'outline-2 outline-pink-400 outline-offset-2' : ''}`}
               style={{
                 position: 'absolute',
                 left: `${position.left}px`,
                 top: `${position.top}px`,
-                transform: `translate(-50%, -50%) scale(${zoom})`,
+                transform: `scale(${zoom})`,
+                transformOrigin: 'top left',
                 cursor: isDragging ? 'grabbing' : 'grab',
                 zIndex: asset.layer,
               }}
@@ -152,38 +171,46 @@ export const AssetCanvas = ({
                 alt={asset.name}
                 className="max-w-[200px] max-h-[200px] pointer-events-none"
               />
-              {isSelected && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-black/90 px-2 py-1 rounded text-xs whitespace-nowrap z-1000">
-                  <div className="font-semibold mb-1">{asset.name}</div>
-                  <div className="text-xs opacity-80 mb-1">
-                    X: {asset.xPercent.toFixed(2)}% Y:{' '}
-                    {asset.yPercent.toFixed(2)}%
-                  </div>
-                  <div className="flex items-center gap-2 text-xs">
-                    <label htmlFor={`layer-${asset.id}`} className="opacity-80">
-                      Layer:
-                    </label>
-                    <input
-                      id={`layer-${asset.id}`}
-                      type="number"
-                      value={asset.layer}
-                      onChange={(e) =>
-                        onAssetUpdate(asset.id, {
-                          layer: Number(e.target.value),
-                        })
-                      }
-                      min="0"
-                      max="100"
-                      className="w-16 px-1 py-0.5 bg-white/10 border border-white/20 rounded text-white text-center focus:outline-none focus:border-pink-400"
-                      onClick={(e) => e.stopPropagation()}
-                    />
-                  </div>
-                </div>
-              )}
             </div>
           )
         })}
       </div>
+
+      {/* Tooltip positioned outside the canvas to avoid clipping */}
+      {selectedAsset && (
+        <div
+          className="absolute left-1/2 bg-black/90 px-3 py-2 rounded text-xs whitespace-nowrap z-50"
+          style={{
+            transform: 'translateX(-50%)',
+            top: previewSize + 16,
+          }}
+        >
+          <div className="font-semibold mb-1">{selectedAsset.name}</div>
+          <div className="text-xs opacity-80 mb-1">
+            X: {selectedAsset.xPercent.toFixed(2)}% Y:{' '}
+            {selectedAsset.yPercent.toFixed(2)}%
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            <label htmlFor={`layer-${selectedAsset.id}`} className="opacity-80">
+              Layer:
+            </label>
+            <input
+              id={`layer-${selectedAsset.id}`}
+              type="number"
+              value={selectedAsset.layer}
+              onChange={(e) =>
+                onAssetUpdate(selectedAsset.id, {
+                  layer: Number(e.target.value),
+                })
+              }
+              min="0"
+              max="100"
+              className="w-16 px-1 py-0.5 bg-white/10 border border-white/20 rounded text-white text-center focus:outline-none focus:border-pink-400"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
