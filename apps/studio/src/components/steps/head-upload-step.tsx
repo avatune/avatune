@@ -40,9 +40,9 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       file,
       dataUrl,
       category: 'head',
-      // Default position at 0%, 0% from top-left
-      xPercent: 0,
-      yPercent: 0,
+      // Default position at center of canvas (50%, 50%)
+      xPercent: 40,
+      yPercent: 40,
       layer: 1,
       width,
       height,

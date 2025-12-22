@@ -1,5 +1,5 @@
 import type { ThemeData } from '../../types'
-import { toKebabCase } from '../caseUtils'
+import { toCamelCase } from '../caseUtils'
 
 // Default color mappings for each category
 const CATEGORY_COLORS: Record<string, string[]> = {
@@ -119,7 +119,7 @@ export function generateThemeFile(themeData: ThemeData): string {
       const xPercent = Math.abs(xOffset) || 0
       const yPercent = Math.abs(yOffset) || 0
 
-      const assetName = toKebabCase(asset.name)
+      const assetName = toCamelCase(asset.name)
       lines.push(`  .addItem('${asset.category}', '${assetName}', {`)
       if (xPercent === 0 && yPercent === 0) {
         lines.push(

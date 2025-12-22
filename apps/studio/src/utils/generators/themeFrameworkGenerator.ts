@@ -1,9 +1,4 @@
-import {
-  capitalizeFirst,
-  toCamelCase,
-  toKebabCase,
-  toPascalCase,
-} from '../caseUtils'
+import { capitalizeFirst, toCamelCase, toPascalCase } from '../caseUtils'
 import type { AssetFile } from '../types'
 
 type ThemeFramework = 'react' | 'vue' | 'svelte' | 'vanilla' | 'react-native'
@@ -66,7 +61,7 @@ export function generateThemeFrameworkFile(
       const componentName = isVanilla
         ? `${toCamelCase(category)}${toPascalCase(asset.name)}`
         : `${capitalizeFirst(category)}${toPascalCase(asset.name)}`
-      const assetName = toKebabCase(asset.name)
+      const assetName = toCamelCase(asset.name)
       items.push(`    ${assetName}: { ${methodName}: ${componentName} },`)
     }
     componentMaps.push(

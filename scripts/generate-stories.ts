@@ -4,7 +4,7 @@
  * from shared story configuration
  */
 
-import { readdirSync, writeFileSync } from 'node:fs'
+import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 
@@ -14,30 +14,35 @@ type Framework = 'react' | 'vue' | 'svelte' | 'vanilla' | 'react-native'
 const FRAMEWORK_CONFIG = {
   react: {
     storyPath: 'apps/react-storybook/src/stories',
+    packageJsonPath: 'apps/react-storybook/package.json',
     fileExt: 'tsx',
     avatarItemType: 'ReactAvatarItem',
     storyRenderer: 'react-vite',
   },
   vue: {
     storyPath: 'apps/vue-storybook/src/stories',
+    packageJsonPath: 'apps/vue-storybook/package.json',
     fileExt: 'ts',
     avatarItemType: 'VueAvatarItem',
     storyRenderer: 'vue3-vite',
   },
   svelte: {
     storyPath: 'apps/svelte-storybook/src/stories',
+    packageJsonPath: 'apps/svelte-storybook/package.json',
     fileExt: 'ts',
     avatarItemType: 'SvelteAvatarItem',
     storyRenderer: 'svelte-vite',
   },
   vanilla: {
     storyPath: 'apps/vanilla-storybook/src/stories',
+    packageJsonPath: 'apps/vanilla-storybook/package.json',
     fileExt: 'ts',
     avatarItemType: 'VanillaAvatarItem',
     storyRenderer: 'html-vite',
   },
   'react-native': {
     storyPath: 'apps/RNStorybook/.rnstorybook/stories',
+    packageJsonPath: 'apps/RNStorybook/package.json',
     fileExt: 'tsx',
     avatarItemType: 'ReactNativeAvatarItem',
     storyRenderer: 'react-native',
@@ -53,6 +58,47 @@ function discoverThemes(): string[] {
     .filter((pkg) => pkg.endsWith('-theme'))
     .map((pkg) => pkg.replace('-theme', ''))
     .filter((name) => name !== 'types')
+}
+
+// Update package.json with theme dependencies
+function updatePackageJsonThemes(
+  packageJsonPath: string,
+  themes: string[],
+): boolean {
+  const fullPath = join(process.cwd(), packageJsonPath)
+  const content = readFileSync(fullPath, 'utf-8')
+  const packageJson = JSON.parse(content)
+
+  const dependencies = packageJson.dependencies || {}
+
+  // Get current theme dependencies
+  const currentThemes = Object.keys(dependencies)
+    .filter((dep) => dep.startsWith('@avatune/') && dep.endsWith('-theme'))
+    .map((dep) => dep.replace('@avatune/', '').replace('-theme', ''))
+
+  // Check if any themes are missing
+  const missingThemes = themes.filter((theme) => !currentThemes.includes(theme))
+
+  if (missingThemes.length === 0) {
+    return false // No updates needed
+  }
+
+  // Add missing themes
+  for (const theme of missingThemes) {
+    dependencies[`@avatune/${theme}-theme`] = 'workspace:*'
+  }
+
+  // Sort dependencies alphabetically
+  const sortedDependencies: Record<string, string> = {}
+  for (const key of Object.keys(dependencies).sort()) {
+    sortedDependencies[key] = dependencies[key]
+  }
+  packageJson.dependencies = sortedDependencies
+
+  // Write back with proper formatting
+  writeFileSync(fullPath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf-8')
+
+  return true
 }
 
 // Utility functions
@@ -608,6 +654,12 @@ function main() {
 
     writeFileSync(outputPath, content, 'utf-8')
     console.log(`✓ Generated ${framework} story at ${outputPath}`)
+
+    // Update package.json with theme dependencies
+    const updated = updatePackageJsonThemes(config.packageJsonPath, themes)
+    if (updated) {
+      console.log(`✓ Updated ${framework} package.json with new themes`)
+    }
   }
 }
 

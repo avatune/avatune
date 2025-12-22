@@ -43,9 +43,13 @@ const PreviewStep = ({
     onThemeSettingsChange(newSize, themeData.borderRadius, themeData.themeName)
   }
 
-  // Get assets for selected category (excluding head)
+  // Get assets for selected category
   const getCategoryAssets = (categoryId: CategoryId | null) => {
     if (!categoryId) return []
+    // Head asset is stored separately
+    if (categoryId === 'head') {
+      return themeData.headAsset ? [themeData.headAsset] : []
+    }
     return themeData.assets.filter((asset) => asset.category === categoryId)
   }
 
@@ -93,7 +97,7 @@ const PreviewStep = ({
           Select Category to Adjust
         </div>
         <div className="flex flex-wrap gap-2">
-          {CATEGORIES.filter((cat) => cat.id !== 'head').map((category) => {
+          {CATEGORIES.map((category) => {
             const categoryAssets = getCategoryAssets(category.id)
             const isSelected = selectedCategory === category.id
             return (

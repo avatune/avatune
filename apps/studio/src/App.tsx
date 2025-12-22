@@ -35,9 +35,30 @@ const App = () => {
     setThemeData((prev) => {
       // Check if updating the head asset
       if (prev.headAsset?.id === assetId) {
+        // Calculate how much the head moved
+        const deltaX =
+          updates.xPercent !== undefined
+            ? updates.xPercent - prev.headAsset.xPercent
+            : 0
+        const deltaY =
+          updates.yPercent !== undefined
+            ? updates.yPercent - prev.headAsset.yPercent
+            : 0
+
+        // Move all other assets by the same delta
+        const updatedAssets =
+          deltaX !== 0 || deltaY !== 0
+            ? prev.assets.map((asset) => ({
+                ...asset,
+                xPercent: asset.xPercent + deltaX,
+                yPercent: asset.yPercent + deltaY,
+              }))
+            : prev.assets
+
         return {
           ...prev,
           headAsset: { ...prev.headAsset, ...updates },
+          assets: updatedAssets,
         }
       }
       // Otherwise update in assets array
