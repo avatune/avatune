@@ -77,6 +77,7 @@ export default createTheme<BaseAvatarItem>()
     SkinTones.Light,
     SkinTones.VeryLight,
     SkinTones.VeryLight2,
+    SkinTones.Grinch,
   ])
   .addColors('body', [
     ClothingColors.Black,
