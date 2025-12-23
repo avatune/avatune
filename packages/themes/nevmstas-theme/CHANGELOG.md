@@ -1,5 +1,16 @@
 # @avatune/nevmstas-theme
 
+## 3.1.0
+
+### Minor Changes
+
+- [#66](https://github.com/avatune/avatune/pull/66) [`c0225fc`](https://github.com/avatune/avatune/commit/c0225fc61b33912978b0d603ceda0ad2b3947b45) Thanks [@nevmstas](https://github.com/nevmstas)! - add new year assets
+
+### Patch Changes
+
+- Updated dependencies [[`c0225fc`](https://github.com/avatune/avatune/commit/c0225fc61b33912978b0d603ceda0ad2b3947b45)]:
+  - @avatune/nevmstas-assets@3.1.0
+
 ## 3.0.2
 
 ### Patch Changes
