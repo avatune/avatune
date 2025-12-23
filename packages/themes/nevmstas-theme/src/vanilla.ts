@@ -1,4 +1,6 @@
 import {
+  accessoriesHorns,
+  bodySanta,
   bodyShirt,
   bodySweater,
   bodyTshirt,
@@ -11,11 +13,13 @@ import {
   eyesDots,
   eyesOpenCircle,
   eyesOpenRounded,
+  faceHairBeard,
   hairBobRounded,
   hairBobStraight,
   hairLong,
   hairMedium,
   hairShort,
+  hatsSanta,
   headOval,
   mouthBigSmile,
   mouthFlat,
@@ -34,7 +38,11 @@ import shared from './shared'
 
 export default shared
   .toFramework<VanillaAvatarItem>()
+  .withComponents('accessories', {
+    horns: { code: accessoriesHorns },
+  })
   .withComponents('body', {
+    santa: { code: bodySanta },
     shirt: { code: bodyShirt },
     sweater: { code: bodySweater },
     tshirt: { code: bodyTshirt },
@@ -78,5 +86,11 @@ export default shared
     curve: { code: noseCurve },
     dots: { code: noseDots },
     halfOval: { code: noseHalfOval },
+  })
+  .withComponents('faceHair', {
+    beard: { code: faceHairBeard },
+  })
+  .withComponents('hats', {
+    santa: { code: hatsSanta },
   })
   .build() satisfies VanillaTheme

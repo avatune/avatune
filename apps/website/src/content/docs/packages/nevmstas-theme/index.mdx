@@ -8,9 +8,12 @@ import AssetPreview from '../../../../components/docs/asset-preview.astro';
 import InstallTabs from '../../../../components/docs/install-tabs.astro';
 import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
+  accessoriesHorns,
   eyebrowsAngry,
   eyebrowsSmall,
   eyebrowsStandard,
+  hatsSanta,
+  bodySanta,
   bodyShirt,
   bodySweater,
   bodyTshirt,
@@ -28,6 +31,7 @@ import {
   mouthSmile,
   earsStandard,
   headOval,
+  faceHairBeard,
   eyesBoring,
   eyesDots,
   eyesOpenCircle,
@@ -133,7 +137,7 @@ You can override specific avatar parts:
   size={300}
   hair="bobRounded"          // Choose specific hair style
   hairColor="#FF5733"    // Custom hair color
-  body="shirt"     // Choose specific clothing
+  body="santa"     // Choose specific clothing
   bodyColor="#3498DB"    // Custom clothing color
 />
 ```
@@ -172,10 +176,17 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/nevmstas-assets/vue'
 
 ### Available Assets
 
+#### Accessories
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={accessoriesHorns} title="horns" hideCaption /> | `horns` |
+
 #### Body
 
 | Preview | Filename |
 |---------|----------|
+| <AssetPreview svg={bodySanta} title="santa" hideCaption /> | `santa` |
 | <AssetPreview svg={bodyShirt} title="shirt" hideCaption /> | `shirt` |
 | <AssetPreview svg={bodySweater} title="sweater" hideCaption /> | `sweater` |
 | <AssetPreview svg={bodyTshirt} title="tshirt" hideCaption /> | `tshirt` |
@@ -204,6 +215,12 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/nevmstas-assets/vue'
 | <AssetPreview svg={eyesOpenCircle} title="openCircle" hideCaption /> | `openCircle` |
 | <AssetPreview svg={eyesOpenRounded} title="openRounded" hideCaption /> | `openRounded` |
 
+#### FaceHair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairBeard} title="beard" hideCaption /> | `beard` |
+
 #### Hair
 
 | Preview | Filename |
@@ -213,6 +230,12 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/nevmstas-assets/vue'
 | <AssetPreview svg={hairLong} title="long" hideCaption /> | `long` |
 | <AssetPreview svg={hairMedium} title="medium" hideCaption /> | `medium` |
 | <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+
+#### Hats
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hatsSanta} title="santa" hideCaption /> | `santa` |
 
 #### Head
 

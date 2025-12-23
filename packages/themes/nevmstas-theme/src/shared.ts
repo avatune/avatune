@@ -45,6 +45,8 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.PeachOrange,
     BackgroundColors.MintGreen,
   ])
+  .addColors('hats', [AccentColors.LipPink])
+  .addColors('accessories', [AccentColors.LipPink])
   .addColors('hair', [
     HairColor.Black,
     HairColor.DarkBrown,
@@ -99,7 +101,28 @@ export default createTheme<BaseAvatarItem>()
   .addColors('eyes', [AccentColors.Black])
   .addColors('mouth', [AccentColors.LipPink])
   .addColors('nose', [AccentColors.BlushPink])
+  .addColors('faceHair', [
+    HairColor.Black,
+    HairColor.DarkBrown,
+    HairColor.Brown,
+    HairColor.LightBrown,
+    HairColor.Blonde,
+    HairColor.Ginger,
+    HairColor.DarkGray,
+    HairColor.Gray,
+    HairColor.White,
+  ])
+  // Accessories
+  .addItem('accessories', 'horns', {
+    position: fromHeadOffset(-percentage('8%'), -percentage('5%')),
+    layer: 200,
+  })
+  .setOptional('accessories')
   // Body
+  .addItem('body', 'santa', {
+    position: fromHeadOffset(percentage('0.04%'), percentage('48.7%')),
+    layer: 10,
+  })
   .addItem('body', 'shirt', {
     position: fromHeadOffset(-percentage('0%'), percentage('49.63%')),
     layer: 10,
@@ -223,3 +246,18 @@ export default createTheme<BaseAvatarItem>()
     position: fromHeadOffset(percentage('19.51%'), percentage('34.15%')),
     layer: 15,
   })
+  // FaceHair
+  .addItem('faceHair', 'beard', {
+    position: fromHeadOffset(percentage('3.5%'), percentage('22%')),
+    layer: 10,
+  })
+  .setOptional('faceHair')
+  .mapPrediction('faceHair', 'beard', ['beard'])
+  .mapPrediction('faceHair', 'none', [])
+  .connectColors('hair', ['faceHair'])
+  // Hats
+  .addItem('hats', 'santa', {
+    position: fromHeadOffset(-percentage('1.4%'), -percentage('12%')),
+    layer: 10,
+  })
+  .setOptional('hats')

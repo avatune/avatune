@@ -1,4 +1,8 @@
+// Accessories
+import AccessoriesHorns from './svg/accessories/horns.svg?svelte'
+
 // Body
+import BodySanta from './svg/body/santa.svg?svelte'
 import BodyShirt from './svg/body/shirt.svg?svelte'
 import BodySweater from './svg/body/sweater.svg?svelte'
 import BodyTshirt from './svg/body/tshirt.svg?svelte'
@@ -18,12 +22,18 @@ import EyesDots from './svg/eyes/dots.svg?svelte'
 import EyesOpenCircle from './svg/eyes/openCircle.svg?svelte'
 import EyesOpenRounded from './svg/eyes/openRounded.svg?svelte'
 
+// FaceHair
+import FaceHairBeard from './svg/faceHair/beard.svg?svelte'
+
 // Hair
 import HairBobRounded from './svg/hair/bobRounded.svg?svelte'
 import HairBobStraight from './svg/hair/bobStraight.svg?svelte'
 import HairLong from './svg/hair/long.svg?svelte'
 import HairMedium from './svg/hair/medium.svg?svelte'
 import HairShort from './svg/hair/short.svg?svelte'
+
+// Hats
+import HatsSanta from './svg/hats/santa.svg?svelte'
 
 // Head
 import HeadOval from './svg/head/oval.svg?svelte'
@@ -44,7 +54,10 @@ import NoseDots from './svg/nose/dots.svg?svelte'
 import NoseHalfOval from './svg/nose/halfOval.svg?svelte'
 
 export {
+  // Accessories
+  AccessoriesHorns,
   // Body
+  BodySanta,
   BodyShirt,
   BodySweater,
   BodyTshirt,
@@ -60,12 +73,16 @@ export {
   EyesDots,
   EyesOpenCircle,
   EyesOpenRounded,
+  // FaceHair
+  FaceHairBeard,
   // Hair
   HairBobRounded,
   HairBobStraight,
   HairLong,
   HairMedium,
   HairShort,
+  // Hats
+  HatsSanta,
   // Head
   HeadOval,
   // Mouth

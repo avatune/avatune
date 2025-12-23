@@ -90,7 +90,7 @@ You can override specific avatar parts:
   size={300}
   hair="bobRounded"          // Choose specific hair style
   hairColor="#FF5733"    // Custom hair color
-  body="shirt"     // Choose specific clothing
+  body="santa"     // Choose specific clothing
   bodyColor="#3498DB"    // Custom clothing color
 />
 ```

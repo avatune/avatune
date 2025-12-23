@@ -1,4 +1,8 @@
+// Accessories
+import accessoriesHorns from './svg/accessories/horns.svg?raw'
+
 // Body
+import bodySanta from './svg/body/santa.svg?raw'
 import bodyShirt from './svg/body/shirt.svg?raw'
 import bodySweater from './svg/body/sweater.svg?raw'
 import bodyTshirt from './svg/body/tshirt.svg?raw'
@@ -18,12 +22,18 @@ import eyesDots from './svg/eyes/dots.svg?raw'
 import eyesOpenCircle from './svg/eyes/openCircle.svg?raw'
 import eyesOpenRounded from './svg/eyes/openRounded.svg?raw'
 
+// FaceHair
+import faceHairBeard from './svg/faceHair/beard.svg?raw'
+
 // Hair
 import hairBobRounded from './svg/hair/bobRounded.svg?raw'
 import hairBobStraight from './svg/hair/bobStraight.svg?raw'
 import hairLong from './svg/hair/long.svg?raw'
 import hairMedium from './svg/hair/medium.svg?raw'
 import hairShort from './svg/hair/short.svg?raw'
+
+// Hats
+import hatsSanta from './svg/hats/santa.svg?raw'
 
 // Head
 import headOval from './svg/head/oval.svg?raw'
@@ -44,7 +54,10 @@ import noseDots from './svg/nose/dots.svg?raw'
 import noseHalfOval from './svg/nose/halfOval.svg?raw'
 
 export {
+  // Accessories
+  accessoriesHorns,
   // Body
+  bodySanta,
   bodyShirt,
   bodySweater,
   bodyTshirt,
@@ -60,12 +73,16 @@ export {
   eyesDots,
   eyesOpenCircle,
   eyesOpenRounded,
+  // FaceHair
+  faceHairBeard,
   // Hair
   hairBobRounded,
   hairBobStraight,
   hairLong,
   hairMedium,
   hairShort,
+  // Hats
+  hatsSanta,
   // Head
   headOval,
   // Mouth

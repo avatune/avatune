@@ -1,4 +1,6 @@
 import {
+  AccessoriesHorns,
+  BodySanta,
   BodyShirt,
   BodySweater,
   BodyTshirt,
@@ -11,11 +13,13 @@ import {
   EyesDots,
   EyesOpenCircle,
   EyesOpenRounded,
+  FaceHairBeard,
   HairBobRounded,
   HairBobStraight,
   HairLong,
   HairMedium,
   HairShort,
+  HatsSanta,
   HeadOval,
   MouthBigSmile,
   MouthFlat,
@@ -34,7 +38,11 @@ import shared from './shared'
 
 export default shared
   .toFramework<ReactAvatarItem>()
+  .withComponents('accessories', {
+    horns: { Component: AccessoriesHorns },
+  })
   .withComponents('body', {
+    santa: { Component: BodySanta },
     shirt: { Component: BodyShirt },
     sweater: { Component: BodySweater },
     tshirt: { Component: BodyTshirt },
@@ -78,5 +86,11 @@ export default shared
     curve: { Component: NoseCurve },
     dots: { Component: NoseDots },
     halfOval: { Component: NoseHalfOval },
+  })
+  .withComponents('faceHair', {
+    beard: { Component: FaceHairBeard },
+  })
+  .withComponents('hats', {
+    santa: { Component: HatsSanta },
   })
   .build() satisfies ReactTheme

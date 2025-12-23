@@ -29,6 +29,7 @@ export enum SkinTones {
   Light = '#FCBE93',
   VeryLight = '#FDCDAC',
   VeryLight2 = '#F5D0C5',
+  Grinch = '#C4DB64',
 }
 
 export enum ClothingColors {
