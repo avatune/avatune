@@ -13,12 +13,49 @@ export const GitHubContributionGuide = ({
         How to Contribute Your Theme
       </h4>
 
+      {/* GitHub Account Requirement */}
+      <div className="mb-6 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
+        <p className="text-sm text-blue-200">
+          <span className="font-semibold text-blue-100">Note:</span> You need to{' '}
+          <a
+            href="https://github.com/signup"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-blue-200 underline"
+          >
+            sign up
+          </a>{' '}
+          or{' '}
+          <a
+            href="https://github.com/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-300 hover:text-blue-200 underline"
+          >
+            sign in
+          </a>{' '}
+          to GitHub to contribute your theme.
+        </p>
+      </div>
+
       {/* Option 1: Create Issue */}
       <div className="mb-4">
         <h5 className="text-md font-medium text-pink-400 mb-2">
           Option 1: Create a GitHub Issue (Easiest)
         </h5>
         <ol className="list-decimal list-inside space-y-1 text-sm text-slate-300 ml-2">
+          <li>
+            Sign in to GitHub (or{' '}
+            <a
+              href="https://github.com/signup"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 underline"
+            >
+              sign up
+            </a>{' '}
+            if you don't have an account)
+          </li>
           <li>
             Go to{' '}
             <a
@@ -48,6 +85,18 @@ export const GitHubContributionGuide = ({
           Option 2: Create a Pull Request
         </h5>
         <ol className="list-decimal list-inside space-y-1 text-sm text-slate-300 ml-2">
+          <li>
+            Sign in to GitHub (or{' '}
+            <a
+              href="https://github.com/signup"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-400 hover:text-pink-300 underline"
+            >
+              sign up
+            </a>{' '}
+            if you don't have an account)
+          </li>
           <li>
             <a
               href="https://github.com/avatune/avatune/fork"
@@ -94,7 +143,7 @@ export const GitHubContributionGuide = ({
         </div>
         <ol
           className="list-decimal list-inside space-y-1 text-sm text-slate-300 ml-2 mt-2"
-          start={5}
+          start={6}
         >
           <li>
             Commit:{' '}
