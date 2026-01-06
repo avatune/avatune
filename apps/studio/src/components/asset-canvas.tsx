@@ -19,10 +19,10 @@ interface AssetCanvasProps {
  * Uses top-left based positioning to match the theme renderer.
  * xPercent/yPercent represent percentage from canvas top-left (0-100).
  */
-const getAssetPosition = (asset: Asset, size: number) => {
+const getAssetPosition = (asset: Asset) => {
   return {
-    left: (asset.xPercent / 100) * size,
-    top: (asset.yPercent / 100) * size,
+    left: `${asset.xPercent}%`,
+    top: `${asset.yPercent}%`,
   }
 }
 
@@ -74,19 +74,20 @@ export const AssetCanvas = ({
   return (
     <div
       ref={containerRef}
-      className="mx-auto relative"
+      className="mx-auto relative w-full"
       style={{
-        maxWidth: '100%',
+        maxWidth: `${previewSize}px`,
         maxHeight: '80vh',
       }}
     >
-      {/* Fixed-size canvas that clips content */}
+      {/* Responsive canvas that scales on mobile */}
       <div
         ref={canvasRef}
-        className="relative bg-white/5 border-2 border-white/20 overflow-hidden mx-auto"
+        className="relative bg-white/5 border-2 border-white/20 overflow-hidden mx-auto w-full"
         style={{
-          width: previewSize,
-          height: previewSize,
+          maxWidth: `${previewSize}px`,
+          width: 'min(100%, 500px)',
+          aspectRatio: '1 / 1',
           borderRadius,
         }}
         role="application"
@@ -137,7 +138,7 @@ export const AssetCanvas = ({
           }}
         />
         {sortedAssets.map((asset) => {
-          const position = getAssetPosition(asset, previewSize)
+          const position = getAssetPosition(asset)
 
           return (
             // biome-ignore lint/a11y/useSemanticElements: This is a draggable element, div is appropriate
@@ -145,8 +146,8 @@ export const AssetCanvas = ({
               key={asset.id}
               style={{
                 position: 'absolute',
-                left: `${position.left}px`,
-                top: `${position.top}px`,
+                left: position.left,
+                top: position.top,
                 transform: `scale(${zoom})`,
                 transformOrigin: 'top left',
                 cursor: isDragging ? 'grabbing' : 'grab',
@@ -169,7 +170,11 @@ export const AssetCanvas = ({
               <img
                 src={asset.dataUrl}
                 alt={asset.name}
-                className="max-w-[200px] max-h-[200px] pointer-events-none"
+                className="max-w-[200px] max-h-[200px] w-auto h-auto pointer-events-none"
+                style={{
+                  maxWidth: 'min(200px, 40vw)',
+                  maxHeight: 'min(200px, 40vw)',
+                }}
               />
             </div>
           )
@@ -179,10 +184,10 @@ export const AssetCanvas = ({
       {/* Tooltip positioned outside the canvas to avoid clipping */}
       {selectedAsset && (
         <div
-          className="absolute left-1/2 bg-black/90 px-3 py-2 rounded text-xs whitespace-nowrap z-50"
+          className="absolute left-1/2 bg-black/90 px-2 sm:px-3 py-2 rounded text-[10px] sm:text-xs z-50 max-w-[90vw] sm:max-w-none"
           style={{
             transform: 'translateX(-50%)',
-            top: previewSize + 16,
+            top: 'calc(100% + 16px)',
           }}
         >
           <div className="font-semibold mb-1">{selectedAsset.name}</div>

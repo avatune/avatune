@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import type { Asset, CategoryId, ThemeData } from '../../types'
 import { CATEGORIES } from '../../types'
 import { AssetCanvas } from '../asset-canvas'
@@ -27,10 +27,13 @@ const PreviewStep = ({
   const [selectedCategory, setSelectedCategory] = useState<CategoryId | null>(
     null,
   )
-  const [selectedAssetIndex, setSelectedAssetIndex] = useState(0)
+  const [selectedAssetIndexes, setSelectedAssetIndexes] = useState<
+    Partial<Record<CategoryId, number>>
+  >({})
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
   const [zoom, setZoom] = useState(1)
 
+  // Responsive preview size - will be handled by CSS in AssetCanvas
   const PREVIEW_SIZE = 500
   // Calculate theme canvas size based on zoom
   // When zoom is 2x, assets appear twice as big, so theme size should be half
@@ -44,29 +47,46 @@ const PreviewStep = ({
   }
 
   // Get assets for selected category
-  const getCategoryAssets = (categoryId: CategoryId | null) => {
-    if (!categoryId) return []
-    // Head asset is stored separately
-    if (categoryId === 'head') {
-      return themeData.headAsset ? [themeData.headAsset] : []
-    }
-    return themeData.assets.filter((asset) => asset.category === categoryId)
+  const getCategoryAssets = useCallback(
+    (categoryId: CategoryId | null) => {
+      if (!categoryId) return []
+      // Head asset is stored separately
+      if (categoryId === 'head') {
+        return themeData.headAsset ? [themeData.headAsset] : []
+      }
+      return themeData.assets.filter((asset) => asset.category === categoryId)
+    },
+    [themeData.headAsset, themeData.assets],
+  )
+
+  const getSelectedIndexForCategory = (categoryId: CategoryId | null) => {
+    if (!categoryId) return 0
+    return selectedAssetIndexes[categoryId] ?? 0
   }
 
   const categoryAssets = getCategoryAssets(selectedCategory)
+  const selectedAssetIndex = getSelectedIndexForCategory(selectedCategory)
   const currentCategoryAsset =
     categoryAssets.length > 0
       ? categoryAssets[selectedAssetIndex % categoryAssets.length]
       : null
 
-  // Assets to display: head (always) + current category asset
+  // Assets to display: head (always) + selected asset for each category
   const displayAssets: Asset[] = []
   if (themeData.headAsset) {
     displayAssets.push(themeData.headAsset)
   }
-  if (currentCategoryAsset) {
-    displayAssets.push(currentCategoryAsset)
-  }
+  CATEGORIES.filter((category) => category.id !== 'head').forEach(
+    (category) => {
+      const assetsForCategory = getCategoryAssets(category.id)
+      if (assetsForCategory.length === 0) return
+      const selectedIndex = Math.min(
+        getSelectedIndexForCategory(category.id),
+        assetsForCategory.length - 1,
+      )
+      displayAssets.push(assetsForCategory[selectedIndex])
+    },
+  )
 
   // Update selected asset when category or index changes
   useEffect(() => {
@@ -82,8 +102,64 @@ const PreviewStep = ({
   // Reset index when category changes
   // biome-ignore lint/correctness/useExhaustiveDependencies: selectedCategory is intentionally the only dependency
   useEffect(() => {
-    setSelectedAssetIndex(0)
+    if (!selectedCategory) return
+    const assetsForCategory = getCategoryAssets(selectedCategory)
+    setSelectedAssetIndexes((prev) => {
+      const prevIndex = prev[selectedCategory] ?? 0
+      const clampedIndex = Math.min(
+        prevIndex,
+        Math.max(assetsForCategory.length - 1, 0),
+      )
+      if (prevIndex === clampedIndex) return prev
+      return { ...prev, [selectedCategory]: clampedIndex }
+    })
   }, [selectedCategory])
+
+  // Clamp selected indexes if assets are added/removed
+  useEffect(() => {
+    setSelectedAssetIndexes((prev) => {
+      let changed = false
+      const next = { ...prev }
+      CATEGORIES.forEach((category) => {
+        if (category.id === 'head') return
+        const assetsForCategory = getCategoryAssets(category.id)
+        if (assetsForCategory.length === 0) {
+          if (next[category.id] !== undefined) {
+            delete next[category.id]
+            changed = true
+          }
+          return
+        }
+        const currentIndex = next[category.id] ?? 0
+        const clampedIndex = Math.min(
+          currentIndex,
+          assetsForCategory.length - 1,
+        )
+        if (clampedIndex !== currentIndex) {
+          next[category.id] = clampedIndex
+          changed = true
+        }
+      })
+      return changed ? next : prev
+    })
+  }, [getCategoryAssets])
+
+  const handleSelectAsset = (asset: Asset) => {
+    setSelectedCategory(asset.category)
+    if (asset.category !== 'head') {
+      const assetsForCategory = getCategoryAssets(asset.category)
+      const assetIndex = assetsForCategory.findIndex(
+        (item) => item.id === asset.id,
+      )
+      if (assetIndex !== -1) {
+        setSelectedAssetIndexes((prev) => ({
+          ...prev,
+          [asset.category]: assetIndex,
+        }))
+      }
+    }
+    setSelectedAsset(asset)
+  }
 
   return (
     <Card>
@@ -104,7 +180,7 @@ const PreviewStep = ({
               <button
                 key={category.id}
                 type="button"
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-3 py-2 sm:px-4 rounded-md text-xs sm:text-sm font-medium transition-all ${
                   isSelected
                     ? 'bg-pink-500/20 text-pink-200 ring-1 ring-pink-500/30'
                     : categoryAssets.length === 0
@@ -114,7 +190,7 @@ const PreviewStep = ({
                 onClick={() => setSelectedCategory(category.id)}
                 disabled={categoryAssets.length === 0}
               >
-                {category.label}
+                <span className="whitespace-nowrap">{category.label}</span>
                 {categoryAssets.length > 0 && (
                   <span className="ml-1 text-xs opacity-70">
                     ({categoryAssets.length})
@@ -125,37 +201,46 @@ const PreviewStep = ({
           })}
         </div>
         {selectedCategory && categoryAssets.length > 0 && (
-          <div className="flex items-center justify-center gap-4 mt-4 p-4 bg-white/5 rounded-lg">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mt-4 p-3 sm:p-4 bg-white/5 rounded-lg">
             <Button
               variant="small"
-              onClick={() =>
-                setSelectedAssetIndex(
-                  (prev) =>
-                    (prev - 1 + categoryAssets.length) % categoryAssets.length,
-                )
-              }
+              onClick={() => {
+                if (!selectedCategory) return
+                setSelectedAssetIndexes((prev) => {
+                  const currentIndex = prev[selectedCategory] ?? 0
+                  const newIndex =
+                    (currentIndex - 1 + categoryAssets.length) %
+                    categoryAssets.length
+                  return { ...prev, [selectedCategory]: newIndex }
+                })
+              }}
             >
-              ← Previous
+              <span className="hidden sm:inline">← Previous</span>
+              <span className="sm:hidden">←</span>
             </Button>
-            <span className="font-semibold min-w-[60px] text-center">
+            <span className="font-semibold min-w-[50px] sm:min-w-[60px] text-center text-sm sm:text-base">
               {selectedAssetIndex + 1} / {categoryAssets.length}
             </span>
             <Button
               variant="small"
-              onClick={() =>
-                setSelectedAssetIndex(
-                  (prev) => (prev + 1) % categoryAssets.length,
-                )
-              }
+              onClick={() => {
+                if (!selectedCategory) return
+                setSelectedAssetIndexes((prev) => {
+                  const currentIndex = prev[selectedCategory] ?? 0
+                  const newIndex = (currentIndex + 1) % categoryAssets.length
+                  return { ...prev, [selectedCategory]: newIndex }
+                })
+              }}
             >
-              Next →
+              <span className="hidden sm:inline">Next →</span>
+              <span className="sm:hidden">→</span>
             </Button>
           </div>
         )}
       </div>
 
       <div className="mb-8">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <Input
             id="theme-name-preview"
             label="Theme Name"
@@ -180,27 +265,27 @@ const PreviewStep = ({
           />
         </div>
 
-        <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 flex-wrap">
           <button
             type="button"
             onClick={() => handleZoomChange(Math.max(0.25, zoom - 0.25))}
-            className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold"
+            className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold shrink-0"
             aria-label="Zoom out"
           >
             −
           </button>
-          <div className="text-center">
-            <span className="text-sm text-slate-300 min-w-[60px] font-mono block">
+          <div className="text-center min-w-[80px] sm:min-w-[100px]">
+            <span className="text-xs sm:text-sm text-slate-300 font-mono block">
               {Math.round(zoom * 100)}%
             </span>
-            <span className="text-xs text-slate-500">
-              Size: {calculatedSize}px
+            <span className="text-[10px] sm:text-xs text-slate-500">
+              {calculatedSize}px
             </span>
           </div>
           <button
             type="button"
             onClick={() => handleZoomChange(Math.min(4, zoom + 0.25))}
-            className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold"
+            className="w-8 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors flex items-center justify-center text-lg font-bold shrink-0"
             aria-label="Zoom in"
           >
             +
@@ -208,7 +293,7 @@ const PreviewStep = ({
           <button
             type="button"
             onClick={() => handleZoomChange(1)}
-            className="px-3 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors text-xs"
+            className="px-2 sm:px-3 h-8 rounded-md bg-slate-800/60 border border-white/20 text-white hover:bg-slate-700/60 transition-colors text-xs shrink-0"
             aria-label="Reset zoom"
           >
             Reset
@@ -218,7 +303,7 @@ const PreviewStep = ({
         <AssetCanvas
           assets={displayAssets}
           selectedAsset={selectedAsset}
-          onSelectAsset={setSelectedAsset}
+          onSelectAsset={handleSelectAsset}
           onAssetUpdate={onAssetUpdate}
           borderRadius={themeData.borderRadius}
           previewSize={PREVIEW_SIZE}
@@ -229,26 +314,32 @@ const PreviewStep = ({
 
       {selectedCategory && categoryAssets.length > 0 && (
         <CardSection className="mt-8">
-          <h3 className="mb-4 text-lg font-semibold text-pink-200">
+          <h3 className="mb-4 text-base sm:text-lg font-semibold text-pink-200 break-words">
             Current Asset: {currentCategoryAsset?.name}
           </h3>
           <div className="flex flex-col gap-3">
-            <div className="flex justify-between items-center py-2 border-b border-white/10">
-              <span className="font-medium opacity-80">Category:</span>
-              <span className="font-mono text-pink-200">
+            <div className="flex justify-between items-center py-2 border-b border-white/10 gap-2">
+              <span className="font-medium opacity-80 text-sm sm:text-base">
+                Category:
+              </span>
+              <span className="font-mono text-pink-200 text-xs sm:text-sm break-all text-right">
                 {selectedCategory}
               </span>
             </div>
-            <div className="flex justify-between items-center py-2 border-b border-white/10">
-              <span className="font-medium opacity-80">Position:</span>
-              <span className="font-mono text-pink-200">
+            <div className="flex justify-between items-center py-2 border-b border-white/10 gap-2">
+              <span className="font-medium opacity-80 text-sm sm:text-base">
+                Position:
+              </span>
+              <span className="font-mono text-pink-200 text-xs sm:text-sm break-all text-right">
                 X: {currentCategoryAsset?.xPercent.toFixed(2)}%, Y:{' '}
                 {currentCategoryAsset?.yPercent.toFixed(2)}%
               </span>
             </div>
-            <div className="flex justify-between items-center py-2">
-              <span className="font-medium opacity-80">Layer:</span>
-              <span className="font-mono text-pink-200">
+            <div className="flex justify-between items-center py-2 gap-2">
+              <span className="font-medium opacity-80 text-sm sm:text-base">
+                Layer:
+              </span>
+              <span className="font-mono text-pink-200 text-xs sm:text-sm">
                 {currentCategoryAsset?.layer}
               </span>
             </div>
@@ -256,11 +347,13 @@ const PreviewStep = ({
         </CardSection>
       )}
 
-      <div className="flex gap-4 mt-8">
-        <Button variant="ghost" onClick={onBack}>
+      <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8">
+        <Button variant="ghost" onClick={onBack} className="w-full sm:w-auto">
           Back
         </Button>
-        <Button onClick={onNext}>Continue to Save</Button>
+        <Button onClick={onNext} className="w-full sm:w-auto">
+          Continue to Save
+        </Button>
       </div>
     </Card>
   )

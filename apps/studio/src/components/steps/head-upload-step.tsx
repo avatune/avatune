@@ -11,9 +11,18 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
 
+  const isSupportedImageFile = (file: File) => {
+    const allowedExtensions = ['.svg', '.png', '.jpg', '.jpeg']
+    const hasImageMime = file.type.startsWith('image/')
+    const hasAllowedExtension = allowedExtensions.some((ext) =>
+      file.name.toLowerCase().endsWith(ext),
+    )
+    return hasImageMime || hasAllowedExtension
+  }
+
   const handleFileSelect = async (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file')
+    if (!isSupportedImageFile(file)) {
+      alert('Please upload an SVG, PNG, or JPG file')
       return
     }
 
@@ -55,6 +64,8 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
     const file = e.target.files?.[0]
     if (file) {
       handleFileSelect(file)
+      // Reset so the same file can be re-selected after replacement
+      e.target.value = ''
     }
   }
 
@@ -82,6 +93,42 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
         title="Step 1: Upload Head Asset"
         description="Upload the base head asset. This will be used as the reference point for positioning all other assets."
       />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/svg+xml,image/png,image/jpeg,.svg,.png,.jpg,.jpeg"
+        onChange={handleFileInputChange}
+        className="hidden"
+      />
+
+      {/* Notice about head asset importance */}
+      <div className="mb-8 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
+        <div className="flex items-start gap-3">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-blue-400 mt-0.5 shrink-0"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 16v-4" />
+            <path d="M12 8h.01" />
+          </svg>
+          <div>
+            <p className="text-blue-300 font-medium mb-1">Foundation Asset</p>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              The head asset serves as the foundation for your entire theme. All
+              other assets (eyes, mouth, hair, accessories) will be positioned
+              and layered relative to this base. Choose an asset that represents
+              the core style and proportions for your avatar theme.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {headAsset ? (
         <div className="text-center">
@@ -110,13 +157,6 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
           onDragLeave={handleDragLeave}
           onClick={() => fileInputRef.current?.click()}
         >
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileInputChange}
-            className="hidden"
-          />
           <div className="flex flex-col items-center gap-4">
             <svg
               width="64"

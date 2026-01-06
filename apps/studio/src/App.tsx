@@ -5,11 +5,13 @@ import {
   PreviewStep,
   SaveThemeStep,
 } from './components/steps'
+import WelcomePage from './components/welcome-page'
 import type { Asset, ThemeData } from './types'
 
 type Step = 'head' | 'categories' | 'preview' | 'save'
 
 const App = () => {
+  const [showWelcome, setShowWelcome] = useState(true)
   const [step, setStep] = useState<Step>('head')
   const [themeData, setThemeData] = useState<ThemeData>({
     headAsset: null,
@@ -112,11 +114,16 @@ const App = () => {
     }
   }
 
+  if (showWelcome) {
+    return <WelcomePage onGetStarted={() => setShowWelcome(false)} />
+  }
+
   return (
     <div className="min-h-screen bg-slate-950 text-white antialiased flex flex-col">
       <header className="border-b border-white/10 px-6 py-8 sm:px-12 lg:px-16">
         <h1 className="text-center text-4xl font-bold mb-8 text-white">
-          Theme Uploader
+          <span className="text-pink-400">Avatune</span> Studio{' '}
+          <span className="text-slate-400 text-2xl">Beta</span>
         </h1>
         <div className="flex justify-center gap-8 flex-wrap">
           <button
@@ -247,6 +254,7 @@ const App = () => {
                 size: 400,
                 borderRadius: '100%',
               })
+              setShowWelcome(true)
               setStep('head')
             }}
           />

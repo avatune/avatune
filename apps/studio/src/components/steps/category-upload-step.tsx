@@ -30,9 +30,17 @@ const CategoryUploadStep = ({
     return existingAssets.filter((asset) => asset.category === categoryId)
   }
 
+  const isSvgFile = (file: File): boolean => {
+    const isSvgType = file.type === 'image/svg+xml' || file.type === 'image/svg'
+    const isSvgExtension = file.name.toLowerCase().endsWith('.svg')
+    return isSvgType || isSvgExtension
+  }
+
   const handleFileSelect = async (file: File, category: CategoryId) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Please upload an image file')
+    if (!isSvgFile(file)) {
+      alert(
+        'Please upload an SVG file. Only SVG format is supported for category assets.',
+      )
       return
     }
 
@@ -71,16 +79,24 @@ const CategoryUploadStep = ({
   }
 
   const handleFilesSelect = async (files: FileList, category: CategoryId) => {
-    const imageFiles = Array.from(files).filter((file) =>
-      file.type.startsWith('image/'),
-    )
+    const svgFiles = Array.from(files).filter((file) => isSvgFile(file))
 
-    if (imageFiles.length === 0) {
-      alert('Please upload image files')
+    if (svgFiles.length === 0) {
+      alert(
+        'Please upload SVG files. Only SVG format is supported for category assets.',
+      )
       return
     }
 
-    for (const file of imageFiles) {
+    // Show warning if some files were filtered out
+    const nonSvgFiles = Array.from(files).filter((file) => !isSvgFile(file))
+    if (nonSvgFiles.length > 0) {
+      alert(
+        `${nonSvgFiles.length} file(s) were skipped because they are not SVG files. Only SVG format is supported.`,
+      )
+    }
+
+    for (const file of svgFiles) {
       await handleFileSelect(file, category)
     }
   }
@@ -126,8 +142,49 @@ const CategoryUploadStep = ({
     <Card>
       <StepHeader
         title="Step 2: Upload Category Assets"
-        description="Choose a category and upload assets. You can upload multiple assets at once by selecting multiple files or dragging multiple files."
+        description="Choose a category and upload SVG assets. You can upload multiple SVG files at once by selecting multiple files or dragging multiple files."
       />
+      <div className="mb-6 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
+        <p className="text-sm text-blue-200 font-medium">
+          <span className="font-semibold text-blue-100">
+            File Naming Convention:
+          </span>{' '}
+          Please follow the file naming convention for variants (e.g. "long",
+          "short", "bobLong") so assets stay organized.
+        </p>
+      </div>
+
+      {/* Notice about proportions */}
+      <div className="mb-8 p-4 bg-amber-500/10 border border-amber-400/30 rounded-lg">
+        <div className="flex items-start gap-3">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-amber-400 mt-0.5 shrink-0"
+            aria-hidden="true"
+          >
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+          <div>
+            <p className="text-amber-300 font-medium mb-1">
+              Keep Consistent Proportions
+            </p>
+            <p className="text-slate-300 text-sm leading-relaxed">
+              All assets must maintain the same proportions as your head asset.
+              For example, if your head asset is 500×500px, all category assets
+              (eyes, mouth, hair, etc.) should maintain the same aspect ratio
+              and proportions relative to the head. This ensures proper
+              alignment and layering when assets are combined to create avatars.
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4 mb-8">
         {CATEGORIES.map((category) => {
@@ -189,7 +246,7 @@ const CategoryUploadStep = ({
                   tabIndex={0}
                   aria-label="Upload files for this category"
                 >
-                  <p>Drop files here or click to select multiple</p>
+                  <p>Drop SVG files here or click to select multiple</p>
                 </div>
               )}
             </button>
@@ -200,7 +257,7 @@ const CategoryUploadStep = ({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept="image/svg+xml,.svg"
         multiple
         onChange={handleFileInputChange}
         className="hidden"
