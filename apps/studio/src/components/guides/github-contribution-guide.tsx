@@ -1,4 +1,4 @@
-import { CardSection } from './ui'
+import { CardSection } from '../ui'
 
 interface GitHubContributionGuideProps {
   themeName: string

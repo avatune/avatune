@@ -1,6 +1,7 @@
+import { Info, Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
-import type { Asset } from '../../types'
-import { Button, Card, StepHeader } from '../ui'
+import type { Asset } from '../../../types'
+import { Button, Card, StepHeader } from '../../ui'
 
 interface HeadUploadStepProps {
   onUpload: (asset: Asset) => void
@@ -11,18 +12,17 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
 
-  const isSupportedImageFile = (file: File) => {
-    const allowedExtensions = ['.svg', '.png', '.jpg', '.jpeg']
-    const hasImageMime = file.type.startsWith('image/')
-    const hasAllowedExtension = allowedExtensions.some((ext) =>
-      file.name.toLowerCase().endsWith(ext),
-    )
-    return hasImageMime || hasAllowedExtension
+  const isSvgFile = (file: File): boolean => {
+    const isSvgType = file.type === 'image/svg+xml' || file.type === 'image/svg'
+    const isSvgExtension = file.name.toLowerCase().endsWith('.svg')
+    return isSvgType || isSvgExtension
   }
 
   const handleFileSelect = async (file: File) => {
-    if (!isSupportedImageFile(file)) {
-      alert('Please upload an SVG, PNG, or JPG file')
+    if (!isSvgFile(file)) {
+      alert(
+        'Please upload an SVG file. Only SVG format is supported for head assets.',
+      )
       return
     }
 
@@ -96,7 +96,7 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/svg+xml,image/png,image/jpeg,.svg,.png,.jpg,.jpeg"
+        accept="image/svg+xml,.svg"
         onChange={handleFileInputChange}
         className="hidden"
       />
@@ -104,20 +104,11 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       {/* Notice about head asset importance */}
       <div className="mb-8 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
         <div className="flex items-start gap-3">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+          <Info
+            size={20}
             className="text-blue-400 mt-0.5 shrink-0"
             aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 16v-4" />
-            <path d="M12 8h.01" />
-          </svg>
+          />
           <div>
             <p className="text-blue-300 font-medium mb-1">Foundation Asset</p>
             <p className="text-slate-300 text-sm leading-relaxed">
@@ -158,24 +149,11 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
           onClick={() => fileInputRef.current?.click()}
         >
           <div className="flex flex-col items-center gap-4">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="text-slate-400"
-              aria-hidden="true"
-            >
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="17 8 12 3 7 8" />
-              <line x1="12" y1="3" x2="12" y2="15" />
-            </svg>
+            <Upload size={64} className="text-slate-400" aria-hidden="true" />
             <p className="text-lg text-white">
               Click or drag to upload head asset
             </p>
-            <p className="text-sm text-slate-400">SVG, PNG, or JPG files</p>
+            <p className="text-sm text-slate-400">SVG files only</p>
           </div>
         </button>
       )}

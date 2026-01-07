@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { useDrag } from '../hooks/use-drag'
-import { useKeyboardNavigation } from '../hooks/use-keyboard-navigation'
-import type { Asset } from '../types'
+import { useDrag } from '../../../../hooks/use-drag'
+import { useKeyboardNavigation } from '../../../../hooks/use-keyboard-navigation'
+import type { Asset } from '../../../../types'
 
 interface AssetCanvasProps {
   assets: Asset[]
@@ -14,11 +14,6 @@ interface AssetCanvasProps {
   onZoomChange?: (zoom: number) => void
 }
 
-/**
- * Calculate asset position in pixels from percentage.
- * Uses top-left based positioning to match the theme renderer.
- * xPercent/yPercent represent percentage from canvas top-left (0-100).
- */
 const getAssetPosition = (asset: Asset) => {
   return {
     left: `${asset.xPercent}%`,
@@ -80,7 +75,6 @@ export const AssetCanvas = ({
         maxHeight: '80vh',
       }}
     >
-      {/* Responsive canvas that scales on mobile */}
       <div
         ref={canvasRef}
         className="relative bg-white/5 border-2 border-white/20 overflow-hidden mx-auto w-full"
@@ -180,42 +174,6 @@ export const AssetCanvas = ({
           )
         })}
       </div>
-
-      {/* Tooltip positioned outside the canvas to avoid clipping */}
-      {selectedAsset && (
-        <div
-          className="absolute left-1/2 bg-black/90 px-2 sm:px-3 py-2 rounded text-[10px] sm:text-xs z-50 max-w-[90vw] sm:max-w-none"
-          style={{
-            transform: 'translateX(-50%)',
-            top: 'calc(100% + 16px)',
-          }}
-        >
-          <div className="font-semibold mb-1">{selectedAsset.name}</div>
-          <div className="text-xs opacity-80 mb-1">
-            X: {selectedAsset.xPercent.toFixed(2)}% Y:{' '}
-            {selectedAsset.yPercent.toFixed(2)}%
-          </div>
-          <div className="flex items-center gap-2 text-xs">
-            <label htmlFor={`layer-${selectedAsset.id}`} className="opacity-80">
-              Layer:
-            </label>
-            <input
-              id={`layer-${selectedAsset.id}`}
-              type="number"
-              value={selectedAsset.layer}
-              onChange={(e) =>
-                onAssetUpdate(selectedAsset.id, {
-                  layer: Number(e.target.value),
-                })
-              }
-              min="0"
-              max="100"
-              className="w-16 px-1 py-0.5 bg-white/10 border border-white/20 rounded text-white text-center focus:outline-none focus:border-pink-400"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>
-        </div>
-      )}
     </div>
   )
 }

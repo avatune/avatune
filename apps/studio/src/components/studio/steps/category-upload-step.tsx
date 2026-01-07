@@ -4,8 +4,8 @@ import {
   CATEGORIES,
   type CategoryId,
   DEFAULT_LAYERS,
-} from '../../types'
-import { Badge, Button, Card, StepHeader } from '../ui'
+} from '../../../types'
+import { Badge, Button, Card, StepHeader } from '../../ui'
 
 interface CategoryUploadStepProps {
   onAssetAdd: (asset: Asset) => void

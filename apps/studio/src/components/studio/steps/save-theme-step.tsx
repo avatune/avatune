@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import type { ThemeData } from '../../types'
+import type { ThemeData } from '../../../types'
 import {
   generateThemeFile,
   generateThemeFolder,
-} from '../../utils/themeGenerator'
-import { GitHubContributionGuide } from '../github-contribution-guide'
-import { Button, Card, CardSection, Input, StepHeader } from '../ui'
+} from '../../../utils/themeGenerator'
+import { GitHubContributionGuide } from '../../guides'
+import { Button, Card, Input, StepHeader } from '../../ui'
 
 interface SaveThemeStepProps {
   themeData: ThemeData
@@ -72,33 +72,10 @@ const SaveThemeStep = ({ themeData, onBack, onReset }: SaveThemeStepProps) => {
           />
         </div>
 
-        <CardSection className="mb-8">
-          <h3 className="mb-4 text-lg font-semibold">Theme Summary</h3>
-          <ul className="space-y-2">
-            <li className="py-2 border-b border-white/10">
-              Head asset: {themeData.headAsset?.name || 'None'}
-            </li>
-            <li className="py-2 border-b border-white/10">
-              Total assets:{' '}
-              {themeData.assets.length + (themeData.headAsset ? 1 : 0)}
-            </li>
-            <li className="py-2 border-b border-white/10">
-              Canvas size: {themeData.size}px
-            </li>
-            <li className="py-2 border-b border-white/10">
-              Border radius: {themeData.borderRadius}
-            </li>
-            <li className="py-2">
-              Categories:{' '}
-              {new Set(themeData.assets.map((a) => a.category)).size}
-            </li>
-          </ul>
-        </CardSection>
-
         {generated ? (
           <div className="p-8 bg-green-500/10 border-2 border-green-500/30 rounded-lg">
             <h3 className="mb-4 text-xl font-semibold text-green-400 text-center">
-              ✓ Packages Generated Successfully!
+              Packages Generated Successfully!
             </h3>
             <p className="mb-6 text-slate-300 text-center">
               A ZIP file containing both the assets and theme packages has been
@@ -138,7 +115,7 @@ const SaveThemeStep = ({ themeData, onBack, onReset }: SaveThemeStepProps) => {
               onClick={handleGenerate}
               disabled={isGenerating || !themeName.trim()}
             >
-              {isGenerating ? 'Generating...' : 'Generate Theme'}
+              {isGenerating ? 'Generating...' : 'Generate & Download Theme'}
             </Button>
           </div>
         )}
