@@ -34,6 +34,11 @@ export default defineConfig({
             { label: 'Welcome', slug: 'docs' },
             { label: 'Getting Started', slug: 'getting-started' },
             { label: 'Playground', slug: 'playground' },
+            {
+              label: 'Studio',
+              slug: 'studio',
+              badge: { text: 'Beta', variant: 'caution' },
+            },
           ],
         },
         {
