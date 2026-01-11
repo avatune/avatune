@@ -9,8 +9,8 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "@tabler/icons-react": "^3.36.1",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.562.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-router-dom": "^6.28.0"

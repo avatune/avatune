@@ -1,4 +1,4 @@
-import { Info, Upload } from 'lucide-react'
+import { IconInfoCircle, IconUpload } from '@tabler/icons-react'
 import { useRef, useState } from 'react'
 import type { Asset } from '../../../types'
 import { Button, Card, StepHeader } from '../../ui'
@@ -104,7 +104,7 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       {/* Notice about head asset importance */}
       <div className="mb-8 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
         <div className="flex items-start gap-3">
-          <Info
+          <IconInfoCircle
             size={20}
             className="text-blue-400 mt-0.5 shrink-0"
             aria-hidden="true"
@@ -149,7 +149,11 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
           onClick={() => fileInputRef.current?.click()}
         >
           <div className="flex flex-col items-center gap-4">
-            <Upload size={64} className="text-slate-400" aria-hidden="true" />
+            <IconUpload
+              size={48}
+              className="text-slate-400"
+              aria-hidden="true"
+            />
             <p className="text-lg text-white">
               Click or drag to upload head asset
             </p>
