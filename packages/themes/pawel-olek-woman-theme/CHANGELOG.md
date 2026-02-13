@@ -1,5 +1,17 @@
 # @avatune/pawel-olek-woman-theme
 
+## 3.0.3
+
+### Patch Changes
+
+- [`fd13ea3`](https://github.com/avatune/avatune/commit/fd13ea3fe712c7a6996f7272cd3b05aa1b0d429f) Thanks [@teimurjan](https://github.com/teimurjan)! - Add solidjs support
+
+- Updated dependencies [[`fd13ea3`](https://github.com/avatune/avatune/commit/fd13ea3fe712c7a6996f7272cd3b05aa1b0d429f)]:
+  - @avatune/pawel-olek-assets@3.0.1
+  - @avatune/types@2.1.1
+  - @avatune/theme-builder@1.2.6
+  - @avatune/utils@1.4.1
+
 ## 3.0.2
 
 ### Patch Changes
