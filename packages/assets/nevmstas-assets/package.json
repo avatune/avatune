@@ -60,6 +60,11 @@
       "import": "./dist/vue.js",
       "require": "./dist/vue.cjs"
     },
+    "./angular": {
+      "types": "./dist/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
+    },
     "./svg": {
       "types": "./dist/svg.d.ts",
       "import": "./dist/svg.js",
@@ -80,6 +85,7 @@
   },
   "devDependencies": {
     "@avatune/rsbuild-plugin-raw-svg": "workspace:*",
+    "@avatune/rsbuild-plugin-svg-to-angular": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-solid": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
@@ -99,6 +105,7 @@
     "vue": "^3.5.22"
   },
   "peerDependencies": {
+    "@angular/compiler": ">=19.0.0",
     "react": ">=18.0.0",
     "react-native": ">=0.74.0",
     "react-native-svg": ">=15.0.0",
@@ -107,6 +114,9 @@
     "vue": "^3.5.22"
   },
   "peerDependenciesMeta": {
+    "@angular/compiler": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },

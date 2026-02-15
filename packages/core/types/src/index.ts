@@ -105,7 +105,16 @@ export interface SolidJsAvatarItem extends BaseAvatarItem {
 }
 
 /**
- * Avatar item can be vanilla, React, React Native, Vue, Svelte, or SolidJS
+ * Angular avatar item with an Angular component
+ */
+export interface AngularAvatarItem extends BaseAvatarItem {
+  /** Angular component to render */
+  Component: unknown
+  template: string
+}
+
+/**
+ * Avatar item can be vanilla, React, React Native, Vue, Svelte, SolidJS, or Angular
  */
 export type AvatarItem =
   | BaseAvatarItem
@@ -115,6 +124,7 @@ export type AvatarItem =
   | VueAvatarItem
   | SvelteAvatarItem
   | SolidJsAvatarItem
+  | AngularAvatarItem
 
 /**
  * Collection of avatar items by identifier
@@ -272,6 +282,11 @@ export type SvelteTheme = Theme<SvelteAvatarItem>
  * SolidJS theme with SolidJS components
  */
 export type SolidJsTheme = Theme<SolidJsAvatarItem>
+
+/**
+ * Angular theme with Angular components
+ */
+export type AngularTheme = Theme<AngularAvatarItem>
 
 /**
  * Avatar part categories

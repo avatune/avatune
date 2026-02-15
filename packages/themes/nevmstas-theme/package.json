@@ -58,6 +58,11 @@
       "types": "./dist/solidjs.d.ts",
       "import": "./dist/solidjs.js"
     },
+    "./angular": {
+      "types": "./dist/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
+    },
     "./react-native": {
       "types": "./dist/react-native.d.ts",
       "import": "./dist/react-native.js",
@@ -86,6 +91,7 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
+    "@angular/core": ">=19.0.0",
     "react": ">=18.0.0",
     "react-native": ">=0.74.0",
     "react-native-svg": ">=15.0.0",
@@ -94,6 +100,9 @@
     "vue": "^3.5.22"
   },
   "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
     "react": {
       "optional": true
     },

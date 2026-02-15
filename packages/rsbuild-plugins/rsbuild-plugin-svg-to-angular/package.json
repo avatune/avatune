@@ -1,0 +1,66 @@
+{
+  "name": "@avatune/rsbuild-plugin-svg-to-angular",
+  "version": "1.0.0",
+  "description": "Rsbuild plugin to transform SVG files into Angular components",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avatune/avatune.git"
+  },
+  "homepage": "https://avatune.dev",
+  "bugs": {
+    "url": "https://github.com/avatune/avatune/issues"
+  },
+  "author": "Avatune Team (https://avatune.dev)",
+  "contributors": [
+    "Teimur Gasanov <me@teimurjan.dev> (https://github.com/teimurjan)",
+    "Stanislav Nevmyvaka <nevmyvakastas@gmail.com> (https://github.com/nevmstas)"
+  ],
+  "keywords": [
+    "avatune",
+    "rsbuild",
+    "plugin",
+    "build-tools",
+    "angular",
+    "svg",
+    "transform"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
+    "deepmerge": "^4.3.1",
+    "svgo": "^4.0.0"
+  },
+  "devDependencies": {
+    "@angular/compiler": "^19.2.0",
+    "@avatune/typescript-config": "workspace:*",
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@angular/compiler": ">=19.0.0",
+    "@rsbuild/core": ">=1.0.0"
+  },
+  "license": "MIT"
+}

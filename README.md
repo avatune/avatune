@@ -83,6 +83,7 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 
 | Framework | Package |
 |-----------|---------|
+| Angular | [`@avatune/angular`](./packages/renderers/angular) |
 | Solidjs | [`@avatune/solidjs`](./packages/renderers/solidjs) |
 | React | [`@avatune/react`](./packages/renderers/react) |
 | React Native | [`@avatune/react-native`](./packages/renderers/react-native) |
