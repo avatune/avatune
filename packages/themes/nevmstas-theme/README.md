@@ -13,7 +13,7 @@ npm install @avatune/nevmstas-theme
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
 
 ### React
 
@@ -64,6 +64,30 @@ import theme from '@avatune/nevmstas-theme/vue'
 />
 ```
 
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/nevmstas-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
 ### Vanilla JavaScript
 
 ```typescript
@@ -111,6 +135,7 @@ The design assets used in this theme are separately licensed. See the asset pack
 - [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
 - [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
 - [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
 - [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
 
 ## Development

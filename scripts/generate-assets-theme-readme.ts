@@ -58,7 +58,7 @@ function generateREADME(theme: ThemeInfo): string {
   sections.push('## Usage')
   sections.push('')
   sections.push(
-    'This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.',
+    'This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.',
   )
   sections.push('')
 
@@ -75,6 +75,11 @@ function generateREADME(theme: ThemeInfo): string {
   sections.push('### Svelte')
   sections.push('')
   sections.push(generateFrameworkExample('svelte', packageName))
+  sections.push('')
+
+  sections.push('### Angular')
+  sections.push('')
+  sections.push(generateFrameworkExample('angular', packageName))
   sections.push('')
 
   sections.push('### Vanilla JavaScript')

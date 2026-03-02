@@ -46,6 +46,7 @@ export default defineConfig({
           items: [
             { label: 'React', slug: 'packages/react' },
             { label: 'React Native', slug: 'packages/react-native' },
+            { label: 'Angular', slug: 'packages/angular' },
             { label: 'SolidJS', slug: 'packages/solidjs' },
             { label: 'Vue', slug: 'packages/vue' },
             { label: 'Svelte', slug: 'packages/svelte' },

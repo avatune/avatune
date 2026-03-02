@@ -1,3 +1,4 @@
+import angularLogo from '../assets/angular-logo.svg'
 import jsLogo from '../assets/javascript-logo.svg'
 import reactLogo from '../assets/react-logo.svg'
 import reactNativeLogo from '../assets/react-native.svg'
@@ -77,6 +78,13 @@ export const frameworks: FrameworkDefinition[] = [
     language: 'tsx',
     filePath: 'src/components/Avatar.tsx',
     logo: { src: reactLogo.src, alt: 'React logo' },
+  },
+  {
+    id: 'angular',
+    label: 'Angular',
+    language: 'ts',
+    filePath: 'src/app/avatar.component.ts',
+    logo: { src: angularLogo.src, alt: 'Angular logo' },
   },
   {
     id: 'vue',
@@ -265,6 +273,32 @@ export function AvatarPreview() {
       seed="${seed}"${propsStr}
     />
   )
+}`
+    }
+
+    case 'angular': {
+      const propsLines = filteredSelections
+        .map(([k, v]) => `    ${k}="${v}"`)
+        .join('\n')
+      const propsStr = hasSelections ? `\n${propsLines}` : ''
+      return `import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '${themeImportPath}'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: \`
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="${seed}"${propsStr}
+    />
+  \`,
+})
+export class AppComponent {
+  theme = theme
 }`
     }
 

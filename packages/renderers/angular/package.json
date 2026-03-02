@@ -60,7 +60,8 @@
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@angular/core": ">=19.0.0"
+    "@angular/core": ">=19.0.0",
+    "@angular/platform-browser": ">=19.0.0"
   },
   "license": "MIT"
 }

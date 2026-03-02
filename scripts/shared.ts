@@ -13,7 +13,7 @@ import { basename, join } from 'node:path'
 // Types
 // ============================================================================
 
-export type Framework = 'react' | 'vue' | 'svelte' | 'vanilla'
+export type Framework = 'react' | 'vue' | 'svelte' | 'angular' | 'vanilla'
 
 export interface AssetFile {
   category: string
@@ -397,6 +397,30 @@ import theme from '@avatune/${packageName}/vue'
         'svelte',
       )
 
+    case 'angular':
+      return generateCodeBlock(
+        `import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/${packageName}/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: \`
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  \`,
+})
+export class AppComponent {
+  theme = theme
+}`,
+        'ts',
+      )
+
     case 'vanilla':
       return generateCodeBlock(
         `import { avatar } from '@avatune/vanilla'
@@ -587,5 +611,6 @@ export function generateRelatedPackagesSection(
 - [\`@avatune/react\`](${renderersUrl}/react) - React avatar renderer
 - [\`@avatune/vue\`](${renderersUrl}/vue) - Vue avatar renderer
 - [\`@avatune/svelte\`](${renderersUrl}/svelte) - Svelte avatar renderer
+- [\`@avatune/angular\`](${renderersUrl}/angular) - Angular avatar renderer
 - [\`@avatune/vanilla\`](${renderersUrl}/vanilla) - Vanilla JavaScript avatar renderer`
 }

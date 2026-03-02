@@ -1,0 +1,98 @@
+---
+title: "@avatune/angular"
+description: "Angular component for rendering avatars from themes."
+source: "packages/angular/README.md"
+---
+
+import InstallTabs from "../../../../components/docs/install-tabs.astro";
+import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
+
+> Source: `packages/angular/README.md`
+
+Angular component for rendering avatars from themes.
+
+## Installation
+
+<InstallTabs packages="@avatune/angular" />
+
+## Usage
+
+<AvatarUsagePreview
+  client:only="svelte"
+  themeId="nevmstas"
+  seed="user@example.com"
+  size={200}
+/>
+
+```ts
+import { Component } from "@angular/core";
+import { Avatar } from "@avatune/angular";
+import theme from "@avatune/nevmstas-theme/angular";
+
+@Component({
+  selector: "app-root",
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar [theme]="theme" seed="user@example.com" [inputSize]="200" />
+  `,
+})
+export class AppComponent {
+  theme = theme;
+}
+```
+
+## Inputs
+
+```ts
+{
+  theme: AngularTheme        // Theme to use for rendering (required)
+  seed?: string              // Random seed for avatar generation
+  inputSize?: number         // Avatar size in pixels (default: theme size)
+  avatarClass?: string       // CSS class for SVG container
+  avatarStyle?: string       // Inline styles for SVG container
+
+  // Part selection (string identifier)
+  body?: string
+  ears?: string
+  eyebrows?: string
+  eyes?: string
+  hair?: string
+  head?: string
+  mouth?: string
+  nose?: string
+
+  // Part colors (CSS color values)
+  bodyColor?: string
+  earsColor?: string
+  eyebrowsColor?: string
+  eyesColor?: string
+  hairColor?: string
+  headColor?: string
+  mouthColor?: string
+  noseColor?: string
+  backgroundColor?: string
+}
+```
+
+> **Note:** Angular uses `inputSize`, `avatarClass`, and `avatarStyle` instead of `size`, `class`, and `style` to avoid conflicts with built-in HTML attributes.
+
+## Examples
+
+Random avatar with seed:
+
+```html
+<avatune-avatar [theme]="nevmstasTheme" seed="521411f1-fab6-4ed5-90bf-2863028bcae6" />
+```
+
+Specific parts with custom colors:
+
+```html
+<avatune-avatar
+  [theme]="nevmstasTheme"
+  hair="long"
+  hairColor="#ff6b6b"
+  eyes="happy"
+  eyesColor="#4ecdc4"
+/>
+```

@@ -15,6 +15,7 @@ type Framework =
   | 'solidjs'
   | 'vanilla'
   | 'react-native'
+  | 'angular'
 
 // Framework-specific configurations
 const FRAMEWORK_CONFIG = {
@@ -59,6 +60,13 @@ const FRAMEWORK_CONFIG = {
     fileExt: 'tsx',
     avatarItemType: 'ReactNativeAvatarItem',
     storyRenderer: 'react-native',
+  },
+  angular: {
+    storyPath: 'apps/angular-storybook/src/stories',
+    packageJsonPath: 'apps/angular-storybook/package.json',
+    fileExt: 'ts',
+    avatarItemType: 'AngularAvatarItem',
+    storyRenderer: 'angular',
   },
 } as const
 
@@ -687,6 +695,69 @@ ${generateSeedStoryArgTypes()}
 `
 }
 
+// Generate Angular story file
+function generateAngularStory(themes: string[]): string {
+  const themeImports = generateThemeImports(themes, 'angular')
+
+  const stories = generateStories(
+    themes,
+    (themeName, themeVar) =>
+      `export const ${themeName} = createStory(${themeVar}Theme)`,
+  )
+
+  return `${themeImports}
+import { Avatar } from '@avatune/angular'
+import type { AngularAvatarItem, Theme } from '@avatune/types'
+import type { Meta, StoryObj } from '@storybook/angular'
+import type { Args } from 'storybook/internal/types'
+
+const meta: Meta = {
+  title: 'Avatar',
+  component: Avatar,
+  parameters: { layout: 'centered' },
+  tags: ['autodocs'],
+}
+
+export default meta
+
+const getArgTypes = <T extends Theme<AngularAvatarItem>>(theme: T) => {
+  const argTypes: Record<string, unknown> = {
+    inputSize: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+  }
+
+  const colorPalettes = theme.colorPalettes
+  for (const [category, items] of Object.entries(theme)) {
+    const excludeCategories = ['style', 'predictorMappings', 'colorPalettes', 'connectedColors']
+    if (excludeCategories.includes(category)) continue
+
+    const presetColors = colorPalettes[category as keyof typeof colorPalettes]
+    argTypes[\`\${category}Color\`] = { control: { type: 'color', presetColors } }
+    argTypes[category] = {
+      control: { type: 'select' },
+      options: Object.keys(items),
+    }
+  }
+  argTypes.backgroundColor = {
+    control: { type: 'color', presetColors: colorPalettes.background },
+  } as const
+
+  return argTypes as StoryObj<Args>['argTypes']
+}
+
+const createStory = <T extends Theme<AngularAvatarItem>>(
+  theme: T,
+): StoryObj => ({
+  argTypes: getArgTypes(theme),
+  args: { inputSize: 300 },
+  render: (args) => ({
+    props: { theme, ...args },
+  }),
+})
+
+${stories}
+`
+}
+
 // Main execution
 function main() {
   const { values } = parseArgs({
@@ -707,6 +778,7 @@ function main() {
         'solidjs',
         'vanilla',
         'react-native',
+        'angular',
       ] as Framework[])
 
   const themes = discoverThemes()
@@ -738,6 +810,9 @@ function main() {
         break
       case 'react-native':
         content = generateReactNativeStory(themes)
+        break
+      case 'angular':
+        content = generateAngularStory(themes)
         break
       default:
         console.warn(`No generator for framework: ${framework}`)
