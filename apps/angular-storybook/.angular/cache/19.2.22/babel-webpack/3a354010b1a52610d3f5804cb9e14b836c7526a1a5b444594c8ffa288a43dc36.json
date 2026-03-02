@@ -1,0 +1,19 @@
+{
+  "ast": null,
+  "code": "// src/blocks/controls/helpers.ts\nvar getControlId = value => `control-${value.replace(/\\s+/g, \"-\")}`,\n  getControlSetterButtonId = value => `set-${value.replace(/\\s+/g, \"-\")}`;\nexport { getControlId, getControlSetterButtonId };",
+  "map": {
+    "version": 3,
+    "names": ["getControlId", "value", "replace", "getControlSetterButtonId"],
+    "sources": [
+      "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/addon-docs/dist/_browser-chunks/chunk-CYSK6WYR.js"
+    ],
+    "sourcesContent": [
+      "// src/blocks/controls/helpers.ts\nvar getControlId = (value) => `control-${value.replace(/\\s+/g, \"-\")}`, getControlSetterButtonId = (value) => `set-${value.replace(/\\s+/g, \"-\")}`;\n\nexport {\n  getControlId,\n  getControlSetterButtonId\n};\n"
+    ],
+    "mappings": "AAAA;AACA,IAAIA,YAAY,GAAIC,KAAK,IAAK,WAAWA,KAAK,CAACC,OAAO,CAAC,MAAM,EAAE,GAAG,CAAC,EAAE;EAAEC,wBAAwB,GAAIF,KAAK,IAAK,OAAOA,KAAK,CAACC,OAAO,CAAC,MAAM,EAAE,GAAG,CAAC,EAAE;AAEhJ,SACEF,YAAY,EACZG,wBAAwB",
+    "ignoreList": []
+  },
+  "metadata": {},
+  "sourceType": "module",
+  "externalDependencies": []
+}

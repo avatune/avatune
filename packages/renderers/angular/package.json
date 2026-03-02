@@ -26,20 +26,23 @@
     "angular"
   ],
   "type": "module",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/fesm2022/avatune-angular.mjs",
   "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "default": "./dist/fesm2022/avatune-angular.mjs"
     }
   },
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rslib build",
-    "dev": "rslib build --watch",
+    "build": "ng-packagr -p ng-package.json",
+    "dev": "ng-packagr -p ng-package.json --watch",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -48,9 +51,12 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular/compiler": "^20.0.0",
+    "@angular/compiler-cli": "^20.0.0",
+    "@angular/core": "^20.0.0",
     "@avatune/typescript-config": "workspace:*",
-    "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
+    "ng-packagr": "^20.0.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

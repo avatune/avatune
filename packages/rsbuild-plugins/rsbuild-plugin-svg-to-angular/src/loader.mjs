@@ -2,8 +2,12 @@ import { normalize } from 'node:path'
 import { callbackify } from 'node:util'
 import { optimize as optimizeSvg } from 'svgo'
 
+const PLACEHOLDER_PREFIX = '__ANGULAR_EXPR_'
+const PLACEHOLDER_SUFFIX = '__'
+
 const applyReplacements = (svg, replacements = {}) => {
   let result = svg
+  const expressions = []
 
   const sortedKeys = Object.keys(replacements).sort(
     (a, b) => b.length - a.length,
@@ -15,16 +19,61 @@ const applyReplacements = (svg, replacements = {}) => {
 
     if (value.startsWith('{') && value.endsWith('}')) {
       const expression = value.slice(1, -1)
+      const idx = expressions.length
+      expressions.push(expression)
       result = result.replace(
         new RegExp(escapedKey, 'g'),
-        `" + ${expression} + "`,
+        () => `${PLACEHOLDER_PREFIX}${idx}${PLACEHOLDER_SUFFIX}`,
       )
     } else {
-      result = result.replace(new RegExp(escapedKey, 'g'), value)
+      result = result.replace(new RegExp(escapedKey, 'g'), () => value)
     }
   }
 
-  return result
+  return { result, expressions }
+}
+
+const buildConcatExpression = (svg, expressions) => {
+  // Replace {color} and {uid} with placeholders too
+  const colorIdx = expressions.length
+  expressions.push('color')
+  svg = svg.replace(
+    /\{color\}/g,
+    `${PLACEHOLDER_PREFIX}${colorIdx}${PLACEHOLDER_SUFFIX}`,
+  )
+
+  const uidIdx = expressions.length
+  expressions.push('uid')
+  svg = svg.replace(
+    /\{uid\}/g,
+    `${PLACEHOLDER_PREFIX}${uidIdx}${PLACEHOLDER_SUFFIX}`,
+  )
+
+  // Split by placeholders and build string concatenation
+  const placeholderRegex = new RegExp(
+    `${PLACEHOLDER_PREFIX}(\\d+)${PLACEHOLDER_SUFFIX}`,
+    'g',
+  )
+
+  const parts = []
+  let lastIndex = 0
+  let match = placeholderRegex.exec(svg)
+
+  while (match !== null) {
+    if (match.index > lastIndex) {
+      parts.push(JSON.stringify(svg.slice(lastIndex, match.index)))
+    }
+    parts.push(expressions[parseInt(match[1], 10)])
+    lastIndex = match.index + match[0].length
+
+    match = placeholderRegex.exec(svg)
+  }
+
+  if (lastIndex < svg.length) {
+    parts.push(JSON.stringify(svg.slice(lastIndex)))
+  }
+
+  return parts.join(' + ')
 }
 
 const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
@@ -53,28 +102,38 @@ const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
     }
   }
 
+  let expressions = []
   if (options.replaceAttrValues) {
-    svg = applyReplacements(svg, options.replaceAttrValues)
+    const replaced = applyReplacements(svg, options.replaceAttrValues)
+    svg = replaced.result
+    expressions = replaced.expressions
   }
 
-  svg = svg.replace(/\{color\}/g, '" + color + "')
-  svg = svg.replace(/\{uid\}/g, '" + uid + "')
+  const concatExpr = buildConcatExpression(svg, expressions)
 
-  const escapedSvg = JSON.stringify(svg)
+  const imports = options.imports || ''
 
-  const out = `export const template = ${escapedSvg};
-export const color = 'currentColor';
-export const uid = '';
-export const props = {
-  color: { type: String, default: 'currentColor' },
-  uid: { type: String, default: '' }
-};
+  const lines = [
+    imports,
+    'export var template = function(color, uid) {',
+    '  color = color || "currentColor";',
+    '  uid = uid || "";',
+    '  return ' + concatExpr + ';',
+    '};',
+    'export var color = "currentColor";',
+    'export var uid = "";',
+    'export var props = {',
+    '  color: { type: String, default: "currentColor" },',
+    '  uid: { type: String, default: "" }',
+    '};',
+    '',
+    'export default {',
+    '  template: template,',
+    '  props: props',
+    '};',
+  ]
 
-export default {
-  template,
-  props
-};
-`
+  const out = lines.join('\n')
 
   return out
 })

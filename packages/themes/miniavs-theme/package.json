@@ -57,6 +57,11 @@
       "types": "./dist/vanilla.d.ts",
       "import": "./dist/vanilla.js",
       "require": "./dist/vanilla.cjs"
+    },
+    "./angular": {
+      "types": "./dist/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
     }
   },
   "files": [
@@ -84,7 +89,8 @@
     "react-native-svg": ">=15.0.0",
     "solid-js": ">=1.8.0",
     "svelte": ">=5.0.0",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "@angular/core": ">=19.0.0"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -103,6 +109,9 @@
       "optional": true
     },
     "react-native-svg": {
+      "optional": true
+    },
+    "@angular/core": {
       "optional": true
     }
   },

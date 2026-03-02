@@ -110,7 +110,7 @@ export interface SolidJsAvatarItem extends BaseAvatarItem {
 export interface AngularAvatarItem extends BaseAvatarItem {
   /** Angular component to render */
   Component: unknown
-  template: string
+  template: string | ((color: string, uid: string) => string)
 }
 
 /**

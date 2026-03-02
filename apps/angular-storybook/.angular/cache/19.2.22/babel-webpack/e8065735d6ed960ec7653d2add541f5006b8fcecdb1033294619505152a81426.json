@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "",
+  "map": {
+    "version": 3,
+    "names": [],
+    "sources": [
+      "/Users/teimurgasanov/Projects/avatune/apps/angular-storybook/.storybook/preview.ts"
+    ],
+    "sourcesContent": [""],
+    "mappings": "",
+    "ignoreList": []
+  },
+  "metadata": {},
+  "sourceType": "script",
+  "externalDependencies": []
+}

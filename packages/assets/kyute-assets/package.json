@@ -64,6 +64,11 @@
       "types": "./dist/svg.d.ts",
       "import": "./dist/svg.js",
       "require": "./dist/svg.cjs"
+    },
+    "./angular": {
+      "types": "./dist/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
     }
   },
   "types": "./dist/svg.d.ts",
@@ -96,7 +101,8 @@
     "svelte": "^5.0.0",
     "svgo": "^4.0.0",
     "typescript": "^5.9.3",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "@avatune/rsbuild-plugin-svg-to-angular": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -104,7 +110,8 @@
     "react-native-svg": ">=15.0.0",
     "solid-js": ">=1.8.0",
     "svelte": ">=5.0.0",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "@angular/compiler": ">=19.0.0"
   },
   "peerDependenciesMeta": {
     "react": {
@@ -123,6 +130,9 @@
       "optional": true
     },
     "vue": {
+      "optional": true
+    },
+    "@angular/compiler": {
       "optional": true
     }
   },

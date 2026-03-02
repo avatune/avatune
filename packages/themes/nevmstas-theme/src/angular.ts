@@ -36,7 +36,9 @@ import {
 import type { AngularAvatarItem, AngularTheme } from '@avatune/types'
 import shared from './shared'
 
-const toAngularItem = (asset: { template: string }) => ({
+const toAngularItem = (asset: {
+  template: string | ((color: string, uid: string) => string)
+}) => ({
   template: asset.template,
   Component: null,
 })

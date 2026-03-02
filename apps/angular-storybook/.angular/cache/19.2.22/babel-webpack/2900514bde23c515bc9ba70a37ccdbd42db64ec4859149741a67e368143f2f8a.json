@@ -1,0 +1,19 @@
+{
+  "ast": null,
+  "code": "// src/client/globals.ts\nimport { global } from \"@storybook/global\";\nglobal.STORYBOOK_ENV = \"angular\";",
+  "map": {
+    "version": 3,
+    "names": ["global", "STORYBOOK_ENV"],
+    "sources": [
+      "/Users/teimurgasanov/Projects/avatune/node_modules/@storybook/angular/dist/_browser-chunks/chunk-DAHG2CDK.js"
+    ],
+    "sourcesContent": [
+      "// src/client/globals.ts\nimport { global } from \"@storybook/global\";\nglobal.STORYBOOK_ENV = \"angular\";\n"
+    ],
+    "mappings": "AAAA;AACA,SAASA,MAAM,QAAQ,mBAAmB;AAC1CA,MAAM,CAACC,aAAa,GAAG,SAAS",
+    "ignoreList": []
+  },
+  "metadata": {},
+  "sourceType": "module",
+  "externalDependencies": []
+}

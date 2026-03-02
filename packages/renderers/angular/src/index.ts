@@ -1,4 +1,11 @@
-import { Component, input, type OnInit, signal } from '@angular/core'
+import {
+  Component,
+  ElementRef,
+  inject,
+  input,
+  type OnInit,
+} from '@angular/core'
+import { DomSanitizer, type SafeHtml } from '@angular/platform-browser'
 import type {
   AngularAvatarItem,
   AngularTheme,
@@ -12,7 +19,7 @@ import {
   selectItems,
 } from '@avatune/utils'
 
-const uid = () => Math.random().toString(36).slice(2, 9)
+const createUid = () => Math.random().toString(36).slice(2, 9)
 
 export type AvatarProps<T extends AngularTheme = AngularTheme> = AvatarConfig<
   AngularAvatarItem,
@@ -25,78 +32,13 @@ export type AvatarProps<T extends AngularTheme = AngularTheme> = AvatarConfig<
   predictions?: Predictions
 }
 
-interface SortedItem {
-  category: string
-  template: string
-  layer: number
-  position: { x: number; y: number }
-}
-
 @Component({
   selector: 'avatune-avatar',
   standalone: true,
-  template: `
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      [attr.width]="avatarSize()"
-      [attr.height]="avatarSize()"
-      [attr.viewBox]="'0 0 ' + avatarSize() + ' ' + avatarSize()"
-      [attr.role]="'img'"
-      [attr.aria-label]="'Avatar'"
-      [class]="avatarClass()"
-      [style]="avatarStyle()"
-    >
-      <defs>
-        <clipPath [id]="avatarClipId">
-          <rect
-            x="0"
-            y="0"
-            [attr.width]="avatarSize()"
-            [attr.height]="avatarSize()"
-            [attr.rx]="avatarBorderRadius()"
-            [attr.ry]="avatarBorderRadius()"
-          />
-        </clipPath>
-      </defs>
-
-      @if (avatarBackgroundColor()) {
-        <rect
-          x="0"
-          y="0"
-          [attr.width]="avatarSize()"
-          [attr.height]="avatarSize()"
-          [attr.rx]="avatarBorderRadius()"
-          [attr.ry]="avatarBorderRadius()"
-          [attr.fill]="avatarBackgroundColor()"
-        />
-      }
-
-      <g [attr.clip-path]="'url(#' + avatarClipId + ')'">
-        @for (item of avatarSortedItems(); track item.category) {
-          <g
-            [attr.data-testid]="'avatar-item-' + item.category + '-' + item.layer"
-            [attr.transform]="'translate(' + item.position.x + ', ' + item.position.y + ') scale(' + avatarScaleFactor() + ')'"
-            [innerHTML]="item.template"
-          ></g>
-        }
-      </g>
-
-      @if (avatarBorderColor() && avatarBorderWidth() > 0) {
-        <rect
-          [attr.x]="avatarBorderWidth() / 2"
-          [attr.y]="avatarBorderWidth() / 2"
-          [attr.width]="avatarSize() - avatarBorderWidth()"
-          [attr.height]="avatarSize() - avatarBorderWidth()"
-          [attr.rx]="avatarBorderRadius()"
-          [attr.ry]="avatarBorderRadius()"
-          fill="none"
-          [attr.stroke]="avatarBorderColor()"
-          [attr.stroke-width]="avatarBorderWidth()"
-        />
-      }
-    </svg>
-  `,
-  imports: [],
+  template: `<span [innerHTML]="svgContent"></span>`,
+  styles: [
+    ':host { display: inline-block; line-height: 0; } span { display: inline-block; line-height: 0; }',
+  ],
 })
 export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
   theme = input.required<T>()
@@ -123,22 +65,17 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
   avatarStyle = input<string | undefined>()
   predictions = input<Predictions | undefined>()
 
-  avatarClipId = uid()
-  avatarUid = uid()
+  svgContent: SafeHtml = ''
 
-  avatarSize = signal(400)
-  avatarBorderRadius = signal(0)
-  avatarBackgroundColor = signal<string | undefined>(undefined)
-  avatarBorderColor = signal<string | undefined>(undefined)
-  avatarBorderWidth = signal(0)
-  avatarScaleFactor = signal(1)
-
-  avatarSortedItems = signal<SortedItem[]>([])
+  private sanitizer = inject(DomSanitizer)
 
   ngOnInit() {
-    const themeValue = this.theme()
-    const size = this.inputSize() ?? themeValue.style.size
-    this.avatarSize.set(size)
+    const theme = this.theme()
+    const size = this.inputSize() ?? theme.style.size
+    const uidValue = createUid()
+    const clipId = `clip-${uidValue}`
+    const borderRadius = parseBorderRadius(theme.style.borderRadius, size)
+    const scaleFactor = size / theme.style.size
 
     const config: AvatarConfig<AngularAvatarItem, T> = {
       seed: this.seed(),
@@ -164,53 +101,74 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
       backgroundColor: this.backgroundColor(),
     }
 
-    const result = selectItems(config, themeValue, this.predictions())
+    const result = selectItems(config, theme, this.predictions())
 
-    this.avatarBackgroundColor.set(
-      result.style?.backgroundColor || themeValue.style.backgroundColor,
-    )
-    this.avatarBorderColor.set(themeValue.style.borderColor)
-    this.avatarBorderWidth.set(parseBorderWidth(themeValue.style.borderWidth))
-    this.avatarBorderRadius.set(
-      parseBorderRadius(themeValue.style.borderRadius, size),
-    )
-    this.avatarScaleFactor.set(size / themeValue.style.size)
+    const backgroundColor =
+      result.style?.backgroundColor || theme.style.backgroundColor
+    const borderColor = theme.style.borderColor
+    const borderWidth = parseBorderWidth(theme.style.borderWidth)
 
-    const items: SortedItem[] = Object.entries(result.selected)
+    const sortedItems = Object.entries(result.selected)
       .filter(([, item]) => item != null)
       .sort(([, a], [, b]) => (a?.layer || 0) - (b?.layer || 0))
-      .map(([category, item]) => {
-        const angularItem = item as AngularAvatarItem
-        const positionRaw =
-          typeof angularItem.position === 'function'
-            ? angularItem.position(size)
-            : angularItem.position
 
-        const position = {
-          x:
-            typeof positionRaw.x === 'string'
-              ? parseFloat(String(positionRaw.x))
-              : positionRaw.x,
-          y:
-            typeof positionRaw.y === 'string'
-              ? parseFloat(String(positionRaw.y))
-              : positionRaw.y,
-        }
+    const parts: string[] = []
 
-        const color = result.colors[category as AvatarPartCategory]
+    parts.push(`<defs>
+      <clipPath id="${clipId}">
+        <rect x="0" y="0" width="${size}" height="${size}" rx="${borderRadius}" ry="${borderRadius}" />
+      </clipPath>
+    </defs>`)
 
-        const template = angularItem.template
-          .replace(/\{color\}/g, color || 'currentColor')
-          .replace(/\{uid\}/g, this.avatarUid)
+    if (backgroundColor) {
+      parts.push(
+        `<rect x="0" y="0" width="${size}" height="${size}" rx="${borderRadius}" ry="${borderRadius}" fill="${backgroundColor}" />`,
+      )
+    }
 
-        return {
-          category,
-          template,
-          layer: angularItem.layer || 0,
-          position,
-        }
-      })
+    const contentParts: string[] = []
+    for (const [category, item] of sortedItems) {
+      const angularItem = item as AngularAvatarItem
+      if (!angularItem.template) continue
 
-    this.avatarSortedItems.set(items)
+      const positionRaw =
+        typeof angularItem.position === 'function'
+          ? angularItem.position(size)
+          : angularItem.position
+
+      const x =
+        typeof positionRaw.x === 'string'
+          ? parseFloat(String(positionRaw.x))
+          : positionRaw.x
+      const y =
+        typeof positionRaw.y === 'string'
+          ? parseFloat(String(positionRaw.y))
+          : positionRaw.y
+
+      const color = result.colors[category as AvatarPartCategory]
+
+      const template =
+        typeof angularItem.template === 'function'
+          ? angularItem.template(color || 'currentColor', uidValue)
+          : angularItem.template
+              .replace(/\{color\}/g, color || 'currentColor')
+              .replace(/\{uid\}/g, uidValue)
+
+      contentParts.push(
+        `<g data-testid="avatar-item-${category}-${angularItem.layer || 0}" transform="translate(${x}, ${y}) scale(${scaleFactor})">${template}</g>`,
+      )
+    }
+
+    parts.push(`<g clip-path="url(#${clipId})">${contentParts.join('')}</g>`)
+
+    if (borderColor && borderWidth > 0) {
+      parts.push(
+        `<rect x="${borderWidth / 2}" y="${borderWidth / 2}" width="${size - borderWidth}" height="${size - borderWidth}" rx="${borderRadius}" ry="${borderRadius}" fill="none" stroke="${borderColor}" stroke-width="${borderWidth}" />`,
+      )
+    }
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="Avatar">${parts.join('')}</svg>`
+
+    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg)
   }
 }

@@ -1,0 +1,19 @@
+{
+  "ast": null,
+  "code": "/**\n * @license Angular v19.2.19\n * (c) 2010-2025 Google LLC. https://angular.io/\n * License: MIT\n */\n\nimport { InjectionToken } from '@angular/core';\n\n/**\n * A DI Token representing the main rendering context.\n * In a browser and SSR this is the DOM Document.\n * When using SSR, that document is created by [Domino](https://github.com/angular/domino).\n *\n * @publicApi\n */\nconst DOCUMENT = new InjectionToken(ngDevMode ? 'DocumentToken' : '');\nexport { DOCUMENT };\n//# sourceMappingURL=dom_tokens-rA0ACyx7.mjs.map",
+  "map": {
+    "version": 3,
+    "names": ["InjectionToken", "DOCUMENT", "ngDevMode"],
+    "sources": [
+      "/Users/teimurgasanov/Projects/avatune/node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs"
+    ],
+    "sourcesContent": [
+      "/**\n * @license Angular v19.2.19\n * (c) 2010-2025 Google LLC. https://angular.io/\n * License: MIT\n */\n\nimport { InjectionToken } from '@angular/core';\n\n/**\n * A DI Token representing the main rendering context.\n * In a browser and SSR this is the DOM Document.\n * When using SSR, that document is created by [Domino](https://github.com/angular/domino).\n *\n * @publicApi\n */\nconst DOCUMENT = new InjectionToken(ngDevMode ? 'DocumentToken' : '');\n\nexport { DOCUMENT };\n//# sourceMappingURL=dom_tokens-rA0ACyx7.mjs.map\n"
+    ],
+    "mappings": "AAAA;AACA;AACA;AACA;AACA;;AAEA,SAASA,cAAc,QAAQ,eAAe;;AAE9C;AACA;AACA;AACA;AACA;AACA;AACA;AACA,MAAMC,QAAQ,GAAG,IAAID,cAAc,CAACE,SAAS,GAAG,eAAe,GAAG,EAAE,CAAC;AAErE,SAASD,QAAQ;AACjB",
+    "ignoreList": []
+  },
+  "metadata": {},
+  "sourceType": "module",
+  "externalDependencies": []
+}

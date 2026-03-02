@@ -59,3 +59,23 @@ declare module '*.svg?solid' {
   export default component
   export const raw: string
 }
+
+declare module '*.svg?angular' {
+  interface SvgComponentProps {
+    color?: string
+    uid?: string
+  }
+
+  const component: {
+    template: string
+    props: {
+      color: { type: StringConstructor; default: string }
+      uid: { type: StringConstructor; default: string }
+    }
+  }
+  export default component
+  export const template: string
+  export const color: string
+  export const uid: string
+  export const props: SvgComponentProps
+}
