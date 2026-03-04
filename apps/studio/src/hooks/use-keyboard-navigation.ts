@@ -14,6 +14,14 @@ export const useKeyboardNavigation = ({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!selectedAsset) return
 
+      const target = e.target as HTMLElement
+      if (
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable
+      )
+        return
+
       const step = e.shiftKey ? 1 : 0.5
       let newX = selectedAsset.xPercent
       let newY = selectedAsset.yPercent

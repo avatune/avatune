@@ -29,6 +29,7 @@ export interface Asset {
   xPercent: number
   yPercent: number
   layer: number
+  scale: number
   width?: number
   height?: number
 }

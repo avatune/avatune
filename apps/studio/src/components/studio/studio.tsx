@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { usePersistedState } from '../../hooks/use-persisted-state'
 import type { Asset, ThemeData } from '../../types'
 import { Stepper } from './stepper'
 import {
@@ -11,16 +11,54 @@ import {
 
 type Step = 'head' | 'categories' | 'preview' | 'save'
 
+const DEFAULT_THEME_DATA: ThemeData = {
+  headAsset: null,
+  assets: [],
+  themeName: '',
+  size: 400,
+  borderRadius: '100%',
+}
+
+function serializeThemeData(data: ThemeData): string {
+  return JSON.stringify(data, (key, value) => {
+    if (key === 'file') return undefined
+    return value
+  })
+}
+
+function deserializeThemeData(raw: string): ThemeData {
+  const data = JSON.parse(raw) as ThemeData
+  const stubFile = new File([], 'restored')
+  const restoreAsset = (asset: Asset): Asset => ({
+    ...asset,
+    file: asset.file ?? stubFile,
+  })
+  return {
+    ...data,
+    headAsset: data.headAsset ? restoreAsset(data.headAsset) : null,
+    assets: data.assets.map(restoreAsset),
+  }
+}
+
 export const Studio = () => {
   const navigate = useNavigate()
-  const [step, setStep] = useState<Step>('head')
-  const [themeData, setThemeData] = useState<ThemeData>({
-    headAsset: null,
-    assets: [],
-    themeName: '',
-    size: 400,
-    borderRadius: '100%',
-  })
+
+  const {
+    value: step,
+    setValue: setStep,
+    clear: clearStep,
+  } = usePersistedState<Step>('step', 'head')
+
+  const {
+    value: themeData,
+    setValue: setThemeData,
+    clear: clearThemeData,
+  } = usePersistedState<ThemeData>(
+    'themeData',
+    DEFAULT_THEME_DATA,
+    serializeThemeData,
+    deserializeThemeData,
+  )
 
   const handleHeadUpload = (asset: Asset) => {
     setThemeData((prev) => ({ ...prev, headAsset: asset }))
@@ -36,9 +74,7 @@ export const Studio = () => {
 
   const handleAssetUpdate = (assetId: string, updates: Partial<Asset>) => {
     setThemeData((prev) => {
-      // Check if updating the head asset
       if (prev.headAsset?.id === assetId) {
-        // Calculate how much the head moved
         const deltaX =
           updates.xPercent !== undefined
             ? updates.xPercent - prev.headAsset.xPercent
@@ -48,7 +84,6 @@ export const Studio = () => {
             ? updates.yPercent - prev.headAsset.yPercent
             : 0
 
-        // Move all other assets by the same delta
         const updatedAssets =
           deltaX !== 0 || deltaY !== 0
             ? prev.assets.map((asset) => ({
@@ -64,7 +99,6 @@ export const Studio = () => {
           assets: updatedAssets,
         }
       }
-      // Otherwise update in assets array
       return {
         ...prev,
         assets: prev.assets.map((asset) =>
@@ -153,13 +187,9 @@ export const Studio = () => {
             themeData={themeData}
             onBack={() => setStep('preview')}
             onReset={() => {
-              setThemeData({
-                headAsset: null,
-                assets: [],
-                themeName: '',
-                size: 400,
-                borderRadius: '100%',
-              })
+              clearStep()
+              clearThemeData()
+              setThemeData(DEFAULT_THEME_DATA)
               setStep('head')
               navigate('/')
             }}

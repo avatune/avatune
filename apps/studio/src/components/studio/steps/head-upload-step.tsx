@@ -53,6 +53,7 @@ const HeadUploadStep = ({ onUpload, headAsset }: HeadUploadStepProps) => {
       xPercent: 40,
       yPercent: 40,
       layer: 1,
+      scale: 1,
       width,
       height,
     }

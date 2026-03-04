@@ -71,6 +71,7 @@ const CategoryUploadStep = ({
       xPercent: 40,
       yPercent: 40,
       layer: DEFAULT_LAYERS[category],
+      scale: 1,
       width,
       height,
     }

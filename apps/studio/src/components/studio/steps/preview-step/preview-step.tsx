@@ -36,7 +36,7 @@ const PreviewStep = ({
     Partial<Record<CategoryId, number>>
   >({})
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
-  const [zoom, setZoom] = useState(1)
+  const [zoom, setZoom] = useState(() => PREVIEW_SIZE / themeData.size)
 
   const calculatedSize = useMemo(() => Math.round(PREVIEW_SIZE / zoom), [zoom])
 

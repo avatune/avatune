@@ -8,6 +8,7 @@ interface UseDragOptions {
 
 interface UseDragReturn {
   isDragging: boolean
+  draggedAssetId: string | null
   handleMouseDown: (e: React.MouseEvent, asset: Asset) => void
 }
 
@@ -75,6 +76,7 @@ export const useDrag = ({
 
   return {
     isDragging,
+    draggedAssetId: draggedAsset?.id ?? null,
     handleMouseDown,
   }
 }
