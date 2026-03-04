@@ -37,7 +37,7 @@ export const AssetInfo = ({
 
   return (
     <CardSection>
-      <h3 className="mb-4 text-base sm:text-lg font-semibold wrap-break-word">
+      <h3 className="mb-4 h-10 text-base sm:text-lg font-semibold wrap-break-word">
         {editingName ? (
           <input
             type="text"
