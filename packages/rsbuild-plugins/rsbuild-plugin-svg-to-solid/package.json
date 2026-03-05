@@ -1,6 +1,6 @@
 {
   "name": "@avatune/rsbuild-plugin-svg-to-solid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Rsbuild plugin to transform SVG files into SolidJS components",
   "private": false,
   "publishConfig": {

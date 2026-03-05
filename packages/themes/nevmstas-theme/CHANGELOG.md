@@ -1,5 +1,14 @@
 # @avatune/nevmstas-theme
 
+## 3.1.2
+
+### Patch Changes
+
+- [`f5ced92`](https://github.com/avatune/avatune/commit/f5ced920a22ab77bae7fbf50f11194482c0354d6) Thanks [@teimurjan](https://github.com/teimurjan)! - Fix solidjs SSR support
+
+- Updated dependencies [[`f5ced92`](https://github.com/avatune/avatune/commit/f5ced920a22ab77bae7fbf50f11194482c0354d6)]:
+  - @avatune/nevmstas-assets@3.1.2
+
 ## 3.1.1
 
 ### Patch Changes
