@@ -69,6 +69,7 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 | Theme | Package |
 |-------|---------|
 | Ashley Seo | [`@avatune/ashley-seo-theme`](./packages/themes/ashley-seo-theme) |
+| Ashleyy | [`@avatune/ashleyy-theme`](./packages/themes/ashleyy-theme) |
 | Fatin Verse | [`@avatune/fatin-verse-theme`](./packages/themes/fatin-verse-theme) |
 | Kyute | [`@avatune/kyute-theme`](./packages/themes/kyute-theme) |
 | Micah | [`@avatune/micah-theme`](./packages/themes/micah-theme) |

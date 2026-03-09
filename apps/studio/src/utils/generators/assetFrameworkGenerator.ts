@@ -8,6 +8,7 @@ type AssetFramework =
   | 'solid'
   | 'svg'
   | 'react-native'
+  | 'angular'
 
 /**
  * Generates framework-specific asset export files (e.g., react.ts, vue.ts)
@@ -27,6 +28,7 @@ export function generateAssetFrameworkFile(
     solid: '?solid',
     svg: '?raw',
     'react-native': '?native',
+    angular: '?angular',
   }[framework]
 
   const isSvg = framework === 'svg'

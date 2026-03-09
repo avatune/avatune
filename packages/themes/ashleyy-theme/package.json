@@ -1,0 +1,124 @@
+{
+  "name": "@avatune/ashleyy-theme",
+  "version": "1.0.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avatune/avatune.git"
+  },
+  "homepage": "https://avatune.dev",
+  "bugs": {
+    "url": "https://github.com/avatune/avatune/issues"
+  },
+  "author": "Avatune Team (https://avatune.dev)",
+  "keywords": [
+    "avatune",
+    "avatar",
+    "theme",
+    "customization",
+    "react",
+    "vue",
+    "svelte"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js",
+      "require": "./dist/vanilla.cjs"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js",
+      "require": "./dist/vanilla.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.cjs"
+    },
+    "./svelte": {
+      "svelte": "./dist/svelte.js",
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "import": "./dist/react-native.js",
+      "require": "./dist/react-native.cjs"
+    },
+    "./solidjs": {
+      "solid": "./dist/solidjs.js",
+      "types": "./dist/solidjs.d.ts",
+      "import": "./dist/solidjs.js",
+      "require": "./dist/solidjs.cjs"
+    },
+    "./angular": {
+      "types": "./dist/angular.d.ts",
+      "import": "./dist/angular.js",
+      "require": "./dist/angular.cjs"
+    }
+  },
+  "types": "./dist/vanilla.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@avatune/ashleyy-assets": "workspace:*",
+    "@avatune/theme-builder": "workspace:*",
+    "@avatune/types": "workspace:*",
+    "@avatune/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.74.0",
+    "react-native-svg": ">=15.0.0",
+    "solid-js": ">=1.8.0",
+    "svelte": ">=5.0.0",
+    "vue": "^3.5.22",
+    "@angular/core": ">=19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "solid-js": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    },
+    "@angular/core": {
+      "optional": true
+    }
+  },
+  "license": "MIT"
+}

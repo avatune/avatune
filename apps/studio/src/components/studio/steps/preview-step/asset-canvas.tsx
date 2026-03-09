@@ -292,10 +292,10 @@ export const AssetCanvas = ({
               <img
                 src={asset.dataUrl}
                 alt={asset.name}
-                className="max-w-[200px] max-h-[200px] w-auto h-auto pointer-events-none"
+                className="w-auto h-auto pointer-events-none"
                 style={{
-                  maxWidth: 'min(200px, 40vw)',
-                  maxHeight: 'min(200px, 40vw)',
+                  maxWidth: `${previewSize}px`,
+                  maxHeight: `${previewSize}px`,
                 }}
                 draggable={false}
               />

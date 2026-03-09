@@ -62,6 +62,17 @@ export function generateThemePackageJson(
         import: './dist/react-native.js',
         require: './dist/react-native.cjs',
       },
+      './solidjs': {
+        solid: './dist/solidjs.js',
+        types: './dist/solidjs.d.ts',
+        import: './dist/solidjs.js',
+        require: './dist/solidjs.cjs',
+      },
+      './angular': {
+        types: './dist/angular.d.ts',
+        import: './dist/angular.js',
+        require: './dist/angular.cjs',
+      },
     },
     types: './dist/vanilla.d.ts',
     files: ['dist'],
@@ -86,11 +97,16 @@ export function generateThemePackageJson(
       react: '>=18.0.0',
       'react-native': '>=0.74.0',
       'react-native-svg': '>=15.0.0',
+      'solid-js': '>=1.8.0',
       svelte: '>=5.0.0',
       vue: '^3.5.22',
+      '@angular/core': '>=19.0.0',
     },
     peerDependenciesMeta: {
       react: {
+        optional: true,
+      },
+      'solid-js': {
         optional: true,
       },
       svelte: {
@@ -103,6 +119,9 @@ export function generateThemePackageJson(
         optional: true,
       },
       'react-native-svg': {
+        optional: true,
+      },
+      '@angular/core': {
         optional: true,
       },
     },
@@ -140,6 +159,12 @@ export function generateThemeTsconfig(assetsPackageName: string): string {
         [`@avatune/${assetsPackageName}/react-native`]: [
           `../${assetsPackageName}/dist/react-native/index.d.ts`,
         ],
+        [`@avatune/${assetsPackageName}/solid`]: [
+          `../${assetsPackageName}/dist/solid/index.d.ts`,
+        ],
+        [`@avatune/${assetsPackageName}/angular`]: [
+          `../${assetsPackageName}/dist/angular/index.d.ts`,
+        ],
         '@avatune/theme-builder': ['../theme-builder/dist/index.d.ts'],
       },
     },
@@ -167,6 +192,7 @@ export default defineConfig({
           react: './src/react.ts',
           vue: './src/vue.ts',
           'react-native': './src/react-native.ts',
+          angular: './src/angular.ts',
         },
       },
     },
@@ -180,6 +206,7 @@ export default defineConfig({
           react: './src/react.ts',
           vue: './src/vue.ts',
           'react-native': './src/react-native.ts',
+          angular: './src/angular.ts',
         },
       },
     },
@@ -190,6 +217,19 @@ export default defineConfig({
       source: {
         entry: {
           svelte: './src/svelte.ts',
+        },
+      },
+      output: {
+        externals: [/@avatune\\/.*/],
+      },
+    },
+    {
+      format: 'esm',
+      syntax: ['node 18'],
+      dts: true,
+      source: {
+        entry: {
+          solidjs: './src/solidjs.ts',
         },
       },
       output: {
@@ -254,7 +294,7 @@ npm install @avatune/${themePackageName}
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, Vue, Svelte, SolidJS, Angular, and Vanilla JavaScript.
 
 ### React
 
@@ -305,6 +345,40 @@ import theme from '@avatune/${themePackageName}/vue'
 />
 \`\`\`
 
+### SolidJS
+
+\`\`\`tsx
+import { Avatar } from '@avatune/solidjs'
+import theme from '@avatune/${themePackageName}/solidjs'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+\`\`\`
+
+### Angular
+
+\`\`\`typescript
+import { Component } from '@angular/core'
+import { AvatarComponent } from '@avatune/angular'
+import theme from '@avatune/${themePackageName}/angular'
+
+@Component({
+  selector: 'app-root',
+  imports: [AvatarComponent],
+  template: \`<avatune-avatar [theme]="theme" [size]="300" seed="optional-seed-for-random-generation" />\`,
+})
+export class AppComponent {
+  theme = theme
+}
+\`\`\`
+
 ### Vanilla JavaScript
 
 \`\`\`typescript
@@ -337,6 +411,8 @@ The design assets used in this theme are separately licensed. See the asset pack
 - [\`@avatune/react\`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
 - [\`@avatune/vue\`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
 - [\`@avatune/svelte\`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [\`@avatune/solidjs\`](https://github.com/avatune/avatune/tree/main/packages/renderers/solidjs) - SolidJS avatar renderer
+- [\`@avatune/angular\`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
 - [\`@avatune/vanilla\`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
 
 ## Development

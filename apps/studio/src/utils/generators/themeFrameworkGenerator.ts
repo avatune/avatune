@@ -1,7 +1,14 @@
 import { capitalizeFirst, toCamelCase, toPascalCase } from '../caseUtils'
 import type { AssetFile } from '../types'
 
-type ThemeFramework = 'react' | 'vue' | 'svelte' | 'vanilla' | 'react-native'
+type ThemeFramework =
+  | 'react'
+  | 'vue'
+  | 'svelte'
+  | 'vanilla'
+  | 'react-native'
+  | 'solidjs'
+  | 'angular'
 
 /**
  * Generates framework-specific theme files (e.g., react.ts, vue.ts, vanilla.ts)
@@ -15,9 +22,12 @@ export function generateThemeFrameworkFile(
   const componentMaps: string[] = []
 
   const isVanilla = framework === 'vanilla'
+  const isAngular = framework === 'angular'
+  const assetImportSuffix =
+    framework === 'solidjs' ? 'solid' : isVanilla ? '' : framework
   const importPath = isVanilla
     ? `@avatune/${assetsPackageName}`
-    : `@avatune/${assetsPackageName}/${framework}`
+    : `@avatune/${assetsPackageName}/${assetImportSuffix}`
 
   // Group assets by category
   const assetsByCategory = new Map<string, AssetFile[]>()
@@ -51,6 +61,8 @@ export function generateThemeFrameworkFile(
     svelte: 'SvelteAvatarItem, SvelteTheme',
     vanilla: 'VanillaAvatarItem, VanillaTheme',
     'react-native': 'ReactNativeAvatarItem, ReactNativeTheme',
+    solidjs: 'SolidJsAvatarItem, SolidJsTheme',
+    angular: 'AngularAvatarItem, AngularTheme',
   }[framework]
 
   const methodName = isVanilla ? 'code' : 'Component'
@@ -62,17 +74,31 @@ export function generateThemeFrameworkFile(
         ? `${toCamelCase(category)}${toPascalCase(asset.name)}`
         : `${capitalizeFirst(category)}${toPascalCase(asset.name)}`
       const assetName = toCamelCase(asset.name)
-      items.push(`    ${assetName}: { ${methodName}: ${componentName} },`)
+      const itemValue = isAngular
+        ? `toAngularItem(${componentName})`
+        : `{ ${methodName}: ${componentName} }`
+      items.push(`    ${assetName}: ${itemValue},`)
     }
     componentMaps.push(
       `  .withComponents('${category}', {\n${items.join('\n')}\n  })`,
     )
   }
 
+  const angularHelper = isAngular
+    ? `
+const toAngularItem = (asset: {
+  template: string | ((color: string, uid: string) => string)
+}) => ({
+  template: asset.template,
+  Component: null,
+})
+`
+    : ''
+
   return `${importStatement}
 import type { ${typeMap} } from '@avatune/types'
 import shared from './shared'
-
+${angularHelper}
 export default shared
   .toFramework<${typeMap.split(',')[0]}>()
 ${componentMaps.join('\n')}

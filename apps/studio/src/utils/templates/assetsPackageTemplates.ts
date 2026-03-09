@@ -68,6 +68,11 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
         import: './dist/svg.js',
         require: './dist/svg.cjs',
       },
+      './angular': {
+        types: './dist/angular.d.ts',
+        import: './dist/angular.js',
+        require: './dist/angular.cjs',
+      },
     },
     types: './dist/svg.d.ts',
     files: ['dist'],
@@ -81,6 +86,7 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
     },
     devDependencies: {
       '@avatune/rsbuild-plugin-raw-svg': 'workspace:*',
+      '@avatune/rsbuild-plugin-svg-to-angular': 'workspace:*',
       '@avatune/rsbuild-plugin-svg-to-solid': 'workspace:*',
       '@avatune/rsbuild-plugin-svg-to-svelte': 'workspace:*',
       '@avatune/rsbuild-plugin-svg-to-vue': 'workspace:*',
@@ -106,6 +112,7 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
       'solid-js': '>=1.8.0',
       svelte: '>=5.0.0',
       vue: '^3.5.22',
+      '@angular/compiler': '>=19.0.0',
     },
     peerDependenciesMeta: {
       react: {
@@ -124,6 +131,9 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
         optional: true,
       },
       vue: {
+        optional: true,
+      },
+      '@angular/compiler': {
         optional: true,
       },
     },
@@ -162,6 +172,7 @@ export function generateAssetsTsconfig(): string {
  */
 export function generateAssetsRslibConfig(): string {
   return `import { pluginRawSvg } from '@avatune/rsbuild-plugin-raw-svg'
+import { pluginSvgToAngular } from '@avatune/rsbuild-plugin-svg-to-angular'
 import {
   pluginSvgToSolid,
   pluginSvgToSolidJsx,
@@ -201,6 +212,7 @@ export default defineConfig({
   },
   source: {
     entry: {
+      angular: './src/angular.ts',
       react: './src/react.ts',
       solid: './src/solid.ts',
       svg: './src/svg.ts',
@@ -227,6 +239,12 @@ function \${variables.componentName}(\${variables.props}) {
 \`
         },
       },
+    }),
+    pluginSvgToAngular({
+      svgo: true,
+      svgoConfig,
+      imports: colordImport,
+      replaceAttrValues: getReplaceAttrValues('color'),
     }),
     pluginSvgToVue({
       svgo: true,
@@ -428,6 +446,13 @@ declare module '*.svg?vue' {
 
   const component: DefineComponent<SvgComponentProps>
   export default component
+}
+
+declare module '*.svg?angular' {
+  const asset: {
+    template: string | ((color: string, uid: string) => string)
+  }
+  export default asset
 }
 `
 }
