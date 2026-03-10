@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@avatune/ashley-seo-theme": "workspace:*",
+    "@avatune/ashleyy-theme": "workspace:*",
     "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
     "@avatune/micah-theme": "workspace:*",
@@ -22,7 +23,7 @@
     "@avatune/vanilla": "workspace:*"
   },
   "devDependencies": {
-    "@blazediff/bun": "^1.1.0",
+    "@blazediff/bun": "^1.1.8",
     "@avatune/typescript-config": "workspace:*",
     "@types/bun": "^1.3.5",
     "sharp": "^0.34.2",
