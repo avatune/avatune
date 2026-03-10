@@ -21,11 +21,21 @@ export default createTheme<BaseAvatarItem>()
     AccentColors.Lavender,
     AccentColors.Sky,
     AccentColors.Salmon,
+    SkinTones.Bleu,
+    SkinTones.Salmon,
+    SkinTones.Sun,
   ])
   .addColors('eyes', [AccentColors.Black])
   .addColors('glasses', [AccentColors.Black])
   .addColors('hair', [AccentColors.Black])
-  .addColors('head', [SkinTones.Light, SkinTones.Medium, SkinTones.Dark])
+  .addColors('head', [
+    SkinTones.Light,
+    SkinTones.Medium,
+    SkinTones.Dark,
+    SkinTones.Bleu,
+    SkinTones.Salmon,
+    SkinTones.Sun,
+  ])
   .addColors('mouth', [AccentColors.Black])
   .addColors('nose', [AccentColors.Black])
   .addColors('hair', [
@@ -40,6 +50,18 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.SalmonLight,
     BackgroundColors.White,
   ])
+  .mapPrediction('hair', 'short', ['shortCurly', 'short'])
+  .mapPrediction('hair', 'medium', ['mediumStraigh'])
+  .mapPrediction('hair', 'long', ['longWavy', 'ponyTail'])
+  .mapPrediction('hairColor', 'black', [AccentColors.Black])
+  .mapPrediction('hairColor', 'brown', [AccentColors.Black])
+  .mapPrediction('hairColor', 'blond', [SkinTones.Sun])
+  .mapPrediction('hairColor', 'gray', [BackgroundColors.White])
+  .mapPrediction('skinTone', 'dark', [SkinTones.Dark])
+  .mapPrediction('skinTone', 'medium', [SkinTones.Medium])
+  .mapPrediction('skinTone', 'light', [SkinTones.Light])
+  .setOptional('glasses')
+  .setOptional('accessories')
   // Accessories
   .addItem('accessories', 'earrings', {
     position: fromHeadOffset(percentage('15.00%'), percentage('14.60%')),

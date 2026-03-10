@@ -77,6 +77,10 @@ export default defineConfig({
               slug: 'packages/ashley-seo-theme',
             },
             {
+              label: 'Ashleyy',
+              slug: 'packages/ashleyy-theme',
+            },
+            {
               label: 'Micah',
               slug: 'packages/micah-theme',
             },

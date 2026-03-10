@@ -1,5 +1,6 @@
 <script lang="ts">
 import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
+import ashleyyTheme from '@avatune/ashleyy-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -32,6 +33,7 @@ const themeMap: Record<string, unknown> = {
   nevmstas: nevmstasTheme,
   fatinVerse: fatinVerseTheme,
   ashleySeo: ashleySeoTheme,
+  ashleyy: ashleyyTheme,
   pawelOlekMan: pawelOlekManTheme,
   pawelOlekWoman: pawelOlekWomanTheme,
 }

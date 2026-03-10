@@ -1,5 +1,6 @@
 <script lang="ts">
 import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
+import ashleyyTheme from '@avatune/ashleyy-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -22,6 +23,7 @@ const themeMap = {
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,
   'ashley-seo': ashleySeoTheme,
+  ashleyy: ashleyyTheme,
 } as const
 
 type AvatarUsageThemeId = keyof typeof themeMap

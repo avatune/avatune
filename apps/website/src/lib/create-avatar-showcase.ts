@@ -15,6 +15,7 @@ export type ThemeId =
   | 'yanliu'
   | 'fatinVerse'
   | 'ashleySeo'
+  | 'ashleyy'
   | 'pawelOlekMan'
   | 'pawelOlekWoman'
 
@@ -58,6 +59,11 @@ export const themeInfos: ThemeInfo[] = [
     id: 'ashleySeo',
     label: 'Ashley Seo',
     packageName: '@avatune/ashley-seo-theme',
+  },
+  {
+    id: 'ashleyy',
+    label: 'Ashleyy',
+    packageName: '@avatune/ashleyy-theme',
   },
   {
     id: 'pawelOlekMan',
