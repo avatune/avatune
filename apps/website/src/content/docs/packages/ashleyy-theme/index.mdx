@@ -1,0 +1,286 @@
+---
+title: "@avatune/ashleyy-theme"
+description: "Avatar theme for Avatune using Ashleyy assets."
+source: "packages/themes/ashleyy-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
+import {
+  accessoriesEarrings,
+  accessoriesMask,
+  bodyButtonShirt,
+  bodyDoubleCollarShirt,
+  bodyKnitSweater,
+  bodyPeterPanCollarShirt,
+  bodyPolkaDotShirt,
+  bodyTieShirt,
+  bodyTurtleneckShirt,
+  noseStandard,
+  mouthSmile,
+  mouthStandard,
+  glassesGlasses,
+  headStandard,
+  eyesStandard,
+  hairAfro,
+  hairCurlyBun,
+  hairLongWavy,
+  hairMediumStraigh,
+  hairPonyTail,
+  hairShort,
+  hairShortCurly,
+  hairSideSwept,
+} from '@avatune/ashleyy-assets/svg';
+
+> Source: `packages/assets/ashleyy-theme/README.md`
+
+Avatar theme for Avatune using ashleyy design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="ashleyy" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="ashleyy" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="ashleyy" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+<InstallTabs packages="@avatune/ashleyy-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/ashleyy-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/ashleyy-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/ashleyy-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/ashleyy-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/ashleyy-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="afro"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="buttonShirt"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Ashleyy style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/ashleyy-assets`](https://www.npmjs.com/package/@avatune/ashleyy-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/ashleyy-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashleyy-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashleyy-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/ashleyy-assets/vue';
+```
+
+### Available Assets
+
+#### Accessories
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={accessoriesEarrings} title="earrings" hideCaption /> | `earrings` |
+| <AssetPreview svg={accessoriesMask} title="mask" hideCaption /> | `mask` |
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyButtonShirt} title="buttonShirt" hideCaption /> | `buttonShirt` |
+| <AssetPreview svg={bodyDoubleCollarShirt} title="doubleCollarShirt" hideCaption /> | `doubleCollarShirt` |
+| <AssetPreview svg={bodyKnitSweater} title="knitSweater" hideCaption /> | `knitSweater` |
+| <AssetPreview svg={bodyPeterPanCollarShirt} title="peterPanCollarShirt" hideCaption /> | `peterPanCollarShirt` |
+| <AssetPreview svg={bodyPolkaDotShirt} title="polkaDotShirt" hideCaption /> | `polkaDotShirt` |
+| <AssetPreview svg={bodyTieShirt} title="tieShirt" hideCaption /> | `tieShirt` |
+| <AssetPreview svg={bodyTurtleneckShirt} title="turtleneckShirt" hideCaption /> | `turtleneckShirt` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
+
+#### Glasses
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={glassesGlasses} title="glasses" hideCaption /> | `glasses` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairAfro} title="afro" hideCaption /> | `afro` |
+| <AssetPreview svg={hairCurlyBun} title="curlyBun" hideCaption /> | `curlyBun` |
+| <AssetPreview svg={hairLongWavy} title="longWavy" hideCaption /> | `longWavy` |
+| <AssetPreview svg={hairMediumStraigh} title="mediumStraigh" hideCaption /> | `mediumStraigh` |
+| <AssetPreview svg={hairPonyTail} title="ponyTail" hideCaption /> | `ponyTail` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+| <AssetPreview svg={hairShortCurly} title="shortCurly" hideCaption /> | `shortCurly` |
+| <AssetPreview svg={hairSideSwept} title="sideSwept" hideCaption /> | `sideSwept` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthSmile} title="smile" hideCaption /> | `smile` |
+| <AssetPreview svg={mouthStandard} title="standard" hideCaption /> | `standard` |
+
+#### Nose
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseStandard} title="standard" hideCaption /> | `standard` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/ashleyy-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/ashleyy-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

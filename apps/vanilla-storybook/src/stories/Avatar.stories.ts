@@ -1,4 +1,5 @@
 import ashleyseoTheme from '@avatune/ashley-seo-theme/vanilla'
+import ashleyyTheme from '@avatune/ashleyy-theme/vanilla'
 import fatinverseTheme from '@avatune/fatin-verse-theme/vanilla'
 import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
@@ -21,6 +22,7 @@ const meta = {
 export default meta
 
 type AshleySeoArgs = Omit<AvatarArgs<typeof ashleyseoTheme>, 'theme'>
+type AshleyyArgs = Omit<AvatarArgs<typeof ashleyyTheme>, 'theme'>
 type FatinVerseArgs = Omit<AvatarArgs<typeof fatinverseTheme>, 'theme'>
 type KyuteArgs = Omit<AvatarArgs<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarArgs<typeof micahTheme>, 'theme'>
@@ -64,6 +66,16 @@ export const AshleySeo: StoryObj<AshleySeoArgs> = {
   argTypes: getArgTypes(ashleyseoTheme),
   render: (args: AshleySeoArgs) => {
     return avatar({ theme: ashleyseoTheme, ...args })
+  },
+  args: {
+    size: 300,
+  },
+}
+
+export const Ashleyy: StoryObj<AshleyyArgs> = {
+  argTypes: getArgTypes(ashleyyTheme),
+  render: (args: AshleyyArgs) => {
+    return avatar({ theme: ashleyyTheme, ...args })
   },
   args: {
     size: 300,
@@ -162,6 +174,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 
 const themes = {
   'Ashley Seo': ashleyseoTheme,
+  Ashleyy: ashleyyTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,

@@ -24,14 +24,22 @@ export default createTheme<BaseAvatarItem>()
   ])
   .addColors('eyes', [AccentColors.Black])
   .addColors('glasses', [AccentColors.Black])
-  .addColors('hair', [
-    AccentColors.Black,
-    AccentColors.White,
-    AccentColors.Canary,
-  ])
+  .addColors('hair', [AccentColors.Black])
   .addColors('head', [SkinTones.Light, SkinTones.Medium, SkinTones.Dark])
   .addColors('mouth', [AccentColors.Black])
   .addColors('nose', [AccentColors.Black])
+  .addColors('hair', [
+    AccentColors.Canary,
+    AccentColors.Granetta,
+    AccentColors.Salmon,
+    AccentColors.Sky,
+  ])
+  .addColors('background', [
+    BackgroundColors.BleuLight,
+    BackgroundColors.GreenTeaLight,
+    BackgroundColors.SalmonLight,
+    BackgroundColors.White,
+  ])
   // Accessories
   .addItem('accessories', 'earrings', {
     position: fromHeadOffset(percentage('15.00%'), percentage('14.60%')),
@@ -47,27 +55,27 @@ export default createTheme<BaseAvatarItem>()
     layer: 10,
   })
   .addItem('body', 'doubleCollarShirt', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(percentage('0.2%'), percentage('43.00%')),
     layer: 10,
   })
   .addItem('body', 'knitSweater', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(percentage('0.17%'), percentage('41.5%')),
     layer: 10,
   })
   .addItem('body', 'peterPanCollarShirt', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(percentage('0.2%'), percentage('44%')),
     layer: 10,
   })
   .addItem('body', 'polkaDotShirt', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(-percentage('0.5%'), percentage('42%')),
     layer: 10,
   })
   .addItem('body', 'tieShirt', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(percentage('0%'), percentage('42%')),
     layer: 10,
   })
   .addItem('body', 'turtleneckShirt', {
-    position: fromHeadOffset(percentage('0%'), percentage('0%')),
+    position: fromHeadOffset(-percentage('0.3%'), percentage('41%')),
     layer: 10,
   })
   // Eyes
@@ -94,7 +102,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 15,
   })
   .addItem('hair', 'mediumStraigh', {
-    position: fromHeadOffset(percentage('10.80%'), -percentage('5.40%')),
+    position: fromHeadOffset(percentage('10.3%'), -percentage('5.40%')),
     layer: 15,
   })
   .addItem('hair', 'ponyTail', {
@@ -102,7 +110,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 15,
   })
   .addItem('hair', 'shortCurly', {
-    position: fromHeadOffset(percentage('9.60%'), -percentage('6.80%')),
+    position: fromHeadOffset(percentage('10%'), -percentage('6.80%')),
     layer: 15,
   })
   .addItem('hair', 'short', {

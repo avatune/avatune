@@ -14,20 +14,21 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/ashley-seo-theme": "workspace:*",
+    "@avatune/ashleyy-theme": "workspace:*",
+    "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
-    "@avatune/nevmstas-theme": "workspace:*",
-    "@avatune/miniavs-theme": "workspace:*",
-    "@avatune/yanliu-theme": "workspace:*",
     "@avatune/micah-theme": "workspace:*",
+    "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/nevmstas-theme": "workspace:*",
     "@avatune/pacovqzz-theme": "workspace:*",
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
-    "@avatune/typescript-config": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/typescript-config": "workspace:*",
     "@avatune/utils": "workspace:*",
-    "@avatune/vanilla": "workspace:*"
+    "@avatune/vanilla": "workspace:*",
+    "@avatune/yanliu-theme": "workspace:*"
   },
   "devDependencies": {
     "@storybook/addon-docs": "^10.0.4",

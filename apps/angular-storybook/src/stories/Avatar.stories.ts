@@ -1,5 +1,6 @@
 import { Avatar } from '@avatune/angular'
 import ashleyseoTheme from '@avatune/ashley-seo-theme/angular'
+import ashleyyTheme from '@avatune/ashleyy-theme/angular'
 import fatinverseTheme from '@avatune/fatin-verse-theme/angular'
 import kyuteTheme from '@avatune/kyute-theme/angular'
 import micahTheme from '@avatune/micah-theme/angular'
@@ -62,6 +63,8 @@ const createStory = <T extends Theme<AngularAvatarItem>>(
 })
 
 export const AshleySeo = createStory(ashleyseoTheme)
+
+export const Ashleyy = createStory(ashleyyTheme)
 
 export const FatinVerse = createStory(fatinverseTheme)
 

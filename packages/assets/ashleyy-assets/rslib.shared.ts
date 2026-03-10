@@ -21,25 +21,25 @@ export const svgoConfig: SvgoConfig = {
   ],
 }
 
+const idReplacements = ['mask0_82_179', 'mask0_99_108']
+
 export const getReplaceAttrValues = (
   colorPropName = 'color',
   uidPropName = 'uid',
-) => ({
-  currentColor: `{${colorPropName}}`,
-  '#FCBE93': `{${colorPropName}}`,
-  '#FF7A93': `{${colorPropName}}`,
-  '#FFA882': `{colord(${colorPropName}).darken(0.05).toHex()}`,
-  '#272424': `{colord(${colorPropName}).darken(0.2).toHex()}`,
-  '#A4C856': `{${colorPropName}}`,
-  '#8DA853': `{colord(${colorPropName}).darken(0.05).toHex()}`,
-  '#4F8558': `{colord(${colorPropName}).darken(0.1).toHex()}`,
-  '#F06E82': `{${colorPropName}}`,
-  filter0_d_144_233: `{${uidPropName} + '-' + '${uid()}'}`,
-  filter0_d_144_264: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask0_134_151: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask0_89_489: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask0_91_509: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask0_91_558: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask1_134_151: `{${uidPropName} + '-' + '${uid()}'}`,
-  mask1_91_558: `{${uidPropName} + '-' + '${uid()}'}`,
-})
+) => {
+  const replacements: Record<string, string> = {
+    '#F1CF73': `{${colorPropName}}`,
+    '#FC909F': `{${colorPropName}}`,
+    '#000': `{${colorPropName}}`,
+  }
+
+  for (const id of idReplacements) {
+    const uniqueId = uid()
+    const replacement = `{${uidPropName} + '-' + '${uniqueId}'}`
+    replacements[id] = replacement
+    replacements[`url(#${id})`] =
+      `{'url(#' + ${uidPropName} + '-' + '${uniqueId}' + ')'}`
+  }
+
+  return replacements
+}
