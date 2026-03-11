@@ -1,5 +1,11 @@
 # @avatune/angular
 
+## 1.2.0
+
+### Minor Changes
+
+- [#78](https://github.com/avatune/avatune/pull/78) [`17590c6`](https://github.com/avatune/avatune/commit/17590c61d96643f1fb125110ac46d227097ac5a8) Thanks [@nevmstas](https://github.com/nevmstas)! - fixed Angular renderer reactivity and add missing optional category inputs
+
 ## 1.1.0
 
 ### Minor Changes
