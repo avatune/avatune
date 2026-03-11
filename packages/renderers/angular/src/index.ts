@@ -1,5 +1,5 @@
-import { Component, inject, input, type OnInit } from '@angular/core'
-import { DomSanitizer, type SafeHtml } from '@angular/platform-browser'
+import { Component, computed, inject, input } from '@angular/core'
+import { DomSanitizer } from '@angular/platform-browser'
 import type {
   AngularAvatarItem,
   AngularTheme,
@@ -29,29 +29,43 @@ export type AvatarProps<T extends AngularTheme = AngularTheme> = AvatarConfig<
 @Component({
   selector: 'avatune-avatar',
   standalone: true,
-  template: `<span [innerHTML]="svgContent"></span>`,
+  template: `<span [innerHTML]="svgContent()"></span>`,
   styles: [
     ':host { display: inline-block; line-height: 0; } span { display: inline-block; line-height: 0; }',
   ],
 })
-export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
+export class Avatar<T extends AngularTheme = AngularTheme> {
   theme = input.required<T>()
   seed = input<string | number | undefined>()
+  accessories = input<string | string[] | undefined>()
   body = input<string | string[] | undefined>()
   ears = input<string | string[] | undefined>()
   eyebrows = input<string | string[] | undefined>()
   eyes = input<string | string[] | undefined>()
+  faceDetails = input<string | string[] | undefined>()
+  faceHair = input<string | string[] | undefined>()
+  forelock = input<string | string[] | undefined>()
+  glasses = input<string | string[] | undefined>()
   hair = input<string | string[] | undefined>()
+  hats = input<string | string[] | undefined>()
   head = input<string | string[] | undefined>()
   mouth = input<string | string[] | undefined>()
+  neck = input<string | string[] | undefined>()
   nose = input<string | string[] | undefined>()
+  accessoriesColor = input<string | undefined>()
   bodyColor = input<string | undefined>()
   earsColor = input<string | undefined>()
   eyebrowsColor = input<string | undefined>()
   eyesColor = input<string | undefined>()
+  faceDetailsColor = input<string | undefined>()
+  faceHairColor = input<string | undefined>()
+  forelockColor = input<string | undefined>()
+  glassesColor = input<string | undefined>()
   hairColor = input<string | undefined>()
+  hatsColor = input<string | undefined>()
   headColor = input<string | undefined>()
   mouthColor = input<string | undefined>()
+  neckColor = input<string | undefined>()
   noseColor = input<string | undefined>()
   backgroundColor = input<string | undefined>()
   inputSize = input<number | undefined>()
@@ -59,11 +73,9 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
   avatarStyle = input<string | undefined>()
   predictions = input<Predictions | undefined>()
 
-  svgContent: SafeHtml = ''
-
   private sanitizer = inject(DomSanitizer)
 
-  ngOnInit() {
+  svgContent = computed(() => {
     const theme = this.theme()
     const size = this.inputSize() ?? theme.style.size
     const uidValue = createUid()
@@ -73,6 +85,10 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
 
     const config: AvatarConfig<AngularAvatarItem, T> = {
       seed: this.seed(),
+      accessories: this.accessories() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['accessories'],
       body: this.body() as AvatarConfig<AngularAvatarItem, T>['body'],
       ears: this.ears() as AvatarConfig<AngularAvatarItem, T>['ears'],
       eyebrows: this.eyebrows() as AvatarConfig<
@@ -80,17 +96,57 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
         T
       >['eyebrows'],
       eyes: this.eyes() as AvatarConfig<AngularAvatarItem, T>['eyes'],
+      faceDetails: this.faceDetails() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['faceDetails'],
+      faceHair: this.faceHair() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['faceHair'],
+      forelock: this.forelock() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['forelock'],
+      glasses: this.glasses() as AvatarConfig<AngularAvatarItem, T>['glasses'],
       hair: this.hair() as AvatarConfig<AngularAvatarItem, T>['hair'],
+      hats: this.hats() as AvatarConfig<AngularAvatarItem, T>['hats'],
       head: this.head() as AvatarConfig<AngularAvatarItem, T>['head'],
       mouth: this.mouth() as AvatarConfig<AngularAvatarItem, T>['mouth'],
+      neck: this.neck() as AvatarConfig<AngularAvatarItem, T>['neck'],
       nose: this.nose() as AvatarConfig<AngularAvatarItem, T>['nose'],
+      accessoriesColor: this.accessoriesColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['accessoriesColor'],
       bodyColor: this.bodyColor(),
       earsColor: this.earsColor(),
       eyebrowsColor: this.eyebrowsColor(),
       eyesColor: this.eyesColor(),
+      faceDetailsColor: this.faceDetailsColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['faceDetailsColor'],
+      faceHairColor: this.faceHairColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['faceHairColor'],
+      forelockColor: this.forelockColor(),
+      glassesColor: this.glassesColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['glassesColor'],
       hairColor: this.hairColor(),
+      hatsColor: this.hatsColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['hatsColor'],
       headColor: this.headColor(),
       mouthColor: this.mouthColor(),
+      neckColor: this.neckColor() as AvatarConfig<
+        AngularAvatarItem,
+        T
+      >['neckColor'],
       noseColor: this.noseColor(),
       backgroundColor: this.backgroundColor(),
     }
@@ -163,6 +219,6 @@ export class Avatar<T extends AngularTheme = AngularTheme> implements OnInit {
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="Avatar">${parts.join('')}</svg>`
 
-    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svg)
-  }
+    return this.sanitizer.bypassSecurityTrustHtml(svg)
+  })
 }
