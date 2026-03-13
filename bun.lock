@@ -1008,7 +1008,7 @@
     },
     "packages/predictors/facial-hair-predictor": {
       "name": "@avatune/facial-hair-predictor",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "dependencies": {
         "@avatune/face-detector": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -1030,7 +1030,7 @@
     },
     "packages/predictors/hair-color-predictor": {
       "name": "@avatune/hair-color-predictor",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "dependencies": {
         "@avatune/face-detector": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -1052,7 +1052,7 @@
     },
     "packages/predictors/hair-length-predictor": {
       "name": "@avatune/hair-length-predictor",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "dependencies": {
         "@avatune/face-detector": "workspace:*",
         "@avatune/types": "workspace:*",
@@ -1074,7 +1074,7 @@
     },
     "packages/predictors/skin-tone-predictor": {
       "name": "@avatune/skin-tone-predictor",
-      "version": "1.3.0",
+      "version": "1.4.0",
       "dependencies": {
         "@avatune/face-detector": "workspace:*",
         "@avatune/types": "workspace:*",

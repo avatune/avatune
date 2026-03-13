@@ -1,5 +1,11 @@
 # @avatune/facial-hair-predictor
 
+## 1.2.0
+
+### Minor Changes
+
+- [#81](https://github.com/avatune/avatune/pull/81) [`37dd838`](https://github.com/avatune/avatune/commit/37dd838f32a92ca8ad2af5ae3a62be47040820c3) Thanks [@teimurjan](https://github.com/teimurjan)! - Improve prediction quality with MobileNetV2
+
 ## 1.1.0
 
 ### Minor Changes
