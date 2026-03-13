@@ -18,5 +18,12 @@ wheels/
 # Data
 data
 
+# Model artifacts (only tfjs/ and best_*.keras are needed)
+models/**/*.h5
+models/**/*.png
+models/**/training_history.json
+models/**/validation.json
+!models/**/tfjs/
+
 # Marimo
 __marimo__/

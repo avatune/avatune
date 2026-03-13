@@ -99,6 +99,10 @@ export default defineConfig({
           label: 'Predictors',
           items: [
             {
+              label: 'Facial Hair Predictor',
+              slug: 'packages/facial-hair-predictor',
+            },
+            {
               label: 'Hair Color Predictor',
               slug: 'packages/hair-color-predictor',
             },

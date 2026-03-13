@@ -121,16 +121,28 @@ Predicts skin tone from an image tensor.
 }
 ```
 
+#### `predictFromImage(image): Promise<SkinToneResult>`
+
+Predicts skin tone from an image element. Automatically detects and crops the face for better accuracy.
+
+**Parameters:**
+- `image` - `HTMLImageElement`, `HTMLVideoElement`, or `HTMLCanvasElement`
+
+**Returns:** Same as `predict()`, plus `faceDetected: boolean`
+
 ## Model Details
 
 - Architecture: MobileNetV2-based CNN
 - Input: 128x128 RGB images
-- Model classes: 7 ethnicities (black, east_asian, indian, latino_hispanic, middle_eastern, southeast_asian, white)
-- Output: Mapped to 3 skin tones (dark, medium, light)
+- Approach: Ethnicity classification (7 classes) mapped to skin tones (3 classes)
 - Training: FairFace dataset
+- Ethnicity accuracy: ~79%
+- Skin tone accuracy: ~88%
 - Format: TensorFlow.js with uint8 quantization
 
-### Ethnicity to Skin Tone Mapping
+### Why Ethnicity-Based?
+
+Direct skin tone labels are noisy - ITA analysis shows all 3 classes overlap significantly, capping accuracy at ~50%. Ethnicity labels are cleaner and more learnable, then mapped to skin tones:
 
 | Ethnicity       | Skin Tone |
 | --------------- | --------- |

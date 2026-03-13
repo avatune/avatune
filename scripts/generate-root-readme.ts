@@ -18,7 +18,9 @@ interface PackageInfo {
 
 function discoverPackages(subdir: string, suffix: string): PackageInfo[] {
   const dir = join(PACKAGES_DIR, subdir)
-  const packages = readdirSync(dir)
+  const packages = readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+    .map((entry) => entry.name)
     .filter((pkg) => (suffix ? pkg.endsWith(suffix) : true))
     .sort()
 
@@ -83,6 +85,7 @@ function generatePredictorsTable(predictors: PackageInfo[]): string {
 
   const descriptions: Record<string, string> = {
     'face-detector': 'Detect faces in images',
+    'facial-hair-predictor': 'Predict facial hair from images',
     'hair-color-predictor': 'Predict hair color from images',
     'hair-length-predictor': 'Predict hair length from images',
     'skin-tone-predictor': 'Predict skin tone from images',

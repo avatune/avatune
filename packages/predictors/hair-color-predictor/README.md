@@ -116,6 +116,15 @@ Predicts hair color from an image tensor.
 }
 ```
 
+#### `predictFromImage(image): Promise<HairColorResult>`
+
+Predicts hair color from an image element. Automatically detects and crops the face for better accuracy.
+
+**Parameters:**
+- `image` - `HTMLImageElement`, `HTMLVideoElement`, or `HTMLCanvasElement`
+
+**Returns:** Same as `predict()`, plus `faceDetected: boolean`
+
 ## Model Details
 
 - Architecture: MobileNetV2-based CNN

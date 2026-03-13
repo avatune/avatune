@@ -320,7 +320,7 @@ def _(mo):
 
 
 @app.cell
-def _(MODEL_OUTPUT_PATH, history, plt):
+def _(history, plt):
     _fig, _axes = plt.subplots(1, 2, figsize=(14, 5))
 
     _axes[0].plot(history.history['accuracy'], label='Train', linewidth=2)
@@ -340,7 +340,6 @@ def _(MODEL_OUTPUT_PATH, history, plt):
     _axes[1].grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig(MODEL_OUTPUT_PATH / 'training_history.png', dpi=150)
     plt.show()
     return
 
@@ -374,7 +373,7 @@ def _(CLASSES, Counter, X_val, classification_report, model, np, y_val):
 
 
 @app.cell
-def _(CLASSES, MODEL_OUTPUT_PATH, confusion_matrix, np, plt, sns, y_pred, y_val):
+def _(CLASSES, confusion_matrix, np, plt, sns, y_pred, y_val):
     _cm = confusion_matrix(y_val, y_pred)
     _cm_norm = _cm.astype('float') / _cm.sum(axis=1)[:, np.newaxis]
 
@@ -393,49 +392,7 @@ def _(CLASSES, MODEL_OUTPUT_PATH, confusion_matrix, np, plt, sns, y_pred, y_val)
     _axes[1].set_xlabel('Predicted Label')
 
     plt.tight_layout()
-    plt.savefig(MODEL_OUTPUT_PATH / 'confusion_matrix.png', dpi=150)
     plt.show()
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""## Save Model""")
-    return
-
-
-@app.cell
-def _(CLASSES, MODEL_OUTPUT_PATH, history, json, model):
-    print("💾 Saving model...")
-
-    model.save(MODEL_OUTPUT_PATH / 'facial_hair_model.keras')
-    print(f"✅ Saved: facial_hair_model.keras")
-
-    with open(MODEL_OUTPUT_PATH / 'classes.json', 'w') as f:
-        json.dump(CLASSES, f, indent=2)
-    print(f"✅ Saved: classes.json")
-
-    _history_dict = {
-        'accuracy': [float(x) for x in history.history['accuracy']],
-        'val_accuracy': [float(x) for x in history.history['val_accuracy']],
-        'loss': [float(x) for x in history.history['loss']],
-        'val_loss': [float(x) for x in history.history['val_loss']],
-        'epochs': len(history.history['accuracy']),
-        'final_val_accuracy': float(history.history['val_accuracy'][-1]),
-        'best_val_accuracy': float(max(history.history['val_accuracy']))
-    }
-
-    with open(MODEL_OUTPUT_PATH / 'training_history.json', 'w') as f:
-        json.dump(_history_dict, f, indent=2)
-    print(f"✅ Saved: training_history.json")
-
-    print(f"\n🎉 Training Complete!")
-    print(f"=" * 60)
-    print(f"📊 Final Results:")
-    print(f"   Train accuracy: {history.history['accuracy'][-1]*100:.2f}%")
-    print(f"   Val accuracy: {history.history['val_accuracy'][-1]*100:.2f}%")
-    print(f"   Best val accuracy: {max(history.history['val_accuracy'])*100:.2f}%")
-    print(f"   Epochs trained: {len(history.history['accuracy'])}")
     return
 
 
@@ -446,9 +403,8 @@ def _(mo):
 
 
 @app.cell
-def _(MODEL_OUTPUT_PATH, model):
+def _(CLASSES, MODEL_OUTPUT_PATH, json, model):
     import tensorflowjs as tfjs
-    import shutil
 
     print('\n' + '=' * 60)
     print('🔄 Converting to TensorFlow.js...')
@@ -463,7 +419,8 @@ def _(MODEL_OUTPUT_PATH, model):
         quantization_dtype_map={'uint8': '*'}
     )
 
-    shutil.copy(MODEL_OUTPUT_PATH / 'classes.json', TFJS_OUTPUT / 'classes.json')
+    with open(TFJS_OUTPUT / 'classes.json', 'w') as _f:
+        json.dump(CLASSES, _f, indent=2)
 
     print('\n✅ TensorFlow.js conversion complete!')
     print(f'\n📁 Generated files:')
@@ -477,7 +434,7 @@ def _(MODEL_OUTPUT_PATH, model):
     print(f'\n📦 Total size: {_total_size:.1f} KB ({_total_size / 1024:.2f} MB)')
     print(f'\n🎯 Ready for deployment!')
     print(f'   Location: {TFJS_OUTPUT}')
-    return TFJS_OUTPUT, shutil, tfjs
+    return
 
 
 if __name__ == "__main__":

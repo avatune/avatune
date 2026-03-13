@@ -37,7 +37,7 @@ console.log(result)
 
 ## Model Files
 
-By default, models are loaded from jsDelivr CDN (`https://cdn.jsdelivr.net/npm/@avatune/facial-hair-predictor@1.0.0/dist/model`). No setup required!
+By default, models are loaded from jsDelivr CDN (`https://cdn.jsdelivr.net/npm/@avatune/facial-hair-predictor@1/dist/model`). No setup required!
 
 ### Self-hosting (Optional)
 
@@ -118,6 +118,15 @@ Predicts facial hair presence from an image tensor.
   probabilities: Record<string, number>  // Scores for all classes
 }
 ```
+
+#### `predictFromImage(image): Promise<FacialHairResult>`
+
+Predicts facial hair from an image element. Automatically detects and crops the lower face area for better accuracy.
+
+**Parameters:**
+- `image` - `HTMLImageElement`, `HTMLVideoElement`, or `HTMLCanvasElement`
+
+**Returns:** Same as `predict()`, plus `faceDetected: boolean`
 
 ## Model Details
 
