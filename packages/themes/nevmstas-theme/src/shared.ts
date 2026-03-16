@@ -151,7 +151,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 30,
   })
   .addItem('eyebrows', 'small', {
-    position: fromHeadOffset(percentage('10.98%'), percentage('20.73%')),
+    position: fromHeadOffset(percentage('11.7%'), percentage('21%')),
     layer: 30,
   })
   .addItem('eyebrows', 'standard', {
@@ -164,7 +164,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 20,
   })
   .addItem('eyes', 'dots', {
-    position: fromHeadOffset(percentage('13.41%'), percentage('25.61%')),
+    position: fromHeadOffset(percentage('14%'), percentage('25.61%')),
     layer: 20,
   })
   .addItem('eyes', 'openCircle', {
