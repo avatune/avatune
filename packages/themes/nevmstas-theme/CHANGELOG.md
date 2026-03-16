@@ -1,5 +1,14 @@
 # @avatune/nevmstas-theme
 
+## 3.2.1
+
+### Patch Changes
+
+- [#83](https://github.com/avatune/avatune/pull/83) [`dad467c`](https://github.com/avatune/avatune/commit/dad467cc092e008606ff59fcffd30dd10b56996c) Thanks [@nevmstas](https://github.com/nevmstas)! - fixed ids replacements
+
+- Updated dependencies [[`dad467c`](https://github.com/avatune/avatune/commit/dad467cc092e008606ff59fcffd30dd10b56996c)]:
+  - @avatune/nevmstas-assets@3.2.1
+
 ## 3.2.0
 
 ### Minor Changes
