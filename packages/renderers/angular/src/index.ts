@@ -68,6 +68,7 @@ export class Avatar<T extends AngularTheme = AngularTheme> {
   neckColor = input<string | undefined>()
   noseColor = input<string | undefined>()
   backgroundColor = input<string | undefined>()
+  borderRadius = input<number | string | undefined>()
   inputSize = input<number | undefined>()
   avatarClass = input<string | undefined>()
   avatarStyle = input<string | undefined>()
@@ -80,7 +81,6 @@ export class Avatar<T extends AngularTheme = AngularTheme> {
     const size = this.inputSize() ?? theme.style.size
     const uidValue = createUid()
     const clipId = `clip-${uidValue}`
-    const borderRadius = parseBorderRadius(theme.style.borderRadius, size)
     const scaleFactor = size / theme.style.size
 
     const config: AvatarConfig<AngularAvatarItem, T> = {
@@ -149,10 +149,15 @@ export class Avatar<T extends AngularTheme = AngularTheme> {
       >['neckColor'],
       noseColor: this.noseColor(),
       backgroundColor: this.backgroundColor(),
+      borderRadius: this.borderRadius(),
     }
 
     const result = selectItems(config, theme, this.predictions())
 
+    const borderRadius = parseBorderRadius(
+      result.style?.borderRadius ?? theme.style.borderRadius,
+      size,
+    )
     const backgroundColor =
       result.style?.backgroundColor || theme.style.backgroundColor
     const borderColor = theme.style.borderColor

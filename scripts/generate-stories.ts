@@ -174,9 +174,13 @@ function generateGetArgTypesFunction(
     ? ` as StoryObj<Args>['argTypes']`
     : ''
 
-  return `const getArgTypes = <T extends Theme<${avatarItemType}>>(theme: T) => {
+  return `const toBorderRadius = (v: number | string | undefined) =>
+  typeof v === 'number' ? \`\${v}%\` : v
+
+const getArgTypes = <T extends Theme<${avatarItemType}>>(theme: T) => {
 ${typeAsssertion}  const argTypes: Record<string, unknown> = {
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+    borderRadius: { control: { type: 'range', min: 0, max: 100, step: 1 } },
   }
 
   const colorPalettes = theme.colorPalettes
@@ -241,9 +245,16 @@ function generateReactStory(themes: string[]): string {
       themeVar,
     ) => `export const ${themeName}: StoryObj<${themeName}Args> = {
   argTypes: getArgTypes(${themeVar}Theme),
-  render: (args) => <Avatar theme={${themeVar}Theme} {...args} />,
+  render: (args) => (
+    <Avatar
+      theme={${themeVar}Theme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -318,11 +329,15 @@ function generateVueStory(themes: string[]): string {
   argTypes: getArgTypes(${themeVar}Theme),
   render: (args: ${themeName}Args) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: ${themeVar}Theme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: ${themeVar}Theme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -405,10 +420,15 @@ function generateSvelteStory(themes: string[]): string {
   argTypes: getArgTypes(${themeVar}Theme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: ${themeVar}Theme, ...args },
+    props: {
+      theme: ${themeVar}Theme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -481,9 +501,16 @@ function generateSolidJsStory(themes: string[]): string {
       themeVar,
     ) => `export const ${themeName}: StoryObj<${themeName}Args> = {
   argTypes: getArgTypes(${themeVar}Theme),
-  render: (args) => <Avatar theme={${themeVar}Theme} {...args} />,
+  render: (args) => (
+    <Avatar
+      theme={${themeVar}Theme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -556,9 +583,16 @@ function generateReactNativeStory(themes: string[]): string {
       themeVar,
     ) => `export const ${themeName}: StoryObj<${themeName}Args> = {
   argTypes: getArgTypes(${themeVar}Theme),
-  render: (args) => <Avatar theme={${themeVar}Theme} {...args} />,
+  render: (args) => (
+    <Avatar
+      theme={${themeVar}Theme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -632,10 +666,15 @@ function generateVanillaStory(themes: string[]): string {
     ) => `export const ${themeName}: StoryObj<${themeName}Args> = {
   argTypes: getArgTypes(${themeVar}Theme),
   render: (args: ${themeName}Args) => {
-    return avatar({ theme: ${themeVar}Theme, ...args })
+    return avatar({
+      theme: ${themeVar}Theme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    })
   },
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }`,
   )
@@ -720,9 +759,13 @@ const meta: Meta = {
 
 export default meta
 
+const toBorderRadius = (v: number | string | undefined) =>
+  typeof v === 'number' ? \`\${v}%\` : v
+
 const getArgTypes = <T extends Theme<AngularAvatarItem>>(theme: T) => {
   const argTypes: Record<string, unknown> = {
     inputSize: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+    borderRadius: { control: { type: 'range', min: 0, max: 100, step: 1 } },
   }
 
   const colorPalettes = theme.colorPalettes
@@ -748,9 +791,13 @@ const createStory = <T extends Theme<AngularAvatarItem>>(
   theme: T,
 ): StoryObj => ({
   argTypes: getArgTypes(theme),
-  args: { inputSize: 300 },
+  args: { inputSize: 300, borderRadius: 50 },
   render: (args) => ({
-    props: { theme, ...args },
+    props: {
+      theme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius as number | string | undefined),
+    },
   }),
 })
 

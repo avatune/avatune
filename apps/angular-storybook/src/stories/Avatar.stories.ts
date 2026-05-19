@@ -23,9 +23,13 @@ const meta: Meta = {
 
 export default meta
 
+const toBorderRadius = (v: number | string | undefined) =>
+  typeof v === 'number' ? `${v}%` : v
+
 const getArgTypes = <T extends Theme<AngularAvatarItem>>(theme: T) => {
   const argTypes: Record<string, unknown> = {
     inputSize: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+    borderRadius: { control: { type: 'range', min: 0, max: 100, step: 1 } },
   }
 
   const colorPalettes = theme.colorPalettes
@@ -56,9 +60,15 @@ const createStory = <T extends Theme<AngularAvatarItem>>(
   theme: T,
 ): StoryObj => ({
   argTypes: getArgTypes(theme),
-  args: { inputSize: 300 },
+  args: { inputSize: 300, borderRadius: 50 },
   render: (args) => ({
-    props: { theme, ...args },
+    props: {
+      theme,
+      ...args,
+      borderRadius: toBorderRadius(
+        args.borderRadius as number | string | undefined,
+      ),
+    },
   }),
 })
 

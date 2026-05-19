@@ -47,7 +47,10 @@ export function avatar<T extends VanillaTheme = VanillaTheme>({
   const scaleFactor = size / theme.style.size
   const uidValue = createUid(config.seed)
   const clipId = `clip-${uidValue}`
-  const borderRadius = parseBorderRadius(theme.style.borderRadius, size)
+  const borderRadius = parseBorderRadius(
+    result.style?.borderRadius ?? theme.style.borderRadius,
+    size,
+  )
   const backgroundColor =
     result.style?.backgroundColor || theme.style.backgroundColor
   const borderColor = theme.style.borderColor

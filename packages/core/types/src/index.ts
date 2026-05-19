@@ -337,6 +337,7 @@ export type AvatarConfig<I extends AvatarItem, T extends Theme<I>> = {
     : never
   nose?: ExtractIdentifiers<T['nose']>
   backgroundColor?: string
+  borderRadius?: number | string
   accessoriesColor?: T['accessories'] extends AvatarItemCollection<I>
     ? string
     : never

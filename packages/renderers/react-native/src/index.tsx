@@ -44,7 +44,10 @@ function AvatarComponent<T extends ReactNativeTheme = ReactNativeTheme>({
   const uidValue = useMemo(uid, [])
 
   const scaleFactor = size / theme.style.size
-  const borderRadius = parseBorderRadius(theme.style.borderRadius, size)
+  const borderRadius = parseBorderRadius(
+    result.style?.borderRadius ?? theme.style.borderRadius,
+    size,
+  )
   const backgroundColor =
     result.style?.backgroundColor || theme.style.backgroundColor
   const borderColor = theme.style.borderColor

@@ -66,6 +66,12 @@ function parseAvatarConfig(
     config.backgroundColor = backgroundColor
   }
 
+  const borderRadius = url.searchParams.get('borderRadius')
+  if (borderRadius !== null) {
+    const asNumber = Number(borderRadius)
+    config.borderRadius = Number.isFinite(asNumber) ? asNumber : borderRadius
+  }
+
   return config
 }
 

@@ -35,9 +35,13 @@ type PawelOlekManArgs = Omit<AvatarProps<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarProps<typeof pawelolekwomanTheme>, 'theme'>
 type YanliuArgs = Omit<AvatarProps<typeof yanliuTheme>, 'theme'>
 
+const toBorderRadius = (v: number | string | undefined) =>
+  typeof v === 'number' ? `${v}%` : v
+
 const getArgTypes = <T extends Theme<VueAvatarItem>>(theme: T) => {
   const argTypes: Record<string, unknown> = {
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+    borderRadius: { control: { type: 'range', min: 0, max: 100, step: 1 } },
   }
 
   const colorPalettes = theme.colorPalettes
@@ -68,11 +72,15 @@ export const AshleySeo: StoryObj<AshleySeoArgs> = {
   argTypes: getArgTypes(ashleyseoTheme),
   render: (args: AshleySeoArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: ashleyseoTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: ashleyseoTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -80,11 +88,15 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   argTypes: getArgTypes(ashleyyTheme),
   render: (args: AshleyyArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: ashleyyTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: ashleyyTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -92,11 +104,15 @@ export const FatinVerse: StoryObj<FatinVerseArgs> = {
   argTypes: getArgTypes(fatinverseTheme),
   render: (args: FatinVerseArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: fatinverseTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: fatinverseTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -104,11 +120,15 @@ export const Kyute: StoryObj<KyuteArgs> = {
   argTypes: getArgTypes(kyuteTheme),
   render: (args: KyuteArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: kyuteTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: kyuteTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -116,11 +136,15 @@ export const Micah: StoryObj<MicahArgs> = {
   argTypes: getArgTypes(micahTheme),
   render: (args: MicahArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: micahTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: micahTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -128,11 +152,15 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
   argTypes: getArgTypes(miniavsTheme),
   render: (args: MiniavsArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: miniavsTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: miniavsTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -140,11 +168,15 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   argTypes: getArgTypes(nevmstasTheme),
   render: (args: NevmstasArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: nevmstasTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: nevmstasTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -152,11 +184,15 @@ export const Pacovqzz: StoryObj<PacovqzzArgs> = {
   argTypes: getArgTypes(pacovqzzTheme),
   render: (args: PacovqzzArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: pacovqzzTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: pacovqzzTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -164,11 +200,15 @@ export const PawelOlekMan: StoryObj<PawelOlekManArgs> = {
   argTypes: getArgTypes(pawelolekmanTheme),
   render: (args: PawelOlekManArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: pawelolekmanTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: pawelolekmanTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -176,11 +216,15 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   argTypes: getArgTypes(pawelolekwomanTheme),
   render: (args: PawelOlekWomanArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: pawelolekwomanTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: pawelolekwomanTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -188,11 +232,15 @@ export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args: YanliuArgs) => ({
     components: { Avatar },
-    setup: () => ({ args, theme: yanliuTheme }),
+    setup: () => ({
+      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
+      theme: yanliuTheme,
+    }),
     template: '<Avatar :theme="theme" v-bind="args" />',
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 

@@ -60,7 +60,10 @@ export function Avatar<T extends SolidJsTheme = SolidJsTheme>(
 
   const scaleFactor = createMemo(() => size() / local.theme.style.size)
   const borderRadius = createMemo(() =>
-    parseBorderRadius(local.theme.style.borderRadius, size()),
+    parseBorderRadius(
+      result().style?.borderRadius ?? local.theme.style.borderRadius,
+      size(),
+    ),
   )
   const backgroundColor = createMemo(
     () => result().style?.backgroundColor || local.theme.style.backgroundColor,

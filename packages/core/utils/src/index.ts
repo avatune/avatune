@@ -349,9 +349,12 @@ export function selectItems<I extends AvatarItem, T extends Theme<I>>(
       ),
   )
 
+  const borderRadius = config.borderRadius ?? theme.style.borderRadius
+
   const style: T['style'] = {
     ...theme.style,
     backgroundColor,
+    borderRadius,
   }
 
   const allCategories = Object.keys(theme.colorPalettes).filter(

@@ -115,6 +115,10 @@ export const Avatar = defineComponent({
       type: String,
       default: undefined,
     },
+    borderRadius: {
+      type: [Number, String] as PropType<number | string>,
+      default: undefined,
+    },
     size: {
       type: Number,
       default: undefined,
@@ -162,7 +166,10 @@ export const Avatar = defineComponent({
     const clipId = genId()
     const uid = genId()
     const borderRadius = computed(() =>
-      parseBorderRadius(props.theme.style.borderRadius, actualSize.value),
+      parseBorderRadius(
+        result.value.style?.borderRadius ?? props.theme.style.borderRadius,
+        actualSize.value,
+      ),
     )
     const backgroundColor = computed(
       () =>

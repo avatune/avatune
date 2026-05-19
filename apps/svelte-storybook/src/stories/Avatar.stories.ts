@@ -40,10 +40,14 @@ type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
+const toBorderRadius = (v: number | string | undefined) =>
+  typeof v === 'number' ? `${v}%` : v
+
 const getArgTypes = <T extends Theme<SvelteAvatarItem>>(theme: T) => {
   type Args = ExtractStoryArgs<T>
   const argTypes: Record<string, unknown> = {
     size: { control: { type: 'range', min: 100, max: 800, step: 50 } },
+    borderRadius: { control: { type: 'range', min: 0, max: 100, step: 1 } },
   }
 
   const colorPalettes = theme.colorPalettes
@@ -74,10 +78,15 @@ export const AshleySeo: StoryObj<AshleySeoArgs> = {
   argTypes: getArgTypes(ashleyseoTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: ashleyseoTheme, ...args },
+    props: {
+      theme: ashleyseoTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -85,10 +94,15 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   argTypes: getArgTypes(ashleyyTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: ashleyyTheme, ...args },
+    props: {
+      theme: ashleyyTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -96,10 +110,15 @@ export const FatinVerse: StoryObj<FatinVerseArgs> = {
   argTypes: getArgTypes(fatinverseTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: fatinverseTheme, ...args },
+    props: {
+      theme: fatinverseTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -107,10 +126,15 @@ export const Kyute: StoryObj<KyuteArgs> = {
   argTypes: getArgTypes(kyuteTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: kyuteTheme, ...args },
+    props: {
+      theme: kyuteTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -118,10 +142,15 @@ export const Micah: StoryObj<MicahArgs> = {
   argTypes: getArgTypes(micahTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: micahTheme, ...args },
+    props: {
+      theme: micahTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -129,10 +158,15 @@ export const Miniavs: StoryObj<MiniavsArgs> = {
   argTypes: getArgTypes(miniavsTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: miniavsTheme, ...args },
+    props: {
+      theme: miniavsTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -140,10 +174,15 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   argTypes: getArgTypes(nevmstasTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: nevmstasTheme, ...args },
+    props: {
+      theme: nevmstasTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -151,10 +190,15 @@ export const Pacovqzz: StoryObj<PacovqzzArgs> = {
   argTypes: getArgTypes(pacovqzzTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: pacovqzzTheme, ...args },
+    props: {
+      theme: pacovqzzTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -162,10 +206,15 @@ export const PawelOlekMan: StoryObj<PawelOlekManArgs> = {
   argTypes: getArgTypes(pawelolekmanTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: pawelolekmanTheme, ...args },
+    props: {
+      theme: pawelolekmanTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -173,10 +222,15 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   argTypes: getArgTypes(pawelolekwomanTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: pawelolekwomanTheme, ...args },
+    props: {
+      theme: pawelolekwomanTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 
@@ -184,10 +238,15 @@ export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => ({
     Component: Avatar,
-    props: { theme: yanliuTheme, ...args },
+    props: {
+      theme: yanliuTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    },
   }),
   args: {
     size: 300,
+    borderRadius: 50,
   },
 }
 

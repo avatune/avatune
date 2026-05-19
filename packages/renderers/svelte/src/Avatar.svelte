@@ -57,7 +57,12 @@ const sortedItems = $derived(
 const scaleFactor = $derived(size / theme.style.size)
 const clipId = untrack(genId)
 const uid = untrack(genId)
-const borderRadius = $derived(parseBorderRadius(theme.style.borderRadius, size))
+const borderRadius = $derived(
+  parseBorderRadius(
+    result.style?.borderRadius ?? theme.style.borderRadius,
+    size,
+  ),
+)
 const backgroundColor = $derived(
   result.style?.backgroundColor || theme.style.backgroundColor,
 )
