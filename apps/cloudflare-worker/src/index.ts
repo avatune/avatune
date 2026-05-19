@@ -68,8 +68,12 @@ function parseAvatarConfig(
 
   const borderRadius = url.searchParams.get('borderRadius')
   if (borderRadius !== null) {
+    // Bare numbers are treated as percentages to match Storybook controls.
+    // Use explicit units (e.g. "20px") for absolute values.
     const asNumber = Number(borderRadius)
-    config.borderRadius = Number.isFinite(asNumber) ? asNumber : borderRadius
+    config.borderRadius = Number.isFinite(asNumber)
+      ? `${asNumber}%`
+      : borderRadius
   }
 
   return config

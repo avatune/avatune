@@ -329,11 +329,9 @@ function generateVueStory(themes: string[]): string {
   argTypes: getArgTypes(${themeVar}Theme),
   render: (args: ${themeName}Args) => ({
     components: { Avatar },
-    setup: () => ({
-      args: { ...args, borderRadius: toBorderRadius(args.borderRadius) },
-      theme: ${themeVar}Theme,
-    }),
-    template: '<Avatar :theme="theme" v-bind="args" />',
+    setup: () => ({ args, theme: ${themeVar}Theme, toBorderRadius }),
+    template:
+      '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
   }),
   args: {
     size: 300,
