@@ -1,5 +1,15 @@
 # @avatune/facial-hair-predictor
 
+## 1.2.1
+
+### Patch Changes
+
+- [#85](https://github.com/avatune/avatune/pull/85) [`99f6ebc`](https://github.com/avatune/avatune/commit/99f6ebcc10e9dc07c2e35573fe296575804e2560) Thanks [@teimurjan](https://github.com/teimurjan)! - Change face detector delegate on Apple Device due to float32 bug
+
+- Updated dependencies [[`f3b0f01`](https://github.com/avatune/avatune/commit/f3b0f0131305855ba56d60303171338c6f889734), [`99f6ebc`](https://github.com/avatune/avatune/commit/99f6ebcc10e9dc07c2e35573fe296575804e2560), [`99f6ebc`](https://github.com/avatune/avatune/commit/99f6ebcc10e9dc07c2e35573fe296575804e2560)]:
+  - @avatune/types@2.3.0
+  - @avatune/face-detector@1.3.1
+
 ## 1.2.0
 
 ### Minor Changes

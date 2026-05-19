@@ -1,5 +1,14 @@
 # @avatune/nevmstas-theme
 
+## 3.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`f3b0f01`](https://github.com/avatune/avatune/commit/f3b0f0131305855ba56d60303171338c6f889734)]:
+  - @avatune/types@2.3.0
+  - @avatune/utils@1.6.0
+  - @avatune/theme-builder@1.3.1
+
 ## 3.2.1
 
 ### Patch Changes

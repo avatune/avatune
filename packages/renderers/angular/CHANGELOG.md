@@ -1,5 +1,17 @@
 # @avatune/angular
 
+## 1.3.0
+
+### Minor Changes
+
+- [#87](https://github.com/avatune/avatune/pull/87) [`f3b0f01`](https://github.com/avatune/avatune/commit/f3b0f0131305855ba56d60303171338c6f889734) Thanks [@teimurjan](https://github.com/teimurjan)! - Add borderRadius to avatar config
+
+### Patch Changes
+
+- Updated dependencies [[`f3b0f01`](https://github.com/avatune/avatune/commit/f3b0f0131305855ba56d60303171338c6f889734)]:
+  - @avatune/types@2.3.0
+  - @avatune/utils@1.6.0
+
 ## 1.2.0
 
 ### Minor Changes

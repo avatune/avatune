@@ -1,5 +1,13 @@
 # @avatune/face-detector
 
+## 1.3.1
+
+### Patch Changes
+
+- [#85](https://github.com/avatune/avatune/pull/85) [`99f6ebc`](https://github.com/avatune/avatune/commit/99f6ebcc10e9dc07c2e35573fe296575804e2560) Thanks [@teimurjan](https://github.com/teimurjan)! - Change face detector delegate on Apple Device due to float32 bug
+
+- [#85](https://github.com/avatune/avatune/pull/85) [`99f6ebc`](https://github.com/avatune/avatune/commit/99f6ebcc10e9dc07c2e35573fe296575804e2560) Thanks [@teimurjan](https://github.com/teimurjan)! - Fixed invalid predictions on mobile by forcing srgb
+
 ## 1.3.0
 
 ### Minor Changes
