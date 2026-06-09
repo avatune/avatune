@@ -18,12 +18,19 @@ const defaultPredictions: Predictions = {
   faceHair: 'facial_hair',
 }
 
+const cachedDefaultPredictions: Predictions = {
+  skinTone: 'medium',
+  hairLength: 'medium',
+  hairColor: 'brown',
+  faceHair: 'facial_hair',
+}
+
 let predictors: Predictors | null = null
-let selectedThemeId = 'kyute'
+let selectedThemeId = 'micah'
 let isProcessing = false
-let predictions: Predictions | null = null
-let imageUrl: string | null = null
-let filename = 'no photo selected'
+let predictions: Predictions | null = cachedDefaultPredictions
+let imageUrl: string | null = '/prediction-2.jpg'
+let filename = 'prediction-2.jpg'
 let error: string | null = null
 let isDragging = false
 let fileInput: HTMLInputElement | null = null
@@ -38,6 +45,15 @@ $: currentThemeInfo = getThemeInfo(selectedThemeId)
 $: themeName = currentThemeInfo.label
 $: skinSwatches = getSkinToneColors(currentTheme, currentPredictions)
 $: hairSwatches = getHairColors(currentTheme, currentPredictions)
+
+function createImageFromUrl(url: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = url
+  })
+}
 
 onMount(() => {
   initializePredictors()
@@ -166,6 +182,13 @@ const stepDefs = [
   { key: 'faceHair', label: 'Face hair' },
 ] as const
 
+function formatStepValue(key: string, value: unknown): string {
+  if (key === 'faceHair') {
+    return value === 'facial_hair' ? 'Have facial hair' : 'No facial hair'
+  }
+  return String(value ?? '—').replace(/_/g, ' ')
+}
+
 $: stepData = stepDefs.map((s) => {
   const value = currentPredictions[s.key]
   const swatches =
@@ -177,7 +200,7 @@ $: stepData = stepDefs.map((s) => {
   return {
     key: s.key,
     label: s.label,
-    value,
+    value: formatStepValue(s.key, value),
     swatches,
     done: predictions !== null,
   }
@@ -220,19 +243,19 @@ const labelMono = 'font-code text-[11px] tracking-[0.16em] uppercase text-ink-3'
         <img
           src={imageUrl}
           alt="uploaded preview"
-          class="h-[140px] w-[140px] rounded-full border border-line-2 object-cover"
+          class="max-h-[200px] max-w-[200px] rounded-[10px] border border-line-2 object-contain"
         />
       {:else}
         <div
-          class="relative h-[140px] w-[140px] rounded-full [background:radial-gradient(circle_at_50%_38%,#2a2a2a_0%,#1a1a1a_50%,#0e0e0e_100%)]"
+          class="relative h-[280px] w-[280px] rounded-full [background:radial-gradient(circle_at_50%_38%,#2a2a2a_0%,#1a1a1a_50%,#0e0e0e_100%)]"
         ></div>
       {/if}
 
-      <div
+      <!-- <div
         class="text-center font-code text-[11px] tracking-[0.1em] uppercase text-ink-3"
       >
         {filename}
-      </div>
+      </div> -->
 
       <span class="{btnBase} mt-1">
         <svg
@@ -303,21 +326,17 @@ const labelMono = 'font-code text-[11px] tracking-[0.16em] uppercase text-ink-3'
     <div class="flex flex-col gap-3">
       {#each stepData as step, idx (step.key)}
         <div
-          class="grid grid-cols-[28px_1fr_auto] items-center gap-3.5 rounded-[10px] border px-3.5 py-3 transition {step.done
-            ? 'border-emerald-mark/40 bg-emerald-mark/[0.06]'
-            : 'border-line bg-[#0b0b0b]'}"
+          class="grid grid-cols-[28px_1fr_auto] items-center gap-3.5 rounded-[10px] border border-line bg-[#0b0b0b] px-3.5 py-3 transition"
         >
           <div
-            class="grid h-6 w-6 place-items-center rounded-full border font-code text-[11px] font-semibold transition {step.done
-              ? 'border-emerald-mark bg-emerald-mark text-paper'
-              : 'border-line-2 bg-[#1a1a1a] text-ink-2'}"
+            class="grid h-6 w-6 place-items-center rounded-full border border-line-2 bg-[#1a1a1a] font-code text-[11px] font-semibold text-ink-2 transition"
           >
             {idx + 1}
           </div>
           <div>
             <div class="{labelMono} whitespace-nowrap">{step.label}</div>
-            <div class="text-sm text-ink capitalize">
-              {String(step.value ?? '—').replace(/_/g, ' ')}
+            <div class="text-sm text-ink">
+              {step.value}
             </div>
           </div>
           <div class="flex gap-1">
@@ -325,23 +344,9 @@ const labelMono = 'font-code text-[11px] tracking-[0.16em] uppercase text-ink-3'
               {#each step.swatches as sw, j (j)}
                 <span
                   class="inline-block h-[18px] w-[18px] rounded border border-black/40 shadow-[0_0_0_1px_var(--color-line-2)]"
-                  style="background: {sw}; opacity: {step.done && j === 0
-                    ? 1
-                    : 0.35}; outline: {step.done && j === 0
-                    ? '2px solid var(--color-emerald-mark)'
-                    : 'none'}; outline-offset: 2px;"
+                  style="background: {sw}; opacity: 0.35;"
                 ></span>
               {/each}
-            {:else}
-              <span
-                class="inline-block h-[18px] w-[18px] rounded border border-black/40 bg-[#1a1a1a] shadow-[0_0_0_1px_var(--color-line-2)]"
-              ></span>
-              <span
-                class="inline-block h-[18px] w-[18px] rounded border border-black/40 bg-[#1a1a1a] shadow-[0_0_0_1px_var(--color-line-2)]"
-              ></span>
-              <span
-                class="inline-block h-[18px] w-[18px] rounded border border-black/40 bg-[#1a1a1a] shadow-[0_0_0_1px_var(--color-line-2)]"
-              ></span>
             {/if}
           </div>
         </div>

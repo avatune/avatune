@@ -3,30 +3,29 @@ const columns = [
   {
     title: 'Docs',
     links: [
-      { label: 'Getting started', href: '/docs/getting-started' },
-      { label: 'Theme reference', href: '/docs#themes' },
-      { label: 'API', href: '/docs/api' },
-      { label: 'SSR guide', href: '/docs/getting-started' },
-      { label: 'Migration', href: '/docs/getting-started' },
+      { label: 'Getting started', href: '/getting-started' },
+      { label: 'API', href: '/api' },
     ],
   },
   {
     title: 'Resources',
     links: [
-      { label: 'Examples', href: '/docs/playground' },
-      { label: 'Showcase', href: '/docs/playground' },
-      { label: 'Playground', href: '/docs/playground' },
-      { label: 'Studio', href: '/docs/studio' },
-      { label: 'Changelog', href: 'https://github.com/avatune/avatune/releases' },
+      { label: 'Studio', href: 'https://studio.avatune.dev' },
+      { label: 'Playground', href: '/playground' },
+      {
+        label: 'Changelog',
+        href: 'https://github.com/avatune/avatune/releases',
+      },
     ],
   },
   {
     title: 'Project',
     links: [
       { label: 'GitHub', href: 'https://github.com/avatune/avatune' },
-      { label: 'Contributing', href: 'https://github.com/avatune/avatune/blob/main/CONTRIBUTING.md' },
-      { label: 'Roadmap', href: 'https://github.com/avatune/avatune/issues' },
-      { label: 'License', href: 'https://github.com/avatune/avatune/blob/main/LICENSE' },
+      {
+        label: 'License',
+        href: 'https://github.com/avatune/avatune/blob/main/LICENSE.md',
+      },
     ],
   },
 ] as const
@@ -98,7 +97,6 @@ const socialBtn =
       class="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-6 font-code text-[11px] tracking-[0.06em] text-ink-4"
     >
       <span>AVATUNE · MIT · v3.1 · 2026</span>
-      <span>Made with intention — not algorithms.</span>
     </div>
   </div>
 </footer>

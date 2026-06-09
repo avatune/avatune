@@ -9,8 +9,8 @@ import { themeMap } from '../../lib/themes'
 
 type Tab = { id: string; label: string }
 
-let selectedThemeId = $state<string>('kyute')
-let seed = $state<string>('hello-avatune')
+let selectedThemeId = $state<string>('pacovqzz')
+let seed = $state<string>('try-your-name')
 let selections = $state<Record<string, string>>({})
 let activeTab = $state<string>('theme')
 let tabsEl = $state<HTMLDivElement | null>(null)
