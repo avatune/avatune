@@ -1,8 +1,8 @@
 diff --git a/dist/changesets-cli.cjs.js b/dist/changesets-cli.cjs.js
-index 577f752a6ba6cb2d8ac7c4740818c7db23fcccfc..6c3388ff2227a4b69d6ea4f4fafa6c6889176d99 100644
+index 9f0bd6c5f96011be225269a71365a878cb822bb7..c426ae7c7fb931172b714b8070bd635b2d8385b7 100644
 --- a/dist/changesets-cli.cjs.js
 +++ b/dist/changesets-cli.cjs.js
-@@ -714,25 +714,35 @@ async function getPublishTool(cwd) {
+@@ -744,25 +744,35 @@ async function getPublishTool(cwd) {
    const pm = await packageManagerDetector.detect({
      cwd
    });
@@ -52,34 +52,32 @@ index 577f752a6ba6cb2d8ac7c4740818c7db23fcccfc..6c3388ff2227a4b69d6ea4f4fafa6c68
  }
  async function getTokenIsRequired() {
    const {
-@@ -831,6 +841,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
+@@ -898,6 +908,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
        env: Object.assign({}, process.env, envOverride),
        cwd: opts.cwd,
-       stdio: "inherit"
-+    }) : publishTool.name === "bun" ? child_process.spawnSync("bun", ["publish", ...publishFlags], {
+       stdio: ["inherit", "inherit", "pipe"]
++    }) : publishTool.name === "bun" ? spawn__default["default"]("bun", ["publish", ...publishFlags], {
 +      env: Object.assign({}, process.env, envOverride),
 +      cwd: opts.publishDir,
-+      stdio: "inherit"
-     }) : child_process.spawnSync(publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
++      stdio: ["inherit", "inherit", "pipe"]
+     }) : spawn__default["default"](publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
        env: Object.assign({}, process.env, envOverride),
-       stdio: "inherit"
-@@ -861,7 +875,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
+       stdio: ["inherit", "inherit", "pipe"]
+@@ -942,6 +956,9 @@ async function internalPublish(packageJson, opts, twoFactorState) {
    } = publishTool.name === "pnpm" ? await spawn__default["default"]("pnpm", ["publish", ...publishFlags], {
      env: Object.assign({}, process.env, envOverride),
      cwd: opts.cwd
--  }) : await spawn__default["default"](publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
-+  }) : publishTool.name === "bun" ? await spawn__default["default"]("bun", ["publish", ...publishFlags], {
++  }) : publishTool.name === "bun" ? await spawn__default["default"]("bun", ["publish", ...publishFlags.filter(flag => flag !== "--json")], {
 +    env: Object.assign({}, process.env, envOverride),
 +    cwd: opts.publishDir
-+  }) : await spawn__default["default"](publishTool.name, ["publish", opts.publishDir, "--json", ...publishFlags], {
+   }) : await spawn__default["default"](publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
      env: Object.assign({}, process.env, envOverride)
    });
-   if (code !== 0) {
 diff --git a/dist/changesets-cli.esm.js b/dist/changesets-cli.esm.js
-index 1c568a79190bf5fa05ed75799570b9c8eb902cdb..a9150dccac4124cf689673ba7ff949a0974bb40a 100644
+index d9582bf53eaf55402a6bf96a39589af7854b8f23..a4755b55cbeaeba2e05f486c090cfdd8b5b9dd24 100644
 --- a/dist/changesets-cli.esm.js
 +++ b/dist/changesets-cli.esm.js
-@@ -677,25 +677,35 @@ async function getPublishTool(cwd) {
+@@ -707,25 +707,35 @@ async function getPublishTool(cwd) {
    const pm = await detect({
      cwd
    });
@@ -129,26 +127,24 @@ index 1c568a79190bf5fa05ed75799570b9c8eb902cdb..a9150dccac4124cf689673ba7ff949a0
  }
  async function getTokenIsRequired() {
    const {
-@@ -794,6 +804,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
+@@ -861,6 +871,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
        env: Object.assign({}, process.env, envOverride),
        cwd: opts.cwd,
-       stdio: "inherit"
-+    }) : publishTool.name === "bun" ? spawnSync("bun", ["publish", ...publishFlags], {
+       stdio: ["inherit", "inherit", "pipe"]
++    }) : publishTool.name === "bun" ? spawn$1("bun", ["publish", ...publishFlags], {
 +      env: Object.assign({}, process.env, envOverride),
 +      cwd: opts.publishDir,
-+      stdio: "inherit"
-     }) : spawnSync(publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
++      stdio: ["inherit", "inherit", "pipe"]
+     }) : spawn$1(publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
        env: Object.assign({}, process.env, envOverride),
-       stdio: "inherit"
-@@ -824,7 +838,10 @@ async function internalPublish(packageJson, opts, twoFactorState) {
+       stdio: ["inherit", "inherit", "pipe"]
+@@ -905,6 +919,9 @@ async function internalPublish(packageJson, opts, twoFactorState) {
    } = publishTool.name === "pnpm" ? await spawn$1("pnpm", ["publish", ...publishFlags], {
      env: Object.assign({}, process.env, envOverride),
      cwd: opts.cwd
--  }) : await spawn$1(publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
-+  }) : publishTool.name === "bun" ? await spawn$1("bun", ["publish", ...publishFlags], {
++  }) : publishTool.name === "bun" ? await spawn$1("bun", ["publish", ...publishFlags.filter(flag => flag !== "--json")], {
 +    env: Object.assign({}, process.env, envOverride),
 +    cwd: opts.publishDir
-+  }) : await spawn$1(publishTool.name, ["publish", opts.publishDir, "--json", ...publishFlags], {
+   }) : await spawn$1(publishTool.name, ["publish", opts.publishDir, ...publishFlags], {
      env: Object.assign({}, process.env, envOverride)
    });
-   if (code !== 0) {
