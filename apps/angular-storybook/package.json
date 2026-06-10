@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@avatune/angular": "workspace:*",
-    "@avatune/anime-samurai-theme": "workspace:*",
     "@avatune/ashley-seo-theme": "workspace:*",
     "@avatune/ashleyy-theme": "workspace:*",
     "@avatune/cyberpunk-theme": "workspace:*",
