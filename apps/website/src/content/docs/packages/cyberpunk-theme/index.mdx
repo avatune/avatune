@@ -1,0 +1,294 @@
+---
+title: "@avatune/cyberpunk-theme"
+description: "Avatar theme for Avatune using Cyberpunk assets."
+source: "packages/themes/cyberpunk-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
+import {
+  faceDetailsBlush,
+  faceDetailsCircuits,
+  faceDetailsScar,
+  bodyHoodie,
+  bodyJacket,
+  bodyVest,
+  mouthGrin,
+  mouthNeutral,
+  mouthSmirk,
+  glassesGoggles,
+  glassesVisor,
+  headAngular,
+  headStandard,
+  faceHairGoatee,
+  faceHairStubble,
+  eyesCyber,
+  eyesDetermined,
+  eyesHappy,
+  eyesStandard,
+  hairBob,
+  hairBuzz,
+  hairMohawk,
+  hairPonytail,
+  hairShaved,
+  hairSlicked,
+  hairSpikes,
+  hairUndercut,
+} from '@avatune/cyberpunk-assets/svg';
+
+> Source: `packages/assets/cyberpunk-theme/README.md`
+
+Avatar theme for Avatune using cyberpunk design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+<InstallTabs packages="@avatune/cyberpunk-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/cyberpunk-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/cyberpunk-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/cyberpunk-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/cyberpunk-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/cyberpunk-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="mohawk"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="jacket"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Cyberpunk style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/cyberpunk-assets`](https://www.npmjs.com/package/@avatune/cyberpunk-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/cyberpunk-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyJacket} title="jacket" hideCaption /> | `jacket` |
+| <AssetPreview svg={bodyVest} title="vest" hideCaption /> | `vest` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesCyber} title="cyber" hideCaption /> | `cyber` |
+| <AssetPreview svg={eyesDetermined} title="determined" hideCaption /> | `determined` |
+| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
+| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
+
+#### FaceDetails
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceDetailsBlush} title="blush" hideCaption /> | `blush` |
+| <AssetPreview svg={faceDetailsCircuits} title="circuits" hideCaption /> | `circuits` |
+| <AssetPreview svg={faceDetailsScar} title="scar" hideCaption /> | `scar` |
+
+#### FaceHair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairGoatee} title="goatee" hideCaption /> | `goatee` |
+| <AssetPreview svg={faceHairStubble} title="stubble" hideCaption /> | `stubble` |
+
+#### Glasses
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={glassesGoggles} title="goggles" hideCaption /> | `goggles` |
+| <AssetPreview svg={glassesVisor} title="visor" hideCaption /> | `visor` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBob} title="bob" hideCaption /> | `bob` |
+| <AssetPreview svg={hairBuzz} title="buzz" hideCaption /> | `buzz` |
+| <AssetPreview svg={hairMohawk} title="mohawk" hideCaption /> | `mohawk` |
+| <AssetPreview svg={hairPonytail} title="ponytail" hideCaption /> | `ponytail` |
+| <AssetPreview svg={hairShaved} title="shaved" hideCaption /> | `shaved` |
+| <AssetPreview svg={hairSlicked} title="slicked" hideCaption /> | `slicked` |
+| <AssetPreview svg={hairSpikes} title="spikes" hideCaption /> | `spikes` |
+| <AssetPreview svg={hairUndercut} title="undercut" hideCaption /> | `undercut` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headAngular} title="angular" hideCaption /> | `angular` |
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthGrin} title="grin" hideCaption /> | `grin` |
+| <AssetPreview svg={mouthNeutral} title="neutral" hideCaption /> | `neutral` |
+| <AssetPreview svg={mouthSmirk} title="smirk" hideCaption /> | `smirk` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/cyberpunk-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/cyberpunk-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

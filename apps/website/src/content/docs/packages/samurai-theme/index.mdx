@@ -1,0 +1,297 @@
+---
+title: "@avatune/samurai-theme"
+description: "Avatar theme for Avatune using Samurai assets."
+source: "packages/themes/samurai-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
+import {
+  accessoriesMenpo,
+  accessoriesOniMask,
+  faceDetailsScar,
+  faceDetailsWarpaint,
+  hatsKabuto,
+  hatsKasa,
+  bodyArmor,
+  bodyKatana,
+  bodyKimono,
+  mouthGrim,
+  mouthShout,
+  mouthStern,
+  headBroad,
+  headStandard,
+  faceHairBeard,
+  faceHairMustache,
+  eyesCalm,
+  eyesFierce,
+  eyesFocused,
+  eyesStern,
+  hairBun,
+  hairChonmage,
+  hairRonin,
+  hairShaved,
+  hairTopknot,
+  hairWarriorTail,
+} from '@avatune/samurai-assets/svg';
+
+> Source: `packages/assets/samurai-theme/README.md`
+
+Avatar theme for Avatune using samurai design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="samurai" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="samurai" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="samurai" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+<InstallTabs packages="@avatune/samurai-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/samurai-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/samurai-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/samurai-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/samurai-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/samurai-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="topknot"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="kimono"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Samurai style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/samurai-assets`](https://www.npmjs.com/package/@avatune/samurai-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/samurai-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/samurai-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/samurai-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/samurai-assets/vue';
+```
+
+### Available Assets
+
+#### Accessories
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={accessoriesMenpo} title="menpo" hideCaption /> | `menpo` |
+| <AssetPreview svg={accessoriesOniMask} title="oniMask" hideCaption /> | `oniMask` |
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyArmor} title="armor" hideCaption /> | `armor` |
+| <AssetPreview svg={bodyKatana} title="katana" hideCaption /> | `katana` |
+| <AssetPreview svg={bodyKimono} title="kimono" hideCaption /> | `kimono` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesCalm} title="calm" hideCaption /> | `calm` |
+| <AssetPreview svg={eyesFierce} title="fierce" hideCaption /> | `fierce` |
+| <AssetPreview svg={eyesFocused} title="focused" hideCaption /> | `focused` |
+| <AssetPreview svg={eyesStern} title="stern" hideCaption /> | `stern` |
+
+#### FaceDetails
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceDetailsScar} title="scar" hideCaption /> | `scar` |
+| <AssetPreview svg={faceDetailsWarpaint} title="warpaint" hideCaption /> | `warpaint` |
+
+#### FaceHair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={faceHairBeard} title="beard" hideCaption /> | `beard` |
+| <AssetPreview svg={faceHairMustache} title="mustache" hideCaption /> | `mustache` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBun} title="bun" hideCaption /> | `bun` |
+| <AssetPreview svg={hairChonmage} title="chonmage" hideCaption /> | `chonmage` |
+| <AssetPreview svg={hairRonin} title="ronin" hideCaption /> | `ronin` |
+| <AssetPreview svg={hairShaved} title="shaved" hideCaption /> | `shaved` |
+| <AssetPreview svg={hairTopknot} title="topknot" hideCaption /> | `topknot` |
+| <AssetPreview svg={hairWarriorTail} title="warriorTail" hideCaption /> | `warriorTail` |
+
+#### Hats
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hatsKabuto} title="kabuto" hideCaption /> | `kabuto` |
+| <AssetPreview svg={hatsKasa} title="kasa" hideCaption /> | `kasa` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headBroad} title="broad" hideCaption /> | `broad` |
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthGrim} title="grim" hideCaption /> | `grim` |
+| <AssetPreview svg={mouthShout} title="shout" hideCaption /> | `shout` |
+| <AssetPreview svg={mouthStern} title="stern" hideCaption /> | `stern` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/samurai-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/samurai-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

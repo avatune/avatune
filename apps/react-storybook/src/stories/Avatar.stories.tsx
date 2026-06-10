@@ -1,5 +1,6 @@
 import ashleyseoTheme from '@avatune/ashley-seo-theme/react'
 import ashleyyTheme from '@avatune/ashleyy-theme/react'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/react'
 import fatinverseTheme from '@avatune/fatin-verse-theme/react'
 import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
@@ -10,6 +11,7 @@ import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/react'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/react'
 import type { AvatarProps } from '@avatune/react'
 import { Avatar } from '@avatune/react'
+import samuraiTheme from '@avatune/samurai-theme/react'
 import type { ReactAvatarItem, Theme } from '@avatune/types'
 import yanliuTheme from '@avatune/yanliu-theme/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -30,6 +32,7 @@ type ExtractStoryArgs<T extends Theme<ReactAvatarItem>> = Omit<
 
 type AshleySeoArgs = ExtractStoryArgs<typeof ashleyseoTheme>
 type AshleyyArgs = ExtractStoryArgs<typeof ashleyyTheme>
+type CyberpunkArgs = ExtractStoryArgs<typeof cyberpunkTheme>
 type FatinVerseArgs = ExtractStoryArgs<typeof fatinverseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
@@ -38,6 +41,7 @@ type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
 type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
+type SamuraiArgs = ExtractStoryArgs<typeof samuraiTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -94,6 +98,21 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   render: (args) => (
     <Avatar
       theme={ashleyyTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
+export const Cyberpunk: StoryObj<CyberpunkArgs> = {
+  argTypes: getArgTypes(cyberpunkTheme),
+  render: (args) => (
+    <Avatar
+      theme={cyberpunkTheme}
       {...args}
       borderRadius={toBorderRadius(args.borderRadius)}
     />
@@ -224,6 +243,21 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   },
 }
 
+export const Samurai: StoryObj<SamuraiArgs> = {
+  argTypes: getArgTypes(samuraiTheme),
+  render: (args) => (
+    <Avatar
+      theme={samuraiTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => (
@@ -242,6 +276,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 const themes = {
   'Ashley Seo': ashleyseoTheme,
   Ashleyy: ashleyyTheme,
+  Cyberpunk: cyberpunkTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,
@@ -250,6 +285,7 @@ const themes = {
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
+  Samurai: samuraiTheme,
   Yanliu: yanliuTheme,
 } as const
 

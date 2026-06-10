@@ -1,5 +1,6 @@
 import ashleyseoTheme from '@avatune/ashley-seo-theme/vue'
 import ashleyyTheme from '@avatune/ashleyy-theme/vue'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/vue'
 import fatinverseTheme from '@avatune/fatin-verse-theme/vue'
 import kyuteTheme from '@avatune/kyute-theme/vue'
 import micahTheme from '@avatune/micah-theme/vue'
@@ -8,6 +9,7 @@ import nevmstasTheme from '@avatune/nevmstas-theme/vue'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vue'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/vue'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/vue'
+import samuraiTheme from '@avatune/samurai-theme/vue'
 import type { Theme, VueAvatarItem } from '@avatune/types'
 import type { AvatarProps } from '@avatune/vue'
 import { Avatar } from '@avatune/vue'
@@ -25,6 +27,7 @@ export default meta
 
 type AshleySeoArgs = Omit<AvatarProps<typeof ashleyseoTheme>, 'theme'>
 type AshleyyArgs = Omit<AvatarProps<typeof ashleyyTheme>, 'theme'>
+type CyberpunkArgs = Omit<AvatarProps<typeof cyberpunkTheme>, 'theme'>
 type FatinVerseArgs = Omit<AvatarProps<typeof fatinverseTheme>, 'theme'>
 type KyuteArgs = Omit<AvatarProps<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarProps<typeof micahTheme>, 'theme'>
@@ -33,6 +36,7 @@ type NevmstasArgs = Omit<AvatarProps<typeof nevmstasTheme>, 'theme'>
 type PacovqzzArgs = Omit<AvatarProps<typeof pacovqzzTheme>, 'theme'>
 type PawelOlekManArgs = Omit<AvatarProps<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarProps<typeof pawelolekwomanTheme>, 'theme'>
+type SamuraiArgs = Omit<AvatarProps<typeof samuraiTheme>, 'theme'>
 type YanliuArgs = Omit<AvatarProps<typeof yanliuTheme>, 'theme'>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -87,6 +91,20 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   render: (args: AshleyyArgs) => ({
     components: { Avatar },
     setup: () => ({ args, theme: ashleyyTheme, toBorderRadius }),
+    template:
+      '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
+  }),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
+export const Cyberpunk: StoryObj<CyberpunkArgs> = {
+  argTypes: getArgTypes(cyberpunkTheme),
+  render: (args: CyberpunkArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: cyberpunkTheme, toBorderRadius }),
     template:
       '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
   }),
@@ -208,6 +226,20 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   },
 }
 
+export const Samurai: StoryObj<SamuraiArgs> = {
+  argTypes: getArgTypes(samuraiTheme),
+  render: (args: SamuraiArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: samuraiTheme, toBorderRadius }),
+    template:
+      '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
+  }),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args: YanliuArgs) => ({
@@ -225,6 +257,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 const themes = {
   'Ashley Seo': ashleyseoTheme,
   Ashleyy: ashleyyTheme,
+  Cyberpunk: cyberpunkTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,
@@ -233,6 +266,7 @@ const themes = {
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
+  Samurai: samuraiTheme,
   Yanliu: yanliuTheme,
 } as const
 

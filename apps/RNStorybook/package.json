@@ -14,8 +14,10 @@
     "check-types": "echo 'Skipping: RN Storybook has generated code with global refs'"
   },
   "dependencies": {
+    "@avatune/anime-samurai-theme": "workspace:*",
     "@avatune/ashley-seo-theme": "workspace:*",
     "@avatune/ashleyy-theme": "workspace:*",
+    "@avatune/cyberpunk-theme": "workspace:*",
     "@avatune/fatin-verse-theme": "workspace:*",
     "@avatune/kyute-theme": "workspace:*",
     "@avatune/micah-theme": "workspace:*",
@@ -25,6 +27,7 @@
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
     "@avatune/react-native": "workspace:*",
+    "@avatune/samurai-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@gorhom/bottom-sheet": "5.2.6",
