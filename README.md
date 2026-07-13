@@ -70,6 +70,7 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 |-------|---------|
 | Ashley Seo | [`@avatune/ashley-seo-theme`](./packages/themes/ashley-seo-theme) |
 | Ashleyy | [`@avatune/ashleyy-theme`](./packages/themes/ashleyy-theme) |
+| Cyberpunk | [`@avatune/cyberpunk-theme`](./packages/themes/cyberpunk-theme) |
 | Fatin Verse | [`@avatune/fatin-verse-theme`](./packages/themes/fatin-verse-theme) |
 | Kyute | [`@avatune/kyute-theme`](./packages/themes/kyute-theme) |
 | Micah | [`@avatune/micah-theme`](./packages/themes/micah-theme) |
@@ -78,6 +79,7 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 | Pacovqzz | [`@avatune/pacovqzz-theme`](./packages/themes/pacovqzz-theme) |
 | Pawel Olek Man | [`@avatune/pawel-olek-man-theme`](./packages/themes/pawel-olek-man-theme) |
 | Pawel Olek Woman | [`@avatune/pawel-olek-woman-theme`](./packages/themes/pawel-olek-woman-theme) |
+| Samurai | [`@avatune/samurai-theme`](./packages/themes/samurai-theme) |
 | Yanliu | [`@avatune/yanliu-theme`](./packages/themes/yanliu-theme) |
 
 ## Framework Renderers
