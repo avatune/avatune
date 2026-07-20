@@ -10,7 +10,6 @@ import nevmstasTheme from '@avatune/nevmstas-theme/angular'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/angular'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/angular'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/angular'
-import samuraiTheme from '@avatune/samurai-theme/angular'
 import type { AngularAvatarItem, Theme } from '@avatune/types'
 import yanliuTheme from '@avatune/yanliu-theme/angular'
 import type { Meta, StoryObj } from '@storybook/angular'
@@ -95,7 +94,5 @@ export const Pacovqzz = createStory(pacovqzzTheme)
 export const PawelOlekMan = createStory(pawelolekmanTheme)
 
 export const PawelOlekWoman = createStory(pawelolekwomanTheme)
-
-export const Samurai = createStory(samuraiTheme)
 
 export const Yanliu = createStory(yanliuTheme)

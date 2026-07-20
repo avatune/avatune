@@ -70,6 +70,10 @@ export default defineConfig({
           label: 'Themes',
           items: [
             {
+              label: 'Cyberpunk',
+              slug: 'packages/cyberpunk-theme',
+            },
+            {
               label: 'Yanliu',
               slug: 'packages/yanliu-theme',
             },

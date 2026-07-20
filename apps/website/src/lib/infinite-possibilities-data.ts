@@ -1,5 +1,6 @@
 import ashleySeoTheme from '@avatune/ashley-seo-theme/vanilla'
 import ashleyyTheme from '@avatune/ashleyy-theme/vanilla'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/vanilla'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
@@ -39,6 +40,7 @@ function calculateCombinations(theme: VanillaTheme): number {
 }
 
 export const TOTAL_COMBINATIONS = [
+  cyberpunkTheme,
   miniavsTheme,
   yanliuTheme,
   nevmstasTheme,

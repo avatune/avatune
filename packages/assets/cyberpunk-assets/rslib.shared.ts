@@ -1,5 +1,7 @@
 import type { Config as SvgoConfig } from 'svgo'
 
+const uid = () => Math.random().toString(36).slice(2, 9)
+
 export const colordImport = "import { colord } from 'colord';"
 
 export const svgoConfig: SvgoConfig = {
@@ -19,31 +21,25 @@ export const svgoConfig: SvgoConfig = {
   ],
 }
 
-export const getReplaceAttrValues = (colorPropName = 'color') => ({
-  // skin base
-  '#F2C094': `{${colorPropName}}`,
-  // skin shadow (derived)
-  '#D9A06B': `{colord(${colorPropName}).desaturate(0.06).darken(0.08).toHex()}`,
-  // skin deep shadow (derived)
-  '#C08850': `{colord(${colorPropName}).desaturate(0.1).darken(0.16).toHex()}`,
-  // hair base
-  '#FF2EC4': `{${colorPropName}}`,
-  // hair shadow (derived)
-  '#C217A0': `{colord(${colorPropName}).darken(0.12).toHex()}`,
-  // clothing base
-  '#3A4366': `{${colorPropName}}`,
-  // clothing shadow (derived)
-  '#2A3050': `{colord(${colorPropName}).darken(0.08).toHex()}`,
-  // clothing highlight (derived)
-  '#5A6694': `{colord(${colorPropName}).lighten(0.08).toHex()}`,
-  // eyes base
-  '#19E6D2': `{${colorPropName}}`,
-  // mouth base
-  '#B03E67': `{${colorPropName}}`,
-  // glasses / visor glow base
-  '#7DF9FF': `{${colorPropName}}`,
-  // face details (implants, tattoos) base
-  '#39FF14': `{${colorPropName}}`,
-  // face hair base
-  '#8A2BE2': `{${colorPropName}}`,
+export const getReplaceAttrValues = (
+  colorPropName = 'color',
+  uidPropName = 'uid',
+) => ({
+  currentColor: `{${colorPropName}}`,
+  '#FCBE93': `{${colorPropName}}`,
+  '#FF7A93': `{${colorPropName}}`,
+  '#FFA882': `{colord(${colorPropName}).darken(0.05).toHex()}`,
+  '#272424': `{colord(${colorPropName}).darken(0.2).toHex()}`,
+  '#A4C856': `{${colorPropName}}`,
+  '#8DA853': `{colord(${colorPropName}).darken(0.05).toHex()}`,
+  '#4F8558': `{colord(${colorPropName}).darken(0.1).toHex()}`,
+  '#F06E82': `{${colorPropName}}`,
+  filter0_d_144_233: `{${uidPropName} + '-' + '${uid()}'}`,
+  filter0_d_144_264: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask0_134_151: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask0_89_489: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask0_91_509: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask0_91_558: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask1_134_151: `{${uidPropName} + '-' + '${uid()}'}`,
+  mask1_91_558: `{${uidPropName} + '-' + '${uid()}'}`,
 })

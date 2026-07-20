@@ -1,20 +1,236 @@
-@import "tailwindcss";
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+body {
+  margin: 0;
+  background: #f7f6f3;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  color: #1c1b19;
+  -webkit-text-size-adjust: 100%;
+}
 
-  html,
-  body {
-    margin: 0;
-    padding: 0;
-  }
+a {
+  color: #4a6b5d;
+}
+a:hover {
+  color: #33493f;
+}
 
-  body {
-    min-height: 100vh;
-    -webkit-text-size-adjust: 100%;
-  }
+input,
+button,
+select {
+  font-family: inherit;
+}
+
+input[type="range"] {
+  accent-color: #4a6b5d;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ddd9d2;
+  border-radius: 4px;
+}
+
+/* Uppercase section labels */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a867e;
+}
+
+/* Category rows */
+.cat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-left: 3px solid transparent;
+  width: 100%;
+}
+.cat-row:hover {
+  background: #f2f0eb;
+}
+.cat-row.active {
+  background: #eef2ef;
+  border-left-color: #4a6b5d;
+}
+.cat-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: #a5a19a;
+}
+.cat-row.filled .cat-name {
+  color: #1c1b19;
+}
+.cat-row.active .cat-name {
+  font-weight: 600;
+}
+.cat-count {
+  font-size: 11px;
+  color: #a5a19a;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* Asset source buttons */
+.asset-source-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid #e0dcd4;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12.5px;
+  color: #6b675f;
+  background: #ffffff;
+}
+.asset-source-btn:hover {
+  border-color: #4a6b5d;
+  color: #4a6b5d;
+}
+
+/* Asset rows */
+.asset-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: transparent;
+}
+.asset-row:hover {
+  background: #f2f0eb;
+}
+.asset-row.active {
+  background: #eef2ef;
+}
+.asset-select {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+.asset-thumb {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: #f2f0eb;
+  border: 1px solid #e8e5df;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: none;
+}
+.asset-name {
+  font-size: 12.5px;
+  color: #1c1b19;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-rename-form {
+  flex: 1;
+  min-width: 0;
+}
+.asset-name-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #4a6b5d;
+  border-radius: 4px;
+  padding: 4px 6px;
+  background: #ffffff;
+  color: #1c1b19;
+  font: inherit;
+  font-size: 12.5px;
+  outline: none;
+}
+.asset-name-input:focus {
+  box-shadow: 0 0 0 2px rgb(74 107 93 / 15%);
+}
+.rename-btn,
+.del-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: #c0bcb4;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+}
+.rename-btn:hover {
+  color: #4a6b5d;
+}
+.del-btn {
+  font-size: 14px;
+}
+.del-btn:hover {
+  color: #c25b4e;
+}
+
+/* Dark export button */
+.btn-dark {
+  padding: 8px 16px;
+  background: #1c1b19;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.btn-dark:hover {
+  background: #3a3833;
+}
+.btn-dark:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+/* Small ghost buttons (reset / apply) */
+.chip-btn {
+  padding: 7px 12px;
+  background: #f2f0eb;
+  border: 1px solid #e0dcd4;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #6b675f;
+}
+.chip-btn:hover {
+  background: #eae7e0;
+}
+.chip-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Monospace numeric fields */
+.field {
+  border: 1px solid #ddd9d2;
+  border-radius: 6px;
+  font-family: "IBM Plex Mono", monospace;
 }

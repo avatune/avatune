@@ -8,33 +8,41 @@ import AssetPreview from '../../../../components/docs/asset-preview.astro';
 import InstallTabs from '../../../../components/docs/install-tabs.astro';
 import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
-  faceDetailsBlush,
-  faceDetailsCircuits,
-  faceDetailsScar,
   bodyHoodie,
-  bodyJacket,
-  bodyVest,
-  mouthGrin,
-  mouthNeutral,
-  mouthSmirk,
-  glassesGoggles,
-  glassesVisor,
-  headAngular,
-  headStandard,
-  faceHairGoatee,
-  faceHairStubble,
-  eyesCyber,
-  eyesDetermined,
-  eyesHappy,
-  eyesStandard,
+  bodyJacket1,
+  bodyJacket2,
+  bodyJacket3,
+  bodyJacket4,
+  bodyPoncho,
+  bodyPoncho1,
+  noseClothespin,
+  noseMetal,
+  noseNarrow,
+  noseStandard,
+  noseWide1,
+  noseWide2,
+  mouthHooky,
+  mouthLips,
+  mouthNervous,
+  mouthOpen,
+  mouthSmiling,
+  headOval,
+  headRhombus,
+  headRobot,
+  headSquaredOval,
+  eyesAnxious,
+  eyesBrave,
+  eyesCurious,
+  eyesFocused,
+  eyesHusky,
+  eyesRound,
+  eyesSharp,
   hairBob,
-  hairBuzz,
-  hairMohawk,
-  hairPonytail,
-  hairShaved,
-  hairSlicked,
-  hairSpikes,
-  hairUndercut,
+  hairBraids,
+  hairForehead,
+  hairMedium,
+  hairShort,
+  hairStylish,
 } from '@avatune/cyberpunk-assets/svg';
 
 > Source: `packages/assets/cyberpunk-theme/README.md`
@@ -153,9 +161,9 @@ You can override specific avatar parts:
 <Avatar
   theme={theme}
   size={300}
-  hair="mohawk"          // Choose specific hair style
+  hair="bob"          // Choose specific hair style
   hairColor="#FF5733"    // Custom hair color
-  body="jacket"     // Choose specific clothing
+  body="hoodie"     // Choose specific clothing
   bodyColor="#3498DB"    // Custom clothing color
 />
 ```
@@ -199,67 +207,65 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/vue
 | Preview | Filename |
 |---------|----------|
 | <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
-| <AssetPreview svg={bodyJacket} title="jacket" hideCaption /> | `jacket` |
-| <AssetPreview svg={bodyVest} title="vest" hideCaption /> | `vest` |
+| <AssetPreview svg={bodyJacket1} title="jacket1" hideCaption /> | `jacket1` |
+| <AssetPreview svg={bodyJacket2} title="jacket2" hideCaption /> | `jacket2` |
+| <AssetPreview svg={bodyJacket3} title="jacket3" hideCaption /> | `jacket3` |
+| <AssetPreview svg={bodyJacket4} title="jacket4" hideCaption /> | `jacket4` |
+| <AssetPreview svg={bodyPoncho} title="poncho" hideCaption /> | `poncho` |
+| <AssetPreview svg={bodyPoncho1} title="poncho1" hideCaption /> | `poncho1` |
 
 #### Eyes
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={eyesCyber} title="cyber" hideCaption /> | `cyber` |
-| <AssetPreview svg={eyesDetermined} title="determined" hideCaption /> | `determined` |
-| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
-| <AssetPreview svg={eyesStandard} title="standard" hideCaption /> | `standard` |
-
-#### FaceDetails
-
-| Preview | Filename |
-|---------|----------|
-| <AssetPreview svg={faceDetailsBlush} title="blush" hideCaption /> | `blush` |
-| <AssetPreview svg={faceDetailsCircuits} title="circuits" hideCaption /> | `circuits` |
-| <AssetPreview svg={faceDetailsScar} title="scar" hideCaption /> | `scar` |
-
-#### FaceHair
-
-| Preview | Filename |
-|---------|----------|
-| <AssetPreview svg={faceHairGoatee} title="goatee" hideCaption /> | `goatee` |
-| <AssetPreview svg={faceHairStubble} title="stubble" hideCaption /> | `stubble` |
-
-#### Glasses
-
-| Preview | Filename |
-|---------|----------|
-| <AssetPreview svg={glassesGoggles} title="goggles" hideCaption /> | `goggles` |
-| <AssetPreview svg={glassesVisor} title="visor" hideCaption /> | `visor` |
+| <AssetPreview svg={eyesAnxious} title="anxious" hideCaption /> | `anxious` |
+| <AssetPreview svg={eyesBrave} title="brave" hideCaption /> | `brave` |
+| <AssetPreview svg={eyesCurious} title="curious" hideCaption /> | `curious` |
+| <AssetPreview svg={eyesFocused} title="focused" hideCaption /> | `focused` |
+| <AssetPreview svg={eyesHusky} title="husky" hideCaption /> | `husky` |
+| <AssetPreview svg={eyesRound} title="round" hideCaption /> | `round` |
+| <AssetPreview svg={eyesSharp} title="sharp" hideCaption /> | `sharp` |
 
 #### Hair
 
 | Preview | Filename |
 |---------|----------|
 | <AssetPreview svg={hairBob} title="bob" hideCaption /> | `bob` |
-| <AssetPreview svg={hairBuzz} title="buzz" hideCaption /> | `buzz` |
-| <AssetPreview svg={hairMohawk} title="mohawk" hideCaption /> | `mohawk` |
-| <AssetPreview svg={hairPonytail} title="ponytail" hideCaption /> | `ponytail` |
-| <AssetPreview svg={hairShaved} title="shaved" hideCaption /> | `shaved` |
-| <AssetPreview svg={hairSlicked} title="slicked" hideCaption /> | `slicked` |
-| <AssetPreview svg={hairSpikes} title="spikes" hideCaption /> | `spikes` |
-| <AssetPreview svg={hairUndercut} title="undercut" hideCaption /> | `undercut` |
+| <AssetPreview svg={hairBraids} title="braids" hideCaption /> | `braids` |
+| <AssetPreview svg={hairForehead} title="forehead" hideCaption /> | `forehead` |
+| <AssetPreview svg={hairMedium} title="medium" hideCaption /> | `medium` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+| <AssetPreview svg={hairStylish} title="stylish" hideCaption /> | `stylish` |
 
 #### Head
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={headAngular} title="angular" hideCaption /> | `angular` |
-| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={headOval} title="oval" hideCaption /> | `oval` |
+| <AssetPreview svg={headRhombus} title="rhombus" hideCaption /> | `rhombus` |
+| <AssetPreview svg={headRobot} title="robot" hideCaption /> | `robot` |
+| <AssetPreview svg={headSquaredOval} title="squaredOval" hideCaption /> | `squaredOval` |
 
 #### Mouth
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={mouthGrin} title="grin" hideCaption /> | `grin` |
-| <AssetPreview svg={mouthNeutral} title="neutral" hideCaption /> | `neutral` |
-| <AssetPreview svg={mouthSmirk} title="smirk" hideCaption /> | `smirk` |
+| <AssetPreview svg={mouthHooky} title="hooky" hideCaption /> | `hooky` |
+| <AssetPreview svg={mouthLips} title="lips" hideCaption /> | `lips` |
+| <AssetPreview svg={mouthNervous} title="nervous" hideCaption /> | `nervous` |
+| <AssetPreview svg={mouthOpen} title="open" hideCaption /> | `open` |
+| <AssetPreview svg={mouthSmiling} title="smiling" hideCaption /> | `smiling` |
+
+#### Nose
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseClothespin} title="clothespin" hideCaption /> | `clothespin` |
+| <AssetPreview svg={noseMetal} title="metal" hideCaption /> | `metal` |
+| <AssetPreview svg={noseNarrow} title="narrow" hideCaption /> | `narrow` |
+| <AssetPreview svg={noseStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={noseWide1} title="wide1" hideCaption /> | `wide1` |
+| <AssetPreview svg={noseWide2} title="wide2" hideCaption /> | `wide2` |
 
 ## License & Credits
 

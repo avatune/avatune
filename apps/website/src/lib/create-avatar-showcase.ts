@@ -7,6 +7,7 @@ import svelteLogo from '../assets/svelte-logo.svg'
 import vueLogo from '../assets/vue-logo.svg'
 
 export type ThemeId =
+  | 'cyberpunk'
   | 'kyute'
   | 'micah'
   | 'miniavs'
@@ -44,6 +45,11 @@ export interface FrameworkDefinition {
 }
 
 export const themeInfos: ThemeInfo[] = [
+  {
+    id: 'cyberpunk',
+    label: 'Cyberpunk',
+    packageName: '@avatune/cyberpunk-theme',
+  },
   { id: 'kyute', label: 'Kyute', packageName: '@avatune/kyute-theme' },
   { id: 'micah', label: 'Micah', packageName: '@avatune/micah-theme' },
   { id: 'miniavs', label: 'Miniavs', packageName: '@avatune/miniavs-theme' },

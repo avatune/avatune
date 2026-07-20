@@ -448,6 +448,19 @@ declare module '*.svg?vue' {
   export default component
 }
 
+declare module '*.svg?solid' {
+  import type { Component, JSX } from 'solid-js'
+
+  interface SvgComponentProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    class?: string
+    style?: JSX.CSSProperties | string
+  }
+
+  const component: Component<SvgComponentProps>
+  export default component
+  export const raw: string
+}
+
 declare module '*.svg?angular' {
   const asset: {
     template: string | ((color: string, uid: string) => string)

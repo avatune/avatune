@@ -1,109 +1,137 @@
 ---
 name: generate-avatar-theme
-description: Generate a complete new avatar theme for the avatune monorepo — an assets package with original SVG art plus a theme package (colors, layout, prediction mappings, framework bindings) — from a style brief like "cyberpunk", "kawaii", "pixel", "corporate". Use this whenever the user asks to create, add, generate, or design a new theme, avatar style, or assets package, says the existing themes aren't enough, or names a visual style they want avatars in — even if they never say the word "theme".
+description: Generate image sheets for a future Avatune avatar theme from a visual brief. Uses a scripted prompt-enhancement call and GPT Image 2 to create separate strict 3x3 PNG sheets for head, hair, eyes, eyebrows, nose, mouth, ears, and body. Stops after image generation so the user can vectorize with PerfectVector and assemble the theme in Avatune Studio. Use whenever the user asks to generate theme artwork, avatar-part images, or a visual starting point for a new avatar theme.
 ---
 
-# Generate Avatar Theme
+# Generate Avatar Theme Images
 
-A theme is two workspace packages working together:
+Generate raster source images only. The user handles vectorization in [PerfectVector](https://perfectvector.com/) and creates the theme in Avatune Studio.
 
-1. `packages/assets/<name>-assets` — raw SVGs in `src/svg/<category>/<item>.svg`, compiled by rslib plugins into framework components. Recoloring works via **sentinel hex colors** replaced at build time.
-2. `packages/themes/<name>-theme` — color palettes, item positions/layers, ML prediction mappings, and per-framework bindings built with `@avatune/theme-builder`.
+The scripts are the source of truth. Do not reproduce their prompts, schemas, OpenAI requests, image decoding, or manifest generation manually.
 
-There are no scaffolding scripts for these packages — copy from a reference theme. `@avatune/miniavs-assets` + `@avatune/miniavs-theme` are the cleanest templates (flat style, 64×64 canvas, 0-offset positions). Only `scripts/generate-assets.ts` (entrypoint generation) is automated.
+## Output contract
 
-## Step 1: Art direction first
+Generate one strict 3×3 PNG sheet for each category:
 
-Before touching files, write down a brief: 4-6 visual motifs (e.g. for cyberpunk: neon glow, visors, asymmetric undercuts, high collars), a palette (which colors are *user-configurable* per category vs. *fixed accents* baked into the art), and the silhouette language (round vs. angular). Every SVG you draw must obey this brief — that consistency is what separates a top-notch theme from clip-art.
+- `head` — blank head, jaw, and neck silhouettes
+- `hair` — isolated hair silhouettes
+- `eyes` — isolated left/right eye pairs
+- `eyebrows` — isolated eyebrow pairs
+- `nose` — isolated noses
+- `mouth` — isolated mouths
+- `ears` — isolated ear pairs
+- `body` — isolated shoulder and torso shapes
 
-Read 2-3 SVGs from an existing assets package first to absorb the conventions (path style, how shading is layered, how parts align).
+Each sheet contains exactly nine distinct variants in row-major order. Hair is ordered as short styles in row one, medium styles in row two, and long styles in row three.
 
-## Step 2: Scaffold the assets package
+The output directory contains:
 
-```bash
-# copy everything except art, generated entrypoints, and build output
-mkdir -p packages/assets/<name>-assets/src/svg
-cp packages/assets/miniavs-assets/{package.json,rslib.config.ts,rslib.native.config.ts,rslib.shared.ts,tsconfig.json} packages/assets/<name>-assets/
-cp packages/assets/miniavs-assets/src/global.d.ts packages/assets/<name>-assets/src/
+```text
+.preview/<name>-images/
+├── body.png
+├── ears.png
+├── head.png
+├── hair.png
+├── eyes.png
+├── eyebrows.png
+├── nose.png
+├── mouth.png
+└── manifest.json
 ```
 
-Then edit `package.json`: change `name` to `@avatune/<name>-assets`, reset `version` to `0.1.0`, update `keywords`. Everything else (exports map, scripts, deps) stays identical.
+`manifest.json` records the enhanced art direction, row-major item names, exact image prompts, palettes, and model metadata.
 
-## Step 3: Define the sentinel color map (`rslib.shared.ts`)
+## Hard rules
 
-This is the heart of the recoloring system. `getReplaceAttrValues()` maps hex strings found in your SVGs to `{color}` template expressions; the build replaces them, and at render time `color` is whatever the theme/user picked for that item's category.
+- Every text or image model call must be made by `scripts/generate-avatar-sheet.ts`.
+- Generate one isolated category per sheet; never generate complete avatars.
+- Every sheet must be a strict 3×3 composition with no borders, dividers, labels, numbers, or guides.
+- Keep all nine designs at a consistent scale and center each within its cell.
+- Use large closed shapes, clean silhouettes, flat fills, crisp edges, and a limited palette.
+- Do not use gradients, lighting, blur, textures, noise, glow, transparency, shadows, thin strokes, or micro-details.
+- Use a pure white background.
+- Do not create SVGs, asset packages, theme packages, framework bindings, previews, or Studio configuration.
+- Do not run VTracer or any other vectorizer.
+- Stop after the PNG sheets and manifest pass visual inspection.
 
-Rules that follow from how the loader works (`rsbuild-plugin-raw-svg/src/loader.mjs`):
+## Step 1: Configure the OpenAI key
 
-- Replacement is **global across the whole package**, not per-category. The same `{color}` works everywhere because each item only ever receives its own category's color — but a sentinel hex must mean ONE role. Never reuse the skin sentinel inside a jacket, or the jacket will turn skin-colored.
-- Derived shades use **different sentinel hexes** mapped to `colord` expressions, e.g. `'#D9A06B': '{colord(color).darken(0.08).toHex()}'`. This gives 2-3 tone shading that follows any user-picked color.
-- Hexes NOT in the map pass through untouched — use those for **fixed accents** that should not change with user colors (e.g. a neon trim that defines the theme's identity).
-- Avoid literal `{` `}` anywhere in SVGs (the loader turns `{expr}` into a template expression) and avoid `id`/`url(#...)`/`<defs>` (multiple avatars on one page collide; `cleanupIds` is disabled). Flat fills + `fill-opacity` instead of gradients.
-- Pick sentinel hexes that won't collide with fixed colors, and don't map `#000000` if you also want fixed black linework — use e.g. `#0A0A14` for fixed dark lines instead.
-
-Document each sentinel with a comment: `// skin base`, `// skin shadow (derived)`, etc.
-
-## Step 4: Draw the SVGs
-
-Categories (each is a directory under `src/svg/`): `head`, `hair`, `eyes`, `mouth`, `body` are the core; `glasses`, `faceHair`, `faceDetails`, `accessories`, `hats` are optional extras. A solid theme ships ~20-30 items: 2-3 heads, 6-8 hair, 3-4 eyes, 3 mouths, 2-3 bodies, plus 1-2 in each optional category.
-
-Geometry conventions:
-
-- All parts share ONE full-size canvas (`viewBox="0 0 <size> <size>"`, miniavs uses 64) and are drawn **in place**, pre-aligned to the head. The theme then uses `0%` offsets for every item — far easier to keep consistent than per-part offsets.
-- Fix the head anchor before drawing anything: head centered horizontally (~x=32 on a 64 canvas), top of skull ~y=13, chin ~y=56, neck running below into the body area; the avatar is clipped to the canvas, so bodies can overflow the bottom edge.
-- Hair must hug the same skull. Draw the head in the background of your mental canvas when drafting every hair/eyes/mouth path. Overlap adjacent parts by 1-2 units so scaling never shows gaps.
-- Detail must read at 64 CSS pixels. Test small: a 1-unit-wide circuit line is invisible; a 2-3 unit neon stripe reads fine.
-- Err on the side of volume for hair. Skull-hugging caps all look bald in a grid; the first visual pass reliably shows hair drawn too timidly. Give each style a silhouette you could identify from the outline alone (fringe edge, sweep, crest, curtain).
-- Use the sentinel hexes from Step 3 for everything recolorable; fixed accent hexes for the theme's signature details.
-
-## Step 5: Generate entrypoints
+Check configuration without exposing the key:
 
 ```bash
-bun scripts/generate-assets.ts <name>-assets
+bun .claude/skills/generate-avatar-theme/scripts/setup-openai-key.ts --check
 ```
 
-This regenerates `src/{react,vue,svelte,solid,angular,svg,react-native}.ts` from whatever SVGs exist. Re-run after adding/renaming any SVG.
-
-## Step 6: Scaffold the theme package
-
-Copy `packages/themes/miniavs-theme/` (`package.json`, `rslib.config.ts`, `tsconfig.json`, `src/`), rename to `@avatune/<name>-theme`, point deps at `@avatune/<name>-assets`. Then:
-
-- `src/colors.ts` — export `SkinTones`, `HairColors`, `ClothingColors`, `BackgroundColors`, `AccentColors` const objects. These are the actual hexes users get; they're injected into the sentinel slots at render time, so shades derive from them via `colord`.
-- `src/shared.ts` — the builder chain. Required pieces:
-  - `.withStyle({ size: <canvas>, borderRadius: '100%' })` — `size` must equal your SVG canvas.
-  - `.addColors(category, [...])` for every category incl. `background`.
-  - `.addItem(category, '<svgFileName>', { position: fromHeadOffset(percentage('0%'), percentage('0%')), layer })` for every SVG. Layer order (low renders first/behind): head 1, hair 5, body 10, mouth 15, eyes 20, faceDetails 25, faceHair 30, glasses 35. Hair that should sit *behind* the head (long hair backdrop) goes below 1.
-  - `.setOptional(category)` for glasses/faceHair/faceDetails so "none" is a valid roll.
-  - `.connectColors(source, [targets])` when parts must share a color (e.g. faceHair follows hair).
-  - **Prediction mappings** — required for the ML predictor integration to work: `hair` → `short|medium|long` item lists, `hairColor` → `black|brown|blond|gray` color lists, `skinTone` → `dark|medium|light`, `faceHair` → `none|facial_hair`. Map every class; an unmapped class silently falls back to random.
-- `src/{vanilla,react,vue,svelte,solidjs,react-native,angular}.ts` — these 7 files are mechanical; generate them from the SVG directory structure:
-
-  ```bash
-  bun .claude/skills/generate-avatar-theme/scripts/gen-bindings.ts <name>
-  bunx biome check --write packages/themes/<name>-theme/src packages/assets/<name>-assets/src
-  ```
-
-Every `addItem` name must exactly match an SVG filename and a `withComponents` key in every binding — a mismatch builds fine but renders a missing part.
-
-## Step 7: Build
+If the check fails, run:
 
 ```bash
-bun install                                # link the new workspaces
-bunx turbo build --filter=@avatune/<name>-assets --filter=@avatune/<name>-theme
+bun .claude/skills/generate-avatar-theme/scripts/setup-openai-key.ts
 ```
 
-## Step 8: Visual verification loop (do not skip)
+The setup script reads masked terminal input and stores `OPENAI_API_KEY` in the ignored repository-root `.env.local`. Never ask the user to paste the key into chat or pass it as a command-line argument.
 
-You cannot judge SVG art from path data. Render it, look at it, fix it, repeat — expect 2-4 rounds.
+## Step 2: Generate the image sheets
+
+Convert the requested name to lowercase kebab-case and pass the user's complete visual brief unchanged:
 
 ```bash
-bun .claude/skills/generate-avatar-theme/scripts/render-preview.ts <name>-theme
+bun .claude/skills/generate-avatar-theme/scripts/generate-avatar-sheet.ts \
+  <name> \
+  --brief '<user style brief>'
 ```
 
-This writes `.preview/<name>-theme/preview.html` (gitignored): a seeded grid (random combinations) plus an item showcase (every item rendered once, labeled, with optional categories suppressed so visors don't cover the eyes you're inspecting). Screenshot it and actually look at the image. Playwright MCP blocks `file://` URLs — serve the directory first (`python3 -m http.server 8741` in `.preview/<name>-theme/`, run in background), then `browser_navigate` to `http://localhost:8741/preview.html` and `browser_take_screenshot` with `fullPage: true` and no `filename` (relative filenames land outside the workspace). Kill the server when done. Check: parts aligned to the head, no gaps/overlap artifacts, silhouettes distinct between items, colors derive correctly (shadows follow base), every item present, style brief respected. Fix SVGs → rebuild assets+theme → re-render.
+The harness:
 
-## Step 9: Optional wiring (ask or note as follow-ups)
+1. enhances the brief into a coherent cross-category art direction with structured output
+2. assigns nine row-major variant names per category
+3. creates an exact vector-friendly prompt per category
+4. calls GPT Image 2 once for each category at 1024×1024 high quality
+5. validates that every returned image is square
+6. writes the eight PNG sheets and `manifest.json`
 
-- Storybook demos: register the theme in `apps/*-storybook` story files (see how existing themes are imported in `apps/react-storybook/src/stories/Avatar.stories.tsx`).
-- Website docs: `apps/website/src/content/docs/packages/` + the `scripts/generate-*-readme.ts` / `generate-themes-mdx.ts` generators.
-- Publishing: this repo uses changesets; add one if the packages should be released.
+Do not call `xd://generate_image`, the OpenAI API, an SDK, or a completion function directly from the skill.
+
+## Step 3: Inspect every sheet
+
+Open all eight PNGs as images. Verify:
+
+- exactly nine visible designs arranged in three rows and three columns
+- only the named category appears
+- no complete heads or faces leak into feature sheets
+- no labels, grid lines, borders, captions, or extra objects
+- all designs are fully inside their cells and easy to distinguish
+- eyes, eyebrows, noses, mouths, and ears are large enough to vectorize cleanly
+- the art style, stroke weight, and palette remain coherent across sheets
+- the background is uniformly white
+
+Do not judge image quality from file metadata alone.
+
+## Step 4: Regenerate rejected categories
+
+Give the observed visual defect back to the harness and regenerate only affected categories in the existing output directory:
+
+```bash
+bun .claude/skills/generate-avatar-theme/scripts/generate-avatar-sheet.ts \
+  <name> \
+  --brief '<original user style brief>' \
+  --only eyes,mouth \
+  --feedback '<specific observed defects and required corrections>'
+```
+
+Use concrete feedback such as “eyes are too small and two cells contain eyebrows; enlarge each eye pair and remove all surrounding anatomy.” Reinspect every regenerated image. Repeat until all sheets satisfy the output contract.
+
+## Step 5: Handoff
+
+Return the output directory and list any deliberate naming or palette decisions. The next manual steps are:
+
+1. upload or recreate each accepted design in [PerfectVector](https://perfectvector.com/)
+2. export and organize the resulting SVG assets
+3. create and configure the theme in Avatune Studio
+
+Do not perform those steps as part of this skill.
+
+## Harness inventory
+
+- `scripts/setup-openai-key.ts` — secure local API-key setup
+- `scripts/generate-avatar-sheet.ts` — prompt enhancement, GPT Image 2 calls, image validation, regeneration, and manifest persistence
+- `scripts/avatar-theme-manifest.ts` — image categories, palettes, manifest types, and runtime validation

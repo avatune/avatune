@@ -58,20 +58,3 @@ export const CATEGORIES: Category[] = [
   { id: 'forelock', label: 'Forelock', optional: true },
   { id: 'hats', label: 'Hats', optional: true },
 ]
-
-export const DEFAULT_LAYERS: Record<CategoryId, number> = {
-  head: 1,
-  hair: 15,
-  eyes: 20,
-  eyebrows: 25,
-  mouth: 32,
-  nose: 21,
-  ears: 40,
-  body: 10,
-  glasses: 35,
-  faceHair: 30,
-  accessories: 41,
-  faceDetails: 25,
-  forelock: 15,
-  hats: 15,
-}

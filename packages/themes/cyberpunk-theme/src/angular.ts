@@ -1,33 +1,41 @@
 import {
   BodyHoodie,
-  BodyJacket,
-  BodyVest,
-  EyesCyber,
-  EyesDetermined,
-  EyesHappy,
-  EyesStandard,
-  FaceDetailsBlush,
-  FaceDetailsCircuits,
-  FaceDetailsScar,
-  FaceHairGoatee,
-  FaceHairStubble,
-  GlassesGoggles,
-  GlassesVisor,
+  BodyJacket1,
+  BodyJacket2,
+  BodyJacket3,
+  BodyJacket4,
+  BodyPoncho,
+  BodyPoncho1,
+  EyesAnxious,
+  EyesBrave,
+  EyesCurious,
+  EyesFocused,
+  EyesHusky,
+  EyesRound,
+  EyesSharp,
   HairBob,
-  HairBuzz,
-  HairMohawk,
-  HairPonytail,
-  HairShaved,
-  HairSlicked,
-  HairSpikes,
-  HairUndercut,
-  HeadAngular,
-  HeadStandard,
-  MouthGrin,
-  MouthNeutral,
-  MouthSmirk,
+  HairBraids,
+  HairForehead,
+  HairMedium,
+  HairShort,
+  HairStylish,
+  HeadOval,
+  HeadRhombus,
+  HeadRobot,
+  HeadSquaredOval,
+  MouthHooky,
+  MouthLips,
+  MouthNervous,
+  MouthOpen,
+  MouthSmiling,
+  NoseClothespin,
+  NoseMetal,
+  NoseNarrow,
+  NoseStandard,
+  NoseWide1,
+  NoseWide2,
 } from '@avatune/cyberpunk-assets/angular'
-import type { AngularAvatarItem } from '@avatune/types'
+import type { AngularAvatarItem, AngularTheme } from '@avatune/types'
 import shared from './shared'
 
 const toAngularItem = (asset: {
@@ -40,46 +48,50 @@ const toAngularItem = (asset: {
 export default shared
   .toFramework<AngularAvatarItem>()
   .withComponents('body', {
-    jacket: toAngularItem(BodyJacket),
     hoodie: toAngularItem(BodyHoodie),
-    vest: toAngularItem(BodyVest),
-  })
-  .withComponents('faceDetails', {
-    circuits: toAngularItem(FaceDetailsCircuits),
-    scar: toAngularItem(FaceDetailsScar),
-    blush: toAngularItem(FaceDetailsBlush),
+    jacket1: toAngularItem(BodyJacket1),
+    jacket2: toAngularItem(BodyJacket2),
+    jacket3: toAngularItem(BodyJacket3),
+    jacket4: toAngularItem(BodyJacket4),
+    poncho: toAngularItem(BodyPoncho),
+    poncho1: toAngularItem(BodyPoncho1),
   })
   .withComponents('eyes', {
-    standard: toAngularItem(EyesStandard),
-    cyber: toAngularItem(EyesCyber),
-    determined: toAngularItem(EyesDetermined),
-    happy: toAngularItem(EyesHappy),
-  })
-  .withComponents('faceHair', {
-    stubble: toAngularItem(FaceHairStubble),
-    goatee: toAngularItem(FaceHairGoatee),
-  })
-  .withComponents('glasses', {
-    visor: toAngularItem(GlassesVisor),
-    goggles: toAngularItem(GlassesGoggles),
+    anxious: toAngularItem(EyesAnxious),
+    brave: toAngularItem(EyesBrave),
+    curious: toAngularItem(EyesCurious),
+    focused: toAngularItem(EyesFocused),
+    husky: toAngularItem(EyesHusky),
+    round: toAngularItem(EyesRound),
+    sharp: toAngularItem(EyesSharp),
   })
   .withComponents('hair', {
-    mohawk: toAngularItem(HairMohawk),
-    undercut: toAngularItem(HairUndercut),
     bob: toAngularItem(HairBob),
-    spikes: toAngularItem(HairSpikes),
-    slicked: toAngularItem(HairSlicked),
-    buzz: toAngularItem(HairBuzz),
-    ponytail: toAngularItem(HairPonytail),
-    shaved: toAngularItem(HairShaved),
+    braids: toAngularItem(HairBraids),
+    forehead: toAngularItem(HairForehead),
+    medium: toAngularItem(HairMedium),
+    short: toAngularItem(HairShort),
+    stylish: toAngularItem(HairStylish),
   })
   .withComponents('head', {
-    standard: toAngularItem(HeadStandard),
-    angular: toAngularItem(HeadAngular),
+    oval: toAngularItem(HeadOval),
+    rhombus: toAngularItem(HeadRhombus),
+    robot: toAngularItem(HeadRobot),
+    squaredOval: toAngularItem(HeadSquaredOval),
   })
   .withComponents('mouth', {
-    neutral: toAngularItem(MouthNeutral),
-    smirk: toAngularItem(MouthSmirk),
-    grin: toAngularItem(MouthGrin),
+    hooky: toAngularItem(MouthHooky),
+    lips: toAngularItem(MouthLips),
+    nervous: toAngularItem(MouthNervous),
+    open: toAngularItem(MouthOpen),
+    smiling: toAngularItem(MouthSmiling),
   })
-  .build()
+  .withComponents('nose', {
+    clothespin: toAngularItem(NoseClothespin),
+    metal: toAngularItem(NoseMetal),
+    narrow: toAngularItem(NoseNarrow),
+    standard: toAngularItem(NoseStandard),
+    wide1: toAngularItem(NoseWide1),
+    wide2: toAngularItem(NoseWide2),
+  })
+  .build() satisfies AngularTheme

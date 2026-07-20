@@ -1,80 +1,90 @@
 // Body
 import BodyHoodie from './svg/body/hoodie.svg?native'
-import BodyJacket from './svg/body/jacket.svg?native'
-import BodyVest from './svg/body/vest.svg?native'
+import BodyJacket1 from './svg/body/jacket1.svg?native'
+import BodyJacket2 from './svg/body/jacket2.svg?native'
+import BodyJacket3 from './svg/body/jacket3.svg?native'
+import BodyJacket4 from './svg/body/jacket4.svg?native'
+import BodyPoncho from './svg/body/poncho.svg?native'
+import BodyPoncho1 from './svg/body/poncho1.svg?native'
 
 // Eyes
-import EyesCyber from './svg/eyes/cyber.svg?native'
-import EyesDetermined from './svg/eyes/determined.svg?native'
-import EyesHappy from './svg/eyes/happy.svg?native'
-import EyesStandard from './svg/eyes/standard.svg?native'
-
-// FaceDetails
-import FaceDetailsBlush from './svg/faceDetails/blush.svg?native'
-import FaceDetailsCircuits from './svg/faceDetails/circuits.svg?native'
-import FaceDetailsScar from './svg/faceDetails/scar.svg?native'
-
-// FaceHair
-import FaceHairGoatee from './svg/faceHair/goatee.svg?native'
-import FaceHairStubble from './svg/faceHair/stubble.svg?native'
-
-// Glasses
-import GlassesGoggles from './svg/glasses/goggles.svg?native'
-import GlassesVisor from './svg/glasses/visor.svg?native'
+import EyesAnxious from './svg/eyes/anxious.svg?native'
+import EyesBrave from './svg/eyes/brave.svg?native'
+import EyesCurious from './svg/eyes/curious.svg?native'
+import EyesFocused from './svg/eyes/focused.svg?native'
+import EyesHusky from './svg/eyes/husky.svg?native'
+import EyesRound from './svg/eyes/round.svg?native'
+import EyesSharp from './svg/eyes/sharp.svg?native'
 
 // Hair
 import HairBob from './svg/hair/bob.svg?native'
-import HairBuzz from './svg/hair/buzz.svg?native'
-import HairMohawk from './svg/hair/mohawk.svg?native'
-import HairPonytail from './svg/hair/ponytail.svg?native'
-import HairShaved from './svg/hair/shaved.svg?native'
-import HairSlicked from './svg/hair/slicked.svg?native'
-import HairSpikes from './svg/hair/spikes.svg?native'
-import HairUndercut from './svg/hair/undercut.svg?native'
+import HairBraids from './svg/hair/braids.svg?native'
+import HairForehead from './svg/hair/forehead.svg?native'
+import HairMedium from './svg/hair/medium.svg?native'
+import HairShort from './svg/hair/short.svg?native'
+import HairStylish from './svg/hair/stylish.svg?native'
 
 // Head
-import HeadAngular from './svg/head/angular.svg?native'
-import HeadStandard from './svg/head/standard.svg?native'
+import HeadOval from './svg/head/oval.svg?native'
+import HeadRhombus from './svg/head/rhombus.svg?native'
+import HeadRobot from './svg/head/robot.svg?native'
+import HeadSquaredOval from './svg/head/squaredOval.svg?native'
 
 // Mouth
-import MouthGrin from './svg/mouth/grin.svg?native'
-import MouthNeutral from './svg/mouth/neutral.svg?native'
-import MouthSmirk from './svg/mouth/smirk.svg?native'
+import MouthHooky from './svg/mouth/hooky.svg?native'
+import MouthLips from './svg/mouth/lips.svg?native'
+import MouthNervous from './svg/mouth/nervous.svg?native'
+import MouthOpen from './svg/mouth/open.svg?native'
+import MouthSmiling from './svg/mouth/smiling.svg?native'
+
+// Nose
+import NoseClothespin from './svg/nose/clothespin.svg?native'
+import NoseMetal from './svg/nose/metal.svg?native'
+import NoseNarrow from './svg/nose/narrow.svg?native'
+import NoseStandard from './svg/nose/standard.svg?native'
+import NoseWide1 from './svg/nose/wide1.svg?native'
+import NoseWide2 from './svg/nose/wide2.svg?native'
 
 export {
   // Body
   BodyHoodie,
-  BodyJacket,
-  BodyVest,
+  BodyJacket1,
+  BodyJacket2,
+  BodyJacket3,
+  BodyJacket4,
+  BodyPoncho,
+  BodyPoncho1,
   // Eyes
-  EyesCyber,
-  EyesDetermined,
-  EyesHappy,
-  EyesStandard,
-  // FaceDetails
-  FaceDetailsBlush,
-  FaceDetailsCircuits,
-  FaceDetailsScar,
-  // FaceHair
-  FaceHairGoatee,
-  FaceHairStubble,
-  // Glasses
-  GlassesGoggles,
-  GlassesVisor,
+  EyesAnxious,
+  EyesBrave,
+  EyesCurious,
+  EyesFocused,
+  EyesHusky,
+  EyesRound,
+  EyesSharp,
   // Hair
   HairBob,
-  HairBuzz,
-  HairMohawk,
-  HairPonytail,
-  HairShaved,
-  HairSlicked,
-  HairSpikes,
-  HairUndercut,
+  HairBraids,
+  HairForehead,
+  HairMedium,
+  HairShort,
+  HairStylish,
   // Head
-  HeadAngular,
-  HeadStandard,
+  HeadOval,
+  HeadRhombus,
+  HeadRobot,
+  HeadSquaredOval,
   // Mouth
-  MouthGrin,
-  MouthNeutral,
-  MouthSmirk,
+  MouthHooky,
+  MouthLips,
+  MouthNervous,
+  MouthOpen,
+  MouthSmiling,
+  // Nose
+  NoseClothespin,
+  NoseMetal,
+  NoseNarrow,
+  NoseStandard,
+  NoseWide1,
+  NoseWide2,
 }

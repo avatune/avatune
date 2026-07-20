@@ -1,6 +1,6 @@
 {
   "name": "@avatune/cyberpunk-assets",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -14,10 +14,6 @@
     "url": "https://github.com/avatune/avatune/issues"
   },
   "author": "Avatune Team (https://avatune.dev)",
-  "contributors": [
-    "Teimur Gasanov <me@teimurjan.dev> (https://github.com/teimurjan)",
-    "Stanislav Nevmyvaka <nevmyvakastas@gmail.com> (https://github.com/nevmstas)"
-  ],
   "keywords": [
     "avatune",
     "avatar",
@@ -86,6 +82,7 @@
   },
   "devDependencies": {
     "@avatune/rsbuild-plugin-raw-svg": "workspace:*",
+    "@avatune/rsbuild-plugin-svg-to-angular": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-solid": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-svelte": "workspace:*",
     "@avatune/rsbuild-plugin-svg-to-vue": "workspace:*",
@@ -100,10 +97,9 @@
     "react": "19.1.0",
     "solid-js": "^1.9.0",
     "svelte": "^5.0.0",
-    "svgo": "^4.0.0",
-    "typescript": "^5.9.3",
     "vue": "^3.5.22",
-    "@avatune/rsbuild-plugin-svg-to-angular": "workspace:*"
+    "svgo": "^4.0.0",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

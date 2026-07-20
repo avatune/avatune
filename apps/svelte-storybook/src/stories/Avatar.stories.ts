@@ -9,7 +9,6 @@ import nevmstasTheme from '@avatune/nevmstas-theme/svelte'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/svelte'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/svelte'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/svelte'
-import samuraiTheme from '@avatune/samurai-theme/svelte'
 import type { AvatarProps } from '@avatune/svelte'
 import { Avatar } from '@avatune/svelte'
 import type { SvelteAvatarItem, Theme } from '@avatune/types'
@@ -41,7 +40,6 @@ type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
 type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
-type SamuraiArgs = ExtractStoryArgs<typeof samuraiTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -254,22 +252,6 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   },
 }
 
-export const Samurai: StoryObj<SamuraiArgs> = {
-  argTypes: getArgTypes(samuraiTheme),
-  render: (args) => ({
-    Component: Avatar,
-    props: {
-      theme: samuraiTheme,
-      ...args,
-      borderRadius: toBorderRadius(args.borderRadius),
-    },
-  }),
-  args: {
-    size: 300,
-    borderRadius: 50,
-  },
-}
-
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => ({
@@ -298,7 +280,6 @@ const themes = {
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
-  Samurai: samuraiTheme,
   Yanliu: yanliuTheme,
 } as const
 

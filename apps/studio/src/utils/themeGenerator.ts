@@ -76,9 +76,7 @@ export async function generateThemeFolder(
   for (const [category, categoryAssets] of assetsByCategory.entries()) {
     const categoryFolder = assetsSvgFolder?.folder(category)
     for (const assetFile of categoryAssets) {
-      const response = await fetch(assetFile.asset.dataUrl)
-      const blob = await response.blob()
-      categoryFolder?.file(assetFile.fileName, blob)
+      categoryFolder?.file(assetFile.fileName, assetFile.asset.file)
     }
   }
 

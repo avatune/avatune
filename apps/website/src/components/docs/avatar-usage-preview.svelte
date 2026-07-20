@@ -1,6 +1,7 @@
 <script lang="ts">
 import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
 import ashleyyTheme from '@avatune/ashleyy-theme/svelte'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -13,6 +14,7 @@ import { Avatar } from '@avatune/svelte'
 import yanliuTheme from '@avatune/yanliu-theme/svelte'
 
 const themeMap = {
+  cyberpunk: cyberpunkTheme,
   yanliu: yanliuTheme,
   miniavs: miniavsTheme,
   nevmstas: nevmstasTheme,

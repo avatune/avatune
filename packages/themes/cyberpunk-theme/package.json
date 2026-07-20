@@ -1,6 +1,6 @@
 {
   "name": "@avatune/cyberpunk-theme",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
   "publishConfig": {
     "access": "public"
@@ -14,10 +14,6 @@
     "url": "https://github.com/avatune/avatune/issues"
   },
   "author": "Avatune Team (https://avatune.dev)",
-  "contributors": [
-    "Teimur Gasanov <me@teimurjan.dev> (https://github.com/teimurjan)",
-    "Stanislav Nevmyvaka <nevmyvakastas@gmail.com> (https://github.com/nevmstas)"
-  ],
   "keywords": [
     "avatune",
     "avatar",
@@ -29,35 +25,41 @@
   ],
   "type": "module",
   "exports": {
+    ".": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js",
+      "require": "./dist/vanilla.cjs"
+    },
+    "./vanilla": {
+      "types": "./dist/vanilla.d.ts",
+      "import": "./dist/vanilla.js",
+      "require": "./dist/vanilla.cjs"
+    },
     "./react": {
       "types": "./dist/react.d.ts",
       "import": "./dist/react.js",
       "require": "./dist/react.cjs"
-    },
-    "./react-native": {
-      "types": "./dist/react-native.d.ts",
-      "import": "./dist/react-native.js",
-      "require": "./dist/react-native.cjs"
-    },
-    "./svelte": {
-      "svelte": "./dist/svelte.js",
-      "types": "./dist/svelte.d.ts",
-      "import": "./dist/svelte.js"
-    },
-    "./solidjs": {
-      "solid": "./dist/solidjs.js",
-      "types": "./dist/solidjs.d.ts",
-      "import": "./dist/solidjs.js"
     },
     "./vue": {
       "types": "./dist/vue.d.ts",
       "import": "./dist/vue.js",
       "require": "./dist/vue.cjs"
     },
-    "./vanilla": {
-      "types": "./dist/vanilla.d.ts",
-      "import": "./dist/vanilla.js",
-      "require": "./dist/vanilla.cjs"
+    "./svelte": {
+      "svelte": "./dist/svelte.js",
+      "types": "./dist/svelte.d.ts",
+      "import": "./dist/svelte.js"
+    },
+    "./react-native": {
+      "types": "./dist/react-native.d.ts",
+      "import": "./dist/react-native.js",
+      "require": "./dist/react-native.cjs"
+    },
+    "./solidjs": {
+      "solid": "./dist/solidjs.js",
+      "types": "./dist/solidjs.d.ts",
+      "import": "./dist/solidjs.js",
+      "require": "./dist/solidjs.cjs"
     },
     "./angular": {
       "types": "./dist/angular.d.ts",
@@ -65,6 +67,7 @@
       "require": "./dist/angular.cjs"
     }
   },
+  "types": "./dist/vanilla.d.ts",
   "files": [
     "dist"
   ],
@@ -82,6 +85,7 @@
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
+    "@types/node": "^22.18.12",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

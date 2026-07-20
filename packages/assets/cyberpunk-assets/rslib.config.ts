@@ -50,7 +50,7 @@ export default defineConfig({
     pluginSvgr({
       svgrOptions: {
         svgoConfig,
-        replaceAttrValues: getReplaceAttrValues('props.color'),
+        replaceAttrValues: getReplaceAttrValues('props.color', 'props.uid'),
         template: (variables, { tpl }) => {
           return tpl`
 ${variables.imports};

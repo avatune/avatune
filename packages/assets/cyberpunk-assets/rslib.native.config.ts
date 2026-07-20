@@ -1,7 +1,7 @@
 import { pluginReact } from '@rsbuild/plugin-react'
 import { pluginSvgr } from '@rsbuild/plugin-svgr'
 import { defineConfig } from '@rslib/core'
-import { svgoConfig } from './rslib.shared'
+import { colordImport, getReplaceAttrValues, svgoConfig } from './rslib.shared'
 
 export default defineConfig({
   lib: [
@@ -26,6 +26,21 @@ export default defineConfig({
       svgrOptions: {
         svgoConfig,
         native: true,
+        replaceAttrValues: getReplaceAttrValues('props.color', 'props.uid'),
+        template: (variables, { tpl }) => {
+          return tpl`
+${variables.imports};
+${colordImport}
+
+${variables.interfaces};
+
+function ${variables.componentName}(${variables.props}) {
+  return ${variables.jsx};
+}
+
+${variables.exports};
+`
+        },
       },
     }),
     pluginReact(),
