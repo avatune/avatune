@@ -1,7 +1,6 @@
 import type { Config as SvgoConfig } from 'svgo'
 
 const uid = () => Math.random().toString(36).slice(2, 9)
-
 export const colordImport = "import { colord } from 'colord';"
 
 export const svgoConfig: SvgoConfig = {
@@ -11,6 +10,7 @@ export const svgoConfig: SvgoConfig = {
       params: {
         overrides: {
           cleanupIds: false,
+          convertColors: false,
         },
       },
     },
@@ -26,14 +26,9 @@ export const getReplaceAttrValues = (
   uidPropName = 'uid',
 ) => ({
   currentColor: `{${colorPropName}}`,
-  '#FCBE93': `{${colorPropName}}`,
-  '#FF7A93': `{${colorPropName}}`,
-  '#FFA882': `{colord(${colorPropName}).darken(0.05).toHex()}`,
-  '#272424': `{colord(${colorPropName}).darken(0.2).toHex()}`,
-  '#A4C856': `{${colorPropName}}`,
-  '#8DA853': `{colord(${colorPropName}).darken(0.05).toHex()}`,
-  '#4F8558': `{colord(${colorPropName}).darken(0.1).toHex()}`,
-  '#F06E82': `{${colorPropName}}`,
+  '#318a1cf8': `{colord(${colorPropName}).rotate(-34).saturate(0.13).lighten(0.37).toHex()}`,
+  '#6a4e69c9': `{colord(${colorPropName}).rotate(90).desaturate(0.13).lighten(0.34).toHex()}`,
+  '#7a6aedfc': `{colord(${colorPropName}).rotate(43).saturate(0.14).lighten(0.44).toHex()}`,
   filter0_d_144_233: `{${uidPropName} + '-' + '${uid()}'}`,
   filter0_d_144_264: `{${uidPropName} + '-' + '${uid()}'}`,
   mask0_134_151: `{${uidPropName} + '-' + '${uid()}'}`,

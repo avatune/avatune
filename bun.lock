@@ -231,6 +231,7 @@
       "name": "@avatune/studio",
       "version": "1.0.1",
       "dependencies": {
+        "colord": "^2.9.3",
         "jszip": "^3.10.1",
         "react": "^19.2.1",
         "react-dom": "^19.2.1",

@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { CategoryId } from '../types'
+import type {
+  CategoryId,
+  PaletteAssignments,
+  ThemeFillBinding,
+  ThemeFillBindings,
+  ThemeFillTransform,
+  ThemePalette,
+} from '../types'
 
 export interface BuilderAsset {
   id: string
@@ -18,15 +25,49 @@ export interface BuilderAsset {
   scale: number
   rotation: number
   layer: number
+  /** Fill attribute occurrences bound to primary or derived theme colors. */
+  themeFillBindings: ThemeFillBindings
 }
 
-type StoredAsset = Omit<BuilderAsset, 'url'>
+type StoredAsset = Omit<BuilderAsset, 'url' | 'themeFillBindings'> & {
+  themeFillBindings?: Record<number, ThemeFillBinding | ThemeFillTransform>
+  themeFillIndices?: number[]
+}
+
+const restoreThemeFillBindings = ({
+  themeFillBindings,
+  themeFillIndices,
+}: Pick<
+  StoredAsset,
+  'themeFillBindings' | 'themeFillIndices'
+>): ThemeFillBindings => {
+  if (themeFillBindings) {
+    return Object.fromEntries(
+      Object.entries(themeFillBindings).map(([index, binding]) => [
+        index,
+        binding.type === 'primary' || binding.type === 'custom'
+          ? binding
+          : { type: 'custom', transforms: [binding] },
+      ]),
+    )
+  }
+
+  return Object.fromEntries(
+    (themeFillIndices ?? []).map((index) => [
+      index,
+      { type: 'primary' as const },
+    ]),
+  )
+}
 
 export interface ContainerMeta {
   size: number
   radius: number
   clip: boolean
   themeName: string
+  palettes: ThemePalette[]
+  paletteByCategory: PaletteAssignments
+  previewColorByPalette: Record<string, string>
 }
 
 /** Default stacking order per category, tuned so a fresh avatar composes sensibly. */
@@ -49,11 +90,68 @@ const DEFAULT_Z: Record<CategoryId, number> = {
 
 const DEFAULT_PLACEMENT = { x: 50, y: 50, scale: 60, rotation: 0 }
 
+const DEFAULT_PALETTES: ThemePalette[] = [
+  {
+    id: 'skin',
+    name: 'Skin',
+    colors: [
+      { id: 'light', name: 'Light', value: '#FCBE93' },
+      { id: 'medium', name: 'Medium', value: '#C78A5C' },
+      { id: 'dark', name: 'Dark', value: '#80502E' },
+      { id: 'very-light', name: 'Very light', value: '#FDCDAC' },
+    ],
+  },
+  {
+    id: 'background',
+    name: 'Background',
+    colors: [{ id: 'seashell', name: 'Seashell', value: '#FFEDEF' }],
+  },
+  {
+    id: 'accent',
+    name: 'Accent',
+    colors: [
+      { id: 'black', name: 'Black', value: '#000000' },
+      { id: 'white', name: 'White', value: '#FFFFFF' },
+      { id: 'lavender', name: 'Lavender', value: '#9287FF' },
+      { id: 'sky', name: 'Sky', value: '#6BD9E9' },
+      { id: 'salmon', name: 'Salmon', value: '#FC909F' },
+      { id: 'canary', name: 'Canary', value: '#F4D150' },
+    ],
+  },
+]
+
+const DEFAULT_PALETTE_BY_CATEGORY: PaletteAssignments = {
+  background: 'background',
+  head: 'skin',
+  ears: 'skin',
+  hair: 'accent',
+  faceHair: 'accent',
+  eyes: 'accent',
+  eyebrows: 'accent',
+  mouth: 'accent',
+  nose: 'accent',
+  glasses: 'accent',
+  body: 'accent',
+  accessories: 'accent',
+  faceDetails: 'accent',
+  forelock: 'accent',
+  hats: 'accent',
+}
+
+const DEFAULT_PREVIEW_COLOR_BY_PALETTE: Record<string, string> = {
+  skin: 'light',
+  background: 'seashell',
+  accent: 'black',
+}
+
 const DEFAULT_META: ContainerMeta = {
   size: 560,
   radius: 50,
   clip: true,
   themeName: 'my-theme',
+  palettes: DEFAULT_PALETTES,
+  paletteByCategory: DEFAULT_PALETTE_BY_CATEGORY,
+  previewColorByPalette: DEFAULT_PREVIEW_COLOR_BY_PALETTE,
 }
 
 const DB_NAME = 'avatune-studio'
@@ -108,7 +206,15 @@ export function useBuilder() {
       request.onsuccess = () => {
         const loaded: Record<string, BuilderAsset> = {}
         for (const record of (request.result ?? []) as StoredAsset[]) {
-          loaded[record.id] = { ...record, url: toObjectUrl(record.svg) }
+          const { themeFillBindings, themeFillIndices, ...stored } = record
+          loaded[record.id] = {
+            ...stored,
+            themeFillBindings: restoreThemeFillBindings({
+              themeFillBindings,
+              themeFillIndices,
+            }),
+            url: toObjectUrl(record.svg),
+          }
         }
         setAssets(loaded)
       }
@@ -116,7 +222,25 @@ export function useBuilder() {
 
     try {
       const raw = localStorage.getItem(META_KEY)
-      if (raw) setMeta({ ...DEFAULT_META, ...JSON.parse(raw) })
+      if (raw) {
+        const saved = JSON.parse(raw) as Partial<ContainerMeta>
+        setMeta({
+          ...DEFAULT_META,
+          ...saved,
+          palettes:
+            Array.isArray(saved.palettes) && saved.palettes.length > 0
+              ? saved.palettes
+              : DEFAULT_PALETTES,
+          paletteByCategory: {
+            ...DEFAULT_PALETTE_BY_CATEGORY,
+            ...saved.paletteByCategory,
+          },
+          previewColorByPalette: {
+            ...DEFAULT_PREVIEW_COLOR_BY_PALETTE,
+            ...saved.previewColorByPalette,
+          },
+        })
+      }
     } catch {
       // ignore malformed meta
     }
@@ -149,6 +273,11 @@ export function useBuilder() {
         const current = prev[id]
         if (!current) return prev
         const next = { ...current, ...patch }
+        const svg = patch.svg
+        if (svg !== undefined && svg !== current.svg) {
+          URL.revokeObjectURL(current.url)
+          next.url = toObjectUrl(svg)
+        }
         dbPut(next)
         return { ...prev, [id]: next }
       })
@@ -167,6 +296,7 @@ export function useBuilder() {
         url: toObjectUrl(svg),
         created: Date.now(),
         ...DEFAULT_PLACEMENT,
+        themeFillBindings: {},
         layer: DEFAULT_Z[selCat] ?? 30,
       }
       dbPut(asset)

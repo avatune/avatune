@@ -30,7 +30,7 @@ export const Studio = () => {
 
     setExporting(true)
     try {
-      await exportTheme(all, meta.size, meta.radius, themeName)
+      await exportTheme(all, meta, themeName)
     } catch (error) {
       console.error('Theme export failed:', error)
       window.alert('Export failed. Check the console for details.')

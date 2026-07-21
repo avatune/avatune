@@ -102,7 +102,10 @@ export async function generateThemeFolder(
   )
   assetsFolder?.file('tsconfig.json', generateAssetsTsconfig())
   assetsFolder?.file('rslib.config.ts', generateAssetsRslibConfig())
-  assetsFolder?.file('rslib.shared.ts', generateAssetsRslibShared())
+  assetsFolder?.file(
+    'rslib.shared.ts',
+    generateAssetsRslibShared(themeData.secondaryColorChains),
+  )
   assetsFolder?.file(
     'rslib.native.config.ts',
     generateAssetsRslibNativeConfig(),
@@ -121,7 +124,7 @@ export async function generateThemeFolder(
 
   // Add shared.ts and colors.ts
   themeSrcFolder?.file('shared.ts', themeCode)
-  themeSrcFolder?.file('colors.ts', generateThemeColors())
+  themeSrcFolder?.file('colors.ts', generateThemeColors(themeData))
 
   // Generate framework-specific theme files
   const themeFrameworks = [

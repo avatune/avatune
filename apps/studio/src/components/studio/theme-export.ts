@@ -1,5 +1,9 @@
-import type { BuilderAsset } from '../../hooks/use-builder'
-import type { Asset, ThemeData } from '../../types'
+import type { BuilderAsset, ContainerMeta } from '../../hooks/use-builder'
+import type { Asset, ThemeData, ThemeFillChain } from '../../types'
+import {
+  normalizeThemeFillChain,
+  replaceSvgFillParts,
+} from '../../utils/svgColors'
 import {
   generateThemeFile,
   generateThemeFolder,
@@ -54,12 +58,20 @@ const setSvgDimensions = (svg: string, width: number, height: number) => {
 }
 
 const toAsset = (asset: BuilderAsset, size: number): Asset => {
-  const source = readSvgDimensions(asset.svg)
+  const themedSvg = replaceSvgFillParts(
+    asset.svg,
+    asset.themeFillBindings,
+    'currentColor',
+  )
+  const usesThemeColor = Object.values(asset.themeFillBindings).some(
+    (binding) => binding.type === 'primary' || !binding.sourceColor,
+  )
+  const source = readSvgDimensions(themedSvg)
   const width = size * (asset.scale / 100)
   const height = width * (source.height / source.width)
   const widthPercent = (width / size) * 100
   const heightPercent = (height / size) * 100
-  const svg = setSvgDimensions(asset.svg, width, height)
+  const svg = setSvgDimensions(themedSvg, width, height)
 
   return {
     id: asset.id,
@@ -67,6 +79,7 @@ const toAsset = (asset: BuilderAsset, size: number): Asset => {
     file: new File([svg], `${asset.name}.svg`, { type: 'image/svg+xml' }),
     dataUrl: asset.url,
     category: asset.category,
+    usesThemeColor,
     xPercent: asset.x - widthPercent / 2,
     yPercent: asset.y - heightPercent / 2,
     layer: asset.layer,
@@ -78,23 +91,34 @@ const toAsset = (asset: BuilderAsset, size: number): Asset => {
 
 export const toThemeData = (
   assets: BuilderAsset[],
-  size: number,
-  radius: number,
+  meta: ContainerMeta,
   themeName: string,
 ): ThemeData => {
   const heads = assets
     .filter((asset) => asset.category === 'head')
     .sort((a, b) => a.created - b.created)
   const head = heads[0] ?? null
+  const secondaryColorChains = new Map<string, ThemeFillChain>()
+  for (const asset of assets) {
+    for (const binding of Object.values(asset.themeFillBindings)) {
+      if (binding.type === 'primary' || binding.transforms.length === 0)
+        continue
+      const chain = normalizeThemeFillChain(binding)
+      secondaryColorChains.set(JSON.stringify(chain), chain)
+    }
+  }
 
   return {
-    headAsset: head ? toAsset(head, size) : null,
+    headAsset: head ? toAsset(head, meta.size) : null,
     assets: assets
       .filter((asset) => asset.id !== head?.id)
-      .map((asset) => toAsset(asset, size)),
+      .map((asset) => toAsset(asset, meta.size)),
     themeName,
-    size,
-    borderRadius: `${radius}%`,
+    size: meta.size,
+    borderRadius: `${meta.radius}%`,
+    palettes: meta.palettes,
+    paletteByCategory: meta.paletteByCategory,
+    secondaryColorChains: [...secondaryColorChains.values()],
   }
 }
 
@@ -104,11 +128,10 @@ export const toThemeData = (
  */
 export const exportTheme = async (
   assets: BuilderAsset[],
-  size: number,
-  radius: number,
+  meta: ContainerMeta,
   themeName: string,
 ): Promise<void> => {
-  const themeData = toThemeData(assets, size, radius, themeName)
+  const themeData = toThemeData(assets, meta, themeName)
   const themeCode = generateThemeFile(themeData)
   await generateThemeFolder(themeName, themeCode, themeData)
 }
