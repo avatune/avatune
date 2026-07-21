@@ -1,5 +1,6 @@
 import ashleyseoTheme from '@avatune/ashley-seo-theme/react'
 import ashleyyTheme from '@avatune/ashleyy-theme/react'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/react'
 import fatinverseTheme from '@avatune/fatin-verse-theme/react'
 import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
@@ -30,6 +31,7 @@ type ExtractStoryArgs<T extends Theme<ReactAvatarItem>> = Omit<
 
 type AshleySeoArgs = ExtractStoryArgs<typeof ashleyseoTheme>
 type AshleyyArgs = ExtractStoryArgs<typeof ashleyyTheme>
+type CyberpunkArgs = ExtractStoryArgs<typeof cyberpunkTheme>
 type FatinVerseArgs = ExtractStoryArgs<typeof fatinverseTheme>
 type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
@@ -94,6 +96,21 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   render: (args) => (
     <Avatar
       theme={ashleyyTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
+export const Cyberpunk: StoryObj<CyberpunkArgs> = {
+  argTypes: getArgTypes(cyberpunkTheme),
+  render: (args) => (
+    <Avatar
+      theme={cyberpunkTheme}
       {...args}
       borderRadius={toBorderRadius(args.borderRadius)}
     />
@@ -242,6 +259,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 const themes = {
   'Ashley Seo': ashleyseoTheme,
   Ashleyy: ashleyyTheme,
+  Cyberpunk: cyberpunkTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,

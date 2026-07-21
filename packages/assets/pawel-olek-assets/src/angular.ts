@@ -136,8 +136,8 @@ export {
   HairManShortTopknot,
   HairManStylish,
   HairWomanBob,
-  HairWomanlong,
   HairWomanLowBun,
+  HairWomanlong,
   HairWomanMedium,
   HairWomanStickBun,
   // Head

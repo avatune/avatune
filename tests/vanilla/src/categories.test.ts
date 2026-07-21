@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from 'bun:test'
 import ashleyTheme from '@avatune/ashley-seo-theme/vanilla'
 import ashleyyTheme from '@avatune/ashleyy-theme/vanilla'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/vanilla'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/vanilla'
 import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
@@ -19,6 +20,7 @@ import '@blazediff/bun'
 const THEMES: Record<string, VanillaTheme> = {
   'ashley-seo': ashleyTheme,
   ashleyy: ashleyyTheme,
+  cyberpunk: cyberpunkTheme,
   'fatin-verse': fatinVerseTheme,
   kyute: kyuteTheme,
   micah: micahTheme,

@@ -9,19 +9,16 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@tabler/icons-react": "^3.36.1",
+    "colord": "^2.9.3",
     "jszip": "^3.10.1",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "react-router-dom": "^6.28.0"
+    "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.6.12",
     "@rsbuild/plugin-react": "^1.4.2",
-    "@tailwindcss/postcss": "^4.1.17",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   }
 }

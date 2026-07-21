@@ -1,6 +1,7 @@
 <script lang="ts">
 import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
 import ashleyyTheme from '@avatune/ashleyy-theme/svelte'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -14,6 +15,7 @@ import { onMount } from 'svelte'
 import { fade } from 'svelte/transition'
 
 const themes = [
+  cyberpunkTheme,
   nevmstasTheme,
   miniavsTheme,
   yanliuTheme,

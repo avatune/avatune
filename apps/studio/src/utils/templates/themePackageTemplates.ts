@@ -1,3 +1,10 @@
+import type { ThemeData } from '../../types'
+import {
+  DEFAULT_COLOR_ENUM_NAME,
+  DEFAULT_COLOR_MEMBER,
+  getThemePaletteDefinitions,
+} from '../themeColorDefinitions'
+
 /**
  * Generates the theme package.json
  */
@@ -247,28 +254,27 @@ export default defineConfig({
 /**
  * Generates the theme colors.ts
  */
-export function generateThemeColors(): string {
-  return `export enum SkinTones {
-  Medium = '#C78A5C',
-  Dark = '#80502E',
-  Light = '#FCBE93',
-  VeryLight = '#FDCDAC',
-  VeryLight2 = '#F5D0C5',
-}
+export function generateThemeColors(themeData: ThemeData): string {
+  const definitions = [
+    ...getThemePaletteDefinitions(themeData.palettes),
+    {
+      id: 'default',
+      enumName: DEFAULT_COLOR_ENUM_NAME,
+      members: [DEFAULT_COLOR_MEMBER],
+    },
+  ]
 
-export enum AccentColors {
-  Black = '#000000',
-  White = '#FFFFFF',
-  Lavender = '#9287FF',
-  Sky = '#6BD9E9',
-  Salmon = '#FC909F',
-  Canary = '#F4D150',
-}
-
-export enum BackgroundColors {
-  Seashell = '#FFEDEF',
-}
-`
+  return `${definitions
+    .map((definition) => {
+      const members = definition.members
+        .map(
+          (member) =>
+            `  ${member.name} = '${member.value.replace(/'/g, "\\'")}',`,
+        )
+        .join('\n')
+      return `export enum ${definition.enumName} {\n${members}\n}`
+    })
+    .join('\n\n')}\n`
 }
 
 /**

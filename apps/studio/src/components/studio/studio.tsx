@@ -1,201 +1,103 @@
-import { useNavigate } from 'react-router-dom'
-import { usePersistedState } from '../../hooks/use-persisted-state'
-import type { Asset, ThemeData } from '../../types'
-import { Stepper } from './stepper'
-import {
-  CategoryUploadStep,
-  HeadUploadStep,
-  PreviewStep,
-  SaveThemeStep,
-} from './steps'
+import { useState } from 'react'
+import { useBuilder } from '../../hooks/use-builder'
+import { CategoryPanel } from './category-panel'
+import { Inspector } from './inspector'
+import { Stage } from './stage'
+import { exportTheme } from './theme-export'
 
-type Step = 'head' | 'categories' | 'preview' | 'save'
-
-const DEFAULT_THEME_DATA: ThemeData = {
-  headAsset: null,
-  assets: [],
-  themeName: '',
-  size: 400,
-  borderRadius: '100%',
-}
-
-function serializeThemeData(data: ThemeData): string {
-  return JSON.stringify(data, (key, value) => {
-    if (key === 'file') return undefined
-    return value
-  })
-}
-
-function deserializeThemeData(raw: string): ThemeData {
-  const data = JSON.parse(raw) as ThemeData
-  const stubFile = new File([], 'restored')
-  const restoreAsset = (asset: Asset): Asset => ({
-    ...asset,
-    file: asset.file ?? stubFile,
-  })
-  return {
-    ...data,
-    headAsset: data.headAsset ? restoreAsset(data.headAsset) : null,
-    assets: data.assets.map(restoreAsset),
-  }
-}
+const sanitizeName = (raw: string): string =>
+  raw
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || 'my-theme'
 
 export const Studio = () => {
-  const navigate = useNavigate()
+  const builder = useBuilder()
+  const { assets, meta, patchMeta } = builder
+  const [exporting, setExporting] = useState(false)
 
-  const {
-    value: step,
-    setValue: setStep,
-    clear: clearStep,
-  } = usePersistedState<Step>('step', 'head')
-
-  const {
-    value: themeData,
-    setValue: setThemeData,
-    clear: clearThemeData,
-  } = usePersistedState<ThemeData>(
-    'themeData',
-    DEFAULT_THEME_DATA,
-    serializeThemeData,
-    deserializeThemeData,
-  )
-
-  const handleHeadUpload = (asset: Asset) => {
-    setThemeData((prev) => ({ ...prev, headAsset: asset }))
-    setStep('categories')
-  }
-
-  const handleAssetAdd = (asset: Asset) => {
-    setThemeData((prev) => ({
-      ...prev,
-      assets: [...prev.assets, asset],
-    }))
-  }
-
-  const handleAssetUpdate = (assetId: string, updates: Partial<Asset>) => {
-    setThemeData((prev) => {
-      if (prev.headAsset?.id === assetId) {
-        const deltaX =
-          updates.xPercent !== undefined
-            ? updates.xPercent - prev.headAsset.xPercent
-            : 0
-        const deltaY =
-          updates.yPercent !== undefined
-            ? updates.yPercent - prev.headAsset.yPercent
-            : 0
-
-        const updatedAssets =
-          deltaX !== 0 || deltaY !== 0
-            ? prev.assets.map((asset) => ({
-                ...asset,
-                xPercent: asset.xPercent + deltaX,
-                yPercent: asset.yPercent + deltaY,
-              }))
-            : prev.assets
-
-        return {
-          ...prev,
-          headAsset: { ...prev.headAsset, ...updates },
-          assets: updatedAssets,
-        }
-      }
-      return {
-        ...prev,
-        assets: prev.assets.map((asset) =>
-          asset.id === assetId ? { ...asset, ...updates } : asset,
-        ),
-      }
-    })
-  }
-
-  const handleAssetRemove = (assetId: string) => {
-    setThemeData((prev) => ({
-      ...prev,
-      assets: prev.assets.filter((asset) => asset.id !== assetId),
-    }))
-  }
-
-  const handleThemeSettingsChange = (
-    size: number,
-    borderRadius: string,
-    themeName?: string,
-  ) => {
-    setThemeData((prev) => ({
-      ...prev,
-      size,
-      borderRadius,
-      ...(themeName !== undefined && { themeName }),
-    }))
-  }
-
-  const canNavigateToStep = (targetStep: Step): boolean => {
-    switch (targetStep) {
-      case 'head':
-        return true
-      case 'categories':
-        return themeData.headAsset !== null
-      case 'preview':
-        return themeData.headAsset !== null && themeData.assets.length > 0
-      case 'save':
-        return step === 'preview' || step === 'save'
-      default:
-        return false
+  const handleExport = async () => {
+    const all = Object.values(assets)
+    if (!all.some((asset) => asset.category === 'head')) {
+      window.alert('Add at least one Head asset before exporting.')
+      return
     }
-  }
+    const input = window.prompt('Theme name', meta.themeName)
+    if (input === null) return
+    const themeName = sanitizeName(input)
+    patchMeta({ themeName })
 
-  const handleStepClick = (targetStep: Step) => {
-    if (canNavigateToStep(targetStep)) {
-      setStep(targetStep)
+    setExporting(true)
+    try {
+      await exportTheme(all, meta, themeName)
+    } catch (error) {
+      console.error('Theme export failed:', error)
+      window.alert('Export failed. Check the console for details.')
+    } finally {
+      setExporting(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white antialiased flex flex-col">
-      <Stepper
-        currentStep={step}
-        onStepClick={handleStepClick}
-        canNavigateToStep={canNavigateToStep}
-      />
+    <div
+      style={{
+        height: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
+      <header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
+          padding: '14px 28px',
+          background: '#ffffff',
+          borderBottom: '1px solid #e8e5df',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+          <img
+            src="/favicon.png"
+            alt=""
+            width={22}
+            height={22}
+            style={{ borderRadius: 5 }}
+          />
+          <span
+            style={{ fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em' }}
+          >
+            Avatune
+          </span>
+        </div>
+        <div style={{ fontSize: 12, color: '#8a867e' }}>
+          Upload assets → position &amp; scale → export config
+        </div>
+        <div style={{ flex: 1 }} />
+        <button
+          type="button"
+          className="btn-dark"
+          onClick={() => void handleExport()}
+          disabled={exporting}
+        >
+          {exporting ? 'Exporting…' : 'Export'}
+        </button>
+      </header>
 
-      <main className="flex-1 px-6 py-8 sm:px-12 lg:px-16 max-w-7xl w-full mx-auto">
-        {step === 'head' && (
-          <HeadUploadStep
-            onUpload={handleHeadUpload}
-            headAsset={themeData.headAsset}
-          />
-        )}
-        {step === 'categories' && (
-          <CategoryUploadStep
-            onAssetAdd={handleAssetAdd}
-            onNext={() => setStep('preview')}
-            existingAssets={themeData.assets}
-            headAsset={themeData.headAsset}
-          />
-        )}
-        {step === 'preview' && (
-          <PreviewStep
-            themeData={themeData}
-            onAssetUpdate={handleAssetUpdate}
-            onAssetRemove={handleAssetRemove}
-            onNext={() => setStep('save')}
-            onBack={() => setStep('categories')}
-            onThemeSettingsChange={handleThemeSettingsChange}
-          />
-        )}
-        {step === 'save' && (
-          <SaveThemeStep
-            themeData={themeData}
-            onBack={() => setStep('preview')}
-            onReset={() => {
-              clearStep()
-              clearThemeData()
-              setThemeData(DEFAULT_THEME_DATA)
-              setStep('head')
-              navigate('/')
-            }}
-          />
-        )}
-      </main>
+      <div
+        style={{
+          flex: 1,
+          display: 'grid',
+          gridTemplateColumns: '280px 1fr 300px',
+          minHeight: 0,
+        }}
+      >
+        <CategoryPanel builder={builder} />
+        <Stage builder={builder} />
+        <Inspector builder={builder} />
+      </div>
     </div>
   )
 }

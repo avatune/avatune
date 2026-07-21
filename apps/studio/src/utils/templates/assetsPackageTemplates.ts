@@ -1,4 +1,6 @@
+import type { ThemeFillChain } from '../../types'
 import { capitalizeFirst } from '../caseUtils'
+import { getThemeFillMarker, normalizeThemeFillChain } from '../svgColors'
 
 /**
  * Generates the assets package.json
@@ -291,12 +293,31 @@ function \${variables.componentName}(\${variables.props}) {
 /**
  * Generates the assets rslib.shared.ts
  */
-export function generateAssetsRslibShared(): string {
+export function generateAssetsRslibShared(chains: ThemeFillChain[]): string {
+  const transformMappings = chains
+    .map((chain) => {
+      const normalized = normalizeThemeFillChain(chain)
+      const expression = normalized.transforms
+        .map((transform) => {
+          const invocation =
+            'amount' in transform
+              ? `${transform.type}(${transform.amount})`
+              : `${transform.type}()`
+          return `.${invocation}`
+        })
+        .join('')
+      const source = normalized.sourceColor
+        ? JSON.stringify(normalized.sourceColor)
+        : '$' + '{colorPropName}'
+      return `  '${getThemeFillMarker(normalized)}': \`{colord(${source})${expression}.toHex()}\`,`
+    })
+    .join('\n')
+
   return `import type { Config as SvgoConfig } from 'svgo'
 
 const uid = () => Math.random().toString(36).slice(2, 9)
-
 export const colordImport = "import { colord } from 'colord';"
+
 
 export const svgoConfig: SvgoConfig = {
   plugins: [
@@ -305,6 +326,7 @@ export const svgoConfig: SvgoConfig = {
       params: {
         overrides: {
           cleanupIds: false,
+          convertColors: false,
         },
       },
     },
@@ -320,14 +342,7 @@ export const getReplaceAttrValues = (
   uidPropName = 'uid',
 ) => ({
   currentColor: \`{\${colorPropName}}\`,
-  '#FCBE93': \`{\${colorPropName}}\`,
-  '#FF7A93': \`{\${colorPropName}}\`,
-  '#FFA882': \`{colord(\${colorPropName}).darken(0.05).toHex()}\`,
-  '#272424': \`{colord(\${colorPropName}).darken(0.2).toHex()}\`,
-  '#A4C856': \`{\${colorPropName}}\`,
-  '#8DA853': \`{colord(\${colorPropName}).darken(0.05).toHex()}\`,
-  '#4F8558': \`{colord(\${colorPropName}).darken(0.1).toHex()}\`,
-  '#F06E82': \`{\${colorPropName}}\`,
+${transformMappings}
   filter0_d_144_233: \`{\${uidPropName} + '-' + '\${uid()}'}\`,
   filter0_d_144_264: \`{\${uidPropName} + '-' + '\${uid()}'}\`,
   mask0_134_151: \`{\${uidPropName} + '-' + '\${uid()}'}\`,
@@ -446,6 +461,19 @@ declare module '*.svg?vue' {
 
   const component: DefineComponent<SvgComponentProps>
   export default component
+}
+
+declare module '*.svg?solid' {
+  import type { Component, JSX } from 'solid-js'
+
+  interface SvgComponentProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    class?: string
+    style?: JSX.CSSProperties | string
+  }
+
+  const component: Component<SvgComponentProps>
+  export default component
+  export const raw: string
 }
 
 declare module '*.svg?angular' {

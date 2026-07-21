@@ -1,5 +1,6 @@
 import ashleyseoTheme from '@avatune/ashley-seo-theme/vanilla'
 import ashleyyTheme from '@avatune/ashleyy-theme/vanilla'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/vanilla'
 import fatinverseTheme from '@avatune/fatin-verse-theme/vanilla'
 import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
@@ -23,6 +24,7 @@ export default meta
 
 type AshleySeoArgs = Omit<AvatarArgs<typeof ashleyseoTheme>, 'theme'>
 type AshleyyArgs = Omit<AvatarArgs<typeof ashleyyTheme>, 'theme'>
+type CyberpunkArgs = Omit<AvatarArgs<typeof cyberpunkTheme>, 'theme'>
 type FatinVerseArgs = Omit<AvatarArgs<typeof fatinverseTheme>, 'theme'>
 type KyuteArgs = Omit<AvatarArgs<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarArgs<typeof micahTheme>, 'theme'>
@@ -86,6 +88,21 @@ export const Ashleyy: StoryObj<AshleyyArgs> = {
   render: (args: AshleyyArgs) => {
     return avatar({
       theme: ashleyyTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    })
+  },
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
+export const Cyberpunk: StoryObj<CyberpunkArgs> = {
+  argTypes: getArgTypes(cyberpunkTheme),
+  render: (args: CyberpunkArgs) => {
+    return avatar({
+      theme: cyberpunkTheme,
       ...args,
       borderRadius: toBorderRadius(args.borderRadius),
     })
@@ -234,6 +251,7 @@ export const Yanliu: StoryObj<YanliuArgs> = {
 const themes = {
   'Ashley Seo': ashleyseoTheme,
   Ashleyy: ashleyyTheme,
+  Cyberpunk: cyberpunkTheme,
   'Fatin Verse': fatinverseTheme,
   Kyute: kyuteTheme,
   Micah: micahTheme,

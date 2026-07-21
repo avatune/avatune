@@ -1,0 +1,300 @@
+---
+title: "@avatune/cyberpunk-theme"
+description: "Avatar theme for Avatune using Cyberpunk assets."
+source: "packages/themes/cyberpunk-theme/README.md"
+---
+
+import AssetPreview from '../../../../components/docs/asset-preview.astro';
+import InstallTabs from '../../../../components/docs/install-tabs.astro';
+import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
+import {
+  bodyHoodie,
+  bodyJacket1,
+  bodyJacket2,
+  bodyJacket3,
+  bodyJacket4,
+  bodyPoncho,
+  bodyPoncho1,
+  noseClothespin,
+  noseMetal,
+  noseNarrow,
+  noseStandard,
+  noseWide1,
+  noseWide2,
+  mouthHooky,
+  mouthLips,
+  mouthNervous,
+  mouthOpen,
+  mouthSmiling,
+  headOval,
+  headRhombus,
+  headRobot,
+  headSquaredOval,
+  eyesAnxious,
+  eyesBrave,
+  eyesCurious,
+  eyesFocused,
+  eyesHusky,
+  eyesRound,
+  eyesSharp,
+  hairBob,
+  hairBraids,
+  hairForehead,
+  hairMedium,
+  hairShort,
+  hairStylish,
+} from '@avatune/cyberpunk-assets/svg';
+
+> Source: `packages/assets/cyberpunk-theme/README.md`
+
+Avatar theme for Avatune using cyberpunk design assets.
+
+
+<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-12345" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-678910" size={200} />
+  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+<InstallTabs packages="@avatune/cyberpunk-theme" />
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/cyberpunk-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/cyberpunk-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/cyberpunk-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/cyberpunk-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/cyberpunk-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="bob"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="hoodie"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Cyberpunk style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/cyberpunk-assets`](https://www.npmjs.com/package/@avatune/cyberpunk-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/cyberpunk-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/cyberpunk-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyJacket1} title="jacket1" hideCaption /> | `jacket1` |
+| <AssetPreview svg={bodyJacket2} title="jacket2" hideCaption /> | `jacket2` |
+| <AssetPreview svg={bodyJacket3} title="jacket3" hideCaption /> | `jacket3` |
+| <AssetPreview svg={bodyJacket4} title="jacket4" hideCaption /> | `jacket4` |
+| <AssetPreview svg={bodyPoncho} title="poncho" hideCaption /> | `poncho` |
+| <AssetPreview svg={bodyPoncho1} title="poncho1" hideCaption /> | `poncho1` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesAnxious} title="anxious" hideCaption /> | `anxious` |
+| <AssetPreview svg={eyesBrave} title="brave" hideCaption /> | `brave` |
+| <AssetPreview svg={eyesCurious} title="curious" hideCaption /> | `curious` |
+| <AssetPreview svg={eyesFocused} title="focused" hideCaption /> | `focused` |
+| <AssetPreview svg={eyesHusky} title="husky" hideCaption /> | `husky` |
+| <AssetPreview svg={eyesRound} title="round" hideCaption /> | `round` |
+| <AssetPreview svg={eyesSharp} title="sharp" hideCaption /> | `sharp` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBob} title="bob" hideCaption /> | `bob` |
+| <AssetPreview svg={hairBraids} title="braids" hideCaption /> | `braids` |
+| <AssetPreview svg={hairForehead} title="forehead" hideCaption /> | `forehead` |
+| <AssetPreview svg={hairMedium} title="medium" hideCaption /> | `medium` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+| <AssetPreview svg={hairStylish} title="stylish" hideCaption /> | `stylish` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headOval} title="oval" hideCaption /> | `oval` |
+| <AssetPreview svg={headRhombus} title="rhombus" hideCaption /> | `rhombus` |
+| <AssetPreview svg={headRobot} title="robot" hideCaption /> | `robot` |
+| <AssetPreview svg={headSquaredOval} title="squaredOval" hideCaption /> | `squaredOval` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthHooky} title="hooky" hideCaption /> | `hooky` |
+| <AssetPreview svg={mouthLips} title="lips" hideCaption /> | `lips` |
+| <AssetPreview svg={mouthNervous} title="nervous" hideCaption /> | `nervous` |
+| <AssetPreview svg={mouthOpen} title="open" hideCaption /> | `open` |
+| <AssetPreview svg={mouthSmiling} title="smiling" hideCaption /> | `smiling` |
+
+#### Nose
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseClothespin} title="clothespin" hideCaption /> | `clothespin` |
+| <AssetPreview svg={noseMetal} title="metal" hideCaption /> | `metal` |
+| <AssetPreview svg={noseNarrow} title="narrow" hideCaption /> | `narrow` |
+| <AssetPreview svg={noseStandard} title="standard" hideCaption /> | `standard` |
+| <AssetPreview svg={noseWide1} title="wide1" hideCaption /> | `wide1` |
+| <AssetPreview svg={noseWide2} title="wide2" hideCaption /> | `wide2` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under MIT (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/cyberpunk-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/cyberpunk-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

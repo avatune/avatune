@@ -1,6 +1,7 @@
 <script lang="ts">
 import ashleySeoTheme from '@avatune/ashley-seo-theme/svelte'
 import ashleyyTheme from '@avatune/ashleyy-theme/svelte'
+import cyberpunkTheme from '@avatune/cyberpunk-theme/svelte'
 import fatinVerseTheme from '@avatune/fatin-verse-theme/svelte'
 import kyuteTheme from '@avatune/kyute-theme/svelte'
 import micahTheme from '@avatune/micah-theme/svelte'
@@ -25,6 +26,7 @@ import FrameworkSelector from './framework-selector.svelte'
 import ThemeSelector from './theme-selector.svelte'
 
 const themeMap: Record<string, unknown> = {
+  cyberpunk: cyberpunkTheme,
   kyute: kyuteTheme,
   micah: micahTheme,
   miniavs: miniavsTheme,

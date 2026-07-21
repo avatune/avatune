@@ -2,44 +2,41 @@
 const cells = [
   {
     num: '01',
-    titleHtml: 'SSR-first, <span class="font-normal text-ink-3">by default</span>',
-    desc:
-      'Every avatar renders to deterministic SVG on the server. No hydration jank, no layout shift, no flicker on cold cache.',
+    titleHtml:
+      'SSR-first, <span class="font-normal text-ink-3">by default</span>',
+    desc: 'Every avatar renders to deterministic SVG on the server. No hydration jank, no layout shift, no flicker on cold cache.',
     icon: 'ssr',
   },
   {
     num: '02',
-    titleHtml: 'Seeded &amp; <span class="font-normal text-ink-3">deterministic</span>',
-    desc:
-      'Same seed in, same avatar out — across renders, processes, and CDN edges. Cache it forever or generate at request time.',
+    titleHtml:
+      'Seeded &amp; <span class="font-normal text-ink-3">deterministic</span>',
+    desc: 'Same seed in, same avatar out — across renders, processes, and CDN edges. Cache it forever or generate at request time.',
     icon: 'seed',
   },
   {
     num: '03',
     titleHtml: 'Tree-shakeable themes',
-    desc:
-      'Each theme is its own package. Ship only the styles you import. Average bundle: 4.1kb gzipped per theme.',
+    desc: 'Each theme is its own package. Ship only the styles you import. Average bundle: 4.1kb gzipped per theme.',
     icon: 'tree',
   },
   {
     num: '04',
     titleHtml: 'Typed <span class="font-normal text-ink-3">end-to-end</span>',
-    desc:
-      'Theme tokens, part names, and configuration all flow through TypeScript. Autocomplete every hair style and skin tone.',
+    desc: 'Theme tokens, part names, and configuration all flow through TypeScript. Autocomplete every hair style and skin tone.',
     icon: 'ts',
   },
   {
     num: '05',
     titleHtml: 'Framework-native APIs',
-    desc:
-      'Not a wrapper. <code>@avatune/react</code>, <code>@avatune/svelte</code>, and friends each compile to idiomatic primitives.',
+    desc: 'Not a wrapper. <code>@avatune/react</code>, <code>@avatune/svelte</code>, and friends each compile to idiomatic primitives.',
     icon: 'fw',
   },
   {
     num: '06',
-    titleHtml: 'Compose, don&rsquo;t <span class="font-normal text-ink-3">configure</span>',
-    desc:
-      'Every part is a slot. Swap eyebrows from one theme into another, or drop in your own SVG. The system stays consistent.',
+    titleHtml:
+      'Compose, don&rsquo;t <span class="font-normal text-ink-3">configure</span>',
+    desc: 'Every part is a slot. Swap eyebrows from one theme into another, or drop in your own SVG. The system stays consistent.',
     icon: 'compose',
   },
 ] as const

@@ -76,9 +76,7 @@ export async function generateThemeFolder(
   for (const [category, categoryAssets] of assetsByCategory.entries()) {
     const categoryFolder = assetsSvgFolder?.folder(category)
     for (const assetFile of categoryAssets) {
-      const response = await fetch(assetFile.asset.dataUrl)
-      const blob = await response.blob()
-      categoryFolder?.file(assetFile.fileName, blob)
+      categoryFolder?.file(assetFile.fileName, assetFile.asset.file)
     }
   }
 
@@ -104,7 +102,10 @@ export async function generateThemeFolder(
   )
   assetsFolder?.file('tsconfig.json', generateAssetsTsconfig())
   assetsFolder?.file('rslib.config.ts', generateAssetsRslibConfig())
-  assetsFolder?.file('rslib.shared.ts', generateAssetsRslibShared())
+  assetsFolder?.file(
+    'rslib.shared.ts',
+    generateAssetsRslibShared(themeData.secondaryColorChains),
+  )
   assetsFolder?.file(
     'rslib.native.config.ts',
     generateAssetsRslibNativeConfig(),
@@ -123,7 +124,7 @@ export async function generateThemeFolder(
 
   // Add shared.ts and colors.ts
   themeSrcFolder?.file('shared.ts', themeCode)
-  themeSrcFolder?.file('colors.ts', generateThemeColors())
+  themeSrcFolder?.file('colors.ts', generateThemeColors(themeData))
 
   // Generate framework-specific theme files
   const themeFrameworks = [

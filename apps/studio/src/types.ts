@@ -14,6 +14,39 @@ export type CategoryId =
   | 'forelock'
   | 'hats'
 
+export type ThemeColorCategory = CategoryId | 'background'
+
+export interface ThemeColor {
+  id: string
+  name: string
+  value: string
+}
+
+export interface ThemePalette {
+  id: string
+  name: string
+  colors: ThemeColor[]
+}
+
+export type PaletteAssignments = Partial<Record<ThemeColorCategory, string>>
+
+export type ThemeFillTransform =
+  | {
+      type: 'darken' | 'lighten' | 'saturate' | 'desaturate' | 'rotate'
+      amount: number
+    }
+  | { type: 'grayscale' | 'invert' }
+
+export interface ThemeFillChain {
+  type: 'custom'
+  sourceColor?: string
+  transforms: ThemeFillTransform[]
+}
+
+export type ThemeFillBinding = { type: 'primary' } | ThemeFillChain
+
+export type ThemeFillBindings = Record<number, ThemeFillBinding>
+
 export interface Category {
   id: CategoryId
   label: string
@@ -27,6 +60,7 @@ export interface Asset {
   dataUrl: string
   category: CategoryId
   xPercent: number
+  usesThemeColor: boolean
   yPercent: number
   layer: number
   scale: number
@@ -40,6 +74,9 @@ export interface ThemeData {
   themeName: string
   size: number
   borderRadius: string
+  palettes: ThemePalette[]
+  paletteByCategory: PaletteAssignments
+  secondaryColorChains: ThemeFillChain[]
 }
 
 export const CATEGORIES: Category[] = [
@@ -58,20 +95,3 @@ export const CATEGORIES: Category[] = [
   { id: 'forelock', label: 'Forelock', optional: true },
   { id: 'hats', label: 'Hats', optional: true },
 ]
-
-export const DEFAULT_LAYERS: Record<CategoryId, number> = {
-  head: 1,
-  hair: 15,
-  eyes: 20,
-  eyebrows: 25,
-  mouth: 32,
-  nose: 21,
-  ears: 40,
-  body: 10,
-  glasses: 35,
-  faceHair: 30,
-  accessories: 41,
-  faceDetails: 25,
-  forelock: 15,
-  hats: 15,
-}
