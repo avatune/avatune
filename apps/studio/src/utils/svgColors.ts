@@ -256,6 +256,84 @@ export const getSvgFillParts = (svg: string): SvgFillPart[] => {
   return parts
 }
 
+const UNSAFE_INTERACTIVE_SVG_ELEMENTS =
+  'script, foreignObject, iframe, object, embed, audio, video, style, link, animate, animateMotion, animateTransform, set'
+const EXTERNAL_SVG_URL_PATTERN = /url\(\s*['"]?(?!#)/i
+const PICKER_STYLE_PROPERTIES = new Set([
+  'fill',
+  'fill-opacity',
+  'opacity',
+  'pointer-events',
+  'stroke',
+  'stroke-opacity',
+  'stroke-width',
+  'visibility',
+])
+
+export const createSvgFillPickerElement = (
+  svg: string,
+): SVGSVGElement | null => {
+  if (typeof DOMParser === 'undefined') return null
+
+  const document = new DOMParser().parseFromString(svg, 'image/svg+xml')
+  const root = document.documentElement
+  if (
+    root.localName.toLowerCase() !== 'svg' ||
+    document.querySelector('parsererror')
+  ) {
+    return null
+  }
+
+  for (const element of Array.from(
+    document.querySelectorAll(UNSAFE_INTERACTIVE_SVG_ELEMENTS),
+  )) {
+    element.remove()
+  }
+
+  const elements = [root, ...Array.from(root.querySelectorAll('*'))]
+  for (const element of elements) {
+    for (const attribute of Array.from(element.attributes)) {
+      const name = attribute.name.toLowerCase()
+      const value = attribute.value.trim()
+      if (name === 'style') {
+        const style = value
+          .split(';')
+          .filter((declaration) => {
+            const property = declaration.split(':', 1)[0].trim().toLowerCase()
+            return !PICKER_STYLE_PROPERTIES.has(property)
+          })
+          .join(';')
+        if (style && !EXTERNAL_SVG_URL_PATTERN.test(style)) {
+          element.setAttribute(attribute.name, style)
+        } else {
+          element.removeAttribute(attribute.name)
+        }
+        continue
+      }
+      if (
+        name.startsWith('on') ||
+        ((name === 'href' || name === 'xlink:href') &&
+          !value.startsWith('#')) ||
+        EXTERNAL_SVG_URL_PATTERN.test(value)
+      ) {
+        element.removeAttribute(attribute.name)
+      }
+    }
+  }
+
+  let fillIndex = 0
+  for (const element of elements) {
+    const fill = element.getAttribute('fill')
+    if (!fill || !isThemeableFill(fill)) continue
+    element.setAttribute('data-avatune-fill-index', String(fillIndex))
+    fillIndex += 1
+  }
+
+  root.setAttribute('aria-hidden', 'true')
+  root.setAttribute('focusable', 'false')
+  return root as unknown as SVGSVGElement
+}
+
 export const replaceSvgFillSource = (
   svg: string,
   targetIndex: number,

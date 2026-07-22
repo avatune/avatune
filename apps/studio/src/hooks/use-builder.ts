@@ -7,6 +7,7 @@ import type {
   ThemeFillTransform,
   ThemePalette,
 } from '../types'
+import type { StudioProject } from '../utils/studioProject'
 
 export interface BuilderAsset {
   id: string
@@ -164,13 +165,21 @@ const uid = () =>
   Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
 
 function openDb(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1)
-    request.onupgradeneeded = () =>
-      request.result.createObjectStore(STORE, { keyPath: 'id' })
-    request.onsuccess = () => resolve(request.result)
-    request.onerror = () => reject(request.error)
-  })
+  const { promise, resolve, reject } = Promise.withResolvers<IDBDatabase>()
+  const request = indexedDB.open(DB_NAME, 1)
+  request.onupgradeneeded = () =>
+    request.result.createObjectStore(STORE, { keyPath: 'id' })
+  request.onsuccess = () => resolve(request.result)
+  request.onerror = () => reject(request.error)
+  return promise
+}
+
+const waitForTransaction = (transaction: IDBTransaction): Promise<void> => {
+  const { promise, resolve, reject } = Promise.withResolvers<void>()
+  transaction.oncomplete = () => resolve()
+  transaction.onerror = () => reject(transaction.error)
+  transaction.onabort = () => reject(transaction.error)
+  return promise
 }
 
 const toObjectUrl = (svg: string) =>
@@ -326,6 +335,41 @@ export function useBuilder() {
     },
     [addAsset, assets, selCat],
   )
+
+  const importProject = useCallback(async (project: StudioProject) => {
+    const db = dbRef.current ?? (await openDb())
+    dbRef.current = db
+    const transaction = db.transaction(STORE, 'readwrite')
+    const store = transaction.objectStore(STORE)
+    store.clear()
+    for (const asset of project.assets) store.put(asset)
+    await waitForTransaction(transaction)
+
+    const importedAssets = Object.fromEntries(
+      project.assets.map((asset) => [
+        asset.id,
+        { ...asset, url: toObjectUrl(asset.svg) },
+      ]),
+    )
+    setAssets((current) => {
+      for (const asset of Object.values(current)) {
+        URL.revokeObjectURL(asset.url)
+      }
+      return importedAssets
+    })
+    setMeta(project.meta)
+    try {
+      localStorage.setItem(META_KEY, JSON.stringify(project.meta))
+    } catch {
+      // ignore quota errors
+    }
+    setActiveByCat({})
+    const selectedAsset =
+      project.assets.find((asset) => asset.category === 'head') ??
+      project.assets[0]
+    setSelCat(selectedAsset?.category ?? 'head')
+    setSelId(selectedAsset?.id ?? null)
+  }, [])
 
   const removeAsset = useCallback((id: string) => {
     setAssets((prev) => {
@@ -578,6 +622,7 @@ export function useBuilder() {
     uploadFiles,
     pasteSvg,
     removeAsset,
+    importProject,
     updateAsset,
     resetPlacement,
     applyToCategory,

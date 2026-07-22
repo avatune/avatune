@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import type { ChangeEvent } from 'react'
+import { useRef, useState } from 'react'
 import { useBuilder } from '../../hooks/use-builder'
+import { parseStudioProject } from '../../utils/studioProject'
 import { CategoryPanel } from './category-panel'
 import { Inspector } from './inspector'
 import { Stage } from './stage'
-import { exportTheme } from './theme-export'
+import { exportStudioProject } from './theme-export'
 
 const sanitizeName = (raw: string): string =>
   raw
@@ -14,8 +16,10 @@ const sanitizeName = (raw: string): string =>
 
 export const Studio = () => {
   const builder = useBuilder()
-  const { assets, meta, patchMeta } = builder
+  const { assets, meta, patchMeta, importProject } = builder
   const [exporting, setExporting] = useState(false)
+  const [importing, setImporting] = useState(false)
+  const importInputRef = useRef<HTMLInputElement | null>(null)
 
   const handleExport = async () => {
     const all = Object.values(assets)
@@ -30,12 +34,39 @@ export const Studio = () => {
 
     setExporting(true)
     try {
-      await exportTheme(all, meta, themeName)
+      exportStudioProject(all, meta, themeName)
     } catch (error) {
       console.error('Theme export failed:', error)
       window.alert('Export failed. Check the console for details.')
     } finally {
       setExporting(false)
+    }
+  }
+
+  const handleImport = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files?.[0]
+    event.currentTarget.value = ''
+    if (!file) return
+
+    setImporting(true)
+    try {
+      const parsed = parseStudioProject(JSON.parse(await file.text()))
+      if (!parsed.ok) {
+        window.alert(parsed.error)
+        return
+      }
+      if (
+        Object.keys(assets).length > 0 &&
+        !window.confirm('Replace the current Studio project with this file?')
+      ) {
+        return
+      }
+      await importProject(parsed.project)
+    } catch (error) {
+      console.error('Studio import failed:', error)
+      window.alert('Import failed. Select a valid Avatune Studio JSON file.')
+    } finally {
+      setImporting(false)
     }
   }
 
@@ -73,14 +104,29 @@ export const Studio = () => {
           </span>
         </div>
         <div style={{ fontSize: 12, color: '#8a867e' }}>
-          Upload assets → position &amp; scale → export config
+          Upload assets → position &amp; scale → export JSON
         </div>
         <div style={{ flex: 1 }} />
+        <input
+          ref={importInputRef}
+          type="file"
+          accept=".json,application/json"
+          onChange={(event) => void handleImport(event)}
+          style={{ display: 'none' }}
+        />
+        <button
+          type="button"
+          className="chip-btn"
+          onClick={() => importInputRef.current?.click()}
+          disabled={importing || exporting}
+        >
+          {importing ? 'Importing…' : 'Import'}
+        </button>
         <button
           type="button"
           className="btn-dark"
           onClick={() => void handleExport()}
-          disabled={exporting}
+          disabled={exporting || importing}
         >
           {exporting ? 'Exporting…' : 'Export'}
         </button>

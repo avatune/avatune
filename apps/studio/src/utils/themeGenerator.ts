@@ -25,13 +25,13 @@ import type { AssetFile } from './types'
 export { generateThemeFile } from './generators'
 
 /**
- * Generates a ZIP file containing the complete theme and assets packages
+ * Builds the complete theme and assets packages as a portable archive.
  */
-export async function generateThemeFolder(
+export function createThemeArchive(
   themeName: string,
   themeCode: string,
   themeData: ThemeData,
-): Promise<void> {
+): JSZip {
   const zip = new JSZip()
   const assetsPackageName = `${themeName}-assets`
   const themePackageName = `${themeName}-theme`
@@ -157,16 +157,22 @@ export async function generateThemeFolder(
     generateThemeReadme(themeName, themePackageName, assetsPackageName),
   )
 
-  // ============================================================================
-  // GENERATE AND DOWNLOAD ZIP
-  // ============================================================================
+  return zip
+}
+
+export async function generateThemeFolder(
+  themeName: string,
+  themeCode: string,
+  themeData: ThemeData,
+): Promise<void> {
+  const zip = createThemeArchive(themeName, themeCode, themeData)
   const blob = await zip.generateAsync({ type: 'blob' })
   const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = `${themeName}.zip`
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = `${themeName}.zip`
+  document.body.appendChild(anchor)
+  anchor.click()
+  anchor.remove()
   URL.revokeObjectURL(url)
 }

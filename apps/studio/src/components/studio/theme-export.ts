@@ -1,13 +1,10 @@
 import type { BuilderAsset, ContainerMeta } from '../../hooks/use-builder'
 import type { Asset, ThemeData, ThemeFillChain } from '../../types'
+import { createStudioProject } from '../../utils/studioProject'
 import {
   normalizeThemeFillChain,
   replaceSvgFillParts,
 } from '../../utils/svgColors'
-import {
-  generateThemeFile,
-  generateThemeFolder,
-} from '../../utils/themeGenerator'
 
 const readSvgDimensions = (svg: string) => {
   const viewBox = svg
@@ -76,7 +73,7 @@ const toAsset = (asset: BuilderAsset, size: number): Asset => {
   return {
     id: asset.id,
     name: asset.name,
-    file: new File([svg], `${asset.name}.svg`, { type: 'image/svg+xml' }),
+    file: svg,
     dataUrl: asset.url,
     category: asset.category,
     usesThemeColor,
@@ -122,16 +119,21 @@ export const toThemeData = (
   }
 }
 
-/**
- * Builds and downloads the theme + assets package ZIP — the same output the
- * previous multi-step flow produced.
- */
-export const exportTheme = async (
+export const exportStudioProject = (
   assets: BuilderAsset[],
   meta: ContainerMeta,
   themeName: string,
-): Promise<void> => {
-  const themeData = toThemeData(assets, meta, themeName)
-  const themeCode = generateThemeFile(themeData)
-  await generateThemeFolder(themeName, themeCode, themeData)
+): void => {
+  const project = createStudioProject(assets, { ...meta, themeName })
+  const blob = new Blob([JSON.stringify(project, null, 2)], {
+    type: 'application/json',
+  })
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  anchor.href = url
+  anchor.download = `${themeName}.json`
+  document.body.appendChild(anchor)
+  anchor.click()
+  anchor.remove()
+  URL.revokeObjectURL(url)
 }

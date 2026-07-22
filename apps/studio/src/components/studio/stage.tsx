@@ -1,10 +1,26 @@
-import { useMemo } from 'react'
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
+} from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Builder } from '../../hooks/use-builder'
-import { replaceSvgFillParts, svgToDataUrl } from '../../utils/svgColors'
+import {
+  createSvgFillPickerElement,
+  replaceSvgFillParts,
+  svgToDataUrl,
+} from '../../utils/svgColors'
 import { ThemeColors } from './theme-colors'
 
 interface StageProps {
   builder: Builder
+}
+
+const getFillIndex = (target: EventTarget | null): number | null => {
+  if (!(target instanceof Element)) return null
+  const fillElement = target.closest('[data-avatune-fill-index]')
+  if (!fillElement) return null
+  const index = Number(fillElement.getAttribute('data-avatune-fill-index'))
+  return Number.isInteger(index) ? index : null
 }
 
 export const Stage = ({ builder }: StageProps) => {
@@ -18,8 +34,52 @@ export const Stage = ({ builder }: StageProps) => {
     onStageMouseDown,
     onStageKeyDown,
   } = builder
+  const [isFillPickerActive, setIsFillPickerActive] = useState(false)
+  const [hoveredFillIndex, setHoveredFillIndex] = useState<number | null>(null)
+  const [focusedFill, setFocusedFill] = useState<{
+    assetId: string
+    index: number
+  } | null>(null)
+  const pickerRef = useRef<HTMLDivElement | null>(null)
+  const focusedFillIndex =
+    focusedFill && focusedFill.assetId === selected?.id
+      ? focusedFill.index
+      : null
 
-  const cursor = dragging ? 'grabbing' : selected ? 'grab' : 'default'
+  const handleFillPickerChange = (active: boolean) => {
+    setIsFillPickerActive(active)
+    if (!active) setHoveredFillIndex(null)
+  }
+
+  const handlePickerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
+    setHoveredFillIndex(getFillIndex(event.target))
+  }
+
+  const handlePickerClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    const fillIndex = getFillIndex(event.target)
+    if (fillIndex !== null && selected) {
+      setFocusedFill({ assetId: selected.id, index: fillIndex })
+    }
+  }
+
+  const handlePickerKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    if ((event.key === 'Enter' || event.key === ' ') && selected) {
+      event.preventDefault()
+      setFocusedFill({
+        assetId: selected.id,
+        index: hoveredFillIndex ?? focusedFillIndex ?? 0,
+      })
+    }
+  }
+
+  const cursor = isFillPickerActive
+    ? 'crosshair'
+    : dragging
+      ? 'grabbing'
+      : selected
+        ? 'grab'
+        : 'default'
   const paletteById = useMemo(
     () =>
       Object.fromEntries(meta.palettes.map((palette) => [palette.id, palette])),
@@ -46,11 +106,15 @@ export const Stage = ({ builder }: StageProps) => {
           palette?.colors.find((entry) => entry.id === previewColorId)?.value ??
           palette?.colors[0]?.value ??
           '#000000'
+        const previewSvg = replaceSvgFillParts(
+          layer.svg,
+          layer.themeFillBindings,
+          color,
+        )
         return {
           ...layer,
-          previewUrl: svgToDataUrl(
-            replaceSvgFillParts(layer.svg, layer.themeFillBindings, color),
-          ),
+          previewSvg,
+          previewUrl: svgToDataUrl(previewSvg),
         }
       }),
     [
@@ -60,6 +124,17 @@ export const Stage = ({ builder }: StageProps) => {
       visibleLayers,
     ],
   )
+  const pickerLayer = isFillPickerActive
+    ? previewLayers.find((layer) => layer.id === selected?.id)
+    : undefined
+  useEffect(() => {
+    const container = pickerRef.current
+    if (!container || !pickerLayer) return
+    const pickerSvg = createSvgFillPickerElement(pickerLayer.previewSvg)
+    if (!pickerSvg) return
+    container.replaceChildren(pickerSvg)
+    return () => pickerSvg.remove()
+  }, [pickerLayer])
 
   return (
     <main
@@ -88,7 +163,9 @@ export const Stage = ({ builder }: StageProps) => {
           Preview &amp; Adjust
         </div>
         <div style={{ fontSize: 11.5, color: '#a5a19a' }}>
-          Drag to move · arrow keys nudge · ⇧ = ×10 · scroll to scale
+          {isFillPickerActive
+            ? 'Hover a path · click to locate its color'
+            : 'Drag to move · arrow keys nudge · ⇧ = ×10 · scroll to scale'}
         </div>
       </div>
 
@@ -154,6 +231,53 @@ export const Stage = ({ builder }: StageProps) => {
             }}
           />
         ))}
+        {pickerLayer && (
+          <div
+            ref={pickerRef}
+            className="svg-fill-picker"
+            role="application"
+            aria-label="Pick a path from the selected SVG"
+            // biome-ignore lint/a11y/noNoninteractiveTabindex: the SVG path picker needs focus for keyboard selection
+            tabIndex={0}
+            onMouseMove={handlePickerMove}
+            onMouseLeave={() => setHoveredFillIndex(null)}
+            onMouseDown={(event) => event.stopPropagation()}
+            onClick={handlePickerClick}
+            onKeyDown={handlePickerKeyDown}
+            style={{
+              position: 'absolute',
+              left: `${pickerLayer.x}%`,
+              top: `${pickerLayer.y}%`,
+              width: `${pickerLayer.scale}%`,
+              transform: `translate(-50%,-50%) rotate(${pickerLayer.rotation}deg)`,
+              zIndex: pickerLayer.layer,
+              cursor: 'crosshair',
+            }}
+          />
+        )}
+        {isFillPickerActive && hoveredFillIndex !== null && (
+          <div
+            aria-live="polite"
+            style={{
+              position: 'absolute',
+              top: 10,
+              left: 10,
+              zIndex: 10_000,
+              padding: '5px 8px',
+              border: '1px solid #b8c9c0',
+              borderRadius: 5,
+              background: 'rgba(255,255,255,0.96)',
+              color: '#33493f',
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 11,
+              fontWeight: 600,
+              pointerEvents: 'none',
+              boxShadow: '0 2px 8px rgba(28,27,25,0.1)',
+            }}
+          >
+            Path {hoveredFillIndex}
+          </div>
+        )}
       </div>
 
       {previewLayers.length === 0 && (
@@ -188,7 +312,12 @@ export const Stage = ({ builder }: StageProps) => {
           boxShadow: '0 8px 28px rgba(28,27,25,0.12)',
         }}
       >
-        <ThemeColors builder={builder} />
+        <ThemeColors
+          builder={builder}
+          isFillPickerActive={isFillPickerActive}
+          focusedFillIndex={focusedFillIndex}
+          onFillPickerActiveChange={handleFillPickerChange}
+        />
       </section>
     </main>
   )

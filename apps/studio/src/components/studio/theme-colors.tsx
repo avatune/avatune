@@ -1,5 +1,5 @@
 import { colord } from 'colord'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Builder } from '../../hooks/use-builder'
 import type {
   PaletteAssignments,
@@ -18,6 +18,9 @@ import {
 
 interface ThemeColorsProps {
   builder: Builder
+  isFillPickerActive: boolean
+  focusedFillIndex: number | null
+  onFillPickerActiveChange: (active: boolean) => void
 }
 
 const uid = () =>
@@ -52,7 +55,12 @@ interface FillCustomization {
   code: string
 }
 
-export const ThemeColors = ({ builder }: ThemeColorsProps) => {
+export const ThemeColors = ({
+  builder,
+  isFillPickerActive,
+  focusedFillIndex,
+  onFillPickerActiveChange,
+}: ThemeColorsProps) => {
   const { meta, patchMeta, selected, updateAsset } = builder
   const [selectedPaletteId, setSelectedPaletteId] = useState(
     meta.palettes[0]?.id ?? '',
@@ -60,6 +68,7 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
   const [renameValue, setRenameValue] = useState<string | null>(null)
   const [fillCustomization, setFillCustomization] =
     useState<FillCustomization | null>(null)
+  const fillPartRefs = useRef(new Map<number, HTMLDivElement>())
 
   const selectedPalette =
     meta.palettes.find((palette) => palette.id === selectedPaletteId) ??
@@ -88,6 +97,12 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
     () => (selectedSvg ? getSvgFillParts(selectedSvg) : []),
     [selectedSvg],
   )
+  useEffect(() => {
+    if (focusedFillIndex === null) return
+    fillPartRefs.current
+      .get(focusedFillIndex)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [focusedFillIndex])
   const activeFillCustomization =
     selected && fillCustomization?.assetId === selected.id
       ? fillCustomization
@@ -197,6 +212,7 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
 
   const startFillCustomization = (parts: typeof fillParts) => {
     if (!selected || parts.length === 0) return
+    onFillPickerActiveChange(false)
     const firstBinding = selected.themeFillBindings[parts[0].index]
     const bindingKey = JSON.stringify(firstBinding ?? null)
     const sharedBinding = parts.every(
@@ -773,7 +789,25 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
             gap: 10,
           }}
         >
-          <div className="eyebrow">Selected asset colors</div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 10,
+            }}
+          >
+            <div className="eyebrow">Selected asset colors</div>
+            <button
+              type="button"
+              className={`chip-btn fill-picker-button${isFillPickerActive ? ' active' : ''}`}
+              aria-pressed={isFillPickerActive}
+              disabled={fillParts.length === 0}
+              onClick={() => onFillPickerActiveChange(!isFillPickerActive)}
+            >
+              {isFillPickerActive ? 'Done picking' : 'Pick path'}
+            </button>
+          </div>
 
           {fillParts.length > 0 ? (
             <fieldset
@@ -859,6 +893,14 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
                         return (
                           <div
                             key={part.index}
+                            ref={(node) => {
+                              if (node) {
+                                fillPartRefs.current.set(part.index, node)
+                              } else {
+                                fillPartRefs.current.delete(part.index)
+                              }
+                            }}
+                            data-fill-index={part.index}
                             style={{
                               display: 'grid',
                               gridTemplateColumns:
@@ -867,6 +909,19 @@ export const ThemeColors = ({ builder }: ThemeColorsProps) => {
                               gap: 7,
                               fontSize: 12,
                               color: '#6b675f',
+                              padding: '4px 5px',
+                              borderRadius: 6,
+                              background:
+                                focusedFillIndex === part.index
+                                  ? '#eef2ef'
+                                  : 'transparent',
+                              outline:
+                                focusedFillIndex === part.index
+                                  ? '1px solid #b8c9c0'
+                                  : '1px solid transparent',
+                              scrollMarginBlock: 8,
+                              transition:
+                                'background 120ms ease, outline-color 120ms ease',
                             }}
                           >
                             <input

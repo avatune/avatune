@@ -228,6 +228,40 @@ input[type="range"] {
   cursor: default;
 }
 
+.fill-picker-button {
+  padding: 5px 9px;
+}
+.fill-picker-button.active {
+  background: #eef2ef;
+  border-color: #8fac9d;
+  color: #33493f;
+}
+
+.svg-fill-picker > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.svg-fill-picker svg * {
+  visibility: hidden;
+  pointer-events: none;
+}
+.svg-fill-picker [data-avatune-fill-index],
+.svg-fill-picker [data-avatune-fill-index] * {
+  visibility: visible;
+  pointer-events: all;
+  fill: transparent;
+  stroke: transparent;
+}
+.svg-fill-picker [data-avatune-fill-index]:hover,
+.svg-fill-picker [data-avatune-fill-index]:hover * {
+  fill: rgba(74, 107, 93, 0.28);
+  stroke: #33493f;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
 /* Monospace numeric fields */
 .field {
   border: 1px solid #ddd9d2;

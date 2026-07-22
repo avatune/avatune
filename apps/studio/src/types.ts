@@ -56,7 +56,7 @@ export interface Category {
 export interface Asset {
   id: string
   name: string
-  file: File
+  file: string
   dataUrl: string
   category: CategoryId
   xPercent: number

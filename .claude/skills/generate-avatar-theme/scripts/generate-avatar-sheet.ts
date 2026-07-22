@@ -1,46 +1,34 @@
 #!/usr/bin/env bun
-/**
- * Enhance an avatar art brief and generate one 3x3 image sheet for each
- * configurable avatar-part category through scripted OpenAI calls.
- */
 import { existsSync } from 'node:fs'
-import { copyFile, mkdir, readFile, writeFile } from 'node:fs/promises'
+import { copyFile, mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
-import sharp from 'sharp'
 import {
-  type EnhancedPrompt,
+  type GenerationState,
   type ImageCategoryManifest,
   type ImageManifest,
   PART_CATEGORIES,
   PART_DEFINITIONS,
   type PartCategory,
-  validateEnhancedPrompt,
+  SHEET_SIZE,
+  type ThemeSpec,
+  validateGenerationState,
   validateImageManifest,
+  validateThemeSpec,
 } from './avatar-theme-manifest'
-
-interface ResponsesResult {
-  status?: string
-  output_text?: string
-  output?: Array<{
-    content?: Array<{ type?: string; text?: string; refusal?: string }>
-  }>
-}
 
 interface ImageResult {
   data?: Array<{ b64_json?: string }>
 }
 
 const usage = `Usage:
-  bun generate-avatar-sheet.ts <name> --brief <text> [options]
-  bun generate-avatar-sheet.ts <name> --brief-file <path> [options]
+  bun generate-avatar-sheet.ts <name> --spec-file <path> [options]
 
 Options:
-  --feedback <text>           Correction from rejected image sheets
-  --only <categories>         Regenerate categories in an existing output directory
+  --feedback <text>           Correction for regenerated sheets
+  --only <categories>         Generate selected categories
+  --resume                    Reuse generated sheets that match the current prompt
   --output-dir <path>         Default: .preview/<name>-images
-  --enhancer-model <model>    Default: gpt-5.6
   --image-model <model>       Default: gpt-image-2
-  --fixture-manifest <path>   Skip prompt-enhancement API call
   --fixture-dir <path>        Copy <category>.png fixtures instead of image calls
   --help                      Print this help`
 
@@ -65,20 +53,15 @@ if (!/^[a-z][a-z0-9-]*$/.test(name)) {
   process.exit(1)
 }
 
-const briefValue = readOption('--brief')
-const briefFile = readOption('--brief-file')
-if (briefValue && briefFile) {
-  console.error('Use either --brief or --brief-file, not both')
+const specFile = readOption('--spec-file')
+if (!specFile) {
+  console.error(`--spec-file is required\n${usage}`)
   process.exit(1)
 }
-const fixtureManifestPath = readOption('--fixture-manifest')
-const fixtureDirectory = readOption('--fixture-dir')
-if (Boolean(fixtureManifestPath) !== Boolean(fixtureDirectory)) {
-  console.error('--fixture-manifest and --fixture-dir must be used together')
-  process.exit(1)
-}
-
+const spec = validateThemeSpec(JSON.parse(await readFile(specFile, 'utf8')), name)
 const feedback = readOption('--feedback')
+const fixtureDirectory = readOption('--fixture-dir')
+const resume = options.includes('--resume')
 const onlyValue = readOption('--only')
 const selectedCategories = (
   onlyValue
@@ -93,79 +76,98 @@ if (unknownCategory) {
   console.error(`Unknown --only category: ${unknownCategory}\nValid categories: ${PART_CATEGORIES.join(', ')}`)
   process.exit(1)
 }
+if (!selectedCategories.length) {
+  console.error('--only must contain at least one category')
+  process.exit(1)
+}
 
 const outputDirectory = resolve(readOption('--output-dir') ?? `.preview/${name}-images`)
+const stateDirectory = join(outputDirectory, '.state')
+const statePath = join(stateDirectory, 'generation.json')
 const manifestPath = join(outputDirectory, 'manifest.json')
-if (onlyValue && !existsSync(manifestPath)) {
-  console.error(`--only requires an existing image manifest at ${manifestPath}`)
-  process.exit(1)
-}
-
-const enhancerModel = readOption('--enhancer-model') ?? 'gpt-5.6'
 const imageModel = readOption('--image-model') ?? 'gpt-image-2'
-const brief = briefValue ?? (briefFile ? (await readFile(briefFile, 'utf8')).trim() : '')
-if (!brief && !fixtureManifestPath) {
-  console.error('A non-empty --brief or --brief-file is required')
-  process.exit(1)
+
+const canonicalSkinColor = (themeSpec: ThemeSpec) => {
+  const color = themeSpec.palette.skin[0]
+  if (!color) throw new Error('Theme spec must define a canonical skin color')
+  return color
 }
 
-const categorySchema = Object.fromEntries(
-  PART_CATEGORIES.map((category) => [
-    category,
-    {
-      type: 'object',
-      additionalProperties: false,
-      required: ['names', 'subject'],
-      properties: {
-        names: {
-          type: 'array',
-          minItems: 9,
-          maxItems: 9,
-          items: { type: 'string', pattern: '^[a-z][A-Za-z0-9]*$' },
-        },
-        subject: { type: 'string', minLength: 80 },
-      },
-    },
-  ]),
-)
-const promptSchema = {
-  type: 'object',
-  additionalProperties: false,
-  required: ['artDirection', 'categories'],
-  properties: {
-    artDirection: { type: 'string', minLength: 80 },
-    categories: {
-      type: 'object',
-      additionalProperties: false,
-      required: [...PART_CATEGORIES],
-      properties: categorySchema,
-    },
-  },
-} as const
+const colorsForCategory = (themeSpec: ThemeSpec, category: PartCategory) => {
+  const colors: string[] = []
+  const seenColors = new Set<string>()
+  for (const role of PART_DEFINITIONS[category].paletteRoles) {
+    const roleColors =
+      role === 'outline'
+        ? [themeSpec.palette.outline]
+        : role === 'skin'
+          ? [canonicalSkinColor(themeSpec)]
+          : themeSpec.palette[role]
+    for (const color of roleColors) {
+      if (seenColors.has(color)) continue
+      seenColors.add(color)
+      colors.push(color)
+    }
+  }
+  return colors
+}
 
-const categoryRequirements = PART_CATEGORIES.map(
-  (category) => `- ${category}: ${PART_DEFINITIONS[category].isolatedSubject}`,
-).join('\n')
-const enhancerInstructions = `You are an art director preparing isolated avatar-part image sheets for manual vector conversion.
-Preserve the user's visual theme, but simplify aggressively and keep all categories stylistically compatible.
+const layerContract = (themeSpec: ThemeSpec, category: PartCategory) => {
+  if (category === 'faces') {
+    return `Each design is one complete face layer: head silhouette, both ears, both eyes, both eyebrows, one nose, and one mouth. Use ${canonicalSkinColor(themeSpec)} as the only skin fill. Keep every head centered at the same scale, with the crown, ear line, and chin baseline in consistent positions. End at a clean closed chin with no neck. Leave a predictable outer head contour for hair overlays.
 
-Create prompt specifications for these isolated categories:
-${categoryRequirements}
+BINDING FACE STYLE LOCK — HIGHEST PRIORITY
+Visible signature: ${themeSpec.faceStyleSignature}. Treat this as a production constraint, not loose inspiration. Make the signature unmistakable in every head silhouette, ear construction, eye shape, eyebrow rhythm, nose simplification, mouth geometry, spacing, and expression. If facial variety conflicts with the signature, preserve the signature.
 
-For every category, return exactly nine materially distinct camelCase names in row-major order and a subject describing all nine variations. Each image will be a strict 3x3 contact sheet containing only that isolated category.
-For hair specifically, order the first row as short styles, the second row as medium styles, and the third row as long styles.
+HIGH-END FINISH BAR
+Present a resolved senior character designer's final shape-language sheet: intentional proportions, controlled negative space, elegant contour rhythm, consistent feature construction, polished asymmetry where requested, and confident economy of form. Every face must feel authored for the same premium design system. Do not fall back to generic avatar-builder faces, stock profile icons, emoji geometry, default cartoon clip art, or nine near-identical faces with only expression changes.`
+  }
+  if (category === 'hairs') {
+    return 'Each design is a hair-only overlay. Keep the face opening, crown anchor, centerline, and category-wide scale consistent so every hair can sit over the generated faces. Short styles belong in row one, medium styles in row two, and long styles in row three.'
+  }
+  if (category === 'bodies') {
+    return 'Each design is a body-only clothing layer. Leave one simple centered neckline socket in the same position and width across all nine bodies. The neck socket must remain open and unobstructed. Include no skin neck, head, jaw, ears, or hair.'
+  }
+  return `Each design is a neck-only connector using ${canonicalSkinColor(themeSpec)} as the only fill plus the shared outline. Keep the same top anchor, bottom anchor, total height, and centerline across all nine cells. Make the shape a simple closed vertical silhouette with flat hidden overlap ends and at most two gentle side curves. No anatomy detail, muscles, collar lines, shading, or decoration.`
+}
 
-Optimize the artwork for clean manual vectorization:
-- large closed shapes, clean silhouettes, and flat solid fills
-- one consistent bold outline or no outline
-- no gradients, lighting, blur, texture, noise, glow, transparency, shadows, thin strokes, or micro-details
-- no heads or faces leaking into isolated feature sheets
-- no text, labels, numbers, borders, dividers, grid lines, or alignment guides
-- pure white background
+const buildImagePrompt = (themeSpec: ThemeSpec, category: PartCategory, correction?: string) => {
+  const definition = PART_DEFINITIONS[category]
+  const cells = definition.variants
+    .map((variant, index) => {
+      const row = Math.floor(index / 3) + 1
+      const column = (index % 3) + 1
+      return `- row ${row}, column ${column}: ${variant.name} — ${variant.description}`
+    })
+    .join('\n')
+  const categoryNote = themeSpec.categoryNotes?.[category]
+  const avoided = themeSpec.avoid?.length ? ` Also avoid: ${themeSpec.avoid.join('; ')}.` : ''
+  const references = themeSpec.references ? ` Visual reference direction: ${themeSpec.references}.` : ''
+  const correctionText = correction
+    ? `\n\nCORRECTION: ${correction}. Keep the established layer contract, cell order, palette, and art direction.`
+    : ''
 
-The artDirection must define one coherent silhouette language, stroke weight, and simplification level shared by every category.`
+  return `Create one production-quality avatar layer source sheet containing only ${definition.isolatedSubject}.
 
-const requestOpenAI = async <T>(path: string, body: unknown): Promise<T> => {
+ART DIRECTION
+Visual family: ${themeSpec.styleFamily}. Shape language: ${themeSpec.shapeLanguage}. Line treatment: ${themeSpec.lineTreatment}. Mood: ${themeSpec.mood}. Representation goal: ${themeSpec.representation}.${references}${avoided}
+Use only these palette colors: ${colorsForCategory(themeSpec, category).join(', ')}. Keep silhouette language, color roles, and stroke weight coherent across all nine designs.${categoryNote ? ` Category-specific direction: ${categoryNote}.` : ''}
+
+EXACT CELL MAP
+${cells}
+The names above are instructions only. Do not render words or symbols.
+
+LAYER CONTRACT
+${layerContract(themeSpec, category)}
+
+COMPOSITION
+Render a clean 1024x1024 square contact sheet with exactly three equal visual columns and three equal visual rows. Put exactly one complete design in each invisible cell in the row-major order above. Center every design with generous white space. Keep scale and anchors consistent within the category. Do not draw cell borders, dividers, guides, labels, captions, numbers, or extra objects.
+
+VECTORIZATION
+Use large closed shapes, flat solid fills, crisp antialiased edges, and ${themeSpec.lineTreatment}. Use deliberate negative space and clear silhouette separation. No gradients, lighting, highlights, shadows, textures, grain, blur, glow, transparency, photorealism, thin decorative strokes, or micro-details. Pure solid white (#FFFFFF) background.${correctionText}`
+}
+
+const requestImage = async (prompt: string) => {
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) {
     throw new Error(
@@ -175,130 +177,111 @@ const requestOpenAI = async <T>(path: string, body: unknown): Promise<T> => {
 
   const maxAttempts = 4
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-    const lastAttempt = attempt === maxAttempts
+    let response: Response
     try {
-      const response = await fetch(`https://api.openai.com/v1${path}`, {
+      response = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          model: imageModel,
+          prompt,
+          size: `${SHEET_SIZE}x${SHEET_SIZE}`,
+          quality: 'high',
+          output_format: 'png',
+          background: 'opaque',
+        }),
         signal: AbortSignal.timeout(240_000),
       })
-      if (response.ok) return (await response.json()) as T
-
-      const details = await response.text()
-      const message = `OpenAI ${path} failed (${response.status}, request ${response.headers.get('x-request-id') ?? 'unknown'}): ${details}`
-      if (lastAttempt || (response.status !== 429 && response.status < 500)) throw new Error(message)
-      console.warn(`Retrying (${attempt}/${maxAttempts}) after ${message}`)
     } catch (error) {
-      if (lastAttempt || (error instanceof Error && error.message.startsWith('OpenAI '))) throw error
+      if (attempt === maxAttempts) throw error
       console.warn(
-        `Retrying (${attempt}/${maxAttempts}) after network error on ${path}: ${error instanceof Error ? error.message : String(error)}`,
+        `Retrying image request (${attempt}/${maxAttempts}) after network error: ${error instanceof Error ? error.message : String(error)}`,
       )
+      await Bun.sleep(2_000 * 2 ** (attempt - 1))
+      continue
     }
-    const { promise, resolve } = Promise.withResolvers<void>()
-    setTimeout(resolve, 2_000 * 2 ** (attempt - 1))
-    await promise
+
+    if (response.ok) return (await response.json()) as ImageResult
+
+    const details = await response.text()
+    const message = `OpenAI image generation failed (${response.status}, request ${response.headers.get('x-request-id') ?? 'unknown'}): ${details}`
+    const retryable = response.status === 429 || response.status >= 500
+    if (!retryable || attempt === maxAttempts) throw new Error(message)
+    console.warn(`Retrying image request (${attempt}/${maxAttempts}) after ${message}`)
+    await Bun.sleep(2_000 * 2 ** (attempt - 1))
   }
-  throw new Error(`OpenAI ${path} exhausted ${maxAttempts} attempts`)
+  throw new Error(`OpenAI image generation exhausted ${maxAttempts} attempts`)
 }
 
-const extractResponseText = (response: ResponsesResult) => {
-  if (response.output_text) return response.output_text
-  for (const item of response.output ?? []) {
-    for (const content of item.content ?? []) {
-      if (content.type === 'refusal') {
-        throw new Error(`Prompt enhancement refused: ${content.refusal ?? 'unknown reason'}`)
-      }
-      if (content.type === 'output_text' && content.text) return content.text
-    }
-  }
-  throw new Error(`Prompt enhancement returned no output text (status: ${response.status ?? 'unknown'})`)
+await mkdir(stateDirectory, { recursive: true })
+let state: GenerationState = { version: 1, name, categories: {} }
+if (existsSync(statePath)) {
+  state = validateGenerationState(JSON.parse(await readFile(statePath, 'utf8')), name)
+}
+const reusable = (category: PartCategory) => {
+  const entry = state.categories[category]
+  return Boolean(
+    entry &&
+      entry.prompt.startsWith(buildImagePrompt(spec, category)) &&
+      existsSync(join(outputDirectory, entry.imageFile)),
+  )
 }
 
-const buildImagePrompt = (prompt: EnhancedPrompt, category: PartCategory) => {
-  const part = prompt.categories[category]
-  const composition = `Strict 3x3 contact sheet with exactly three equal columns and three equal rows. One isolated ${category} design per cell. Enlarge every design to fill 65-75% of its cell. Center each design independently with an 8% safe margin. No complete avatars, heads, faces, reference anatomy, borders, dividers, labels, numbers, captions, alignment guides, or extra objects.`
-  const style = `${prompt.artDirection} Render ${PART_DEFINITIONS[category].isolatedSubject}. Use only colors close to ${PART_DEFINITIONS[category].palette.join(', ')}. Use large closed shapes, flat solid fills, crisp edges, and uniform bold strokes. No gradients, lighting, highlights, shadows, textures, noise, transparency, or photorealism.`
-  return `${part.subject}\n\nComposition: ${composition}\n\nStyle: ${style}\n\nPure solid white background.`
-}
-
-let enhancedPrompt: EnhancedPrompt
-if (fixtureManifestPath && fixtureDirectory) {
-  enhancedPrompt = validateEnhancedPrompt(JSON.parse(await readFile(fixtureManifestPath, 'utf8')))
-} else {
-  const input = feedback ? `${brief}\n\nCorrective feedback from rejected sheets:\n${feedback}` : brief
-  const response = await requestOpenAI<ResponsesResult>('/responses', {
-    model: enhancerModel,
-    instructions: enhancerInstructions,
-    input,
-    store: false,
-    text: {
-      format: {
-        type: 'json_schema',
-        name: 'avatar_part_image_prompt',
-        strict: true,
-        schema: promptSchema,
-      },
-    },
-  })
-  enhancedPrompt = validateEnhancedPrompt(JSON.parse(extractResponseText(response)))
-}
-
-await mkdir(outputDirectory, { recursive: true })
-
-
-const existingManifest = onlyValue
-  ? validateImageManifest(JSON.parse(await readFile(manifestPath, 'utf8')), name)
-  : undefined
-const categories = existingManifest
-  ? { ...existingManifest.categories }
-  : ({} as Record<PartCategory, ImageCategoryManifest>)
-
+const categoriesToGenerate: PartCategory[] = []
 for (const category of selectedCategories) {
-  const imageFile = `${category}.png`
-  const imagePath = join(outputDirectory, imageFile)
-
-  if (fixtureDirectory) {
-    await copyFile(join(fixtureDirectory, imageFile), imagePath)
+  if (resume && reusable(category)) {
+    console.log(`Reusing ${category}.png`)
   } else {
-    const image = await requestOpenAI<ImageResult>('/images/generations', {
-      model: imageModel,
-      prompt: buildImagePrompt(enhancedPrompt, category),
-      size: '1024x1024',
-      quality: 'high',
-      output_format: 'png',
-      background: 'opaque',
-    })
-    const imageBase64 = image.data?.[0]?.b64_json
+    categoriesToGenerate.push(category)
+  }
+}
+if (categoriesToGenerate.length) await rm(manifestPath, { force: true })
+
+for (const category of categoriesToGenerate) {
+  const prompt = buildImagePrompt(spec, category, feedback)
+  const candidatePath = join(stateDirectory, `${category}.candidate.png`)
+  if (fixtureDirectory) {
+    await copyFile(join(fixtureDirectory, `${category}.png`), candidatePath)
+  } else {
+    const result = await requestImage(prompt)
+    const imageBase64 = result.data?.[0]?.b64_json
     if (!imageBase64) throw new Error(`${category} generation returned no base64 image`)
-    await writeFile(imagePath, Buffer.from(imageBase64, 'base64'))
+    await writeFile(candidatePath, Buffer.from(imageBase64, 'base64'))
   }
+  await rename(candidatePath, join(outputDirectory, `${category}.png`))
+  state.categories[category] = { prompt, imageFile: `${category}.png` }
+  await writeFile(statePath, `${JSON.stringify(state, null, 2)}\n`)
+  console.log(`Wrote ${category}.png`)
+}
 
-  const metadata = await sharp(imagePath).metadata()
-  if (!metadata.width || !metadata.height || metadata.width !== metadata.height) {
-    throw new Error(`${category} contact sheet must be square, received ${metadata.width ?? '?'}x${metadata.height ?? '?'}`)
-  }
+const missingCategories = PART_CATEGORIES.filter((category) => !reusable(category))
+if (missingCategories.length) {
+  console.log(`Checkpoint saved. Remaining sheets: ${missingCategories.join(', ')}`)
+  process.exit(0)
+}
 
+const categories = {} as Record<PartCategory, ImageCategoryManifest>
+for (const category of PART_CATEGORIES) {
+  const entry = state.categories[category]
+  if (!entry) throw new Error(`Missing generation state for ${category}`)
   categories[category] = {
-    ...enhancedPrompt.categories[category],
-    palette: [...PART_DEFINITIONS[category].palette],
-    prompt: buildImagePrompt(enhancedPrompt, category),
-    imageFile,
+    variants: PART_DEFINITIONS[category].variants.map((variant) => ({ ...variant })),
+    palette: colorsForCategory(spec, category),
+    prompt: entry.prompt,
+    imageFile: entry.imageFile,
   }
-  console.log(`Wrote ${category} sheet to ${imagePath}`)
 }
 
 const manifest: ImageManifest = {
-  version: 1,
+  version: 3,
   name,
-  brief: brief || existingManifest?.brief || 'fixture',
-  ...(feedback ? { feedback } : {}),
-  enhancerModel,
   imageModel,
-  artDirection: enhancedPrompt.artDirection,
+  sheetSize: SHEET_SIZE,
+  spec,
+  ...(feedback ? { feedback } : {}),
   categories,
 }
 const validatedManifest = validateImageManifest(manifest, name)
