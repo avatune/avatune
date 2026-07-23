@@ -12,8 +12,8 @@
     "dev": "next dev",
     "start": "next dev",
     "build": "next build",
-    "postinstall": "fumadocs-mdx",
-    "typegen": "fumadocs-mdx && next typegen",
+    "generate:mdx": "fumadocs-mdx",
+    "typegen": "bun run generate:mdx && next typegen",
     "check-types": "bun run typegen && tsc --noEmit"
   },
   "dependencies": {
