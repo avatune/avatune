@@ -15,9 +15,10 @@
     "generate:assets-readme": "bun scripts/generate-assets-readme.ts",
     "generate:theme-readme": "bun scripts/generate-assets-theme-readme.ts",
     "generate:theme-website-docs": "bun scripts/generate-themes-mdx.ts",
+    "generate:website-themes": "bun scripts/generate-website-themes.ts",
     "generate:readme-and-website-docs": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts",
     "generate:root-readme": "bun scripts/generate-root-readme.ts",
-    "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-root-readme.ts && bun scripts/generate-stories.ts && bun check",
+    "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-website-themes.ts && bun scripts/generate-root-readme.ts && bun scripts/generate-stories.ts && bun check",
     "prepare": "husky",
     "release:version": "changeset version && bun update",
     "release:publish": "changeset publish"
@@ -54,8 +55,6 @@
     ]
   },
   "resolutions": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "ws": "^8.18.0"
   },

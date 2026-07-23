@@ -4,8 +4,6 @@ description: "Vue component for rendering avatars from themes."
 source: "packages/vue/README.md"
 ---
 
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
 
 > Source: `packages/vue/README.md`
 
@@ -13,12 +11,13 @@ Vue component for rendering avatars from themes.
 
 ## Installation
 
-<InstallTabs packages="@avatune/vue" />
+```package-install
+@avatune/vue
+```
 
 ## Usage
 
 <AvatarUsagePreview
-  client:only="svelte"
   themeId="miniavs"
   seed="user@example.com"
   size={200}

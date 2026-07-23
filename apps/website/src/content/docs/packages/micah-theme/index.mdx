@@ -4,9 +4,6 @@ description: "Avatar theme for Avatune using Micah assets."
 source: "packages/themes/micah-theme/README.md"
 ---
 
-import AssetPreview from '../../../../components/docs/asset-preview.astro';
-import InstallTabs from '../../../../components/docs/install-tabs.astro';
-import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   accessoriesHoopEarRing,
   accessoriesStudEarRing,
@@ -48,20 +45,22 @@ import {
   hairTurban,
 } from '@avatune/micah-assets/svg';
 
-> Source: `packages/assets/micah-theme/README.md`
+> Source: `packages/assets/micah-assets/README.md`
 
 Avatar theme for Avatune using micah design assets.
 
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="micah" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="micah" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="micah" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="micah" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
 
-<InstallTabs packages="@avatune/micah-theme" />
+```package-install
+@avatune/micah-theme
+```
 
 ## Usage
 

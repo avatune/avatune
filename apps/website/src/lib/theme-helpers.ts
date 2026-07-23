@@ -1,12 +1,7 @@
-import type { Predictions, SvelteTheme } from '@avatune/types'
-
-export function getHairComponent(theme: SvelteTheme, item: string): unknown {
-  const hairCategory = theme.hair as Record<string, { Component: unknown }>
-  return hairCategory?.[item]?.Component ?? null
-}
+import type { Predictions, ReactTheme } from '@avatune/types'
 
 export function getSkinToneColors(
-  theme: SvelteTheme,
+  theme: ReactTheme,
   predictions: Predictions,
 ): string[] {
   const skinToneMap = theme.predictorMappings?.skinTone
@@ -14,39 +9,11 @@ export function getSkinToneColors(
   return skinToneMap[predictions.skinTone] ?? []
 }
 
-export function getHairItems(
-  theme: SvelteTheme,
-  predictions: Predictions,
-): string[] {
-  const hairMap = theme.predictorMappings?.hair
-  if (!hairMap || !predictions.hairLength) return []
-  return hairMap[predictions.hairLength] ?? []
-}
-
 export function getHairColors(
-  theme: SvelteTheme,
+  theme: ReactTheme,
   predictions: Predictions,
 ): string[] {
   const colorMap = theme.predictorMappings?.hairColor
   if (!colorMap || !predictions.hairColor) return []
   return colorMap[predictions.hairColor] ?? []
-}
-
-export function getFaceHairItems(
-  theme: SvelteTheme,
-  predictions: Predictions,
-): string[] {
-  const faceHairMap = theme.predictorMappings?.faceHair
-  if (!faceHairMap || !predictions.faceHair) return []
-  return faceHairMap[predictions.faceHair] ?? []
-}
-
-export function getFaceHairComponent(
-  theme: SvelteTheme,
-  item: string,
-): unknown {
-  const faceHairCategory = theme.faceHair as
-    | Record<string, { Component: unknown }>
-    | undefined
-  return faceHairCategory?.[item]?.Component ?? null
 }

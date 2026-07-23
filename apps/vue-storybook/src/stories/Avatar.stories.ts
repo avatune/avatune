@@ -9,6 +9,7 @@ import nevmstasTheme from '@avatune/nevmstas-theme/vue'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vue'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/vue'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/vue'
+import retrocartoonTheme from '@avatune/retro-cartoon-theme/vue'
 import type { Theme, VueAvatarItem } from '@avatune/types'
 import type { AvatarProps } from '@avatune/vue'
 import { Avatar } from '@avatune/vue'
@@ -35,6 +36,7 @@ type NevmstasArgs = Omit<AvatarProps<typeof nevmstasTheme>, 'theme'>
 type PacovqzzArgs = Omit<AvatarProps<typeof pacovqzzTheme>, 'theme'>
 type PawelOlekManArgs = Omit<AvatarProps<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarProps<typeof pawelolekwomanTheme>, 'theme'>
+type RetroCartoonArgs = Omit<AvatarProps<typeof retrocartoonTheme>, 'theme'>
 type YanliuArgs = Omit<AvatarProps<typeof yanliuTheme>, 'theme'>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -224,6 +226,20 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   },
 }
 
+export const RetroCartoon: StoryObj<RetroCartoonArgs> = {
+  argTypes: getArgTypes(retrocartoonTheme),
+  render: (args: RetroCartoonArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: retrocartoonTheme, toBorderRadius }),
+    template:
+      '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
+  }),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args: YanliuArgs) => ({
@@ -250,6 +266,7 @@ const themes = {
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
+  'Retro Cartoon': retrocartoonTheme,
   Yanliu: yanliuTheme,
 } as const
 

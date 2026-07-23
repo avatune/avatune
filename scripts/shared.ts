@@ -52,6 +52,72 @@ export interface AssetPackageInfo {
 }
 
 // ============================================================================
+// Constants
+// ============================================================================
+
+/**
+ * Default MIT license text used when a theme package ships no LICENSE.md.
+ * Matches the wording of the existing hand-authored theme licenses.
+ */
+export const MIT_LICENSE = `MIT License
+
+Copyright (c) 2025 Avatune
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+`
+
+/**
+ * A modified MIT license for themes whose avatar assets may be used freely but
+ * must not be repackaged into competing avatar libraries (e.g. DiceBear).
+ * The unique "No-Redistribution" marker lets docs generation detect it.
+ */
+export const RESTRICTED_LICENSE = `MIT License (No-Redistribution Variant)
+
+Copyright (c) 2025 Avatune
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+The Software includes avatar artwork and themes (the "Avatar Assets"). Except
+as expressly permitted above, the Avatar Assets may NOT be incorporated,
+bundled, packaged, or otherwise redistributed — in whole or in part, in
+original or modified form — as part of any third-party avatar library, avatar
+generator, avatar collection, or comparable toolkit or dataset (for example,
+DiceBear or similar projects).
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+`
+
+// ============================================================================
 // String Transformation Helpers
 // ============================================================================
 
@@ -517,14 +583,16 @@ npm install @avatune/${packageName}
 }
 
 /**
- * Generates installation section for MDX using InstallTabs component
+ * Generates an installation section for Fumadocs MDX.
  * @param packageName Name of the package
  * @returns Formatted installation section for MDX
  */
 export function generateInstallationSectionMDX(packageName: string): string {
   return `## Installation
 
-<InstallTabs packages="@avatune/${packageName}" />`
+\`\`\`package-install
+@avatune/${packageName}
+\`\`\``
 }
 
 /**

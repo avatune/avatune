@@ -4,9 +4,6 @@ description: "Avatar theme for Avatune using Yanliu assets."
 source: "packages/themes/yanliu-theme/README.md"
 ---
 
-import AssetPreview from '../../../../components/docs/asset-preview.astro';
-import InstallTabs from '../../../../components/docs/install-tabs.astro';
-import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   forelockBubble,
   forelockCurve,
@@ -46,20 +43,22 @@ import {
   hairStraightMedium,
 } from '@avatune/yanliu-assets/svg';
 
-> Source: `packages/assets/yanliu-theme/README.md`
+> Source: `packages/assets/yanliu-assets/README.md`
 
 Avatar theme for Avatune using yanliu design assets.
 
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="yanliu" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="yanliu" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="yanliu" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="yanliu" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
 
-<InstallTabs packages="@avatune/yanliu-theme" />
+```package-install
+@avatune/yanliu-theme
+```
 
 ## Usage
 

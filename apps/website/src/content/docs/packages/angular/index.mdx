@@ -4,8 +4,6 @@ description: "Angular component for rendering avatars from themes."
 source: "packages/angular/README.md"
 ---
 
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
 
 > Source: `packages/angular/README.md`
 
@@ -13,12 +11,13 @@ Angular component for rendering avatars from themes.
 
 ## Installation
 
-<InstallTabs packages="@avatune/angular" />
+```package-install
+@avatune/angular
+```
 
 ## Usage
 
 <AvatarUsagePreview
-  client:only="svelte"
   themeId="nevmstas"
   seed="user@example.com"
   size={200}

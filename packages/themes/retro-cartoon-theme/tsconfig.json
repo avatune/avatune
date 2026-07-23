@@ -1,0 +1,37 @@
+{
+  "extends": "@avatune/typescript-config/base",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/retro-cartoon-assets/svg": [
+        "../retro-cartoon-assets/dist/svg/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/react": [
+        "../retro-cartoon-assets/dist/react/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/svelte": [
+        "../retro-cartoon-assets/dist/svelte/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/vue": [
+        "../retro-cartoon-assets/dist/vue/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/react-native": [
+        "../retro-cartoon-assets/dist/react-native/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/solid": [
+        "../retro-cartoon-assets/dist/solid/index.d.ts"
+      ],
+      "@avatune/retro-cartoon-assets/angular": [
+        "../retro-cartoon-assets/dist/angular/index.d.ts"
+      ],
+      "@avatune/theme-builder": ["../theme-builder/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

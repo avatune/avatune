@@ -9,6 +9,7 @@ import nevmstasTheme from '@avatune/nevmstas-theme/solidjs'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/solidjs'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/solidjs'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/solidjs'
+import retrocartoonTheme from '@avatune/retro-cartoon-theme/solidjs'
 import type { AvatarProps } from '@avatune/solidjs'
 import { Avatar } from '@avatune/solidjs'
 import type { SolidJsAvatarItem, Theme } from '@avatune/types'
@@ -40,6 +41,7 @@ type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
 type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
+type RetroCartoonArgs = ExtractStoryArgs<typeof retrocartoonTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -241,6 +243,21 @@ export const PawelOlekWoman: StoryObj<PawelOlekWomanArgs> = {
   },
 }
 
+export const RetroCartoon: StoryObj<RetroCartoonArgs> = {
+  argTypes: getArgTypes(retrocartoonTheme),
+  render: (args) => (
+    <Avatar
+      theme={retrocartoonTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => (
@@ -268,6 +285,7 @@ const themes = {
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
+  'Retro Cartoon': retrocartoonTheme,
   Yanliu: yanliuTheme,
 } as const
 

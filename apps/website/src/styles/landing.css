@@ -1,14 +1,47 @@
-/*
- * Landing page styles — only rules that can't sensibly be Tailwind utilities.
- * Imported from src/pages/index.astro.
- */
+@import "tailwindcss";
+
+@theme {
+  --color-accent-50: var(--color-gray-50);
+  --color-accent-100: var(--color-gray-100);
+  --color-accent-200: var(--color-gray-200);
+  --color-accent-300: var(--color-gray-300);
+  --color-accent-400: var(--color-gray-400);
+  --color-accent-500: var(--color-gray-500);
+  --color-accent-600: var(--color-gray-600);
+  --color-accent-700: var(--color-gray-700);
+  --color-accent-800: var(--color-gray-800);
+  --color-accent-900: var(--color-gray-900);
+  --color-accent-950: var(--color-gray-950);
+
+  --color-ink: #f5f5f4;
+  --color-ink-2: rgba(245, 245, 244, 0.72);
+  --color-ink-3: rgba(245, 245, 244, 0.5);
+  --color-ink-4: rgba(245, 245, 244, 0.32);
+
+  --color-paper: #0a0a0a;
+  --color-paper-2: #0f0f0f;
+  --color-paper-3: #141414;
+  --color-paper-card: #161616;
+
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-2: rgba(255, 255, 255, 0.14);
+  --color-line-strong: rgba(255, 255, 255, 0.22);
+
+  --color-emerald-mark: #19b385;
+  --color-orange-mark: #f37a3a;
+  --color-coral-mark: #e85a6b;
+  --color-sun-mark: #f6c84a;
+
+  --font-display:
+    var(--font-newsreader), ui-serif, Georgia, "Times New Roman", serif;
+  --font-body:
+    var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-code:
+    var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+}
 
 @layer components {
-  /*
-   * Checker-pattern overlay on the avatar preview circle.
-   * Two stacked diagonal gradients with offset background-position — too noisy
-   * as an arbitrary `before:bg-[...]` chain. Keep here for readability.
-   */
   .pg-frame-checker::before {
     content: "";
     position: absolute;
@@ -34,22 +67,18 @@
       4px 4px;
   }
 
-  /*
-   * Shiki emits HTML we don't author (`.shiki pre > code > span`) — we need a
-   * descendant-selector reach. Tailwind utilities on our wrapper can't get
-   * inside the rendered tree.
-   */
   .code-shell .shiki {
     margin: 0;
+    overflow-x: auto;
+    background: transparent;
     padding: 16px 18px;
-    background: transparent !important;
-    font-family: var(--font-code) !important;
+    font-family: var(--font-code);
     font-size: 12.5px;
     line-height: 1.7;
-    overflow-x: auto;
   }
+
   .code-shell .shiki code {
-    background: transparent !important;
-    font-family: var(--font-code) !important;
+    background: transparent;
+    font-family: var(--font-code);
   }
 }

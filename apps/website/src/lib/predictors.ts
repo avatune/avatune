@@ -41,13 +41,19 @@ export async function initializePredictors(): Promise<Predictors> {
 }
 
 function yieldToMain(): Promise<void> {
-  return new Promise((resolve) => {
-    if ('scheduler' in globalThis && 'yield' in (globalThis as any).scheduler) {
-      ;(globalThis as any).scheduler.yield().then(resolve)
-    } else {
-      setTimeout(resolve, 0)
+  const scheduler = (
+    globalThis as typeof globalThis & {
+      scheduler?: { yield?: () => Promise<void> }
     }
-  })
+  ).scheduler
+
+  if (!scheduler?.yield) {
+    const { promise, resolve } = Promise.withResolvers<void>()
+    setTimeout(resolve, 0)
+    return promise
+  }
+
+  return scheduler.yield()
 }
 
 export async function predictFromImage(

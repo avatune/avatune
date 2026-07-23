@@ -4,8 +4,6 @@ description: "Vanilla JavaScript function for rendering avatars from themes."
 source: "packages/vanilla/README.md"
 ---
 
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
 
 > Source: `packages/vanilla/README.md`
 
@@ -13,12 +11,13 @@ Vanilla JavaScript function for rendering avatars from themes.
 
 ## Installation
 
-<InstallTabs packages="@avatune/vanilla" />
+```package-install
+@avatune/vanilla
+```
 
 ## Usage
 
 <AvatarUsagePreview
-  client:only="svelte"
   themeId="micah"
   seed="user@example.com"
   size={200}

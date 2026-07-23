@@ -4,9 +4,6 @@ description: "Avatar theme for Avatune using Pawel Olek Woman assets."
 source: "packages/themes/pawel-olek-woman-theme/README.md"
 ---
 
-import AssetPreview from '../../../../components/docs/asset-preview.astro';
-import InstallTabs from '../../../../components/docs/install-tabs.astro';
-import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   faceDetailsChinDimple1,
   faceDetailsChinDimple2,
@@ -84,20 +81,22 @@ import {
   hairWomanStickBun,
 } from '@avatune/pawel-olek-assets/svg';
 
-> Source: `packages/assets/pawel-olek-woman-theme/README.md`
+> Source: `packages/assets/pawel-olek-assets/README.md`
 
 Avatar theme for Avatune using pawel olek woman design assets.
 
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="pawel-olek-woman" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="pawel-olek-woman" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="pawel-olek-woman" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="pawel-olek-woman" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
 
-<InstallTabs packages="@avatune/pawel-olek-woman-theme" />
+```package-install
+@avatune/pawel-olek-woman-theme
+```
 
 ## Usage
 

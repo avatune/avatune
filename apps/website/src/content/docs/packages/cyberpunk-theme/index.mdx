@@ -4,9 +4,6 @@ description: "Avatar theme for Avatune using Cyberpunk assets."
 source: "packages/themes/cyberpunk-theme/README.md"
 ---
 
-import AssetPreview from '../../../../components/docs/asset-preview.astro';
-import InstallTabs from '../../../../components/docs/install-tabs.astro';
-import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   bodyHoodie,
   bodyJacket1,
@@ -45,20 +42,22 @@ import {
   hairStylish,
 } from '@avatune/cyberpunk-assets/svg';
 
-> Source: `packages/assets/cyberpunk-theme/README.md`
+> Source: `packages/assets/cyberpunk-assets/README.md`
 
 Avatar theme for Avatune using cyberpunk design assets.
 
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="cyberpunk" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="cyberpunk" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="cyberpunk" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="cyberpunk" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
 
-<InstallTabs packages="@avatune/cyberpunk-theme" />
+```package-install
+@avatune/cyberpunk-theme
+```
 
 ## Usage
 

@@ -5,26 +5,13 @@ import reactNativeLogo from '../assets/react-native.svg'
 import solidjsLogo from '../assets/solidjs-logo.svg'
 import svelteLogo from '../assets/svelte-logo.svg'
 import vueLogo from '../assets/vue-logo.svg'
+import {
+  type ThemeId,
+  type ThemeInfo,
+  themeInfos,
+} from './theme-registry.generated'
 
-export type ThemeId =
-  | 'cyberpunk'
-  | 'kyute'
-  | 'micah'
-  | 'miniavs'
-  | 'nevmstas'
-  | 'pacovqzz'
-  | 'yanliu'
-  | 'fatinVerse'
-  | 'ashleySeo'
-  | 'ashleyy'
-  | 'pawelOlekMan'
-  | 'pawelOlekWoman'
-
-export interface ThemeInfo {
-  id: ThemeId
-  label: string
-  packageName: string
-}
+export { type ThemeId, type ThemeInfo, themeInfos }
 
 export interface ThemeCategory {
   id: string
@@ -43,45 +30,6 @@ export interface FrameworkDefinition {
     alt: string
   }
 }
-
-export const themeInfos: ThemeInfo[] = [
-  {
-    id: 'cyberpunk',
-    label: 'Cyberpunk',
-    packageName: '@avatune/cyberpunk-theme',
-  },
-  { id: 'kyute', label: 'Kyute', packageName: '@avatune/kyute-theme' },
-  { id: 'micah', label: 'Micah', packageName: '@avatune/micah-theme' },
-  { id: 'miniavs', label: 'Miniavs', packageName: '@avatune/miniavs-theme' },
-  { id: 'pacovqzz', label: 'Pacovqzz', packageName: '@avatune/pacovqzz-theme' },
-  { id: 'yanliu', label: 'Yanliu', packageName: '@avatune/yanliu-theme' },
-  { id: 'nevmstas', label: 'Nevmstas', packageName: '@avatune/nevmstas-theme' },
-  {
-    id: 'fatinVerse',
-    label: 'Fatin Verse',
-    packageName: '@avatune/fatin-verse-theme',
-  },
-  {
-    id: 'ashleySeo',
-    label: 'Ashley Seo',
-    packageName: '@avatune/ashley-seo-theme',
-  },
-  {
-    id: 'ashleyy',
-    label: 'Ashleyy',
-    packageName: '@avatune/ashleyy-theme',
-  },
-  {
-    id: 'pawelOlekMan',
-    label: 'Pawel Olek Man',
-    packageName: '@avatune/pawel-olek-man-theme',
-  },
-  {
-    id: 'pawelOlekWoman',
-    label: 'Pawel Olek Woman',
-    packageName: '@avatune/pawel-olek-woman-theme',
-  },
-]
 
 export const frameworks: FrameworkDefinition[] = [
   {

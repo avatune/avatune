@@ -4,9 +4,6 @@ description: "Avatar theme for Avatune using Nevmstas assets."
 source: "packages/themes/nevmstas-theme/README.md"
 ---
 
-import AssetPreview from '../../../../components/docs/asset-preview.astro';
-import InstallTabs from '../../../../components/docs/install-tabs.astro';
-import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';
 import {
   accessoriesHorns,
   eyebrowsAngry,
@@ -43,20 +40,22 @@ import {
   hairShort,
 } from '@avatune/nevmstas-assets/svg';
 
-> Source: `packages/assets/nevmstas-theme/README.md`
+> Source: `packages/assets/nevmstas-assets/README.md`
 
 Avatar theme for Avatune using nevmstas design assets.
 
 
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="nevmstas" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="nevmstas" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="nevmstas" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="nevmstas" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="nevmstas" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="nevmstas" seed="example-101112131415" size={200} />
 </div>
 
 ## Installation
 
-<InstallTabs packages="@avatune/nevmstas-theme" />
+```package-install
+@avatune/nevmstas-theme
+```
 
 ## Usage
 
