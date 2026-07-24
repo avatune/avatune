@@ -27,7 +27,7 @@
     "release:publish": "changeset publish"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.15",
+    "@biomejs/biome": "^2.5.5",
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "2.31.0",
     "@types/bun": "^1.3.14",
@@ -37,7 +37,7 @@
     "react-dom": "19.2.8",
     "sharp": "^0.34.5",
     "syncpack": "^15.3.2",
-    "turbo": "^2.9.14",
+    "turbo": "^2.10.6",
     "typescript": "^5.9.3"
   },
   "engines": {
