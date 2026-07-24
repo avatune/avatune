@@ -15,8 +15,7 @@ The workflow: Python trains models → exports to TFJS → TypeScript packages l
 ```
 avatune/
 ├── apps/                                    # Applications
-│   ├── website/                             # Documentation website (Astro)
-│   ├── cloudflare-worker/                   # Cloudflare Worker API
+│   ├── website/                             # Documentation website and API (Next.js)
 │   ├── RNStorybook/                         # React Native Storybook
 │   ├── react-storybook/                     # React Storybook
 │   ├── svelte-storybook/                    # Svelte Storybook

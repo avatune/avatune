@@ -3,7 +3,8 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-const avatarUrl = 'https://api.avatune.dev/?theme=yanliu&seed=user-123&size=200'
+const avatarUrl =
+  'https://avatune.dev/api/svg?theme=yanliu&seed=user-123&size=200'
 
 export function ApiClientDemo() {
   const [svg, setSvg] = useState<string | null>(null)

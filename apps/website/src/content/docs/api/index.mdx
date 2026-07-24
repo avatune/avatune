@@ -1,10 +1,11 @@
 ---
 title: "Avatune API"
-description: "REST API for generating avatar SVGs on-demand via Cloudflare Workers."
+description: "REST API for generating avatar SVGs and PNGs on demand."
 ---
+import { avatarApiThemeNames } from "@/lib/avatar-api-themes.generated";
 
 
-The Avatune API provides a REST endpoint for generating avatar SVGs on-demand, deployed on Cloudflare Workers at [https://api.avatune.dev](https://api.avatune.dev).
+The Avatune API provides REST endpoints for generating avatar images on demand at [https://avatune.dev](https://avatune.dev).
 
 ## Live Demo
 
@@ -24,23 +25,26 @@ const svg = await client.getAvatar({
 });
 ```
 
-## Live API Endpoint
+## Live API Endpoints
 
-```
-https://api.avatune.dev/
-```
+| Format | Endpoint |
+| ------ | -------- |
+| SVG | `https://avatune.dev/api/svg` |
+| PNG | `https://avatune.dev/api/png` |
 
-<Callout type="idea">
-  The API is deployed globally on Cloudflare's edge network for fast response
-  times worldwide.
-</Callout>
 
 ## API Usage
 
 ### Basic Request
 
 ```bash
-GET https://api.avatune.dev/?theme=nevmstas&hair=short
+GET https://avatune.dev/api/svg?theme=nevmstas&hair=short
+```
+
+### PNG Request
+
+```bash
+GET https://avatune.dev/api/png?theme=nevmstas&hair=short
 ```
 
 ### Example Response
@@ -48,16 +52,16 @@ GET https://api.avatune.dev/?theme=nevmstas&hair=short
 The API returns an SVG image that can be used directly in `<img>` tags or embedded in your HTML:
 
 ```html
-<img src="https://api.avatune.dev/?theme=yanliu&seed=user123" alt="Avatar" />
+<img src="https://avatune.dev/api/svg?theme=yanliu&seed=user123" alt="Avatar" />
 ```
 
 ## Parameters
 
-### Required Parameters
+### Theme
 
-| Parameter | Description | Example                                                                      |
-| --------- | ----------- | ---------------------------------------------------------------------------- |
-| `theme`   | Theme name  | `yanliu`, `nevmstas`, `miniavs`, `micah`, `kyute`, `fatin-verse`, `pacovqzz` |
+The `theme` parameter is optional and defaults to `yanliu`.
+
+Available themes: <code>{avatarApiThemeNames.join(", ")}</code>
 
 ### Optional Parameters
 
@@ -67,29 +71,6 @@ The API returns an SVG image that can be used directly in `<img>` tags or embedd
 | `seed`            | Random seed for generation | Random        |
 | `backgroundColor` | Background color (hex)     | Theme default |
 
-## Rate Limiting
-
-The API enforces rate limits per IP address + User-Agent to ensure fair usage:
-
-- **100 requests per hour**
-- **1,000 requests per day**
-
-Limits reset automatically via KV TTL expiration.
-
-### Rate Limit Response
-
-When rate limits are exceeded, the API returns:
-
-- **Status Code**: `429 Too Many Requests`
-- **Header**: `Retry-After: 3600` (seconds until reset)
-- **Response Body**:
-
-```json
-{
-  "error": "Rate limit exceeded",
-  "retryAfter": 3600
-}
-```
 
 ## Caching
 
@@ -124,22 +105,13 @@ Access-Control-Allow-Origin: *
 
 ```json
 {
-  "error": "Invalid theme. Available themes: yanliu, nevmstas, miniavs, micah, kyute, fatin-verse, pacovqzz"
+  "error": "Invalid theme",
+  "availableThemes": ["ashley-seo", "..."]
 }
 ```
 
 **Status Code**: `400 Bad Request`
 
-### Rate Limit Exceeded
-
-```json
-{
-  "error": "Rate limit exceeded",
-  "retryAfter": 3600
-}
-```
-
-**Status Code**: `429 Too Many Requests`
 
 ## TypeScript API Client
 
@@ -213,11 +185,7 @@ try {
   const svg = await client.getAvatar({ theme: "yanliu", seed: "test" });
 } catch (error) {
   if (error instanceof AvatuneApiError) {
-    if (error.isRateLimited) {
-      console.log(`Rate limited. Retry after ${error.retryAfter} seconds`);
-    } else {
-      console.log(`API error: ${error.data.error}`);
-    }
+    console.log(`API error: ${error.data.error}`);
   }
 }
 ```
@@ -239,8 +207,9 @@ const client = createClient({
 import { AvatuneClient } from "@avatune/api-client";
 
 console.log(AvatuneClient.themes);
-// ['yanliu', 'nevmstas', 'miniavs', 'micah', 'kyute', 'fatin-verse', 'pacovqzz']
 ```
+
+Current themes: <code>{avatarApiThemeNames.join(", ")}</code>
 
 ## Integration Examples
 
@@ -248,7 +217,7 @@ console.log(AvatuneClient.themes);
 
 ```html
 <img
-  src="https://api.avatune.dev/?theme=yanliu&seed=user-123"
+  src="https://avatune.dev/api/svg?theme=yanliu&seed=user-123"
   alt="User Avatar"
   width="200"
   height="200"
@@ -258,7 +227,7 @@ console.log(AvatuneClient.themes);
 ### JavaScript Fetch
 
 ```javascript
-const avatarUrl = `https://api.avatune.dev/?theme=nevmstas&seed=${userId}&size=300`;
+const avatarUrl = `https://avatune.dev/api/svg?theme=nevmstas&seed=${userId}&size=300`;
 const response = await fetch(avatarUrl);
 const svgText = await response.text();
 ```
@@ -267,7 +236,7 @@ const svgText = await response.text();
 
 ```tsx
 function UserAvatar({ userId, theme = "yanliu", size = 200 }) {
-  const avatarUrl = `https://api.avatune.dev/?theme=${theme}&seed=${userId}&size=${size}`;
+  const avatarUrl = `https://avatune.dev/api/svg?theme=${theme}&seed=${userId}&size=${size}`;
 
   return <img src={avatarUrl} alt="Avatar" width={size} height={size} />;
 }
@@ -291,7 +260,7 @@ const props = defineProps({
 
 const avatarUrl = computed(
   () =>
-    `https://api.avatune.dev/?theme=${props.theme}&seed=${props.userId}&size=${props.size}`
+    `https://avatune.dev/api/svg?theme=${props.theme}&seed=${props.userId}&size=${props.size}`
 );
 </script>
 ```
@@ -302,7 +271,7 @@ const avatarUrl = computed(
 .avatar {
   width: 200px;
   height: 200px;
-  background-image: url("https://api.avatune.dev/?theme=miniavs&seed=user-456");
+  background-image: url("https://avatune.dev/api/svg?theme=miniavs&seed=user-456");
   background-size: cover;
   border-radius: 50%;
 }
@@ -310,30 +279,21 @@ const avatarUrl = computed(
 
 ## Infrastructure
 
-The Avatune API is built with:
-
-- **Cloudflare Workers** - Edge computing for low latency
-- **Cloudflare KV** - Distributed key-value storage for rate limiting
-- **Global CDN** - Deployed to 300+ locations worldwide
+The Avatune API is implemented as Next.js route handlers in the website app and deployed with `avatune.dev`.
 
 ## Self-Hosting
 
-Want to run your own instance? Check out the source code:
+Run the website app locally:
 
 ```bash
-cd apps/cloudflare-worker
-bun install
-bun run dev
+bun run --cwd apps/website dev
 ```
-
-For deployment instructions, see the [GitHub repository](https://github.com/avatune/avatune/tree/main/apps/cloudflare-worker).
 
 ## Best Practices
 
 1. **Use Seeds for Consistency**: Always use the same `seed` parameter for a specific user to ensure their avatar remains consistent
 2. **Cache Responses**: Take advantage of the long cache headers to minimize API calls
-3. **Respect Rate Limits**: Implement proper error handling for 429 responses
-4. **URL Encode Parameters**: Always URL encode color values and other special characters
+3. **URL Encode Parameters**: Always URL encode color values and other special characters
 
 ### Example with URL Encoding
 
@@ -345,5 +305,5 @@ const params = new URLSearchParams({
   backgroundColor: "#3498DB",
 });
 
-const url = `https://api.avatune.dev/?${params}`;
+const url = `https://avatune.dev/api/svg?${params}`;
 ```

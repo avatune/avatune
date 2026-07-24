@@ -10,7 +10,6 @@
   "ignore": [
     "@avatune/angular-storybook",
     "@avatune/rn-storybook",
-    "@avatune/cloudflare-worker",
     "@avatune/predictor-storybook",
     "@avatune/react-storybook",
     "@avatune/storybook-root",

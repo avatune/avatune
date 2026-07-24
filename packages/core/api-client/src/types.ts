@@ -10,18 +10,9 @@ import type {
   VanillaTheme,
 } from '@avatune/types'
 import type yanliuTheme from '@avatune/yanliu-theme/vanilla'
+import type { ThemeName } from './theme-names.generated.js'
 
-/**
- * Available themes in the Avatune API
- */
-export type ThemeName =
-  | 'yanliu'
-  | 'nevmstas'
-  | 'miniavs'
-  | 'micah'
-  | 'kyute'
-  | 'fatin-verse'
-  | 'pacovqzz'
+export type { ThemeName } from './theme-names.generated.js'
 
 /**
  * Base parameters available for all themes
@@ -107,7 +98,7 @@ export interface GenericAvatarParams extends BaseAvatarParams {
  * API client configuration
  */
 export interface AvatuneClientConfig {
-  /** Base URL for the API (default: https://api.avatune.dev) */
+  /** Base URL for the API (default: https://avatune.dev/api/svg) */
   baseUrl?: string
   /** Request timeout in milliseconds (default: 10000) */
   timeout?: number
