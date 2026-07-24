@@ -26,8 +26,8 @@
   "devDependencies": {
     "@blazediff/bun": "^1.2.12",
     "@avatune/typescript-config": "workspace:*",
-    "@types/bun": "^1.3.5",
-    "sharp": "^0.34.2",
+    "@types/bun": "^1.3.14",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.3"
   }
 }

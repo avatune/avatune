@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
-    "@rsbuild/core": "^1.5.17",
+    "@rsbuild/core": "^1.6.12",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
     "typescript": "^5.9.3"

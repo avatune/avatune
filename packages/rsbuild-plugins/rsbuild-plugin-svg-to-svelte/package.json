@@ -55,7 +55,7 @@
     "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",
-    "svelte": "^5.0.0",
+    "svelte": "^5.43.8",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

@@ -56,9 +56,9 @@
     "@storybook/addon-ondevice-controls": "10.0.7",
     "@storybook/react-native": "10.0.7",
     "@types/jest": "30.0.0",
-    "@types/react": "19",
+    "@types/react": "^19.0.8",
     "storybook": "10.0.4",
-    "typescript": "5.9.3"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=20"

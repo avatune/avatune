@@ -5,9 +5,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "test": "turbo run test",
-    "check": "biome check --write",
+    "check": "bun run check:versions && biome check --write",
+    "check:versions": "syncpack lint",
     "lint": "biome lint --write",
     "format": "biome format --write",
+    "fix:versions": "syncpack fix",
     "check-types": "turbo run check-types",
     "storybook": "turbo run storybook --filter=@avatune/predictor-storybook --filter=@avatune/react-storybook --filter=@avatune/vue-storybook --filter=@avatune/svelte-storybook --filter=@avatune/vanilla-storybook --filter=@avatune/solidjs-storybook --filter=@avatune/angular-storybook --filter=@avatune/storybook-root",
     "generate:stories": "bun scripts/generate-stories.ts",
@@ -31,9 +33,12 @@
     "@types/bun": "^1.3.14",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sharp": "^0.34.5",
+    "syncpack": "^15.3.2",
     "turbo": "^2.9.14",
-    "typescript": "5.9.3"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=22"

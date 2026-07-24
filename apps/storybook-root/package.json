@@ -16,8 +16,8 @@
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
     "@storybook/html-vite": "^10.0.4",
-    "@types/node": "^22.10.0",
-    "storybook": "^10.0.4",
+    "@types/node": "^22.18.12",
+    "storybook": "10.1.11",
     "typescript": "^5.9.3"
   }
 }

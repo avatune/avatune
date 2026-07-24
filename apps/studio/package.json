@@ -11,13 +11,13 @@
   "dependencies": {
     "colord": "^2.9.3",
     "jszip": "^3.10.1",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.6.12",
     "@rsbuild/plugin-react": "^1.4.2",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3"
   }

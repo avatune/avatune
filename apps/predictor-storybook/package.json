@@ -27,15 +27,15 @@
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
   },
   "devDependencies": {
     "@avatune/typescript-config": "workspace:*",
     "@storybook/react-vite": "^10.0.4",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.4",
-    "storybook": "^10.0.4",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "storybook": "10.1.11",
     "typescript": "^5.9.3",
     "vite": "^7.2.2"
   }

@@ -52,7 +52,7 @@
     "svgo": "^4.0.0"
   },
   "devDependencies": {
-    "@angular/compiler": "^19.2.0",
+    "@angular/compiler": "21.2.1",
     "@avatune/typescript-config": "workspace:*",
     "@rslib/core": "^0.16.1",
     "@types/node": "^22.18.12",

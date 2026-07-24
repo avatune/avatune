@@ -16,7 +16,7 @@
     "solid-js": "^1.9.11"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "typescript": "^5.9.3",
     "vinxi": "^0.5.11"
   }
 }

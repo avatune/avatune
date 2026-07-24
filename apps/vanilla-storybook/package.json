@@ -33,9 +33,9 @@
     "@avatune/yanliu-theme": "workspace:*"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.0.4",
+    "@storybook/addon-docs": "10.1.11",
     "@storybook/html-vite": "^10.0.4",
-    "storybook": "^10.0.4",
+    "storybook": "10.1.11",
     "typescript": "^5.9.3"
   }
 }

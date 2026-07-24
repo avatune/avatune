@@ -1,0 +1,168 @@
+{
+  "versionGroups": [
+    {
+      "label": "Ignore private packages without versions",
+      "dependencies": ["@avatune/root", "@avatune/nuxt-example"],
+      "isIgnored": true
+    },
+    {
+      "label": "Keep peer dependency ranges compatible",
+      "dependencyTypes": ["peer"],
+      "policy": "sameRange"
+    },
+    {
+      "label": "Keep Angular Storybook on Angular 19",
+      "packages": ["@avatune/angular-storybook"],
+      "dependencies": ["@angular/**"],
+      "dependencyTypes": ["prod", "dev"]
+    },
+    {
+      "label": "Keep React Native on React 19.1",
+      "packages": ["@avatune/rn-storybook", "@avatune/react-native"],
+      "dependencies": ["react", "react-dom"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "19.1.0"
+    },
+    {
+      "label": "Keep React Native runtime aligned",
+      "packages": ["@avatune/rn-storybook", "@avatune/react-native"],
+      "dependencies": ["react-native"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "0.81.5"
+    },
+    {
+      "label": "Keep React Native SVG aligned",
+      "packages": ["@avatune/rn-storybook", "@avatune/react-native"],
+      "dependencies": ["react-native-svg"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "15.15.0"
+    },
+    {
+      "label": "Keep React Native types compatible",
+      "packages": ["@avatune/rn-storybook", "@avatune/react-native"],
+      "dependencies": ["@types/react"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^19.0.8"
+    },
+    {
+      "label": "Align web React",
+      "packages": ["!@avatune/rn-storybook", "!@avatune/react-native"],
+      "dependencies": ["react", "react-dom"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "19.2.8"
+    },
+    {
+      "label": "Align web React types",
+      "packages": ["!@avatune/rn-storybook", "!@avatune/react-native"],
+      "dependencies": ["@types/react"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^19.2.17"
+    },
+    {
+      "label": "Align web React DOM types",
+      "dependencies": ["@types/react-dom"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^19.2.3"
+    },
+    {
+      "label": "Keep React Native Babel version",
+      "packages": ["@avatune/rn-storybook"],
+      "dependencies": ["@babel/core"],
+      "dependencyTypes": ["dev"]
+    },
+    {
+      "label": "Keep Svelte Storybook toolchain",
+      "packages": ["@avatune/svelte-storybook"],
+      "dependencies": [
+        "@sveltejs/adapter-auto",
+        "@sveltejs/kit",
+        "@sveltejs/vite-plugin-svelte",
+        "vite"
+      ],
+      "dependencyTypes": ["prod", "dev"]
+    },
+    {
+      "label": "Keep Solid Storybook on Vite 6",
+      "packages": ["@avatune/solidjs-storybook"],
+      "dependencies": ["vite"],
+      "dependencyTypes": ["dev"]
+    },
+    {
+      "label": "Keep React Native Storybook version",
+      "packages": ["@avatune/rn-storybook"],
+      "dependencies": ["storybook"],
+      "dependencyTypes": ["dev"]
+    },
+    {
+      "label": "Align Node 20 types",
+      "packages": ["@avatune/angular-ssr-example", "@avatune/nextjs-example"],
+      "dependencies": ["@types/node"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^20.17.19"
+    },
+    {
+      "label": "Align Node 22 types",
+      "packages": [
+        "@avatune/angular",
+        "@avatune/api-client",
+        "@avatune/ashleyy-theme",
+        "@avatune/cyberpunk-theme",
+        "@avatune/face-detector",
+        "@avatune/facial-hair-predictor",
+        "@avatune/fatin-verse-theme",
+        "@avatune/hair-color-predictor",
+        "@avatune/hair-length-predictor",
+        "@avatune/kyute-theme",
+        "@avatune/micah-theme",
+        "@avatune/nevmstas-theme",
+        "@avatune/pawel-olek-man-theme",
+        "@avatune/pawel-olek-woman-theme",
+        "@avatune/react",
+        "@avatune/react-native",
+        "@avatune/retro-cartoon-theme",
+        "@avatune/rsbuild-plugin-copy-tfjs-model",
+        "@avatune/rsbuild-plugin-svg-to-angular",
+        "@avatune/rsbuild-plugin-svg-to-solid",
+        "@avatune/rsbuild-plugin-svg-to-svelte",
+        "@avatune/rsbuild-plugin-svg-to-vue",
+        "@avatune/skin-tone-predictor",
+        "@avatune/solidjs",
+        "@avatune/storybook-root",
+        "@avatune/svelte",
+        "@avatune/theme-builder",
+        "@avatune/types",
+        "@avatune/utils",
+        "@avatune/vanilla",
+        "@avatune/vue",
+        "@avatune/yanliu-theme"
+      ],
+      "dependencies": ["@types/node"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^22.18.12"
+    },
+    {
+      "label": "Align Node 24 types",
+      "dependencies": ["@types/node"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^24.9.1"
+    },
+    {
+      "label": "Align TypeScript",
+      "dependencies": ["typescript"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^5.9.3"
+    },
+    {
+      "label": "Align Bun types",
+      "dependencies": ["@types/bun"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^1.3.14"
+    },
+    {
+      "label": "Align Tailwind",
+      "dependencies": ["tailwindcss", "@tailwindcss/postcss"],
+      "dependencyTypes": ["dev"],
+      "pinVersion": "^4.3.3"
+    }
+  ]
+}

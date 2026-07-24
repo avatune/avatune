@@ -29,12 +29,12 @@
     "@avatune/types": "workspace:*",
     "@avatune/vue": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
-    "vue": "^3.5.22"
+    "vue": "^3.5.25"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "^10.0.4",
+    "@storybook/addon-docs": "10.1.11",
     "@storybook/vue3-vite": "^10.0.4",
-    "storybook": "^10.0.4",
+    "storybook": "10.1.11",
     "typescript": "^5.9.3"
   }
 }
