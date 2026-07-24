@@ -29,8 +29,8 @@ const svg = await client.getAvatar({
 
 | Format | Endpoint |
 | ------ | -------- |
-| SVG | `https://avatune.dev/api/svg` |
-| PNG | `https://avatune.dev/api/png` |
+| SVG | `https://www.avatune.dev/api/svg/` |
+| PNG | `https://www.avatune.dev/api/png/` |
 
 
 ## API Usage
@@ -38,13 +38,13 @@ const svg = await client.getAvatar({
 ### Basic Request
 
 ```bash
-GET https://avatune.dev/api/svg?theme=nevmstas&hair=short
+GET https://www.avatune.dev/api/svg/?theme=nevmstas&hair=short
 ```
 
 ### PNG Request
 
 ```bash
-GET https://avatune.dev/api/png?theme=nevmstas&hair=short
+GET https://www.avatune.dev/api/png/?theme=nevmstas&hair=short
 ```
 
 ### Example Response
@@ -52,7 +52,7 @@ GET https://avatune.dev/api/png?theme=nevmstas&hair=short
 The API returns an SVG image that can be used directly in `<img>` tags or embedded in your HTML:
 
 ```html
-<img src="https://avatune.dev/api/svg?theme=yanliu&seed=user123" alt="Avatar" />
+<img src="https://www.avatune.dev/api/svg/?theme=yanliu&seed=user123" alt="Avatar" />
 ```
 
 ## Parameters
@@ -217,7 +217,7 @@ Current themes: <code>{avatarApiThemeNames.join(", ")}</code>
 
 ```html
 <img
-  src="https://avatune.dev/api/svg?theme=yanliu&seed=user-123"
+  src="https://www.avatune.dev/api/svg/?theme=yanliu&seed=user-123"
   alt="User Avatar"
   width="200"
   height="200"
@@ -227,7 +227,7 @@ Current themes: <code>{avatarApiThemeNames.join(", ")}</code>
 ### JavaScript Fetch
 
 ```javascript
-const avatarUrl = `https://avatune.dev/api/svg?theme=nevmstas&seed=${userId}&size=300`;
+const avatarUrl = `https://www.avatune.dev/api/svg/?theme=nevmstas&seed=${userId}&size=300`;
 const response = await fetch(avatarUrl);
 const svgText = await response.text();
 ```
@@ -236,7 +236,7 @@ const svgText = await response.text();
 
 ```tsx
 function UserAvatar({ userId, theme = "yanliu", size = 200 }) {
-  const avatarUrl = `https://avatune.dev/api/svg?theme=${theme}&seed=${userId}&size=${size}`;
+  const avatarUrl = `https://www.avatune.dev/api/svg/?theme=${theme}&seed=${userId}&size=${size}`;
 
   return <img src={avatarUrl} alt="Avatar" width={size} height={size} />;
 }
@@ -260,7 +260,7 @@ const props = defineProps({
 
 const avatarUrl = computed(
   () =>
-    `https://avatune.dev/api/svg?theme=${props.theme}&seed=${props.userId}&size=${props.size}`
+    `https://www.avatune.dev/api/svg/?theme=${props.theme}&seed=${props.userId}&size=${props.size}`
 );
 </script>
 ```
@@ -271,7 +271,7 @@ const avatarUrl = computed(
 .avatar {
   width: 200px;
   height: 200px;
-  background-image: url("https://avatune.dev/api/svg?theme=miniavs&seed=user-456");
+  background-image: url("https://www.avatune.dev/api/svg/?theme=miniavs&seed=user-456");
   background-size: cover;
   border-radius: 50%;
 }
@@ -305,5 +305,5 @@ const params = new URLSearchParams({
   backgroundColor: "#3498DB",
 });
 
-const url = `https://avatune.dev/api/svg?${params}`;
+const url = `https://www.avatune.dev/api/svg/?${params}`;
 ```

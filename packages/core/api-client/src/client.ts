@@ -15,7 +15,7 @@ import type {
   YanliuParams,
 } from './types.js'
 
-const DEFAULT_BASE_URL = 'https://avatune.dev/api/svg'
+const DEFAULT_BASE_URL = 'https://www.avatune.dev/api/svg/'
 const DEFAULT_TIMEOUT = 10000
 
 /**

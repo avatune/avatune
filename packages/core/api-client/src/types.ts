@@ -98,7 +98,7 @@ export interface GenericAvatarParams extends BaseAvatarParams {
  * API client configuration
  */
 export interface AvatuneClientConfig {
-  /** Base URL for the API (default: https://avatune.dev/api/svg) */
+  /** Base URL for the API (default: https://www.avatune.dev/api/svg/) */
   baseUrl?: string
   /** Request timeout in milliseconds (default: 10000) */
   timeout?: number
