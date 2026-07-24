@@ -13,7 +13,7 @@
     "start": "next dev",
     "build": "next build",
     "generate:mdx": "fumadocs-mdx",
-    "typegen": "bun run generate:mdx && next typegen",
+    "typegen": "next typegen && bun run generate:mdx",
     "check-types": "bun run typegen && tsc --noEmit"
   },
   "dependencies": {
