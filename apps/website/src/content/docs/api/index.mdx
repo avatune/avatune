@@ -3,9 +3,6 @@ title: "Avatune API"
 description: "REST API for generating avatar SVGs on-demand via Cloudflare Workers."
 ---
 
-import { Aside } from "@astrojs/starlight/components";
-import InstallTabs from "../../../components/docs/install-tabs.astro";
-import ApiClientDemo from "../../../components/client/api-client-demo.svelte";
 
 The Avatune API provides a REST endpoint for generating avatar SVGs on-demand, deployed on Cloudflare Workers at [https://api.avatune.dev](https://api.avatune.dev).
 
@@ -13,7 +10,7 @@ The Avatune API provides a REST endpoint for generating avatar SVGs on-demand, d
 
 Try the API right here:
 
-<ApiClientDemo client:visible />
+<ApiClientDemo />
 
 ```typescript
 import { createClient } from "@avatune/api-client";
@@ -33,10 +30,10 @@ const svg = await client.getAvatar({
 https://api.avatune.dev/
 ```
 
-<Aside type="tip">
+<Callout type="idea">
   The API is deployed globally on Cloudflare's edge network for fast response
   times worldwide.
-</Aside>
+</Callout>
 
 ## API Usage
 
@@ -108,10 +105,10 @@ This means:
 - Content is immutable (won't change)
 - Can be cached by browsers and CDNs
 
-<Aside type="tip">
+<Callout type="idea">
   Use the `seed` parameter to generate consistent avatars for the same user
   across requests.
-</Aside>
+</Callout>
 
 ## CORS
 
@@ -148,7 +145,9 @@ Access-Control-Allow-Origin: *
 
 For type-safe API access, use the official `@avatune/api-client` package:
 
-<InstallTabs packages="@avatune/api-client" />
+```package-install
+@avatune/api-client
+```
 
 ### Basic Usage
 

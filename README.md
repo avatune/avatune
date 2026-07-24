@@ -79,6 +79,7 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 | Pacovqzz | [`@avatune/pacovqzz-theme`](./packages/themes/pacovqzz-theme) |
 | Pawel Olek Man | [`@avatune/pawel-olek-man-theme`](./packages/themes/pawel-olek-man-theme) |
 | Pawel Olek Woman | [`@avatune/pawel-olek-woman-theme`](./packages/themes/pawel-olek-woman-theme) |
+| Retro Cartoon | [`@avatune/retro-cartoon-theme`](./packages/themes/retro-cartoon-theme) |
 | Yanliu | [`@avatune/yanliu-theme`](./packages/themes/yanliu-theme) |
 
 ## Framework Renderers

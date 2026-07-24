@@ -1,0 +1,107 @@
+import Image from 'next/image'
+
+const columns = [
+  {
+    title: 'Docs',
+    links: [
+      { label: 'Getting started', href: '/getting-started' },
+      { label: 'API', href: '/api' },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Studio', href: 'https://studio.avatune.dev' },
+      { label: 'Playground', href: '/playground' },
+      {
+        label: 'Changelog',
+        href: 'https://github.com/avatune/avatune/releases',
+      },
+    ],
+  },
+  {
+    title: 'Project',
+    links: [
+      { label: 'GitHub', href: 'https://github.com/avatune/avatune' },
+      {
+        label: 'License',
+        href: 'https://github.com/avatune/avatune/blob/main/LICENSE.md',
+      },
+    ],
+  },
+] as const
+
+const socialButtonClass =
+  'inline-flex cursor-pointer items-center gap-2 rounded-lg border border-line-2 bg-paper-3 px-2.5 py-1.5 text-ink transition hover:border-line-strong hover:bg-paper-card active:translate-y-px'
+
+export function Footer() {
+  return (
+    <footer className="border-t border-line bg-[#080808] py-20">
+      <div className="mx-auto max-w-[1280px] px-8">
+        <div className="mb-16 grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div>
+            <a href="/" className="mb-4 flex items-center gap-3 text-ink">
+              <Image
+                src="/favicon.png"
+                alt="Avatune"
+                width={32}
+                height={32}
+                className="rounded-md"
+              />
+              <span className="font-display text-[26px] font-medium tracking-[-0.025em]">
+                Avatune
+              </span>
+            </a>
+            <p className="mt-2 max-w-[36ch] text-sm text-ink-3">
+              An open-source avatar primitive for the modern web. MIT licensed.
+            </p>
+            <div className="mt-6 flex gap-2">
+              <a
+                href="https://github.com/avatune/avatune"
+                target="_blank"
+                rel="noreferrer"
+                className={socialButtonClass}
+                aria-label="GitHub"
+              >
+                <svg
+                  aria-hidden="true"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2.2c-3.2.7-3.8-1.5-3.8-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.9C23.5 5.7 18.3.5 12 .5z" />
+                </svg>
+                <span className="sr-only">GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          {columns.map((column) => (
+            <div key={column.title}>
+              <h4 className="mb-4 font-code text-[11px] font-medium tracking-[0.16em] uppercase text-ink-3">
+                {column.title}
+              </h4>
+              <ul className="ml-0 flex list-none flex-col gap-2.5 pl-0">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-ink-2 hover:text-ink"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-6 font-code text-[11px] tracking-[0.06em] text-ink-4">
+          <span>AVATUNE · MIT · v3.1 · 2026</span>
+        </div>
+      </div>
+    </footer>
+  )
+}

@@ -36,6 +36,7 @@
   "files": {
     "includes": [
       "apps/**/*",
+      "!apps/website/next-env.d.ts",
       "packages/**/*",
       "tests/**/*",
       "!**/*/storybook.requires.ts",

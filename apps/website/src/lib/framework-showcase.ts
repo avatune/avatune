@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image'
 import { getSingletonHighlighter } from 'shiki/bundle/full'
 import angularLogo from '../assets/angular-logo.svg'
 import jsLogo from '../assets/javascript-logo.svg'
@@ -31,7 +32,7 @@ export interface FrameworkShowcaseEntry {
   snippet: string
   highlightedSnippet: string
   logo?: {
-    src: string
+    src: StaticImageData
     alt: string
   }
 }
@@ -49,7 +50,7 @@ interface FrameworkDefinition {
   deps: string
   since: string
   logo?: {
-    src: string
+    src: StaticImageData
     alt: string
   }
   getSnippet: (seed: string) => string
@@ -85,7 +86,7 @@ export default function Profile({ user }) {
   {
     id: 'svelte',
     label: 'Svelte',
-    tagline: 'Zero-runtime — compiles to inline SVG.',
+    tagline: 'Zero runtime. Compiles to inline SVG.',
     description: 'Lightweight bindings with actions + stores.',
     language: 'svelte',
     filePath: 'lib/Profile.svelte',

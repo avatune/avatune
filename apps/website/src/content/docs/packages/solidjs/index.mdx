@@ -4,8 +4,6 @@ description: "SolidJS component for rendering avatars from themes."
 source: "packages/solidjs/README.md"
 ---
 
-import InstallTabs from "../../../../components/docs/install-tabs.astro";
-import AvatarUsagePreview from "../../../../components/docs/avatar-usage-preview.svelte";
 
 > Source: `packages/solidjs/README.md`
 
@@ -13,12 +11,13 @@ SolidJS component for rendering avatars from themes.
 
 ## Installation
 
-<InstallTabs packages="@avatune/solidjs" />
+```package-install
+@avatune/solidjs
+```
 
 ## Usage
 
 <AvatarUsagePreview
-  client:only="svelte"
   themeId="yanliu"
   seed="user@example.com"
   size={200}

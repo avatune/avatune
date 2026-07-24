@@ -15,17 +15,19 @@
     "generate:assets-readme": "bun scripts/generate-assets-readme.ts",
     "generate:theme-readme": "bun scripts/generate-assets-theme-readme.ts",
     "generate:theme-website-docs": "bun scripts/generate-themes-mdx.ts",
+    "generate:website-themes": "bun scripts/generate-website-themes.ts",
     "generate:readme-and-website-docs": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts",
     "generate:root-readme": "bun scripts/generate-root-readme.ts",
-    "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-root-readme.ts && bun scripts/generate-stories.ts && bun check",
+    "generate": "bun scripts/generate-assets-theme-readme.ts && bun scripts/generate-themes-mdx.ts && bun scripts/generate-website-themes.ts && bun scripts/generate-root-readme.ts && bun scripts/generate-stories.ts && bun check",
     "prepare": "husky",
+    "postinstall": "bun run --cwd examples/nuxt-example setup && bun run --cwd examples/sveltekit-example sync && bun run --cwd apps/website generate:mdx",
     "release:version": "changeset version && bun update",
     "release:publish": "changeset publish"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.15",
     "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "2.31.0",
     "@types/bun": "^1.3.14",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
@@ -54,8 +56,6 @@
     ]
   },
   "resolutions": {
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
     "react-native": "0.81.5",
     "ws": "^8.18.0"
   },

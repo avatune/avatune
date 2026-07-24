@@ -26,6 +26,7 @@
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
     "@avatune/react": "workspace:*",
+    "@avatune/retro-cartoon-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "react": "^19.1.0",

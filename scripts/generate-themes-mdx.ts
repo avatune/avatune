@@ -9,7 +9,7 @@
  * Example: bun scripts/generate-themes-mdx.ts --theme micah
  */
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 import {
@@ -22,9 +22,168 @@ import {
   generateFrameworkExample,
   generateInstallationSectionMDX,
   generateRelatedPackagesSection,
+  MIT_LICENSE,
+  RESTRICTED_LICENSE,
   readFileIfExists,
   type ThemeInfo,
 } from './shared'
+
+type LicenseChoice = 'mit' | 'restricted'
+
+const LICENSE_TEXT: Record<LicenseChoice, string> = {
+  mit: MIT_LICENSE,
+  restricted: RESTRICTED_LICENSE,
+}
+
+const LICENSE_LABEL: Record<LicenseChoice, string> = {
+  mit: 'MIT',
+  restricted: 'MIT No-Redistribution',
+}
+
+/**
+ * Asks which license to apply to a theme that ships none. Falls back to MIT
+ * when stdin is not a TTY (CI / piped input) so automation never blocks.
+ */
+function promptLicenseChoice(theme: ThemeInfo): LicenseChoice {
+  if (!process.stdin.isTTY) {
+    console.log(
+      `  ℹ No license for ${theme.displayName}; defaulting to MIT (non-interactive).`,
+    )
+    return 'mit'
+  }
+
+  console.log(`\nNo license found for @avatune/${theme.packageName}.`)
+  console.log('  [1] MIT — permissive, usable anywhere')
+  console.log(
+    '  [2] MIT No-Redistribution — like MIT, but forbids bundling the avatar assets into other avatar libraries (e.g. DiceBear)',
+  )
+  const answer = (prompt('  Choose a license [1/2]:', '1') ?? '1').trim()
+  return answer === '2' ? 'restricted' : 'mit'
+}
+
+/**
+ * Keeps package metadata aligned with the license shipped in the package.
+ */
+function setPackageLicense(
+  group: 'themes' | 'assets',
+  packageName: string,
+  license: string,
+): void {
+  const packageJsonPath = join(
+    process.cwd(),
+    'packages',
+    group,
+    packageName,
+    'package.json',
+  )
+  if (!existsSync(packageJsonPath)) return
+
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
+  if (packageJson.license === license) return
+
+  packageJson.license = license
+  writeFileSync(
+    packageJsonPath,
+    `${JSON.stringify(packageJson, null, 2)}\n`,
+    'utf-8',
+  )
+}
+
+/**
+ * Ensures a theme has a LICENSE.md source so a license.mdx can be generated.
+ * Restricted artwork licenses are also applied to the separately published
+ * assets package.
+ */
+function ensureThemeLicense(theme: ThemeInfo): void {
+  const themeLicensePath = join(
+    process.cwd(),
+    'packages',
+    'themes',
+    theme.packageName,
+    'LICENSE.md',
+  )
+  const assetsLicensePath = join(
+    process.cwd(),
+    'packages',
+    'assets',
+    theme.assetsPackageName,
+    'LICENSE.md',
+  )
+  const existingLicensePath = existsSync(themeLicensePath)
+    ? themeLicensePath
+    : existsSync(assetsLicensePath)
+      ? assetsLicensePath
+      : undefined
+
+  if (existingLicensePath) {
+    const licenseContent = readFileSync(existingLicensePath, 'utf-8')
+    if (licenseContent.includes('No-Redistribution')) {
+      if (!existsSync(themeLicensePath)) {
+        writeFileSync(themeLicensePath, licenseContent, 'utf-8')
+      }
+      if (!existsSync(assetsLicensePath)) {
+        writeFileSync(assetsLicensePath, licenseContent, 'utf-8')
+      }
+      setPackageLicense(
+        'themes',
+        theme.packageName,
+        'SEE LICENSE IN LICENSE.md',
+      )
+      setPackageLicense(
+        'assets',
+        theme.assetsPackageName,
+        'SEE LICENSE IN LICENSE.md',
+      )
+    }
+    return
+  }
+
+  const choice = promptLicenseChoice(theme)
+  const licenseContent = LICENSE_TEXT[choice]
+  writeFileSync(themeLicensePath, licenseContent, 'utf-8')
+  setPackageLicense(
+    'themes',
+    theme.packageName,
+    choice === 'restricted' ? 'SEE LICENSE IN LICENSE.md' : 'MIT',
+  )
+
+  if (choice === 'restricted') {
+    writeFileSync(assetsLicensePath, licenseContent, 'utf-8')
+    setPackageLicense(
+      'assets',
+      theme.assetsPackageName,
+      'SEE LICENSE IN LICENSE.md',
+    )
+  }
+  console.log(
+    `  ✓ Created ${theme.displayName} LICENSE.md (${LICENSE_LABEL[choice]})`,
+  )
+}
+
+/**
+ * Reads a theme's effective LICENSE.md content (theme package first, then its
+ * assets package) for wording decisions in the generated docs.
+ */
+function readThemeLicenseContent(theme: ThemeInfo): string | undefined {
+  const themeLicensePath = join(
+    process.cwd(),
+    'packages',
+    'themes',
+    theme.packageName,
+    'LICENSE.md',
+  )
+  const assetsLicensePath = join(
+    process.cwd(),
+    'packages',
+    'assets',
+    theme.assetsPackageName,
+    'LICENSE.md',
+  )
+
+  if (existsSync(themeLicensePath)) return readFileIfExists(themeLicensePath)
+  if (existsSync(assetsLicensePath)) return readFileIfExists(assetsLicensePath)
+  return undefined
+}
 
 /**
  * Maps theme package name to theme ID used in AvatarUsagePreview component
@@ -41,10 +200,10 @@ function getThemeId(packageName: string): string {
  */
 function generateExamplesSection(themeId: string): string {
   return `
-<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 2rem 0;">
-  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-12345" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-678910" size={200} />
-  <AvatarUsagePreview client:only="svelte" themeId="${themeId}" seed="example-101112131415" size={200} />
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="${themeId}" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="${themeId}" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="${themeId}" seed="example-101112131415" size={200} />
 </div>`
 }
 
@@ -82,17 +241,6 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push(generateFrontmatter(theme))
   sections.push('')
 
-  // Import statements
-  sections.push(
-    "import AssetPreview from '../../../../components/docs/asset-preview.astro';",
-  )
-  sections.push(
-    "import InstallTabs from '../../../../components/docs/install-tabs.astro';",
-  )
-  sections.push(
-    "import AvatarUsagePreview from '../../../../components/docs/avatar-usage-preview.svelte';",
-  )
-
   // Get assets for import generation
   const packagesDir = join(process.cwd(), 'packages')
   const svgDir = join(packagesDir, 'assets', assetsPackageName, 'src', 'svg')
@@ -104,7 +252,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push('')
 
   // Source reference
-  sections.push(`> Source: \`packages/assets/${packageName}/README.md\``)
+  sections.push(`> Source: \`packages/assets/${assetsPackageName}/README.md\``)
   sections.push('')
 
   // Introduction
@@ -225,8 +373,11 @@ function generateThemeMDX(theme: ThemeInfo): string {
 
   sections.push('### Theme License')
   sections.push('')
+  const themeLicenseContent = readThemeLicenseContent(theme)
   sections.push(
-    'This theme package is licensed under MIT (see [LICENSE.md](license)).',
+    themeLicenseContent?.includes('No-Redistribution')
+      ? 'This theme package is licensed under a modified MIT license that permits any use except repackaging its avatar assets into other avatar libraries such as DiceBear (see [LICENSE.md](license)).'
+      : 'This theme package is licensed under MIT (see [LICENSE.md](license)).',
   )
   sections.push('')
 
@@ -257,7 +408,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
 }
 
 /**
- * Generates CREDITS.mdx file if CREDITS.md exists in the assets package
+ * Generates credits.mdx if CREDITS.md exists in the assets package
  */
 function generateCreditsMDX(theme: ThemeInfo): string | null {
   const packagesDir = join(process.cwd(), 'packages')
@@ -311,7 +462,7 @@ function generateCreditsMDX(theme: ThemeInfo): string | null {
 }
 
 /**
- * Generates LICENSE.mdx file if LICENSE.md exists in the theme or assets package
+ * Generates license.mdx if LICENSE.md exists in the theme or assets package
  */
 function generateLicenseMDX(theme: ThemeInfo): string | null {
   const packagesDir = join(process.cwd(), 'packages')
@@ -354,7 +505,9 @@ function generateLicenseMDX(theme: ThemeInfo): string | null {
   sections.push('title: "LICENSE.md"')
 
   // Extract license type from content
-  if (licenseContent.includes('MIT License')) {
+  if (licenseContent.includes('No-Redistribution')) {
+    sections.push('description: "MIT License (No-Redistribution Variant)"')
+  } else if (licenseContent.includes('MIT License')) {
     sections.push('description: "MIT License"')
   } else if (licenseContent.includes('CC BY 4.0')) {
     sections.push('description: "CC BY 4.0 License"')
@@ -422,26 +575,29 @@ function main() {
       mkdirSync(themeDocsDir, { recursive: true })
     }
 
+    // Ensure a LICENSE.md source exists before generating its docs page
+    ensureThemeLicense(theme)
+
     // Generate main index.mdx
     const indexContent = generateThemeMDX(theme)
     const indexPath = join(themeDocsDir, 'index.mdx')
     writeFileSync(indexPath, indexContent, 'utf-8')
     console.log(`✓ Generated ${theme.displayName} index.mdx`)
 
-    // Generate CREDITS.mdx if available
+    // Generate credits.mdx if available
     const creditsContent = generateCreditsMDX(theme)
     if (creditsContent) {
-      const creditsPath = join(themeDocsDir, 'CREDITS.mdx')
+      const creditsPath = join(themeDocsDir, 'credits.mdx')
       writeFileSync(creditsPath, creditsContent, 'utf-8')
-      console.log(`  ✓ Generated ${theme.displayName} CREDITS.mdx`)
+      console.log(`  ✓ Generated ${theme.displayName} credits.mdx`)
     }
 
-    // Generate LICENSE.mdx if available
+    // Generate license.mdx if available
     const licenseContent = generateLicenseMDX(theme)
     if (licenseContent) {
-      const licensePath = join(themeDocsDir, 'LICENSE.mdx')
+      const licensePath = join(themeDocsDir, 'license.mdx')
       writeFileSync(licensePath, licenseContent, 'utf-8')
-      console.log(`  ✓ Generated ${theme.displayName} LICENSE.mdx`)
+      console.log(`  ✓ Generated ${theme.displayName} license.mdx`)
     }
   }
 
