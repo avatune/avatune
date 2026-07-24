@@ -53,7 +53,7 @@
     "@avatune/typescript-config": "workspace:*",
     "@rsbuild/plugin-react": "^1.4.2",
     "@rslib/core": "^0.16.1",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.9.1",
     "@types/react": "^19.0.8",
     "react": "19.1.0",
     "react-native": "0.81.5",

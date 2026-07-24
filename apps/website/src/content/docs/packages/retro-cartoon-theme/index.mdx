@@ -5,38 +5,38 @@ source: "packages/themes/retro-cartoon-theme/README.md"
 ---
 
 import {
-  eyebrowsPasted1,
-  eyebrowsPasted2,
-  eyebrowsPasted3,
-  eyebrowsPasted4,
-  eyebrowsPasted5,
-  bodyPasted1,
-  bodyPasted2,
-  bodyPasted3,
-  bodyPasted4,
-  bodyPasted5,
-  bodyPasted6,
-  nosePasted1,
-  mouthPasted1,
-  mouthPasted2,
-  mouthPasted3,
-  mouthPasted4,
-  mouthPasted5,
-  mouthPasted6,
-  headPasted2,
-  eyesPasted1,
-  eyesPasted2,
-  eyesPasted3,
-  eyesPasted4,
-  eyesPasted5,
-  hairPasted2,
-  hairPasted3,
-  hairPasted4,
-  hairPasted5,
-  hairPasted6,
-  hairPasted7,
-  hairPasted8,
-  hairPasted9,
+  eyebrowsAngled,
+  eyebrowsFlat,
+  eyebrowsRaised,
+  eyebrowsSoft,
+  eyebrowsThick,
+  bodyBlazer,
+  bodyCollaredShirt,
+  bodyCrewneckSweater,
+  bodyHoodie,
+  bodyTurtleneckSweater,
+  bodyVNeckSweater,
+  noseCurve,
+  mouthLips,
+  mouthNeutral,
+  mouthOpenedSmile,
+  mouthSad,
+  mouthSmirk,
+  mouthTeethSmile,
+  headStandard,
+  eyesHappy,
+  eyesNeutral,
+  eyesSleepy,
+  eyesSurprised,
+  eyesWinking,
+  hairAfro,
+  hairBob,
+  hairBuzzCut,
+  hairCurlyBob,
+  hairLongCurly,
+  hairLongStraight,
+  hairLongWavy,
+  hairSideSwept,
 } from '@avatune/retro-cartoon-assets/svg';
 
 > Source: `packages/assets/retro-cartoon-assets/README.md`
@@ -157,9 +157,9 @@ You can override specific avatar parts:
 <Avatar
   theme={theme}
   size={300}
-  hair="pasted2"          // Choose specific hair style
+  hair="curlyBob"          // Choose specific hair style
   hairColor="#FF5733"    // Custom hair color
-  body="pasted1"     // Choose specific clothing
+  body="crewneckSweater"     // Choose specific clothing
   bodyColor="#3498DB"    // Custom clothing color
 />
 ```
@@ -202,68 +202,68 @@ import { HairShort, EyesBoring, MouthSmile } from '@avatune/retro-cartoon-assets
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={bodyPasted1} title="pasted1" hideCaption /> | `pasted1` |
-| <AssetPreview svg={bodyPasted2} title="pasted2" hideCaption /> | `pasted2` |
-| <AssetPreview svg={bodyPasted3} title="pasted3" hideCaption /> | `pasted3` |
-| <AssetPreview svg={bodyPasted4} title="pasted4" hideCaption /> | `pasted4` |
-| <AssetPreview svg={bodyPasted5} title="pasted5" hideCaption /> | `pasted5` |
-| <AssetPreview svg={bodyPasted6} title="pasted6" hideCaption /> | `pasted6` |
+| <AssetPreview svg={bodyBlazer} title="blazer" hideCaption /> | `blazer` |
+| <AssetPreview svg={bodyCollaredShirt} title="collaredShirt" hideCaption /> | `collaredShirt` |
+| <AssetPreview svg={bodyCrewneckSweater} title="crewneckSweater" hideCaption /> | `crewneckSweater` |
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyTurtleneckSweater} title="turtleneckSweater" hideCaption /> | `turtleneckSweater` |
+| <AssetPreview svg={bodyVNeckSweater} title="vNeckSweater" hideCaption /> | `vNeckSweater` |
 
 #### Eyebrows
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={eyebrowsPasted1} title="pasted1" hideCaption /> | `pasted1` |
-| <AssetPreview svg={eyebrowsPasted2} title="pasted2" hideCaption /> | `pasted2` |
-| <AssetPreview svg={eyebrowsPasted3} title="pasted3" hideCaption /> | `pasted3` |
-| <AssetPreview svg={eyebrowsPasted4} title="pasted4" hideCaption /> | `pasted4` |
-| <AssetPreview svg={eyebrowsPasted5} title="pasted5" hideCaption /> | `pasted5` |
+| <AssetPreview svg={eyebrowsAngled} title="angled" hideCaption /> | `angled` |
+| <AssetPreview svg={eyebrowsFlat} title="flat" hideCaption /> | `flat` |
+| <AssetPreview svg={eyebrowsRaised} title="raised" hideCaption /> | `raised` |
+| <AssetPreview svg={eyebrowsSoft} title="soft" hideCaption /> | `soft` |
+| <AssetPreview svg={eyebrowsThick} title="thick" hideCaption /> | `thick` |
 
 #### Eyes
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={eyesPasted1} title="pasted1" hideCaption /> | `pasted1` |
-| <AssetPreview svg={eyesPasted2} title="pasted2" hideCaption /> | `pasted2` |
-| <AssetPreview svg={eyesPasted3} title="pasted3" hideCaption /> | `pasted3` |
-| <AssetPreview svg={eyesPasted4} title="pasted4" hideCaption /> | `pasted4` |
-| <AssetPreview svg={eyesPasted5} title="pasted5" hideCaption /> | `pasted5` |
+| <AssetPreview svg={eyesHappy} title="happy" hideCaption /> | `happy` |
+| <AssetPreview svg={eyesNeutral} title="neutral" hideCaption /> | `neutral` |
+| <AssetPreview svg={eyesSleepy} title="sleepy" hideCaption /> | `sleepy` |
+| <AssetPreview svg={eyesSurprised} title="surprised" hideCaption /> | `surprised` |
+| <AssetPreview svg={eyesWinking} title="winking" hideCaption /> | `winking` |
 
 #### Hair
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={hairPasted2} title="pasted2" hideCaption /> | `pasted2` |
-| <AssetPreview svg={hairPasted3} title="pasted3" hideCaption /> | `pasted3` |
-| <AssetPreview svg={hairPasted4} title="pasted4" hideCaption /> | `pasted4` |
-| <AssetPreview svg={hairPasted5} title="pasted5" hideCaption /> | `pasted5` |
-| <AssetPreview svg={hairPasted6} title="pasted6" hideCaption /> | `pasted6` |
-| <AssetPreview svg={hairPasted7} title="pasted7" hideCaption /> | `pasted7` |
-| <AssetPreview svg={hairPasted8} title="pasted8" hideCaption /> | `pasted8` |
-| <AssetPreview svg={hairPasted9} title="pasted9" hideCaption /> | `pasted9` |
+| <AssetPreview svg={hairAfro} title="afro" hideCaption /> | `afro` |
+| <AssetPreview svg={hairBob} title="bob" hideCaption /> | `bob` |
+| <AssetPreview svg={hairBuzzCut} title="buzzCut" hideCaption /> | `buzzCut` |
+| <AssetPreview svg={hairCurlyBob} title="curlyBob" hideCaption /> | `curlyBob` |
+| <AssetPreview svg={hairLongCurly} title="longCurly" hideCaption /> | `longCurly` |
+| <AssetPreview svg={hairLongStraight} title="longStraight" hideCaption /> | `longStraight` |
+| <AssetPreview svg={hairLongWavy} title="longWavy" hideCaption /> | `longWavy` |
+| <AssetPreview svg={hairSideSwept} title="sideSwept" hideCaption /> | `sideSwept` |
 
 #### Head
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={headPasted2} title="pasted2" hideCaption /> | `pasted2` |
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
 
 #### Mouth
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={mouthPasted1} title="pasted1" hideCaption /> | `pasted1` |
-| <AssetPreview svg={mouthPasted2} title="pasted2" hideCaption /> | `pasted2` |
-| <AssetPreview svg={mouthPasted3} title="pasted3" hideCaption /> | `pasted3` |
-| <AssetPreview svg={mouthPasted4} title="pasted4" hideCaption /> | `pasted4` |
-| <AssetPreview svg={mouthPasted5} title="pasted5" hideCaption /> | `pasted5` |
-| <AssetPreview svg={mouthPasted6} title="pasted6" hideCaption /> | `pasted6` |
+| <AssetPreview svg={mouthLips} title="lips" hideCaption /> | `lips` |
+| <AssetPreview svg={mouthNeutral} title="neutral" hideCaption /> | `neutral` |
+| <AssetPreview svg={mouthOpenedSmile} title="openedSmile" hideCaption /> | `openedSmile` |
+| <AssetPreview svg={mouthSad} title="sad" hideCaption /> | `sad` |
+| <AssetPreview svg={mouthSmirk} title="smirk" hideCaption /> | `smirk` |
+| <AssetPreview svg={mouthTeethSmile} title="teethSmile" hideCaption /> | `teethSmile` |
 
 #### Nose
 
 | Preview | Filename |
 |---------|----------|
-| <AssetPreview svg={nosePasted1} title="pasted1" hideCaption /> | `pasted1` |
+| <AssetPreview svg={noseCurve} title="curve" hideCaption /> | `curve` |
 
 ## License & Credits
 

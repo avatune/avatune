@@ -101,8 +101,8 @@
       "pinVersion": "^20.17.19"
     },
     {
-      "label": "Align Node 22 types",
-      "packages": [
+      "label": "Align Node 24 types",
+            "packages": [
         "@avatune/angular",
         "@avatune/api-client",
         "@avatune/ashleyy-theme",
@@ -136,12 +136,6 @@
         "@avatune/vue",
         "@avatune/yanliu-theme"
       ],
-      "dependencies": ["@types/node"],
-      "dependencyTypes": ["dev"],
-      "pinVersion": "^22.18.12"
-    },
-    {
-      "label": "Align Node 24 types",
       "dependencies": ["@types/node"],
       "dependencyTypes": ["dev"],
       "pinVersion": "^24.9.1"

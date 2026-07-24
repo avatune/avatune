@@ -14,9 +14,15 @@ on:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
 jobs:
   release:
     name: Release
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -26,6 +32,9 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version-file: ".node-version"
+
+      - name: Update npm
+        run: npm install --global npm@11.15.0
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -48,5 +57,3 @@ jobs:
           title: "chore: update versions"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}

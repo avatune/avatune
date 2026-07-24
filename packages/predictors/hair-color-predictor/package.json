@@ -58,7 +58,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",
     "@tensorflow/tfjs-backend-webgl": "^4.22.0",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.9.1",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

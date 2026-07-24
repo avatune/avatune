@@ -1,87 +1,87 @@
 // Body
-import BodyPasted1 from './svg/body/pasted1.svg?vue'
-import BodyPasted2 from './svg/body/pasted2.svg?vue'
-import BodyPasted3 from './svg/body/pasted3.svg?vue'
-import BodyPasted4 from './svg/body/pasted4.svg?vue'
-import BodyPasted5 from './svg/body/pasted5.svg?vue'
-import BodyPasted6 from './svg/body/pasted6.svg?vue'
+import BodyBlazer from './svg/body/blazer.svg?vue'
+import BodyCollaredShirt from './svg/body/collaredShirt.svg?vue'
+import BodyCrewneckSweater from './svg/body/crewneckSweater.svg?vue'
+import BodyHoodie from './svg/body/hoodie.svg?vue'
+import BodyTurtleneckSweater from './svg/body/turtleneckSweater.svg?vue'
+import BodyVNeckSweater from './svg/body/vNeckSweater.svg?vue'
 
 // Eyebrows
-import EyebrowsPasted1 from './svg/eyebrows/pasted1.svg?vue'
-import EyebrowsPasted2 from './svg/eyebrows/pasted2.svg?vue'
-import EyebrowsPasted3 from './svg/eyebrows/pasted3.svg?vue'
-import EyebrowsPasted4 from './svg/eyebrows/pasted4.svg?vue'
-import EyebrowsPasted5 from './svg/eyebrows/pasted5.svg?vue'
+import EyebrowsAngled from './svg/eyebrows/angled.svg?vue'
+import EyebrowsFlat from './svg/eyebrows/flat.svg?vue'
+import EyebrowsRaised from './svg/eyebrows/raised.svg?vue'
+import EyebrowsSoft from './svg/eyebrows/soft.svg?vue'
+import EyebrowsThick from './svg/eyebrows/thick.svg?vue'
 
 // Eyes
-import EyesPasted1 from './svg/eyes/pasted1.svg?vue'
-import EyesPasted2 from './svg/eyes/pasted2.svg?vue'
-import EyesPasted3 from './svg/eyes/pasted3.svg?vue'
-import EyesPasted4 from './svg/eyes/pasted4.svg?vue'
-import EyesPasted5 from './svg/eyes/pasted5.svg?vue'
+import EyesHappy from './svg/eyes/happy.svg?vue'
+import EyesNeutral from './svg/eyes/neutral.svg?vue'
+import EyesSleepy from './svg/eyes/sleepy.svg?vue'
+import EyesSurprised from './svg/eyes/surprised.svg?vue'
+import EyesWinking from './svg/eyes/winking.svg?vue'
 
 // Hair
-import HairPasted2 from './svg/hair/pasted2.svg?vue'
-import HairPasted3 from './svg/hair/pasted3.svg?vue'
-import HairPasted4 from './svg/hair/pasted4.svg?vue'
-import HairPasted5 from './svg/hair/pasted5.svg?vue'
-import HairPasted6 from './svg/hair/pasted6.svg?vue'
-import HairPasted7 from './svg/hair/pasted7.svg?vue'
-import HairPasted8 from './svg/hair/pasted8.svg?vue'
-import HairPasted9 from './svg/hair/pasted9.svg?vue'
+import HairAfro from './svg/hair/afro.svg?vue'
+import HairBob from './svg/hair/bob.svg?vue'
+import HairBuzzCut from './svg/hair/buzzCut.svg?vue'
+import HairCurlyBob from './svg/hair/curlyBob.svg?vue'
+import HairLongCurly from './svg/hair/longCurly.svg?vue'
+import HairLongStraight from './svg/hair/longStraight.svg?vue'
+import HairLongWavy from './svg/hair/longWavy.svg?vue'
+import HairSideSwept from './svg/hair/sideSwept.svg?vue'
 
 // Head
-import HeadPasted2 from './svg/head/pasted2.svg?vue'
+import HeadStandard from './svg/head/standard.svg?vue'
 
 // Mouth
-import MouthPasted1 from './svg/mouth/pasted1.svg?vue'
-import MouthPasted2 from './svg/mouth/pasted2.svg?vue'
-import MouthPasted3 from './svg/mouth/pasted3.svg?vue'
-import MouthPasted4 from './svg/mouth/pasted4.svg?vue'
-import MouthPasted5 from './svg/mouth/pasted5.svg?vue'
-import MouthPasted6 from './svg/mouth/pasted6.svg?vue'
+import MouthLips from './svg/mouth/lips.svg?vue'
+import MouthNeutral from './svg/mouth/neutral.svg?vue'
+import MouthOpenedSmile from './svg/mouth/openedSmile.svg?vue'
+import MouthSad from './svg/mouth/sad.svg?vue'
+import MouthSmirk from './svg/mouth/smirk.svg?vue'
+import MouthTeethSmile from './svg/mouth/teethSmile.svg?vue'
 
 // Nose
-import NosePasted1 from './svg/nose/pasted1.svg?vue'
+import NoseCurve from './svg/nose/curve.svg?vue'
 
 export {
   // Body
-  BodyPasted1,
-  BodyPasted2,
-  BodyPasted3,
-  BodyPasted4,
-  BodyPasted5,
-  BodyPasted6,
+  BodyBlazer,
+  BodyCollaredShirt,
+  BodyCrewneckSweater,
+  BodyHoodie,
+  BodyTurtleneckSweater,
+  BodyVNeckSweater,
   // Eyebrows
-  EyebrowsPasted1,
-  EyebrowsPasted2,
-  EyebrowsPasted3,
-  EyebrowsPasted4,
-  EyebrowsPasted5,
+  EyebrowsAngled,
+  EyebrowsFlat,
+  EyebrowsRaised,
+  EyebrowsSoft,
+  EyebrowsThick,
   // Eyes
-  EyesPasted1,
-  EyesPasted2,
-  EyesPasted3,
-  EyesPasted4,
-  EyesPasted5,
+  EyesHappy,
+  EyesNeutral,
+  EyesSleepy,
+  EyesSurprised,
+  EyesWinking,
   // Hair
-  HairPasted2,
-  HairPasted3,
-  HairPasted4,
-  HairPasted5,
-  HairPasted6,
-  HairPasted7,
-  HairPasted8,
-  HairPasted9,
+  HairAfro,
+  HairBob,
+  HairBuzzCut,
+  HairCurlyBob,
+  HairLongCurly,
+  HairLongStraight,
+  HairLongWavy,
+  HairSideSwept,
   // Head
-  HeadPasted2,
+  HeadStandard,
   // Mouth
-  MouthPasted1,
-  MouthPasted2,
-  MouthPasted3,
-  MouthPasted4,
-  MouthPasted5,
-  MouthPasted6,
+  MouthLips,
+  MouthNeutral,
+  MouthOpenedSmile,
+  MouthSad,
+  MouthSmirk,
+  MouthTeethSmile,
   // Nose
-  NosePasted1,
+  NoseCurve,
 }

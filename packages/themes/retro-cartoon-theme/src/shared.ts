@@ -40,137 +40,137 @@ export default createTheme<BaseAvatarItem>()
   .addColors('mouth', [DefaultColors.Default])
   .addColors('nose', [DefaultColors.Default])
   // Body
-  .addItem('body', 'pasted1', {
+  .addItem('body', 'crewneckSweater', {
     position: fromHeadOffset(-percentage('8.65%'), percentage('50.68%')),
     layer: 15,
   })
-  .addItem('body', 'pasted2', {
+  .addItem('body', 'collaredShirt', {
     position: fromHeadOffset(-percentage('10.30%'), percentage('48.09%')),
     layer: 15,
   })
-  .addItem('body', 'pasted3', {
+  .addItem('body', 'hoodie', {
     position: fromHeadOffset(-percentage('9.40%'), percentage('46.46%')),
     layer: 5,
   })
-  .addItem('body', 'pasted4', {
+  .addItem('body', 'turtleneckSweater', {
     position: fromHeadOffset(-percentage('9.94%'), percentage('48.96%')),
     layer: 15,
   })
-  .addItem('body', 'pasted5', {
+  .addItem('body', 'blazer', {
     position: fromHeadOffset(-percentage('10.66%'), percentage('52.15%')),
     layer: 5,
   })
-  .addItem('body', 'pasted6', {
+  .addItem('body', 'vNeckSweater', {
     position: fromHeadOffset(-percentage('9.59%'), percentage('47.97%')),
     layer: 5,
   })
   // Eyebrows
-  .addItem('eyebrows', 'pasted1', {
+  .addItem('eyebrows', 'soft', {
     position: fromHeadOffset(percentage('9.70%'), percentage('15.09%')),
     layer: 22,
   })
-  .addItem('eyebrows', 'pasted2', {
+  .addItem('eyebrows', 'thick', {
     position: fromHeadOffset(percentage('10.52%'), percentage('15.92%')),
     layer: 22,
   })
-  .addItem('eyebrows', 'pasted3', {
+  .addItem('eyebrows', 'angled', {
     position: fromHeadOffset(percentage('9.70%'), percentage('14.24%')),
     layer: 22,
   })
-  .addItem('eyebrows', 'pasted4', {
+  .addItem('eyebrows', 'flat', {
     position: fromHeadOffset(percentage('10.70%'), percentage('16.43%')),
     layer: 22,
   })
-  .addItem('eyebrows', 'pasted5', {
+  .addItem('eyebrows', 'raised', {
     position: fromHeadOffset(percentage('11.02%'), percentage('13.17%')),
     layer: 22,
   })
   // Eyes
-  .addItem('eyes', 'pasted1', {
+  .addItem('eyes', 'neutral', {
     position: fromHeadOffset(percentage('9.21%'), percentage('20.15%')),
     layer: 20,
   })
-  .addItem('eyes', 'pasted2', {
+  .addItem('eyes', 'happy', {
     position: fromHeadOffset(percentage('9.21%'), percentage('21.13%')),
     layer: 20,
   })
-  .addItem('eyes', 'pasted3', {
+  .addItem('eyes', 'winking', {
     position: fromHeadOffset(percentage('9.21%'), percentage('20.66%')),
     layer: 20,
   })
-  .addItem('eyes', 'pasted4', {
+  .addItem('eyes', 'surprised', {
     position: fromHeadOffset(percentage('9.21%'), percentage('19.10%')),
     layer: 20,
   })
-  .addItem('eyes', 'pasted5', {
+  .addItem('eyes', 'sleepy', {
     position: fromHeadOffset(percentage('9.21%'), percentage('20.76%')),
     layer: 20,
   })
   // Hair
-  .addItem('hair', 'pasted2', {
+  .addItem('hair', 'curlyBob', {
     position: fromHeadOffset(-percentage('13.43%'), -percentage('11.80%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted3', {
+  .addItem('hair', 'longWavy', {
     position: fromHeadOffset(-percentage('10.44%'), -percentage('7.40%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted4', {
+  .addItem('hair', 'longStraight', {
     position: fromHeadOffset(-percentage('6.94%'), -percentage('8.48%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted5', {
+  .addItem('hair', 'longCurly', {
     position: fromHeadOffset(-percentage('15.80%'), -percentage('7.38%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted6', {
+  .addItem('hair', 'bob', {
     position: fromHeadOffset(-percentage('7.30%'), -percentage('6.31%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted7', {
+  .addItem('hair', 'sideSwept', {
     position: fromHeadOffset(-percentage('0.22%'), -percentage('7.68%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted8', {
+  .addItem('hair', 'afro', {
     position: fromHeadOffset(-percentage('1.83%'), -percentage('11.11%')),
     layer: 40,
   })
-  .addItem('hair', 'pasted9', {
+  .addItem('hair', 'buzzCut', {
     position: fromHeadOffset(percentage('1.52%'), -percentage('8.03%')),
     layer: 40,
   })
   // Head
-  .addItem('head', 'pasted2', {
+  .addItem('head', 'standard', {
     position: fromHeadOffset(percentage('0%'), percentage('0%')),
     layer: 10,
   })
   // Mouth
-  .addItem('mouth', 'pasted1', {
+  .addItem('mouth', 'teethSmile', {
     position: fromHeadOffset(percentage('14.88%'), percentage('36.40%')),
     layer: 20,
   })
-  .addItem('mouth', 'pasted2', {
+  .addItem('mouth', 'lips', {
     position: fromHeadOffset(percentage('14.88%'), percentage('38.40%')),
     layer: 20,
   })
-  .addItem('mouth', 'pasted3', {
+  .addItem('mouth', 'openedSmile', {
     position: fromHeadOffset(percentage('14.88%'), percentage('34.57%')),
     layer: 20,
   })
-  .addItem('mouth', 'pasted4', {
+  .addItem('mouth', 'smirk', {
     position: fromHeadOffset(percentage('16.88%'), percentage('38.28%')),
     layer: 20,
   })
-  .addItem('mouth', 'pasted5', {
+  .addItem('mouth', 'neutral', {
     position: fromHeadOffset(percentage('16.88%'), percentage('39.97%')),
     layer: 20,
   })
-  .addItem('mouth', 'pasted6', {
+  .addItem('mouth', 'sad', {
     position: fromHeadOffset(percentage('17.38%'), percentage('39.00%')),
     layer: 20,
   })
   // Nose
-  .addItem('nose', 'pasted1', {
+  .addItem('nose', 'curve', {
     position: fromHeadOffset(percentage('20.56%'), percentage('27.69%')),
     layer: 21,
   })

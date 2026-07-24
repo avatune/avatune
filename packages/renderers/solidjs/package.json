@@ -54,7 +54,7 @@
     "@rsbuild/plugin-solid": "^1.0.5",
     "@rslib/core": "^0.16.1",
     "esbuild": "^0.25.0",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.9.1",
     "solid-js": "^1.9.11",
     "typescript": "^5.9.3"
   },

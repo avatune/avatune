@@ -51,7 +51,7 @@
     "@avatune/typescript-config": "workspace:*",
     "@rsbuild/plugin-svelte": "^1.0.10",
     "@rslib/core": "^0.16.1",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.9.1",
     "svelte": "^5.43.8",
     "typescript": "^5.9.3"
   },

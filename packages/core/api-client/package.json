@@ -58,7 +58,7 @@
     "@avatune/yanliu-theme": "workspace:*",
     "@microsoft/api-extractor": "^7.52.8",
     "@rslib/core": "^0.16.1",
-    "@types/node": "^22.18.12",
+    "@types/node": "^24.9.1",
     "typescript": "^5.9.3"
   },
   "license": "MIT"
