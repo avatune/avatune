@@ -63,8 +63,5 @@
   "resolutions": {
     "react-native": "0.81.5",
     "ws": "^8.18.0"
-  },
-  "patchedDependencies": {
-    "@changesets/cli@2.31.0": "patches/@changesets%2Fcli@2.31.0.patch"
   }
 }
