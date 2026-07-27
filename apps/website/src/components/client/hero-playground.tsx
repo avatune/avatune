@@ -13,7 +13,7 @@ const Avatar = dynamic(
 const tabBase =
   'cursor-pointer rounded-md border-none bg-transparent px-3 py-1.5 font-code text-[11.5px] tracking-[0.06em] whitespace-nowrap hover:bg-paper-3'
 const optionBase =
-  'pg-frame-checker relative aspect-square min-w-0 min-h-0 cursor-pointer overflow-hidden rounded-[10px] border border-line bg-[#0c0c0c] p-0 transition hover:-translate-y-px hover:border-line-strong [&>.thumb>svg]:block [&>.thumb>svg]:h-[78%] [&>.thumb>svg]:w-[78%] [&>.thumb>svg]:max-h-[56px] [&>.thumb>svg]:max-w-[56px]'
+  'pg-frame-checker relative aspect-square cursor-pointer rounded-[10px] border border-line bg-[#0c0c0c] p-0 transition hover:-translate-y-px hover:border-line-strong [&>.thumb>svg]:block [&>.thumb>svg]:h-[78%] [&>.thumb>svg]:w-[78%] [&>.thumb>svg]:max-h-[56px] [&>.thumb>svg]:max-w-[56px]'
 const optionActive = 'border-ink bg-[#181818]'
 const buttonClass =
   'inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line-2 bg-paper-3 px-2.5 py-1.5 text-xs font-medium whitespace-nowrap text-ink transition hover:border-line-strong hover:bg-paper-card active:translate-y-px'
@@ -230,7 +230,7 @@ export function HeroPlayground() {
                   title={themeInfo.label}
                   onClick={() => pickTheme(themeInfo.id)}
                 >
-                  <span className="thumb pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden rounded-lg">
+                  <span className="thumb pointer-events-none inset-0 flex items-center justify-center overflow-hidden rounded-lg">
                     <Avatar
                       key={themeInfo.id}
                       theme={themeMap[themeInfo.id] ?? fallbackTheme}
