@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "bun test",
-    "test:update": "bun test --update-snapshots",
+    "test:update": "BUN_UPDATE_SNAPSHOTS=true bun test",
     "clean": "rm -rf .tmp __snapshots__"
   },
   "dependencies": {
