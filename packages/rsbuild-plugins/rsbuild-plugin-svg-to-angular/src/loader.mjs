@@ -118,7 +118,7 @@ const transformSvg = callbackify(async (contents, options = {}, state = {}) => {
     'export var template = function(color, uid) {',
     '  color = color || "currentColor";',
     '  uid = uid || "";',
-    '  return ' + concatExpr + ';',
+    `  return ${concatExpr};`,
     '};',
     'export var color = "currentColor";',
     'export var uid = "";',

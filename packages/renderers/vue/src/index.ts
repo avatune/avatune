@@ -37,7 +37,7 @@ export type AvatarProps<T extends VueTheme> = AvatarConfig<VueAvatarItem, T> & {
  * Vue component for rendering avatars
  */
 export const Avatar = defineComponent({
-  name: 'Avatar',
+  name: 'AvatuneAvatar',
   props: {
     theme: {
       type: Object as PropType<VueTheme>,

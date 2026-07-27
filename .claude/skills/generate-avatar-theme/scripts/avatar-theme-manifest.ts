@@ -5,6 +5,14 @@ export type PaletteRole = 'skin' | 'hair' | 'features' | 'clothing' | 'outline'
 
 export const SHEET_SIZE = 1024
 
+export const REFERENCE_KINDS = ['mascot', 'photo'] as const
+export const REFERENCE_INTENTS = ['style', 'likeness'] as const
+export const REFERENCE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp'] as const
+export const MAX_REFERENCE_FILES = 4
+
+export type ReferenceKind = (typeof REFERENCE_KINDS)[number]
+export type ReferenceIntent = (typeof REFERENCE_INTENTS)[number]
+
 export interface PartVariant {
   name: string
   description: string
@@ -19,18 +27,18 @@ interface PartDefinition {
 export const PART_DEFINITIONS: Record<PartCategory, PartDefinition> = {
   faces: {
     isolatedSubject:
-      'complete front-facing heads containing the head shape, ears, eyes, eyebrows, nose, and mouth, with no hair, neck, shoulders, clothing, or accessories',
+      'complete front-facing heads that all share one identical head silhouette and ear construction and differ only in eyes, eyebrows, nose, mouth, and expression, with no hair, neck, shoulders, clothing, or accessories',
     paletteRoles: ['skin', 'hair', 'features', 'outline'],
     variants: [
-      { name: 'ovalFriendly', description: 'oval head, balanced eyes, soft brows, and a friendly closed smile' },
-      { name: 'roundBright', description: 'round head, bright round eyes, raised brows, and a broad smile' },
-      { name: 'squareCalm', description: 'square head, calm almond eyes, straight brows, and a neutral mouth' },
-      { name: 'heartCheerful', description: 'heart-shaped head, upturned eyes, arched brows, and a cheerful grin' },
-      { name: 'diamondConfident', description: 'diamond head, focused eyes, defined brows, and a confident smirk' },
-      { name: 'oblongWarm', description: 'oblong head, soft hooded eyes, curved brows, and a warm smile' },
-      { name: 'pearPlayful', description: 'pear-shaped head, wide eyes, expressive brows, and a playful open smile' },
-      { name: 'broadJawRelaxed', description: 'broad jaw, relaxed eyes, low brows, and relaxed closed lips' },
-      { name: 'taperedHappy', description: 'tapered jaw, happy curved eyes, soft brows, and a laughing mouth' },
+      { name: 'balancedFriendly', description: 'almond eyes, soft brows, compact nose, and a friendly closed smile' },
+      { name: 'roundBright', description: 'large round eyes, high rounded brows, small nose, and a broad open smile' },
+      { name: 'narrowCalm', description: 'narrow level eyes, straight brows, slim nose, and a neutral closed mouth' },
+      { name: 'upturnedCheerful', description: 'upturned eyes, arched brows, short rounded nose, and a cheerful grin' },
+      { name: 'hoodedConfident', description: 'half-hooded eyes, angled brows, straight nose, and a confident smirk' },
+      { name: 'wideCurious', description: 'wide-set eyes, raised inner brows, small nose, and a slightly parted mouth' },
+      { name: 'closedJoyful', description: 'closed curved eyes, lifted brows, tiny nose, and a laughing open mouth' },
+      { name: 'heavyBrowSerious', description: 'deep-set eyes, heavy low brows, broad nose, and a flat compressed mouth' },
+      { name: 'smallFeatureQuiet', description: 'small eyes, short thin brows, minimal nose, and a small quiet smile' },
     ],
   },
   hairs: {
@@ -82,10 +90,18 @@ export const PART_DEFINITIONS: Record<PartCategory, PartDefinition> = {
   },
 }
 
-export const getPartVariant = (category: PartCategory, index: number) => {
-  const variant = PART_DEFINITIONS[category].variants[index]
-  if (!variant) throw new Error(`${category} has no variant at index ${index}`)
-  return variant
+export const HAIR_VARIANT_COUNT = PART_DEFINITIONS.hairs.variants.length
+
+export const resolveVariants = (spec: ThemeSpec, category: PartCategory): readonly PartVariant[] =>
+  category === 'hairs' && spec.hairVariants ? spec.hairVariants : PART_DEFINITIONS[category].variants
+
+export interface ReferenceSpec {
+  kind: ReferenceKind
+  intent: ReferenceIntent
+  files: string[]
+  readout: string
+  categories?: PartCategory[]
+  notes?: string
 }
 
 export interface ThemeSpec {
@@ -97,7 +113,9 @@ export interface ThemeSpec {
   mood: string
   representation: string
   faceStyleSignature: string
+  hairVariants?: PartVariant[]
   references?: string
+  reference?: ReferenceSpec
   palette: {
     skin: string[]
     hair: string[]
@@ -114,10 +132,12 @@ export interface ImageCategoryManifest {
   palette: string[]
   prompt: string
   imageFile: string
+  referenceFiles?: string[]
+  referenceFingerprint?: string
 }
 
 export interface ImageManifest {
-  version: 3
+  version: 4
   name: string
   imageModel: string
   sheetSize: number
@@ -129,7 +149,7 @@ export interface ImageManifest {
 export interface GenerationState {
   version: 1
   name: string
-  categories: Partial<Record<PartCategory, { prompt: string; imageFile: string }>>
+  categories: Partial<Record<PartCategory, { prompt: string; imageFile: string; referenceFingerprint?: string }>>
 }
 
 const requireText = (value: unknown, field: string) => {
@@ -151,6 +171,27 @@ const requireColors = (value: unknown, field: string, minimum = 2) => {
   return value.map((color) => color.toUpperCase())
 }
 
+const validateHairVariants = (value: unknown): PartVariant[] => {
+  if (!Array.isArray(value) || value.length !== HAIR_VARIANT_COUNT) {
+    throw new Error(`hairVariants must contain exactly ${HAIR_VARIANT_COUNT} variants in row-major order`)
+  }
+  const variants = value.map((entry, index) => {
+    if (!entry || typeof entry !== 'object') throw new Error(`hairVariants.${index} must be an object`)
+    const candidate = entry as Partial<PartVariant>
+    const name = requireText(candidate.name, `hairVariants.${index}.name`)
+    if (!/^[a-z][A-Za-z0-9]*$/.test(name)) throw new Error(`hairVariants.${index}.name must be camelCase`)
+    const description = requireText(candidate.description, `hairVariants.${index}.description`)
+    if (description.length < 12) {
+      throw new Error(`hairVariants.${index}.description must name the concrete hair shape`)
+    }
+    return { name, description }
+  })
+  if (new Set(variants.map((variant) => variant.name)).size !== variants.length) {
+    throw new Error('hairVariants names must be unique')
+  }
+  return variants
+}
+
 const CATEGORY_BY_CURRENT_OR_LEGACY_NAME: Record<string, PartCategory> = {
   face: 'faces',
   faces: 'faces',
@@ -166,6 +207,53 @@ const CATEGORY_BY_CURRENT_OR_LEGACY_NAME: Record<string, PartCategory> = {
   bodies: 'bodies',
   neck: 'necks',
   necks: 'necks',
+}
+
+const resolveCategoryName = (value: unknown, field: string): PartCategory => {
+  const resolved = CATEGORY_BY_CURRENT_OR_LEGACY_NAME[requireText(value, field)]
+  if (!resolved) throw new Error(`Unknown category in ${field}: ${String(value)}`)
+  return resolved
+}
+
+const validateReferenceSpec = (value: unknown): ReferenceSpec => {
+  if (!value || typeof value !== 'object') throw new Error('reference must be an object')
+  const candidate = value as Partial<ReferenceSpec>
+
+  if (!candidate.kind || !REFERENCE_KINDS.includes(candidate.kind)) {
+    throw new Error(`reference.kind must be one of: ${REFERENCE_KINDS.join(', ')}`)
+  }
+  if (!candidate.intent || !REFERENCE_INTENTS.includes(candidate.intent)) {
+    throw new Error(`reference.intent must be one of: ${REFERENCE_INTENTS.join(', ')}`)
+  }
+  if (!Array.isArray(candidate.files) || !candidate.files.length || candidate.files.length > MAX_REFERENCE_FILES) {
+    throw new Error(`reference.files must contain 1 to ${MAX_REFERENCE_FILES} image paths`)
+  }
+
+  const files = candidate.files.map((file, index) => {
+    const path = requireText(file, `reference.files.${index}`)
+    if (!REFERENCE_EXTENSIONS.some((extension) => path.toLowerCase().endsWith(extension))) {
+      throw new Error(`reference.files.${index} must be one of: ${REFERENCE_EXTENSIONS.join(', ')}`)
+    }
+    return path
+  })
+
+  const readout = requireText(candidate.readout, 'reference.readout')
+  if (readout.length < 40) {
+    throw new Error('reference.readout must name at least 40 characters of traits observed in the reference images')
+  }
+
+  const categories = candidate.categories?.map((entry, index) =>
+    resolveCategoryName(entry, `reference.categories.${index}`),
+  )
+
+  return {
+    kind: candidate.kind,
+    intent: candidate.intent,
+    files,
+    readout,
+    ...(categories?.length ? { categories: [...new Set(categories)] } : {}),
+    ...(candidate.notes ? { notes: requireText(candidate.notes, 'reference.notes') } : {}),
+  }
 }
 
 export const validateThemeSpec = (value: unknown, expectedName?: string): ThemeSpec => {
@@ -190,8 +278,7 @@ export const validateThemeSpec = (value: unknown, expectedName?: string): ThemeS
 
   if (candidate.categoryNotes) {
     for (const [category, note] of Object.entries(candidate.categoryNotes)) {
-      const resolvedCategory = CATEGORY_BY_CURRENT_OR_LEGACY_NAME[category]
-      if (!resolvedCategory) throw new Error(`Unknown category note: ${category}`)
+      const resolvedCategory = resolveCategoryName(category, 'categoryNotes')
       const resolvedNote = requireText(note, `categoryNotes.${category}`)
       const existingNote = categoryNotes[resolvedCategory]
       categoryNotes[resolvedCategory] = existingNote ? `${existingNote}; ${resolvedNote}` : resolvedNote
@@ -209,7 +296,9 @@ export const validateThemeSpec = (value: unknown, expectedName?: string): ThemeS
     mood: requireText(candidate.mood, 'mood'),
     representation: requireText(candidate.representation, 'representation'),
     faceStyleSignature,
+    ...(candidate.hairVariants ? { hairVariants: validateHairVariants(candidate.hairVariants) } : {}),
     ...(candidate.references ? { references: requireText(candidate.references, 'references') } : {}),
+    ...(candidate.reference ? { reference: validateReferenceSpec(candidate.reference) } : {}),
     palette: {
       skin: requireColors(candidate.palette.skin, 'palette.skin', 3),
       hair: requireColors(candidate.palette.hair, 'palette.hair', 3),
@@ -238,7 +327,14 @@ export const validateGenerationState = (value: unknown, expectedName: string): G
     if (typeof entry.prompt !== 'string' || entry.imageFile !== `${category}.png`) {
       throw new Error(`Generation state ${category} is invalid`)
     }
-    categories[category] = { prompt: entry.prompt, imageFile: entry.imageFile }
+    if (entry.referenceFingerprint !== undefined && typeof entry.referenceFingerprint !== 'string') {
+      throw new Error(`Generation state ${category} has an invalid reference fingerprint`)
+    }
+    categories[category] = {
+      prompt: entry.prompt,
+      imageFile: entry.imageFile,
+      ...(entry.referenceFingerprint ? { referenceFingerprint: entry.referenceFingerprint } : {}),
+    }
   }
   return { version: 1, name: expectedName, categories }
 }
@@ -246,7 +342,7 @@ export const validateGenerationState = (value: unknown, expectedName: string): G
 export const validateImageManifest = (value: unknown, expectedName?: string): ImageManifest => {
   if (!value || typeof value !== 'object') throw new Error('Image manifest must be an object')
   const candidate = value as Partial<ImageManifest>
-  if (candidate.version !== 3) throw new Error(`Unsupported image manifest version: ${candidate.version ?? 'missing'}`)
+  if (candidate.version !== 4) throw new Error(`Unsupported image manifest version: ${candidate.version ?? 'missing'}`)
   if (!candidate.name || !/^[a-z][a-z0-9-]*$/.test(candidate.name)) {
     throw new Error('Image manifest name must be lowercase kebab-case')
   }
@@ -264,30 +360,35 @@ export const validateImageManifest = (value: unknown, expectedName?: string): Im
   const categories = {} as Record<PartCategory, ImageCategoryManifest>
   for (const category of PART_CATEGORIES) {
     const part = candidate.categories[category]
-    const definition = PART_DEFINITIONS[category]
+    const expectedVariants = resolveVariants(spec, category)
     if (!part || !part.prompt || part.imageFile !== `${category}.png`) {
       throw new Error(`Image manifest ${category} is missing generation fields`)
     }
     if (
       !Array.isArray(part.variants) ||
-      part.variants.length !== definition.variants.length ||
-      part.variants.some((variant, index) => variant.name !== getPartVariant(category, index).name)
+      part.variants.length !== expectedVariants.length ||
+      part.variants.some((variant, index) => variant.name !== expectedVariants[index]?.name)
     ) {
-      throw new Error(`Image manifest ${category} variants do not match the generator definition`)
+      throw new Error(`Image manifest ${category} variants do not match the resolved theme variants`)
     }
     if (!Array.isArray(part.palette) || part.palette.some((color) => !/^#[0-9A-F]{6}$/.test(color))) {
       throw new Error(`Image manifest ${category} palette is invalid`)
     }
+    if (part.referenceFiles && !part.referenceFiles.every((file) => typeof file === 'string' && file.length > 0)) {
+      throw new Error(`Image manifest ${category} reference files are invalid`)
+    }
     categories[category] = {
-      variants: definition.variants.map((variant) => ({ ...variant })),
+      variants: expectedVariants.map((variant) => ({ ...variant })),
       palette: [...part.palette],
       prompt: part.prompt,
       imageFile: part.imageFile,
+      ...(part.referenceFiles?.length ? { referenceFiles: [...part.referenceFiles] } : {}),
+      ...(part.referenceFingerprint ? { referenceFingerprint: part.referenceFingerprint } : {}),
     }
   }
 
   return {
-    version: 3,
+    version: 4,
     name: candidate.name,
     imageModel: candidate.imageModel,
     sheetSize: SHEET_SIZE,

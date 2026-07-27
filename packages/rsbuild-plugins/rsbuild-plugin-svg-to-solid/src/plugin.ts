@@ -196,8 +196,7 @@ export const pluginSvgToSolid = (
 
           if (
             options.exclude &&
-            svgRule &&
-            svgRule.exclude &&
+            svgRule?.exclude &&
             typeof svgRule.exclude.add === 'function'
           ) {
             svgRule.exclude.add(options.exclude)

@@ -15,6 +15,7 @@ export enum Layer {
   Ears = 5,
   Head = 10,
   Hair = 20,
+  // biome-ignore lint/suspicious/noDuplicateEnumValues: Equal layers preserve source-order rendering.
   Eyes = 20,
   Eyebrows = 21,
   FaceDetails = 25,
@@ -80,6 +81,7 @@ export default createTheme<BaseAvatarItem>()
   .addColors('ears', [SkinTones.Black])
   .addColors('eyebrows', [HairColors.Black])
   .addColors('mouth', [AccentColors.Black])
+  .addColors('nose', [AccentColors.Black])
   .addColors('faceHair', [HairColors.Black])
   .addColors('accessories', [AccessoriesColors.Black])
   .addColors('glasses', [AccessoriesColors.Black])
