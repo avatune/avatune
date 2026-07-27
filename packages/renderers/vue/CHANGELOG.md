@@ -1,5 +1,11 @@
 # @avatune/vue
 
+## 2.2.1
+
+### Patch Changes
+
+- [#94](https://github.com/avatune/avatune/pull/94) [`b0220b0`](https://github.com/avatune/avatune/commit/b0220b0be4e684de569a70187868f948776200f4) Thanks [@teimurjan](https://github.com/teimurjan)! - Use a multi-word internal component name for the Vue avatar renderer.
+
 ## 2.2.0
 
 ### Minor Changes

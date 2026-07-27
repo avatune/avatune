@@ -37,7 +37,7 @@
     "react-dom": "19.2.8",
     "sharp": "^0.34.5",
     "syncpack": "^15.3.2",
-    "turbo": "^2.10.6",
+    "turbo": "^2.10.7",
     "typescript": "^5.9.3"
   },
   "engines": {
