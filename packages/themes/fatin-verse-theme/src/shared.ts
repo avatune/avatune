@@ -15,6 +15,7 @@ export enum Layer {
   Ears = 5,
   Head = 10,
   Hair = 20,
+  // biome-ignore lint/suspicious/noDuplicateEnumValues: Equal layers preserve source-order rendering.
   Eyes = 20,
   Eyebrows = 21,
   FaceDetails = 25,
