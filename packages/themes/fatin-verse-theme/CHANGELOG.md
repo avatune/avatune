@@ -1,5 +1,11 @@
 # @avatune/fatin-verse-theme
 
+## 3.1.2
+
+### Patch Changes
+
+- [#94](https://github.com/avatune/avatune/pull/94) [`b0220b0`](https://github.com/avatune/avatune/commit/b0220b0be4e684de569a70187868f948776200f4) Thanks [@teimurjan](https://github.com/teimurjan)! - Render noses in generated Fatin Verse avatars.
+
 ## 3.1.1
 
 ### Patch Changes
