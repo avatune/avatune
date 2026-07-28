@@ -4,6 +4,7 @@ import {
   DEFAULT_COLOR_MEMBER,
   getThemePaletteDefinitions,
 } from '../themeColorDefinitions'
+import { dependencyVersions } from './dependencyVersions'
 
 /**
  * Generates the theme package.json
@@ -96,9 +97,9 @@ export function generateThemePackageJson(
     },
     devDependencies: {
       '@avatune/typescript-config': 'workspace:*',
-      '@rslib/core': '^0.16.1',
-      '@types/node': '^24.9.1',
-      typescript: '^5.9.3',
+      '@rslib/core': dependencyVersions['@rslib/core'],
+      '@types/node': dependencyVersions['@types/node'],
+      typescript: dependencyVersions.typescript,
     },
     peerDependencies: {
       react: '>=18.0.0',

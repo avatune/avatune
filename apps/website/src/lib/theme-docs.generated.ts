@@ -40,6 +40,7 @@ export const themeDocItems: ThemeDocItem[] = [
     previewId: 'nevmstas',
     slugs: ['packages', 'nevmstas-theme'],
   },
+  { label: 'Orks', previewId: 'orks', slugs: ['packages', 'orks-theme'] },
   {
     label: 'Pacovqzz',
     previewId: 'pacovqzz',

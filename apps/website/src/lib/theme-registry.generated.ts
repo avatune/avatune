@@ -8,6 +8,7 @@ import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
 import miniavsTheme from '@avatune/miniavs-theme/react'
 import nevmstasTheme from '@avatune/nevmstas-theme/react'
+import orksTheme from '@avatune/orks-theme/react'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/react'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/react'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/react'
@@ -24,6 +25,7 @@ export type ThemeId =
   | 'micah'
   | 'miniavs'
   | 'nevmstas'
+  | 'orks'
   | 'pacovqzz'
   | 'pawelOlekMan'
   | 'pawelOlekWoman'
@@ -45,6 +47,7 @@ export const themeMap: Record<string, ReactTheme> = {
   micah: micahTheme,
   miniavs: miniavsTheme,
   nevmstas: nevmstasTheme,
+  orks: orksTheme,
   pacovqzz: pacovqzzTheme,
   pawelOlekMan: pawelOlekManTheme,
   pawelOlekWoman: pawelOlekWomanTheme,
@@ -62,6 +65,7 @@ export const themeMapBySlug: Record<string, ReactTheme> = {
   micah: micahTheme,
   miniavs: miniavsTheme,
   nevmstas: nevmstasTheme,
+  orks: orksTheme,
   pacovqzz: pacovqzzTheme,
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,
@@ -90,6 +94,7 @@ export const themeInfos: ThemeInfo[] = [
   { id: 'micah', label: 'Micah', packageName: '@avatune/micah-theme' },
   { id: 'miniavs', label: 'Miniavs', packageName: '@avatune/miniavs-theme' },
   { id: 'nevmstas', label: 'Nevmstas', packageName: '@avatune/nevmstas-theme' },
+  { id: 'orks', label: 'Orks', packageName: '@avatune/orks-theme' },
   { id: 'pacovqzz', label: 'Pacovqzz', packageName: '@avatune/pacovqzz-theme' },
   {
     id: 'pawelOlekMan',

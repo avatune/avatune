@@ -54,6 +54,25 @@ const writeArchive = async (
   return packageDirectories
 }
 
+/**
+ * Realigns the generated package.json versions with the rest of the workspace
+ * so `syncpack lint` stays green after generating.
+ */
+const alignDependencyVersions = (outputRoot: string) => {
+  const { exitCode } = Bun.spawnSync(['bun', 'run', 'fix:versions'], {
+    cwd: outputRoot,
+    stdout: 'inherit',
+    stderr: 'inherit',
+  })
+  if (exitCode === 0) {
+    console.log('Aligned dependency versions with syncpack')
+    return
+  }
+  console.warn(
+    'syncpack fix failed — run `bun run fix:versions` before committing',
+  )
+}
+
 const main = async () => {
   const [inputArgument, outputArgument] = Bun.argv.slice(2)
   if (!inputArgument) {
@@ -99,6 +118,8 @@ const main = async () => {
   for (const directory of Object.values(directories)) {
     console.log(`Generated ${relative(outputRoot, directory)}`)
   }
+
+  alignDependencyVersions(outputRoot)
 }
 
 await main().catch((error: unknown) => {

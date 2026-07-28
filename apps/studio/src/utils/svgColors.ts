@@ -259,7 +259,7 @@ export const getSvgFillParts = (svg: string): SvgFillPart[] => {
 const UNSAFE_INTERACTIVE_SVG_ELEMENTS =
   'script, foreignObject, iframe, object, embed, audio, video, style, link, animate, animateMotion, animateTransform, set'
 const EXTERNAL_SVG_URL_PATTERN = /url\(\s*['"]?(?!#)/i
-const PICKER_STYLE_PROPERTIES = new Set([
+const OVERLAY_STYLE_PROPERTIES = new Set([
   'fill',
   'fill-opacity',
   'opacity',
@@ -270,7 +270,12 @@ const PICKER_STYLE_PROPERTIES = new Set([
   'visibility',
 ])
 
-export const createSvgFillPickerElement = (
+/**
+ * Sanitized copy of the SVG whose themeable fills carry a
+ * `data-avatune-fill-index` attribute, so a fill can be highlighted on the
+ * preview by index.
+ */
+export const createSvgFillOverlayElement = (
   svg: string,
 ): SVGSVGElement | null => {
   if (typeof DOMParser === 'undefined') return null
@@ -300,7 +305,7 @@ export const createSvgFillPickerElement = (
           .split(';')
           .filter((declaration) => {
             const property = declaration.split(':', 1)[0].trim().toLowerCase()
-            return !PICKER_STYLE_PROPERTIES.has(property)
+            return !OVERLAY_STYLE_PROPERTIES.has(property)
           })
           .join(';')
         if (style && !EXTERNAL_SVG_URL_PATTERN.test(style)) {

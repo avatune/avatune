@@ -115,6 +115,7 @@ export const toThemeData = (
     borderRadius: `${meta.radius}%`,
     palettes: meta.palettes,
     paletteByCategory: meta.paletteByCategory,
+    paletteConnections: meta.paletteConnections,
     secondaryColorChains: [...secondaryColorChains.values()],
   }
 }

@@ -1,11 +1,8 @@
-import type {
-  KeyboardEvent as ReactKeyboardEvent,
-  MouseEvent as ReactMouseEvent,
-} from 'react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { Builder } from '../../hooks/use-builder'
+import { resolvePaletteId } from '../../utils/palettes'
 import {
-  createSvgFillPickerElement,
+  createSvgFillOverlayElement,
   replaceSvgFillParts,
   svgToDataUrl,
 } from '../../utils/svgColors'
@@ -13,14 +10,6 @@ import { ThemeColors } from './theme-colors'
 
 interface StageProps {
   builder: Builder
-}
-
-const getFillIndex = (target: EventTarget | null): number | null => {
-  if (!(target instanceof Element)) return null
-  const fillElement = target.closest('[data-avatune-fill-index]')
-  if (!fillElement) return null
-  const index = Number(fillElement.getAttribute('data-avatune-fill-index'))
-  return Number.isInteger(index) ? index : null
 }
 
 export const Stage = ({ builder }: StageProps) => {
@@ -34,52 +23,12 @@ export const Stage = ({ builder }: StageProps) => {
     onStageMouseDown,
     onStageKeyDown,
   } = builder
-  const [isFillPickerActive, setIsFillPickerActive] = useState(false)
-  const [hoveredFillIndex, setHoveredFillIndex] = useState<number | null>(null)
-  const [focusedFill, setFocusedFill] = useState<{
-    assetId: string
-    index: number
-  } | null>(null)
-  const pickerRef = useRef<HTMLDivElement | null>(null)
-  const focusedFillIndex =
-    focusedFill && focusedFill.assetId === selected?.id
-      ? focusedFill.index
-      : null
+  const [highlightedFills, setHighlightedFills] = useState<number[] | null>(
+    null,
+  )
+  const overlayRef = useRef<HTMLDivElement | null>(null)
 
-  const handleFillPickerChange = (active: boolean) => {
-    setIsFillPickerActive(active)
-    if (!active) setHoveredFillIndex(null)
-  }
-
-  const handlePickerMove = (event: ReactMouseEvent<HTMLDivElement>) => {
-    setHoveredFillIndex(getFillIndex(event.target))
-  }
-
-  const handlePickerClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    const fillIndex = getFillIndex(event.target)
-    if (fillIndex !== null && selected) {
-      setFocusedFill({ assetId: selected.id, index: fillIndex })
-    }
-  }
-
-  const handlePickerKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
-    event.stopPropagation()
-    if ((event.key === 'Enter' || event.key === ' ') && selected) {
-      event.preventDefault()
-      setFocusedFill({
-        assetId: selected.id,
-        index: hoveredFillIndex ?? focusedFillIndex ?? 0,
-      })
-    }
-  }
-
-  const cursor = isFillPickerActive
-    ? 'crosshair'
-    : dragging
-      ? 'grabbing'
-      : selected
-        ? 'grab'
-        : 'default'
+  const cursor = dragging ? 'grabbing' : selected ? 'grab' : 'default'
   const paletteById = useMemo(
     () =>
       Object.fromEntries(meta.palettes.map((palette) => [palette.id, palette])),
@@ -98,43 +47,54 @@ export const Stage = ({ builder }: StageProps) => {
     () =>
       visibleLayers.map((layer) => {
         const palette =
-          paletteById[meta.paletteByCategory[layer.category] ?? '']
+          paletteById[resolvePaletteId(meta, layer.category) ?? '']
         const previewColorId = palette
           ? meta.previewColorByPalette[palette.id]
           : undefined
         const color =
           palette?.colors.find((entry) => entry.id === previewColorId)?.value ??
-          palette?.colors[0]?.value ??
-          '#000000'
-        const previewSvg = replaceSvgFillParts(
-          layer.svg,
-          layer.themeFillBindings,
-          color,
-        )
+          palette?.colors[0]?.value
+        // Without a palette the asset keeps the colors baked into its own SVG.
+        const previewSvg = color
+          ? replaceSvgFillParts(layer.svg, layer.themeFillBindings, color)
+          : layer.svg
         return {
           ...layer,
           previewSvg,
           previewUrl: svgToDataUrl(previewSvg),
         }
       }),
-    [
-      meta.paletteByCategory,
-      meta.previewColorByPalette,
-      paletteById,
-      visibleLayers,
-    ],
+    [meta, paletteById, visibleLayers],
   )
-  const pickerLayer = isFillPickerActive
-    ? previewLayers.find((layer) => layer.id === selected?.id)
-    : undefined
+  const overlayLayer = previewLayers.find((layer) => layer.id === selected?.id)
+  // Keyed on the markup, not on the layer — dragging changes the layer object
+  // every frame but leaves the SVG (and so the overlay) untouched.
+  const overlayMarkup = overlayLayer?.previewSvg
   useEffect(() => {
-    const container = pickerRef.current
-    if (!container || !pickerLayer) return
-    const pickerSvg = createSvgFillPickerElement(pickerLayer.previewSvg)
-    if (!pickerSvg) return
-    container.replaceChildren(pickerSvg)
-    return () => pickerSvg.remove()
-  }, [pickerLayer])
+    const container = overlayRef.current
+    if (!container || !overlayMarkup) return
+    const overlaySvg = createSvgFillOverlayElement(overlayMarkup)
+    if (!overlaySvg) return
+    container.replaceChildren(overlaySvg)
+    return () => overlaySvg.remove()
+  }, [overlayMarkup])
+
+  // The hovered fill lives in the colors panel, so the highlight is driven by
+  // class rather than by :hover on the overlay itself. Depends on the markup
+  // too, so the classes survive a rebuild by the effect above.
+  useEffect(() => {
+    const container = overlayRef.current
+    if (!container || !overlayMarkup) return
+    for (const element of Array.from(
+      container.querySelectorAll('[data-avatune-fill-index]'),
+    )) {
+      const index = Number(element.getAttribute('data-avatune-fill-index'))
+      element.classList.toggle(
+        'is-highlighted',
+        Boolean(highlightedFills?.includes(index)),
+      )
+    }
+  }, [highlightedFills, overlayMarkup])
 
   return (
     <main
@@ -163,9 +123,7 @@ export const Stage = ({ builder }: StageProps) => {
           Preview &amp; Adjust
         </div>
         <div style={{ fontSize: 11.5, color: '#a5a19a' }}>
-          {isFillPickerActive
-            ? 'Hover a path · click to locate its color'
-            : 'Drag to move · arrow keys nudge · ⇧ = ×10 · scroll to scale'}
+          Drag to move · arrow keys nudge · ⇧ = ×10 · scroll to scale
         </div>
       </div>
 
@@ -231,52 +189,20 @@ export const Stage = ({ builder }: StageProps) => {
             }}
           />
         ))}
-        {pickerLayer && (
+        {overlayLayer && (
           <div
-            ref={pickerRef}
-            className="svg-fill-picker"
-            role="application"
-            aria-label="Pick a path from the selected SVG"
-            // biome-ignore lint/a11y/noNoninteractiveTabindex: the SVG path picker needs focus for keyboard selection
-            tabIndex={0}
-            onMouseMove={handlePickerMove}
-            onMouseLeave={() => setHoveredFillIndex(null)}
-            onMouseDown={(event) => event.stopPropagation()}
-            onClick={handlePickerClick}
-            onKeyDown={handlePickerKeyDown}
+            ref={overlayRef}
+            className="svg-fill-overlay"
+            aria-hidden="true"
             style={{
               position: 'absolute',
-              left: `${pickerLayer.x}%`,
-              top: `${pickerLayer.y}%`,
-              width: `${pickerLayer.scale}%`,
-              transform: `translate(-50%,-50%) rotate(${pickerLayer.rotation}deg)`,
-              zIndex: pickerLayer.layer,
-              cursor: 'crosshair',
+              left: `${overlayLayer.x}%`,
+              top: `${overlayLayer.y}%`,
+              width: `${overlayLayer.scale}%`,
+              transform: `translate(-50%,-50%) rotate(${overlayLayer.rotation}deg)`,
+              zIndex: 9_999,
             }}
           />
-        )}
-        {isFillPickerActive && hoveredFillIndex !== null && (
-          <div
-            aria-live="polite"
-            style={{
-              position: 'absolute',
-              top: 10,
-              left: 10,
-              zIndex: 10_000,
-              padding: '5px 8px',
-              border: '1px solid #b8c9c0',
-              borderRadius: 5,
-              background: 'rgba(255,255,255,0.96)',
-              color: '#33493f',
-              fontFamily: '"IBM Plex Mono", monospace',
-              fontSize: 11,
-              fontWeight: 600,
-              pointerEvents: 'none',
-              boxShadow: '0 2px 8px rgba(28,27,25,0.1)',
-            }}
-          >
-            Path {hoveredFillIndex}
-          </div>
         )}
       </div>
 
@@ -314,9 +240,7 @@ export const Stage = ({ builder }: StageProps) => {
       >
         <ThemeColors
           builder={builder}
-          isFillPickerActive={isFillPickerActive}
-          focusedFillIndex={focusedFillIndex}
-          onFillPickerActiveChange={handleFillPickerChange}
+          onHighlightChange={setHighlightedFills}
         />
       </section>
     </main>

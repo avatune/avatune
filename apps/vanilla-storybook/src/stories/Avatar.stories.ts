@@ -6,6 +6,7 @@ import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import nevmstasTheme from '@avatune/nevmstas-theme/vanilla'
+import orksTheme from '@avatune/orks-theme/vanilla'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vanilla'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/vanilla'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
@@ -31,6 +32,7 @@ type KyuteArgs = Omit<AvatarArgs<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarArgs<typeof micahTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarArgs<typeof miniavsTheme>, 'theme'>
 type NevmstasArgs = Omit<AvatarArgs<typeof nevmstasTheme>, 'theme'>
+type OrksArgs = Omit<AvatarArgs<typeof orksTheme>, 'theme'>
 type PacovqzzArgs = Omit<AvatarArgs<typeof pacovqzzTheme>, 'theme'>
 type PawelOlekManArgs = Omit<AvatarArgs<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarArgs<typeof pawelolekwomanTheme>, 'theme'>
@@ -190,6 +192,21 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Orks: StoryObj<OrksArgs> = {
+  argTypes: getArgTypes(orksTheme),
+  render: (args: OrksArgs) => {
+    return avatar({
+      theme: orksTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    })
+  },
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Pacovqzz: StoryObj<PacovqzzArgs> = {
   argTypes: getArgTypes(pacovqzzTheme),
   render: (args: PacovqzzArgs) => {
@@ -274,6 +291,7 @@ const themes = {
   Micah: micahTheme,
   Miniavs: miniavsTheme,
   Nevmstas: nevmstasTheme,
+  Orks: orksTheme,
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,

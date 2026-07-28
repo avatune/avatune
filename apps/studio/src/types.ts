@@ -30,6 +30,9 @@ export interface ThemePalette {
 
 export type PaletteAssignments = Partial<Record<ThemeColorCategory, string>>
 
+/** Category → the category whose color it reuses, e.g. `{ ears: 'head' }`. */
+export type PaletteConnections = Partial<Record<CategoryId, CategoryId>>
+
 export type ThemeFillTransform =
   | {
       type: 'darken' | 'lighten' | 'saturate' | 'desaturate' | 'rotate'
@@ -76,6 +79,7 @@ export interface ThemeData {
   borderRadius: string
   palettes: ThemePalette[]
   paletteByCategory: PaletteAssignments
+  paletteConnections: PaletteConnections
   secondaryColorChains: ThemeFillChain[]
 }
 

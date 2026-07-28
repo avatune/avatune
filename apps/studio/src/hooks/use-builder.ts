@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type {
   CategoryId,
   PaletteAssignments,
+  PaletteConnections,
   ThemeFillBinding,
   ThemeFillBindings,
   ThemeFillTransform,
@@ -68,6 +69,8 @@ export interface ContainerMeta {
   themeName: string
   palettes: ThemePalette[]
   paletteByCategory: PaletteAssignments
+  /** Categories that reuse another category's color instead of their own. */
+  paletteConnections: PaletteConnections
   previewColorByPalette: Record<string, string>
 }
 
@@ -139,6 +142,8 @@ const DEFAULT_PALETTE_BY_CATEGORY: PaletteAssignments = {
   hats: 'accent',
 }
 
+const DEFAULT_PALETTE_CONNECTIONS: PaletteConnections = {}
+
 const DEFAULT_PREVIEW_COLOR_BY_PALETTE: Record<string, string> = {
   skin: 'light',
   background: 'seashell',
@@ -152,6 +157,7 @@ const DEFAULT_META: ContainerMeta = {
   themeName: 'my-theme',
   palettes: DEFAULT_PALETTES,
   paletteByCategory: DEFAULT_PALETTE_BY_CATEGORY,
+  paletteConnections: DEFAULT_PALETTE_CONNECTIONS,
   previewColorByPalette: DEFAULT_PREVIEW_COLOR_BY_PALETTE,
 }
 
@@ -240,10 +246,12 @@ export function useBuilder() {
             Array.isArray(saved.palettes) && saved.palettes.length > 0
               ? saved.palettes
               : DEFAULT_PALETTES,
-          paletteByCategory: {
-            ...DEFAULT_PALETTE_BY_CATEGORY,
-            ...saved.paletteByCategory,
-          },
+          // Replaced wholesale, not merged — a category the user set to "no
+          // palette" has no key, and merging would silently restore its default.
+          paletteByCategory:
+            saved.paletteByCategory ?? DEFAULT_PALETTE_BY_CATEGORY,
+          paletteConnections:
+            saved.paletteConnections ?? DEFAULT_PALETTE_CONNECTIONS,
           previewColorByPalette: {
             ...DEFAULT_PREVIEW_COLOR_BY_PALETTE,
             ...saved.previewColorByPalette,
@@ -371,6 +379,30 @@ export function useBuilder() {
     setSelId(selectedAsset?.id ?? null)
   }, [])
 
+  const clearProject = useCallback(async () => {
+    const db = dbRef.current ?? (await openDb())
+    dbRef.current = db
+    const transaction = db.transaction(STORE, 'readwrite')
+    transaction.objectStore(STORE).clear()
+    await waitForTransaction(transaction)
+
+    setAssets((current) => {
+      for (const asset of Object.values(current)) {
+        URL.revokeObjectURL(asset.url)
+      }
+      return {}
+    })
+    setMeta(DEFAULT_META)
+    try {
+      localStorage.removeItem(META_KEY)
+    } catch {
+      // ignore storage errors
+    }
+    setActiveByCat({})
+    setSelCat('head')
+    setSelId(null)
+  }, [])
+
   const removeAsset = useCallback((id: string) => {
     setAssets((prev) => {
       const current = prev[id]
@@ -431,28 +463,6 @@ export function useBuilder() {
     })
   }, [updateAsset])
 
-  const applyToCategory = useCallback(() => {
-    const asset = selectedRef.current
-    if (!asset) return
-    setAssets((prev) => {
-      const next = { ...prev }
-      for (const other of Object.values(prev)) {
-        if (other.category !== asset.category || other.id === asset.id) continue
-        const patched = {
-          ...other,
-          x: asset.x,
-          y: asset.y,
-          scale: asset.scale,
-          rotation: asset.rotation,
-          layer: asset.layer,
-        }
-        dbPut(patched)
-        next[other.id] = patched
-      }
-      return next
-    })
-  }, [dbPut])
-
   // Copies another asset's placement (position, scale, rotation, layer) onto
   // the current selection.
   const inheritFrom = useCallback(
@@ -471,11 +481,17 @@ export function useBuilder() {
     [updateAsset],
   )
 
-  const transformAll = useCallback(
-    (fn: (asset: BuilderAsset) => Partial<BuilderAsset>) => {
+  // Bulk placement edit, scoped to one category when given, otherwise to every
+  // asset in the project.
+  const transformAssets = useCallback(
+    (
+      fn: (asset: BuilderAsset) => Partial<BuilderAsset>,
+      category?: CategoryId,
+    ) => {
       setAssets((prev) => {
         const next = { ...prev }
         for (const asset of Object.values(prev)) {
+          if (category && asset.category !== category) continue
           const patched = { ...asset, ...fn(asset) }
           dbPut(patched)
           next[asset.id] = patched
@@ -486,27 +502,33 @@ export function useBuilder() {
     [dbPut],
   )
 
-  const moveAll = useCallback(
-    (dx: number, dy: number) => {
-      transformAll((asset) => ({
-        x: round2(asset.x + dx),
-        y: round2(asset.y + dy),
-      }))
+  const moveAssets = useCallback(
+    (dx: number, dy: number, category?: CategoryId) => {
+      transformAssets(
+        (asset) => ({
+          x: round2(asset.x + dx),
+          y: round2(asset.y + dy),
+        }),
+        category,
+      )
     },
-    [transformAll],
+    [transformAssets],
   )
 
-  // Scales every asset about the container center so the whole avatar grows or
-  // shrinks as one group.
-  const scaleAll = useCallback(
-    (factor: number) => {
-      transformAll((asset) => ({
-        x: round2(50 + (asset.x - 50) * factor),
-        y: round2(50 + (asset.y - 50) * factor),
-        scale: Math.max(1, round1(asset.scale * factor)),
-      }))
+  // Scales assets about the container center so the avatar grows or shrinks as
+  // one group.
+  const scaleAssets = useCallback(
+    (factor: number, category?: CategoryId) => {
+      transformAssets(
+        (asset) => ({
+          x: round2(50 + (asset.x - 50) * factor),
+          y: round2(50 + (asset.y - 50) * factor),
+          scale: Math.max(1, round1(asset.scale * factor)),
+        }),
+        category,
+      )
     },
-    [transformAll],
+    [transformAssets],
   )
 
   // --- stage interaction ------------------------------------------------------
@@ -623,12 +645,12 @@ export function useBuilder() {
     pasteSvg,
     removeAsset,
     importProject,
+    clearProject,
     updateAsset,
     resetPlacement,
-    applyToCategory,
     inheritFrom,
-    moveAll,
-    scaleAll,
+    moveAssets,
+    scaleAssets,
     visibleLayers,
     dragging,
     stageRef,

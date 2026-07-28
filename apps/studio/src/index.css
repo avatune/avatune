@@ -83,9 +83,8 @@ input[type="range"] {
   font-family: "IBM Plex Mono", monospace;
 }
 
-/* Asset source buttons */
-.asset-source-btn {
-  width: 100%;
+/* Outlined buttons — the studio's default button */
+.btn-soft {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,9 +97,15 @@ input[type="range"] {
   color: #6b675f;
   background: #ffffff;
 }
-.asset-source-btn:hover {
+.btn-soft:hover {
   border-color: #4a6b5d;
   color: #4a6b5d;
+}
+.btn-soft:disabled {
+  opacity: 0.5;
+  cursor: default;
+  border-color: #e0dcd4;
+  color: #6b675f;
 }
 
 /* Asset rows */
@@ -169,7 +174,8 @@ input[type="range"] {
 .asset-name-input:focus {
   box-shadow: 0 0 0 2px rgb(74 107 93 / 15%);
 }
-.rename-btn,
+/* Borderless icon buttons inside list rows */
+.icon-action,
 .del-btn {
   display: flex;
   align-items: center;
@@ -180,9 +186,21 @@ input[type="range"] {
   cursor: pointer;
   padding: 2px 4px;
   line-height: 1;
+  flex: none;
 }
-.rename-btn:hover {
+.icon-action:hover {
   color: #4a6b5d;
+}
+.icon-action:disabled,
+.del-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+  color: #c0bcb4;
+}
+/* After :disabled — the active preview color stays marked while unclickable */
+.icon-action[aria-pressed="true"] {
+  color: #4a6b5d;
+  opacity: 1;
 }
 .del-btn {
   font-size: 14px;
@@ -228,34 +246,104 @@ input[type="range"] {
   cursor: default;
 }
 
-.fill-picker-button {
-  padding: 5px 9px;
-}
-.fill-picker-button.active {
-  background: #eef2ef;
-  border-color: #8fac9d;
-  color: #33493f;
+/* Icon-only variant of .chip-btn */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 7px;
+  flex: none;
 }
 
-.svg-fill-picker > svg {
+/* Palette radio rows */
+.palette-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 6px;
+  border-radius: 6px;
+  background: transparent;
+}
+.palette-row:hover {
+  background: #f2f0eb;
+}
+.palette-row.active {
+  background: #eef2ef;
+}
+.palette-select {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.palette-name {
+  font-size: 12.5px;
+  color: #1c1b19;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.palette-row.active .palette-name {
+  font-weight: 600;
+}
+
+/* Move scope radios */
+.scope-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #6b675f;
+  cursor: pointer;
+}
+
+/* Collapsible fill color groups */
+.fill-group-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 6px;
+  padding: 2px 4px;
+}
+.fill-group-header:hover {
+  background: #f7f6f3;
+}
+.fill-group-toggle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b675f;
+}
+
+/* Path highlight overlay — driven by hover in the colors panel, not :hover */
+.svg-fill-overlay {
+  pointer-events: none;
+}
+.svg-fill-overlay > svg {
   display: block;
   width: 100%;
   height: auto;
   overflow: visible;
 }
-.svg-fill-picker svg * {
+.svg-fill-overlay svg * {
   visibility: hidden;
-  pointer-events: none;
 }
-.svg-fill-picker [data-avatune-fill-index],
-.svg-fill-picker [data-avatune-fill-index] * {
+.svg-fill-overlay .is-highlighted,
+.svg-fill-overlay .is-highlighted * {
   visibility: visible;
-  pointer-events: all;
-  fill: transparent;
-  stroke: transparent;
-}
-.svg-fill-picker [data-avatune-fill-index]:hover,
-.svg-fill-picker [data-avatune-fill-index]:hover * {
   fill: rgba(74, 107, 93, 0.28);
   stroke: #33493f;
   stroke-width: 2px;

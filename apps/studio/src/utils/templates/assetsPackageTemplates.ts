@@ -1,6 +1,7 @@
 import type { ThemeFillChain } from '../../types'
 import { capitalizeFirst } from '../caseUtils'
 import { getThemeFillMarker, normalizeThemeFillChain } from '../svgColors'
+import { dependencyVersions } from './dependencyVersions'
 
 /**
  * Generates the assets package.json
@@ -92,20 +93,20 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
       '@avatune/rsbuild-plugin-svg-to-solid': 'workspace:*',
       '@avatune/rsbuild-plugin-svg-to-svelte': 'workspace:*',
       '@avatune/rsbuild-plugin-svg-to-vue': 'workspace:*',
-      '@rsbuild/core': '^1.5.17',
-      '@rsbuild/plugin-react': '^1.4.1',
-      '@rsbuild/plugin-solid': '^1.0.5',
-      '@rsbuild/plugin-svelte': '^1.0.10',
-      '@rsbuild/plugin-svgr': '^1.2.2',
-      '@rsbuild/plugin-vue': '^1.2.0',
-      '@rslib/core': '^0.16.1',
-      '@types/node': '^24.9.1',
-      react: '19.1.0',
-      'solid-js': '^1.9.0',
-      svelte: '^5.0.0',
-      vue: '^3.5.22',
-      svgo: '^4.0.0',
-      typescript: '^5.9.3',
+      '@rsbuild/core': dependencyVersions['@rsbuild/core'],
+      '@rsbuild/plugin-react': dependencyVersions['@rsbuild/plugin-react'],
+      '@rsbuild/plugin-solid': dependencyVersions['@rsbuild/plugin-solid'],
+      '@rsbuild/plugin-svelte': dependencyVersions['@rsbuild/plugin-svelte'],
+      '@rsbuild/plugin-svgr': dependencyVersions['@rsbuild/plugin-svgr'],
+      '@rsbuild/plugin-vue': dependencyVersions['@rsbuild/plugin-vue'],
+      '@rslib/core': dependencyVersions['@rslib/core'],
+      '@types/node': dependencyVersions['@types/node'],
+      react: dependencyVersions.react,
+      'solid-js': dependencyVersions['solid-js'],
+      svelte: dependencyVersions.svelte,
+      vue: dependencyVersions.vue,
+      svgo: dependencyVersions.svgo,
+      typescript: dependencyVersions.typescript,
     },
     peerDependencies: {
       react: '>=18.0.0',
@@ -140,7 +141,7 @@ export function generateAssetsPackageJson(assetsPackageName: string): string {
       },
     },
     dependencies: {
-      colord: '^2.9.3',
+      colord: dependencyVersions.colord,
     },
     license: 'MIT',
   }

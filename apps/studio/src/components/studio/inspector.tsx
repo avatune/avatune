@@ -19,6 +19,11 @@ const miniBtnStyle: CSSProperties = {
   textAlign: 'center',
 }
 
+const MOVE_SCOPES = [
+  { id: 'all', label: 'All categories' },
+  { id: 'category', label: 'Current category' },
+] as const
+
 interface ControlRowProps {
   label: string
   value: number
@@ -80,38 +85,27 @@ export const Inspector = ({ builder }: InspectorProps) => {
     assets,
     meta,
     patchMeta,
+    selCat,
     selected,
     updateAsset,
     resetPlacement,
-    applyToCategory,
     inheritFrom,
-    moveAll,
-    scaleAll,
+    moveAssets,
+    scaleAssets,
   } = builder
 
   const [sourceId, setSourceId] = useState('')
+  const [moveScope, setMoveScope] = useState<'all' | 'category'>('all')
 
   const hasAssets = Object.keys(assets).length > 0
+  const moveTarget = moveScope === 'category' ? selCat : undefined
 
   const inheritSources = Object.values(assets)
-    .filter((asset) => asset.id !== selected?.id)
-    .sort(
-      (a, b) =>
-        CATEGORY_LABEL[a.category].localeCompare(CATEGORY_LABEL[b.category]) ||
-        a.name.localeCompare(b.name),
+    .filter(
+      (asset) =>
+        asset.id !== selected?.id && asset.category === selected?.category,
     )
-
-  const handleApplyToCategory = () => {
-    if (!selected) return
-    const label = CATEGORY_LABEL[selected.category]
-    if (
-      window.confirm(
-        `Apply this placement to every ${label} asset? This overwrites their position, scale, rotation and layer.`,
-      )
-    ) {
-      applyToCategory()
-    }
-  }
+    .sort((a, b) => a.name.localeCompare(b.name))
 
   const handleInherit = () => {
     if (!sourceId) return
@@ -215,45 +209,64 @@ export const Inspector = ({ builder }: InspectorProps) => {
         <>
           <div>
             <div className="eyebrow" style={eyebrowStyle}>
-              All assets
+              Move
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div
+                role="radiogroup"
+                aria-label="Which assets to move and scale"
+                style={{ display: 'flex', flexDirection: 'column', gap: 4 }}
+              >
+                {MOVE_SCOPES.map(({ id, label }) => (
+                  <label key={id} className="scope-option">
+                    <input
+                      type="radio"
+                      name="move-scope"
+                      checked={moveScope === id}
+                      onChange={() => setMoveScope(id)}
+                    />
+                    {id === 'category'
+                      ? `${label} · ${CATEGORY_LABEL[selCat]}`
+                      : label}
+                  </label>
+                ))}
+              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ ...labelStyle, width: 50 }}>Move</span>
                 <div style={{ display: 'flex', gap: 6 }}>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Move all assets left"
-                    onClick={() => moveAll(-2, 0)}
+                    aria-label="Move left"
+                    onClick={() => moveAssets(-2, 0, moveTarget)}
                   >
                     ←
                   </button>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Move all assets up"
-                    onClick={() => moveAll(0, -2)}
+                    aria-label="Move up"
+                    onClick={() => moveAssets(0, -2, moveTarget)}
                   >
                     ↑
                   </button>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Move all assets down"
-                    onClick={() => moveAll(0, 2)}
+                    aria-label="Move down"
+                    onClick={() => moveAssets(0, 2, moveTarget)}
                   >
                     ↓
                   </button>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Move all assets right"
-                    onClick={() => moveAll(2, 0)}
+                    aria-label="Move right"
+                    onClick={() => moveAssets(2, 0, moveTarget)}
                   >
                     →
                   </button>
@@ -264,19 +277,19 @@ export const Inspector = ({ builder }: InspectorProps) => {
                 <div style={{ display: 'flex', gap: 6 }}>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Scale all assets down"
-                    onClick={() => scaleAll(0.95)}
+                    aria-label="Scale down"
+                    onClick={() => scaleAssets(0.95, moveTarget)}
                   >
                     −
                   </button>
                   <button
                     type="button"
-                    className="chip-btn"
+                    className="btn-soft"
                     style={miniBtnStyle}
-                    aria-label="Scale all assets up"
-                    onClick={() => scaleAll(1.05)}
+                    aria-label="Scale up"
+                    onClick={() => scaleAssets(1.05, moveTarget)}
                   >
                     +
                   </button>
@@ -292,7 +305,7 @@ export const Inspector = ({ builder }: InspectorProps) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div>
             <div className="eyebrow" style={{ marginBottom: 4 }}>
-              Selected asset
+              Adjust selected asset
             </div>
             <div style={{ fontSize: 13.5, fontWeight: 500 }}>
               {selected.name}{' '}
@@ -357,29 +370,13 @@ export const Inspector = ({ builder }: InspectorProps) => {
             X / Y / scale are % of container size — position is the asset's
             center point.
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button
-              style={{ flex: 1 }}
-              type="button"
-              className="chip-btn"
-              onClick={resetPlacement}
-            >
-              Reset placement
-            </button>
-            <button
-              style={{ flex: 1 }}
-              type="button"
-              className="chip-btn"
-              title="Copy this placement to every asset in the category"
-              onClick={handleApplyToCategory}
-            >
-              Apply to category
-            </button>
-          </div>
+          <button type="button" className="btn-soft" onClick={resetPlacement}>
+            Reset
+          </button>
           {inheritSources.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <select
-                aria-label="Inherit placement from asset"
+                aria-label="Inherit position from asset"
                 value={sourceId}
                 onChange={(e) => setSourceId(e.target.value)}
                 style={{
@@ -393,16 +390,16 @@ export const Inspector = ({ builder }: InspectorProps) => {
                   color: '#1c1b19',
                 }}
               >
-                <option value="">Inherit from…</option>
+                <option value="">Inherit position from…</option>
                 {inheritSources.map((asset) => (
                   <option key={asset.id} value={asset.id}>
-                    {asset.name} · {CATEGORY_LABEL[asset.category]}
+                    {asset.name}
                   </option>
                 ))}
               </select>
               <button
                 type="button"
-                className="chip-btn"
+                className="btn-soft"
                 style={miniBtnStyle}
                 title="Copy the selected asset's placement onto this one"
                 aria-label="Inherit placement"

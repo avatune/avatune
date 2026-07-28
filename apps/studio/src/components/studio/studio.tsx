@@ -16,10 +16,27 @@ const sanitizeName = (raw: string): string =>
 
 export const Studio = () => {
   const builder = useBuilder()
-  const { assets, meta, patchMeta, importProject } = builder
+  const { assets, meta, patchMeta, importProject, clearProject } = builder
   const [exporting, setExporting] = useState(false)
   const [importing, setImporting] = useState(false)
   const importInputRef = useRef<HTMLInputElement | null>(null)
+  const busy = importing || exporting
+
+  const handleClear = async () => {
+    if (
+      !window.confirm(
+        'Clear the whole Studio project? Every asset, palette and placement is deleted. This cannot be undone.',
+      )
+    ) {
+      return
+    }
+    try {
+      await clearProject()
+    } catch (error) {
+      console.error('Studio clear failed:', error)
+      window.alert('Clear failed. Check the console for details.')
+    }
+  }
 
   const handleExport = async () => {
     const all = Object.values(assets)
@@ -117,8 +134,16 @@ export const Studio = () => {
         <button
           type="button"
           className="chip-btn"
+          onClick={() => void handleClear()}
+          disabled={busy}
+        >
+          Clear
+        </button>
+        <button
+          type="button"
+          className="chip-btn"
           onClick={() => importInputRef.current?.click()}
-          disabled={importing || exporting}
+          disabled={busy}
         >
           {importing ? 'Importing…' : 'Import'}
         </button>
@@ -126,7 +151,7 @@ export const Studio = () => {
           type="button"
           className="btn-dark"
           onClick={() => void handleExport()}
-          disabled={exporting || importing}
+          disabled={busy}
         >
           {exporting ? 'Exporting…' : 'Export'}
         </button>
@@ -136,7 +161,7 @@ export const Studio = () => {
         style={{
           flex: 1,
           display: 'grid',
-          gridTemplateColumns: '280px 1fr 300px',
+          gridTemplateColumns: '300px 1fr 300px',
           minHeight: 0,
         }}
       >

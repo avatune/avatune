@@ -6,6 +6,7 @@ import kyuteTheme from '@avatune/kyute-theme/react'
 import micahTheme from '@avatune/micah-theme/react'
 import miniavsTheme from '@avatune/miniavs-theme/react'
 import nevmstasTheme from '@avatune/nevmstas-theme/react'
+import orksTheme from '@avatune/orks-theme/react'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/react'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/react'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/react'
@@ -38,6 +39,7 @@ type KyuteArgs = ExtractStoryArgs<typeof kyuteTheme>
 type MicahArgs = ExtractStoryArgs<typeof micahTheme>
 type MiniavsArgs = ExtractStoryArgs<typeof miniavsTheme>
 type NevmstasArgs = ExtractStoryArgs<typeof nevmstasTheme>
+type OrksArgs = ExtractStoryArgs<typeof orksTheme>
 type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
@@ -198,6 +200,21 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Orks: StoryObj<OrksArgs> = {
+  argTypes: getArgTypes(orksTheme),
+  render: (args) => (
+    <Avatar
+      theme={orksTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Pacovqzz: StoryObj<PacovqzzArgs> = {
   argTypes: getArgTypes(pacovqzzTheme),
   render: (args) => (
@@ -282,6 +299,7 @@ const themes = {
   Micah: micahTheme,
   Miniavs: miniavsTheme,
   Nevmstas: nevmstasTheme,
+  Orks: orksTheme,
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,

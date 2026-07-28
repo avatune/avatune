@@ -78,6 +78,9 @@ const validateMeta = (value: unknown): value is ContainerMeta => {
     !Array.isArray(value.palettes) ||
     value.palettes.length === 0 ||
     !isStringRecord(value.paletteByCategory, THEME_COLOR_CATEGORY_IDS) ||
+    // Added after v1 shipped — absent in older projects, defaulted on import.
+    (value.paletteConnections !== undefined &&
+      !isStringRecord(value.paletteConnections, CATEGORY_IDS)) ||
     !isStringRecord(value.previewColorByPalette)
   ) {
     return false
@@ -165,5 +168,19 @@ export const parseStudioProject = (
     }
   }
 
-  return { ok: true, project: value as unknown as StudioProject }
+  // Meta fields added after v1 shipped are absent in older files — defaulted
+  // here, so every consumer of a parsed project gets a complete meta.
+  const project = value as unknown as StudioProject & {
+    meta: Partial<Pick<ContainerMeta, 'paletteConnections'>>
+  }
+  return {
+    ok: true,
+    project: {
+      ...project,
+      meta: {
+        ...project.meta,
+        paletteConnections: project.meta.paletteConnections ?? {},
+      },
+    },
+  }
 }

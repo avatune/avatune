@@ -7,6 +7,7 @@ import kyuteTheme from '@avatune/kyute-theme/angular'
 import micahTheme from '@avatune/micah-theme/angular'
 import miniavsTheme from '@avatune/miniavs-theme/angular'
 import nevmstasTheme from '@avatune/nevmstas-theme/angular'
+import orksTheme from '@avatune/orks-theme/angular'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/angular'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/angular'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/angular'
@@ -89,6 +90,8 @@ export const Micah = createStory(micahTheme)
 export const Miniavs = createStory(miniavsTheme)
 
 export const Nevmstas = createStory(nevmstasTheme)
+
+export const Orks = createStory(orksTheme)
 
 export const Pacovqzz = createStory(pacovqzzTheme)
 

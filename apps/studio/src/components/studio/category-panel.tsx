@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import type { Builder } from '../../hooks/use-builder'
 import { CATEGORIES } from '../../types'
+import { PencilIcon } from './icons'
+import { PalettePanel } from './palette-panel'
 
 const CATEGORY_LABEL = Object.fromEntries(
   CATEGORIES.map((category) => [category.id, category.label]),
@@ -139,7 +141,7 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
           gap: 8,
         }}
       >
-        <label className="asset-source-btn">
+        <label className="btn-soft">
           <span style={{ fontSize: 15, lineHeight: 1 }}>+</span> Upload SVGs
           <input
             type="file"
@@ -154,7 +156,7 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
         </label>
         <button
           type="button"
-          className="asset-source-btn"
+          className="btn-soft"
           onClick={() => void handlePaste()}
         >
           Paste SVG
@@ -230,26 +232,12 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
                 <>
                   <button
                     type="button"
-                    className="rename-btn"
+                    className="icon-action"
                     title="Rename asset"
                     aria-label={`Rename ${asset.name}`}
                     onClick={() => beginRename(asset.id, asset.name)}
                   >
-                    <svg
-                      viewBox="0 0 16 16"
-                      width="12"
-                      height="12"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M11.9 1.6a1.4 1.4 0 0 1 2 2L5.2 12.3l-3 .7.7-3 9-8.4Z"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.4"
-                      />
-                    </svg>
+                    <PencilIcon />
                   </button>
                   <button
                     type="button"
@@ -278,6 +266,8 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
           </div>
         )}
       </div>
+
+      <PalettePanel builder={builder} />
     </aside>
   )
 }

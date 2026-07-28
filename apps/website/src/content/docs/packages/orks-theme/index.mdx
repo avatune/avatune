@@ -1,0 +1,300 @@
+---
+title: "@avatune/orks-theme"
+description: "Avatar theme for Avatune using Orks assets."
+source: "packages/themes/orks-theme/README.md"
+---
+
+import {
+  eyebrowsAngry,
+  eyebrowsCalm,
+  eyebrowsConfident,
+  eyebrowsDefault,
+  eyebrowsNeutral,
+  bodyArmor,
+  bodyFurJacket,
+  bodyHoodie,
+  bodyOpenJacket,
+  bodyStuddedVest,
+  bodyTunic,
+  bodyWrapTunic,
+  noseDefault,
+  mouthDracula,
+  mouthHooky,
+  mouthNeutral,
+  mouthOpen,
+  mouthOpenTusks,
+  mouthSmile,
+  headDefault,
+  headLarge,
+  headSqaure,
+  eyesDefault,
+  eyesScared,
+  eyesTired,
+  hairBraid,
+  hairBraids,
+  hairBun,
+  hairDreadlocks,
+  hairLong,
+  hairMohawk,
+  hairShort,
+  hairSideForelock,
+} from '@avatune/orks-assets/svg';
+
+> Source: `packages/assets/orks-assets/README.md`
+
+Avatar theme for Avatune using orks design assets.
+
+
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="orks" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="orks" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="orks" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+```package-install
+@avatune/orks-theme
+```
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/orks-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/orks-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/orks-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/orks-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/orks-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="braid"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="armor"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Orks style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/orks-assets`](https://www.npmjs.com/package/@avatune/orks-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/orks-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/orks-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/orks-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/orks-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyArmor} title="armor" hideCaption /> | `armor` |
+| <AssetPreview svg={bodyFurJacket} title="furJacket" hideCaption /> | `furJacket` |
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyOpenJacket} title="openJacket" hideCaption /> | `openJacket` |
+| <AssetPreview svg={bodyStuddedVest} title="studdedVest" hideCaption /> | `studdedVest` |
+| <AssetPreview svg={bodyTunic} title="tunic" hideCaption /> | `tunic` |
+| <AssetPreview svg={bodyWrapTunic} title="wrapTunic" hideCaption /> | `wrapTunic` |
+
+#### Eyebrows
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyebrowsAngry} title="angry" hideCaption /> | `angry` |
+| <AssetPreview svg={eyebrowsCalm} title="calm" hideCaption /> | `calm` |
+| <AssetPreview svg={eyebrowsConfident} title="confident" hideCaption /> | `confident` |
+| <AssetPreview svg={eyebrowsDefault} title="default" hideCaption /> | `default` |
+| <AssetPreview svg={eyebrowsNeutral} title="neutral" hideCaption /> | `neutral` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesDefault} title="default" hideCaption /> | `default` |
+| <AssetPreview svg={eyesScared} title="scared" hideCaption /> | `scared` |
+| <AssetPreview svg={eyesTired} title="tired" hideCaption /> | `tired` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBraid} title="braid" hideCaption /> | `braid` |
+| <AssetPreview svg={hairBraids} title="braids" hideCaption /> | `braids` |
+| <AssetPreview svg={hairBun} title="bun" hideCaption /> | `bun` |
+| <AssetPreview svg={hairDreadlocks} title="dreadlocks" hideCaption /> | `dreadlocks` |
+| <AssetPreview svg={hairLong} title="long" hideCaption /> | `long` |
+| <AssetPreview svg={hairMohawk} title="mohawk" hideCaption /> | `mohawk` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+| <AssetPreview svg={hairSideForelock} title="sideForelock" hideCaption /> | `sideForelock` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headDefault} title="default" hideCaption /> | `default` |
+| <AssetPreview svg={headLarge} title="large" hideCaption /> | `large` |
+| <AssetPreview svg={headSqaure} title="sqaure" hideCaption /> | `sqaure` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthDracula} title="dracula" hideCaption /> | `dracula` |
+| <AssetPreview svg={mouthHooky} title="hooky" hideCaption /> | `hooky` |
+| <AssetPreview svg={mouthNeutral} title="neutral" hideCaption /> | `neutral` |
+| <AssetPreview svg={mouthOpen} title="open" hideCaption /> | `open` |
+| <AssetPreview svg={mouthOpenTusks} title="openTusks" hideCaption /> | `openTusks` |
+| <AssetPreview svg={mouthSmile} title="smile" hideCaption /> | `smile` |
+
+#### Nose
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseDefault} title="default" hideCaption /> | `default` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under a modified MIT license that permits any use except repackaging its avatar assets into other avatar libraries such as DiceBear (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/orks-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/orks-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

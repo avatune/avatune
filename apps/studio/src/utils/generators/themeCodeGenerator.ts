@@ -1,5 +1,6 @@
-import type { ThemeData } from '../../types'
+import type { CategoryId, ThemeColorCategory, ThemeData } from '../../types'
 import { toCamelCase } from '../caseUtils'
+import { resolvePaletteId } from '../palettes'
 import type { ThemeColorReference } from '../themeColorDefinitions'
 import {
   DEFAULT_COLOR_ENUM_NAME,
@@ -55,10 +56,14 @@ export function generateThemeFile(themeData: ThemeData): string {
   ) => {
     const usesThemeColor =
       category === 'background' || assets?.some((asset) => asset.usesThemeColor)
-    const paletteId =
-      themeData.paletteByCategory[
-        category as keyof typeof themeData.paletteByCategory
-      ]
+    // A connected category lists the colors of the category it follows.
+    const paletteId = resolvePaletteId(
+      {
+        paletteByCategory: themeData.paletteByCategory,
+        paletteConnections: themeData.paletteConnections,
+      },
+      category as ThemeColorCategory,
+    )
     const palette = usesThemeColor
       ? palettesById.get(paletteId ?? '')
       : undefined
@@ -99,6 +104,22 @@ export function generateThemeFile(themeData: ThemeData): string {
   lines.push(`    size: ${themeData.size},`)
   lines.push(`    borderRadius: '${themeData.borderRadius}',`)
   lines.push(`  })`)
+
+  // Connections only make sense between categories that made it into the theme.
+  const dependentsBySource = new Map<CategoryId, CategoryId[]>()
+  for (const [dependent, source] of Object.entries(
+    themeData.paletteConnections,
+  ) as Array<[CategoryId, CategoryId]>) {
+    if (!categoryColors.has(dependent) || !categoryColors.has(source)) continue
+    const dependents = dependentsBySource.get(source)
+    if (dependents) dependents.push(dependent)
+    else dependentsBySource.set(source, [dependent])
+  }
+  for (const [source, dependents] of dependentsBySource) {
+    const list = dependents.map((dependent) => `'${dependent}'`).join(', ')
+    lines.push(`  .connectColors('${source}', [${list}])`)
+  }
+
   lines.push('  // Colors')
 
   for (const [category, colors] of categoryColors) {

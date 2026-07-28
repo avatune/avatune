@@ -8,6 +8,7 @@ import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import nevmstasTheme from '@avatune/nevmstas-theme/vanilla'
+import orksTheme from '@avatune/orks-theme/vanilla'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vanilla'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/vanilla'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
@@ -24,6 +25,7 @@ export const avatarApiThemes = {
   micah: micahTheme,
   miniavs: miniavsTheme,
   nevmstas: nevmstasTheme,
+  orks: orksTheme,
   pacovqzz: pacovqzzTheme,
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,

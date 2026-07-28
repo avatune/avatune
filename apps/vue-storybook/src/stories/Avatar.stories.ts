@@ -6,6 +6,7 @@ import kyuteTheme from '@avatune/kyute-theme/vue'
 import micahTheme from '@avatune/micah-theme/vue'
 import miniavsTheme from '@avatune/miniavs-theme/vue'
 import nevmstasTheme from '@avatune/nevmstas-theme/vue'
+import orksTheme from '@avatune/orks-theme/vue'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vue'
 import pawelolekmanTheme from '@avatune/pawel-olek-man-theme/vue'
 import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/vue'
@@ -33,6 +34,7 @@ type KyuteArgs = Omit<AvatarProps<typeof kyuteTheme>, 'theme'>
 type MicahArgs = Omit<AvatarProps<typeof micahTheme>, 'theme'>
 type MiniavsArgs = Omit<AvatarProps<typeof miniavsTheme>, 'theme'>
 type NevmstasArgs = Omit<AvatarProps<typeof nevmstasTheme>, 'theme'>
+type OrksArgs = Omit<AvatarProps<typeof orksTheme>, 'theme'>
 type PacovqzzArgs = Omit<AvatarProps<typeof pacovqzzTheme>, 'theme'>
 type PawelOlekManArgs = Omit<AvatarProps<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarProps<typeof pawelolekwomanTheme>, 'theme'>
@@ -184,6 +186,20 @@ export const Nevmstas: StoryObj<NevmstasArgs> = {
   },
 }
 
+export const Orks: StoryObj<OrksArgs> = {
+  argTypes: getArgTypes(orksTheme),
+  render: (args: OrksArgs) => ({
+    components: { Avatar },
+    setup: () => ({ args, theme: orksTheme, toBorderRadius }),
+    template:
+      '<Avatar :theme="theme" v-bind="args" :border-radius="toBorderRadius(args.borderRadius)" />',
+  }),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Pacovqzz: StoryObj<PacovqzzArgs> = {
   argTypes: getArgTypes(pacovqzzTheme),
   render: (args: PacovqzzArgs) => ({
@@ -263,6 +279,7 @@ const themes = {
   Micah: micahTheme,
   Miniavs: miniavsTheme,
   Nevmstas: nevmstasTheme,
+  Orks: orksTheme,
   Pacovqzz: pacovqzzTheme,
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
