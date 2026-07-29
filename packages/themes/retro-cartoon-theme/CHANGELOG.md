@@ -1,5 +1,11 @@
 # @avatune/retro-cartoon-theme
 
+## 1.1.1
+
+### Patch Changes
+
+- [`7b68260`](https://github.com/avatune/avatune/commit/7b68260838d79836fb9307641973325b6fedb6e4) Thanks [@teimurjan](https://github.com/teimurjan)! - Move assets to bottom + set predictions
+
 ## 1.1.0
 
 ### Minor Changes
