@@ -1,4 +1,9 @@
-import type { CategoryId, ThemeColorCategory, ThemeData } from '../../types'
+import {
+  type CategoryId,
+  PREDICTORS,
+  type ThemeColorCategory,
+  type ThemeData,
+} from '../../types'
 import { toCamelCase } from '../caseUtils'
 import { resolvePaletteId } from '../palettes'
 import type { ThemeColorReference } from '../themeColorDefinitions'
@@ -34,6 +39,7 @@ export function generateThemeFile(themeData: ThemeData): string {
     'hats',
     'head',
     'mouth',
+    'neck',
     'nose',
   ]
   const assetsByCategory = new Map<string, typeof themeData.assets>()
@@ -50,12 +56,7 @@ export function generateThemeFile(themeData: ThemeData): string {
   const palettesById = new Map(
     paletteDefinitions.map((definition) => [definition.id, definition]),
   )
-  const getCategoryColors = (
-    category: string,
-    assets: typeof themeData.assets | undefined,
-  ) => {
-    const usesThemeColor =
-      category === 'background' || assets?.some((asset) => asset.usesThemeColor)
+  const getCategoryColors = (category: string) => {
     // A connected category lists the colors of the category it follows.
     const paletteId = resolvePaletteId(
       {
@@ -64,9 +65,7 @@ export function generateThemeFile(themeData: ThemeData): string {
       },
       category as ThemeColorCategory,
     )
-    const palette = usesThemeColor
-      ? palettesById.get(paletteId ?? '')
-      : undefined
+    const palette = palettesById.get(paletteId ?? '')
     return palette?.members.length
       ? { enumName: palette.enumName, members: palette.members }
       : {
@@ -75,11 +74,10 @@ export function generateThemeFile(themeData: ThemeData): string {
         }
   }
   const categoryColors = new Map<string, ThemeColorReference>()
-  categoryColors.set('background', getCategoryColors('background', undefined))
+  categoryColors.set('background', getCategoryColors('background'))
   for (const category of categoryOrder) {
-    const assets = assetsByCategory.get(category)
-    if (assets?.length) {
-      categoryColors.set(category, getCategoryColors(category, assets))
+    if (assetsByCategory.get(category)?.length) {
+      categoryColors.set(category, getCategoryColors(category))
     }
   }
 
@@ -120,9 +118,55 @@ export function generateThemeFile(themeData: ThemeData): string {
     lines.push(`  .connectColors('${source}', [${list}])`)
   }
 
+  // Predictor mappings store bare hex; emitting the enum member it came from
+  // keeps the generated theme readable and consistent with `.addColors`.
+  const colorReferences = new Map<string, string>()
+  for (const { enumName, members } of categoryColors.values()) {
+    for (const member of members) {
+      const key = member.value.toLowerCase()
+      if (!colorReferences.has(key)) {
+        colorReferences.set(key, `${enumName}.${member.name}`)
+      }
+    }
+  }
+
+  const predictorLines: string[] = []
+  for (const predictor of PREDICTORS) {
+    const mapping = themeData.predictorMappings[predictor]
+    if (!mapping) continue
+    for (const [predictorValue, values] of Object.entries(mapping)) {
+      const list = values
+        .map(
+          (value) => colorReferences.get(value.toLowerCase()) ?? `'${value}'`,
+        )
+        .join(', ')
+      predictorLines.push(
+        `  .mapPrediction('${predictor}', '${predictorValue}', [${list}])`,
+      )
+    }
+  }
+  if (predictorLines.length > 0) {
+    lines.push('  // Predictions')
+    lines.push(...predictorLines)
+  }
+
   lines.push('  // Colors')
 
-  for (const [category, colors] of categoryColors) {
+  // A connected category copies its source's color at render time, but only if
+  // the source was resolved first — and resolution follows palette order.
+  const orderedCategories: string[] = []
+  const visited = new Set<string>()
+  const visitCategory = (category: string) => {
+    if (visited.has(category)) return
+    visited.add(category)
+    const source = themeData.paletteConnections[category as CategoryId]
+    if (source && categoryColors.has(source)) visitCategory(source)
+    orderedCategories.push(category)
+  }
+  for (const category of categoryColors.keys()) visitCategory(category)
+
+  for (const category of orderedCategories) {
+    const colors = categoryColors.get(category) as ThemeColorReference
     if (colors.members.length === 1) {
       lines.push(
         `  .addColors('${category}', [${colors.enumName}.${colors.members[0].name}])`,
@@ -162,6 +206,12 @@ export function generateThemeFile(themeData: ThemeData): string {
       }
       lines.push(`    layer: ${asset.layer},`)
       lines.push(`  })`)
+    }
+
+    // Declared after the items so the generated 'none' entry sorts last, the
+    // same position a hand-written theme puts it in.
+    if (themeData.optionalCategories.includes(category as CategoryId)) {
+      lines.push(`  .setOptional('${category}')`)
     }
   }
 

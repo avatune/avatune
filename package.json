@@ -14,6 +14,8 @@
     "storybook": "turbo run storybook --filter=@avatune/predictor-storybook --filter=@avatune/react-storybook --filter=@avatune/vue-storybook --filter=@avatune/svelte-storybook --filter=@avatune/vanilla-storybook --filter=@avatune/solidjs-storybook --filter=@avatune/angular-storybook --filter=@avatune/storybook-root",
     "generate:stories": "bun scripts/generate-stories.ts",
     "generate:studio": "bun scripts/generate-studio-project.ts",
+    "generate:studio-json": "bun scripts/theme-to-studio.ts",
+    "merge:studio": "bun scripts/merge-studio-project.ts",
     "generate:assets-readme": "bun scripts/generate-assets-readme.ts",
     "generate:theme-readme": "bun scripts/generate-assets-theme-readme.ts",
     "generate:theme-website-docs": "bun scripts/generate-themes-mdx.ts",

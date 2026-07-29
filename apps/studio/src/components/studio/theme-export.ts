@@ -60,9 +60,6 @@ const toAsset = (asset: BuilderAsset, size: number): Asset => {
     asset.themeFillBindings,
     'currentColor',
   )
-  const usesThemeColor = Object.values(asset.themeFillBindings).some(
-    (binding) => binding.type === 'primary' || !binding.sourceColor,
-  )
   const source = readSvgDimensions(themedSvg)
   const width = size * (asset.scale / 100)
   const height = width * (source.height / source.width)
@@ -76,7 +73,6 @@ const toAsset = (asset: BuilderAsset, size: number): Asset => {
     file: svg,
     dataUrl: asset.url,
     category: asset.category,
-    usesThemeColor,
     xPercent: asset.x - widthPercent / 2,
     yPercent: asset.y - heightPercent / 2,
     layer: asset.layer,
@@ -116,6 +112,8 @@ export const toThemeData = (
     palettes: meta.palettes,
     paletteByCategory: meta.paletteByCategory,
     paletteConnections: meta.paletteConnections,
+    predictorMappings: meta.predictorMappings,
+    optionalCategories: meta.optionalCategories,
     secondaryColorChains: [...secondaryColorChains.values()],
   }
 }

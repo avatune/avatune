@@ -6,6 +6,7 @@ export type CategoryId =
   | 'mouth'
   | 'nose'
   | 'ears'
+  | 'neck'
   | 'body'
   | 'glasses'
   | 'faceHair'
@@ -32,6 +33,56 @@ export type PaletteAssignments = Partial<Record<ThemeColorCategory, string>>
 
 /** Category → the category whose color it reuses, e.g. `{ ears: 'head' }`. */
 export type PaletteConnections = Partial<Record<CategoryId, CategoryId>>
+
+export const PREDICTORS = ['hair', 'hairColor', 'skinTone', 'faceHair'] as const
+
+export type Predictor = (typeof PREDICTORS)[number]
+
+/** Predictor result → the item identifiers or color values it may select. */
+export type PredictorMappings = Partial<
+  Record<Predictor, Record<string, string[]>>
+>
+
+export interface PredictorSpec {
+  id: Predictor
+  label: string
+  /** The category whose items or colors this predictor's results choose from. */
+  category: CategoryId
+  target: 'item' | 'color'
+  /** The classes the trained model can return. */
+  classes: readonly string[]
+}
+
+export const PREDICTOR_SPECS: readonly PredictorSpec[] = [
+  {
+    id: 'hair',
+    label: 'Hair length',
+    category: 'hair',
+    target: 'item',
+    classes: ['short', 'medium', 'long'],
+  },
+  {
+    id: 'hairColor',
+    label: 'Hair color',
+    category: 'hair',
+    target: 'color',
+    classes: ['black', 'brown', 'blond', 'gray'],
+  },
+  {
+    id: 'skinTone',
+    label: 'Skin tone',
+    category: 'head',
+    target: 'color',
+    classes: ['dark', 'medium', 'light'],
+  },
+  {
+    id: 'faceHair',
+    label: 'Facial hair',
+    category: 'faceHair',
+    target: 'item',
+    classes: ['none', 'facial_hair'],
+  },
+]
 
 export type ThemeFillTransform =
   | {
@@ -63,7 +114,6 @@ export interface Asset {
   dataUrl: string
   category: CategoryId
   xPercent: number
-  usesThemeColor: boolean
   yPercent: number
   layer: number
   scale: number
@@ -80,6 +130,8 @@ export interface ThemeData {
   palettes: ThemePalette[]
   paletteByCategory: PaletteAssignments
   paletteConnections: PaletteConnections
+  predictorMappings: PredictorMappings
+  optionalCategories: CategoryId[]
   secondaryColorChains: ThemeFillChain[]
 }
 
@@ -91,6 +143,7 @@ export const CATEGORIES: Category[] = [
   { id: 'mouth', label: 'Mouth', optional: false },
   { id: 'nose', label: 'Nose', optional: false },
   { id: 'ears', label: 'Ears', optional: false },
+  { id: 'neck', label: 'Neck', optional: true },
   { id: 'body', label: 'Body', optional: false },
   { id: 'glasses', label: 'Glasses', optional: true },
   { id: 'faceHair', label: 'Facial Hair', optional: true },

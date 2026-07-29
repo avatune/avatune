@@ -137,12 +137,11 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
         style={{
           padding: '0 20px 12px',
           display: 'flex',
-          flexDirection: 'column',
           gap: 8,
         }}
       >
-        <label className="btn-soft">
-          <span style={{ fontSize: 15, lineHeight: 1 }}>+</span> Upload SVGs
+        <label className="btn-soft" style={{ flex: 1 }}>
+          Upload SVG
           <input
             type="file"
             accept=".svg,image/svg+xml"
@@ -157,6 +156,7 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
         <button
           type="button"
           className="btn-soft"
+          style={{ flex: 1 }}
           onClick={() => void handlePaste()}
         >
           Paste SVG
@@ -172,6 +172,7 @@ export const CategoryPanel = ({ builder }: CategoryPanelProps) => {
           flex: 1,
           minHeight: 0,
           overflowY: 'auto',
+          marginBottom: 12,
         }}
       >
         {categoryAssets.map((asset) => {

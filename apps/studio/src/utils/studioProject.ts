@@ -1,6 +1,9 @@
 import type { BuilderAsset, ContainerMeta } from '../hooks/use-builder'
 import {
   CATEGORIES,
+  type CategoryId,
+  PREDICTORS,
+  type PredictorMappings,
   type ThemeFillBinding,
   type ThemeFillTransform,
 } from '../types'
@@ -23,6 +26,7 @@ export type StudioProjectParseResult =
 
 const CATEGORY_IDS = new Set(CATEGORIES.map(({ id }) => id))
 const THEME_COLOR_CATEGORY_IDS = new Set([...CATEGORY_IDS, 'background'])
+const PREDICTOR_IDS = new Set<string>(PREDICTORS)
 const AMOUNT_TRANSFORMS = new Set([
   'darken',
   'lighten',
@@ -66,6 +70,19 @@ const isThemeFillBinding = (value: unknown): value is ThemeFillBinding => {
   )
 }
 
+const isPredictorMappings = (value: unknown): value is PredictorMappings =>
+  isRecord(value) &&
+  Object.entries(value).every(
+    ([predictor, mapping]) =>
+      PREDICTOR_IDS.has(predictor) &&
+      isRecord(mapping) &&
+      Object.values(mapping).every(
+        (values) =>
+          Array.isArray(values) &&
+          values.every((entry) => typeof entry === 'string'),
+      ),
+  )
+
 const validateMeta = (value: unknown): value is ContainerMeta => {
   if (!isRecord(value)) return false
   if (
@@ -81,6 +98,13 @@ const validateMeta = (value: unknown): value is ContainerMeta => {
     // Added after v1 shipped — absent in older projects, defaulted on import.
     (value.paletteConnections !== undefined &&
       !isStringRecord(value.paletteConnections, CATEGORY_IDS)) ||
+    (value.predictorMappings !== undefined &&
+      !isPredictorMappings(value.predictorMappings)) ||
+    (value.optionalCategories !== undefined &&
+      (!Array.isArray(value.optionalCategories) ||
+        !value.optionalCategories.every((category) =>
+          CATEGORY_IDS.has(category as CategoryId),
+        ))) ||
     !isStringRecord(value.previewColorByPalette)
   ) {
     return false
@@ -171,7 +195,12 @@ export const parseStudioProject = (
   // Meta fields added after v1 shipped are absent in older files — defaulted
   // here, so every consumer of a parsed project gets a complete meta.
   const project = value as unknown as StudioProject & {
-    meta: Partial<Pick<ContainerMeta, 'paletteConnections'>>
+    meta: Partial<
+      Pick<
+        ContainerMeta,
+        'paletteConnections' | 'predictorMappings' | 'optionalCategories'
+      >
+    >
   }
   return {
     ok: true,
@@ -180,6 +209,10 @@ export const parseStudioProject = (
       meta: {
         ...project.meta,
         paletteConnections: project.meta.paletteConnections ?? {},
+        predictorMappings: project.meta.predictorMappings ?? {},
+        optionalCategories:
+          project.meta.optionalCategories ??
+          CATEGORIES.filter(({ optional }) => optional).map(({ id }) => id),
       },
     },
   }

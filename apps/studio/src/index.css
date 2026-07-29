@@ -245,6 +245,11 @@ input[type="range"] {
   opacity: 0.5;
   cursor: default;
 }
+.chip-btn[aria-pressed="true"] {
+  background: #e6ede9;
+  border-color: #4a6b5d;
+  color: #33503f;
+}
 
 /* Icon-only variant of .chip-btn */
 .icon-btn {

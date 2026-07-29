@@ -3,11 +3,13 @@ import type {
   CategoryId,
   PaletteAssignments,
   PaletteConnections,
+  PredictorMappings,
   ThemeFillBinding,
   ThemeFillBindings,
   ThemeFillTransform,
   ThemePalette,
 } from '../types'
+import { CATEGORIES } from '../types'
 import type { StudioProject } from '../utils/studioProject'
 
 export interface BuilderAsset {
@@ -71,6 +73,9 @@ export interface ContainerMeta {
   paletteByCategory: PaletteAssignments
   /** Categories that reuse another category's color instead of their own. */
   paletteConnections: PaletteConnections
+  predictorMappings: PredictorMappings
+  /** Categories that also offer a 'none' choice when generating an avatar. */
+  optionalCategories: CategoryId[]
   previewColorByPalette: Record<string, string>
 }
 
@@ -78,6 +83,7 @@ export interface ContainerMeta {
 const DEFAULT_Z: Record<CategoryId, number> = {
   head: 10,
   body: 5,
+  neck: 8,
   ears: 12,
   hair: 40,
   eyes: 20,
@@ -128,6 +134,7 @@ const DEFAULT_PALETTE_BY_CATEGORY: PaletteAssignments = {
   background: 'background',
   head: 'skin',
   ears: 'skin',
+  neck: 'skin',
   hair: 'accent',
   faceHair: 'accent',
   eyes: 'accent',
@@ -144,6 +151,12 @@ const DEFAULT_PALETTE_BY_CATEGORY: PaletteAssignments = {
 
 const DEFAULT_PALETTE_CONNECTIONS: PaletteConnections = {}
 
+const DEFAULT_PREDICTOR_MAPPINGS: PredictorMappings = {}
+
+const DEFAULT_OPTIONAL_CATEGORIES: CategoryId[] = CATEGORIES.filter(
+  ({ optional }) => optional,
+).map(({ id }) => id)
+
 const DEFAULT_PREVIEW_COLOR_BY_PALETTE: Record<string, string> = {
   skin: 'light',
   background: 'seashell',
@@ -158,6 +171,8 @@ const DEFAULT_META: ContainerMeta = {
   palettes: DEFAULT_PALETTES,
   paletteByCategory: DEFAULT_PALETTE_BY_CATEGORY,
   paletteConnections: DEFAULT_PALETTE_CONNECTIONS,
+  predictorMappings: DEFAULT_PREDICTOR_MAPPINGS,
+  optionalCategories: DEFAULT_OPTIONAL_CATEGORIES,
   previewColorByPalette: DEFAULT_PREVIEW_COLOR_BY_PALETTE,
 }
 
@@ -252,6 +267,10 @@ export function useBuilder() {
             saved.paletteByCategory ?? DEFAULT_PALETTE_BY_CATEGORY,
           paletteConnections:
             saved.paletteConnections ?? DEFAULT_PALETTE_CONNECTIONS,
+          predictorMappings:
+            saved.predictorMappings ?? DEFAULT_PREDICTOR_MAPPINGS,
+          optionalCategories:
+            saved.optionalCategories ?? DEFAULT_OPTIONAL_CATEGORIES,
           previewColorByPalette: {
             ...DEFAULT_PREVIEW_COLOR_BY_PALETTE,
             ...saved.previewColorByPalette,

@@ -265,7 +265,10 @@ export function generateThemeColors(themeData: ThemeData): string {
     },
   ]
 
+  // Sorted by name so the file does not reshuffle when palette order changes,
+  // which keeps regenerating an existing theme a no-op.
   return `${definitions
+    .sort((left, right) => left.enumName.localeCompare(right.enumName))
     .map((definition) => {
       const members = definition.members
         .map(

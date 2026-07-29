@@ -4,14 +4,14 @@ import { percentage } from '@avatune/utils'
 import {
   BackgroundColors,
   BodyColors,
-  DefaultColors,
+  DefaultColors2,
   EyesColors,
   HairColors,
 } from './colors'
 
 const getHeadPosition = (size: number) => ({
   x: size * percentage('27.12%'),
-  y: size * percentage('11.67%'),
+  y: size * percentage('15.67%'),
 })
 
 const fromHeadOffset = fromHead(getHeadPosition)
@@ -21,6 +21,14 @@ export default createTheme<BaseAvatarItem>()
     size: 560,
     borderRadius: '50%',
   })
+  // Predictions
+  .mapPrediction('hair', 'long', ['longCurly', 'longWavy', 'longStraight'])
+  .mapPrediction('hair', 'medium', ['bob', 'curlyBob'])
+  .mapPrediction('hair', 'short', ['afro', 'sideSwept', 'buzzCut'])
+  .mapPrediction('hairColor', 'blond', [HairColors.Blonde])
+  .mapPrediction('hairColor', 'brown', [HairColors.Brown])
+  .mapPrediction('hairColor', 'black', [HairColors.Dark])
+  .mapPrediction('hairColor', 'gray', [HairColors.Blonde])
   // Colors
   .addColors('background', [
     BackgroundColors.Pink,
@@ -28,7 +36,7 @@ export default createTheme<BaseAvatarItem>()
     BackgroundColors.Brown,
   ])
   .addColors('body', [BodyColors.Sea, BodyColors.Green, BodyColors.Purple])
-  .addColors('eyebrows', [DefaultColors.Default])
+  .addColors('eyebrows', [DefaultColors2.Default])
   .addColors('eyes', [EyesColors.Brown, EyesColors.Blue, EyesColors.Green])
   .addColors('hair', [
     HairColors.Dark,
@@ -36,9 +44,9 @@ export default createTheme<BaseAvatarItem>()
     HairColors.Ginger,
     HairColors.Brown,
   ])
-  .addColors('head', [DefaultColors.Default])
-  .addColors('mouth', [DefaultColors.Default])
-  .addColors('nose', [DefaultColors.Default])
+  .addColors('head', [DefaultColors2.Default])
+  .addColors('mouth', [DefaultColors2.Default])
+  .addColors('nose', [DefaultColors2.Default])
   // Body
   .addItem('body', 'crewneckSweater', {
     position: fromHeadOffset(-percentage('8.65%'), percentage('50.68%')),
@@ -49,7 +57,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 15,
   })
   .addItem('body', 'hoodie', {
-    position: fromHeadOffset(-percentage('9.40%'), percentage('46.46%')),
+    position: fromHeadOffset(-percentage('9.40%'), percentage('46.47%')),
     layer: 5,
   })
   .addItem('body', 'turtleneckSweater', {
@@ -57,7 +65,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 15,
   })
   .addItem('body', 'blazer', {
-    position: fromHeadOffset(-percentage('10.66%'), percentage('52.15%')),
+    position: fromHeadOffset(-percentage('10.66%'), percentage('52.16%')),
     layer: 5,
   })
   .addItem('body', 'vNeckSweater', {
@@ -66,11 +74,11 @@ export default createTheme<BaseAvatarItem>()
   })
   // Eyebrows
   .addItem('eyebrows', 'soft', {
-    position: fromHeadOffset(percentage('9.70%'), percentage('15.09%')),
+    position: fromHeadOffset(percentage('9.70%'), percentage('15.10%')),
     layer: 22,
   })
   .addItem('eyebrows', 'thick', {
-    position: fromHeadOffset(percentage('10.52%'), percentage('15.92%')),
+    position: fromHeadOffset(percentage('10.52%'), percentage('15.93%')),
     layer: 22,
   })
   .addItem('eyebrows', 'angled', {
@@ -78,11 +86,11 @@ export default createTheme<BaseAvatarItem>()
     layer: 22,
   })
   .addItem('eyebrows', 'flat', {
-    position: fromHeadOffset(percentage('10.70%'), percentage('16.43%')),
+    position: fromHeadOffset(percentage('10.70%'), percentage('16.44%')),
     layer: 22,
   })
   .addItem('eyebrows', 'raised', {
-    position: fromHeadOffset(percentage('11.02%'), percentage('13.17%')),
+    position: fromHeadOffset(percentage('11.02%'), percentage('13.18%')),
     layer: 22,
   })
   // Eyes
@@ -103,7 +111,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 20,
   })
   .addItem('eyes', 'sleepy', {
-    position: fromHeadOffset(percentage('9.21%'), percentage('20.76%')),
+    position: fromHeadOffset(percentage('9.21%'), percentage('20.77%')),
     layer: 20,
   })
   // Hair
@@ -124,7 +132,7 @@ export default createTheme<BaseAvatarItem>()
     layer: 40,
   })
   .addItem('hair', 'bob', {
-    position: fromHeadOffset(-percentage('7.30%'), -percentage('6.31%')),
+    position: fromHeadOffset(-percentage('7.30%'), -percentage('6.30%')),
     layer: 40,
   })
   .addItem('hair', 'sideSwept', {
@@ -150,11 +158,11 @@ export default createTheme<BaseAvatarItem>()
     layer: 20,
   })
   .addItem('mouth', 'lips', {
-    position: fromHeadOffset(percentage('14.88%'), percentage('38.40%')),
+    position: fromHeadOffset(percentage('14.88%'), percentage('38.41%')),
     layer: 20,
   })
   .addItem('mouth', 'openedSmile', {
-    position: fromHeadOffset(percentage('14.88%'), percentage('34.57%')),
+    position: fromHeadOffset(percentage('14.88%'), percentage('34.58%')),
     layer: 20,
   })
   .addItem('mouth', 'smirk', {
