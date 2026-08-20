@@ -28,6 +28,7 @@
     "@avatune/pawel-olek-woman-theme": "workspace:*",
     "@avatune/retro-cartoon-theme": "workspace:*",
     "@avatune/svelte": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@sveltejs/kit": "^2.0.0",

@@ -1,0 +1,285 @@
+---
+title: "@avatune/toon-flat-theme"
+description: "Avatar theme for Avatune using Toon Flat assets."
+source: "packages/themes/toon-flat-theme/README.md"
+---
+
+import {
+  bodyHalfZip,
+  bodyHoodie,
+  bodyJacket,
+  bodyShirt,
+  bodySweater,
+  bodyTshirt,
+  bodyTurtleneck,
+  bodyVest,
+  noseCurve,
+  noseFlat,
+  noseThin,
+  mouthFlat,
+  mouthLaugh,
+  mouthOpenSmile,
+  mouthSmile,
+  mouthSmirk,
+  headStandard,
+  eyesAlmond,
+  eyesBig,
+  eyesNarrow,
+  hairBeanie,
+  hairBowlerHat,
+  hairBun,
+  hairDreads,
+  hairMessy,
+  hairPonyTail,
+  hairShort,
+  hairSidePart,
+} from '@avatune/toon-flat-assets/svg';
+
+> Source: `packages/assets/toon-flat-assets/README.md`
+
+Avatar theme for Avatune using toon flat design assets.
+
+
+<div className="my-8 flex flex-wrap justify-center gap-4">
+  <AvatarUsagePreview themeId="toon-flat" seed="example-12345" size={200} />
+  <AvatarUsagePreview themeId="toon-flat" seed="example-678910" size={200} />
+  <AvatarUsagePreview themeId="toon-flat" seed="example-101112131415" size={200} />
+</div>
+
+## Installation
+
+```package-install
+@avatune/toon-flat-theme
+```
+
+## Usage
+
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+
+### React
+
+```tsx
+import { Avatar } from '@avatune/react'
+import theme from '@avatune/toon-flat-theme/react'
+
+function App() {
+  return (
+    <Avatar
+      theme={theme}
+      size={300}
+      seed="optional-seed-for-random-generation"
+    />
+  )
+}
+```
+
+### Vue
+
+```vue
+<script setup lang="ts">
+import { Avatar } from '@avatune/vue'
+import theme from '@avatune/toon-flat-theme/vue'
+</script>
+
+<template>
+  <Avatar
+    :theme="theme"
+    :size="300"
+    seed="optional-seed-for-random-generation"
+  />
+</template>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import { Avatar } from '@avatune/svelte'
+  import theme from '@avatune/toon-flat-theme/svelte'
+</script>
+
+<Avatar
+  theme={theme}
+  size={300}
+  seed="optional-seed-for-random-generation"
+/>
+```
+
+### Angular
+
+```ts
+import { Component } from '@angular/core'
+import { Avatar } from '@avatune/angular'
+import theme from '@avatune/toon-flat-theme/angular'
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [Avatar],
+  template: `
+    <avatune-avatar
+      [theme]="theme"
+      [inputSize]="300"
+      seed="optional-seed-for-random-generation"
+    />
+  `,
+})
+export class AppComponent {
+  theme = theme
+}
+```
+
+### Vanilla JavaScript
+
+```typescript
+import { avatar } from '@avatune/vanilla'
+import theme from '@avatune/toon-flat-theme/vanilla'
+
+const container = document.getElementById('avatar-container')
+const svg = avatar({
+  theme,
+  size: 300,
+  seed: 'optional-seed-for-random-generation',
+})
+
+container?.appendChild(svg)
+```
+
+## Customization
+
+You can override specific avatar parts:
+
+```tsx
+<Avatar
+  theme={theme}
+  size={300}
+  hair="beanie"          // Choose specific hair style
+  hairColor="#FF5733"    // Custom hair color
+  body="halfZip"     // Choose specific clothing
+  bodyColor="#3498DB"    // Custom clothing color
+/>
+```
+
+## Design Assets
+
+This theme uses Toon Flat style SVG assets for creating customizable avatars. Assets include various options for hair, eyes, eyebrows, mouth, nose, ears, head shape, and body/clothing.
+
+The assets are available in the [`@avatune/toon-flat-assets`](https://www.npmjs.com/package/@avatune/toon-flat-assets) package.
+
+### Using Assets Directly
+
+#### SVG Paths
+
+```typescript
+import { hair, eyes, mouth } from '@avatune/toon-flat-assets';
+```
+
+#### React Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/toon-flat-assets/react';
+```
+
+#### Svelte Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/toon-flat-assets/svelte';
+```
+
+#### Vue Components
+
+```typescript
+import { HairShort, EyesBoring, MouthSmile } from '@avatune/toon-flat-assets/vue';
+```
+
+### Available Assets
+
+#### Body
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={bodyHalfZip} title="halfZip" hideCaption /> | `halfZip` |
+| <AssetPreview svg={bodyHoodie} title="hoodie" hideCaption /> | `hoodie` |
+| <AssetPreview svg={bodyJacket} title="jacket" hideCaption /> | `jacket` |
+| <AssetPreview svg={bodyShirt} title="shirt" hideCaption /> | `shirt` |
+| <AssetPreview svg={bodySweater} title="sweater" hideCaption /> | `sweater` |
+| <AssetPreview svg={bodyTshirt} title="tshirt" hideCaption /> | `tshirt` |
+| <AssetPreview svg={bodyTurtleneck} title="turtleneck" hideCaption /> | `turtleneck` |
+| <AssetPreview svg={bodyVest} title="vest" hideCaption /> | `vest` |
+
+#### Eyes
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={eyesAlmond} title="almond" hideCaption /> | `almond` |
+| <AssetPreview svg={eyesBig} title="big" hideCaption /> | `big` |
+| <AssetPreview svg={eyesNarrow} title="narrow" hideCaption /> | `narrow` |
+
+#### Hair
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={hairBeanie} title="beanie" hideCaption /> | `beanie` |
+| <AssetPreview svg={hairBowlerHat} title="bowlerHat" hideCaption /> | `bowlerHat` |
+| <AssetPreview svg={hairBun} title="bun" hideCaption /> | `bun` |
+| <AssetPreview svg={hairDreads} title="dreads" hideCaption /> | `dreads` |
+| <AssetPreview svg={hairMessy} title="messy" hideCaption /> | `messy` |
+| <AssetPreview svg={hairPonyTail} title="ponyTail" hideCaption /> | `ponyTail` |
+| <AssetPreview svg={hairShort} title="short" hideCaption /> | `short` |
+| <AssetPreview svg={hairSidePart} title="sidePart" hideCaption /> | `sidePart` |
+
+#### Head
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={headStandard} title="standard" hideCaption /> | `standard` |
+
+#### Mouth
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={mouthFlat} title="flat" hideCaption /> | `flat` |
+| <AssetPreview svg={mouthLaugh} title="laugh" hideCaption /> | `laugh` |
+| <AssetPreview svg={mouthOpenSmile} title="openSmile" hideCaption /> | `openSmile` |
+| <AssetPreview svg={mouthSmile} title="smile" hideCaption /> | `smile` |
+| <AssetPreview svg={mouthSmirk} title="smirk" hideCaption /> | `smirk` |
+
+#### Nose
+
+| Preview | Filename |
+|---------|----------|
+| <AssetPreview svg={noseCurve} title="curve" hideCaption /> | `curve` |
+| <AssetPreview svg={noseFlat} title="flat" hideCaption /> | `flat` |
+| <AssetPreview svg={noseThin} title="thin" hideCaption /> | `thin` |
+
+## License & Credits
+
+### Theme License
+
+This theme package is licensed under a modified MIT license that permits any use except repackaging its avatar assets into other avatar libraries such as DiceBear (see [LICENSE.md](license)).
+
+### Design Assets License
+
+The design assets used in this theme are separately licensed. See the asset package for details.
+
+## Related Packages
+
+- [`@avatune/toon-flat-assets`](https://github.com/avatune/avatune/tree/main/packages/assets/toon-flat-assets) - SVG assets used by this theme
+- [`@avatune/react`](https://github.com/avatune/avatune/tree/main/packages/renderers/react) - React avatar renderer
+- [`@avatune/vue`](https://github.com/avatune/avatune/tree/main/packages/renderers/vue) - Vue avatar renderer
+- [`@avatune/svelte`](https://github.com/avatune/avatune/tree/main/packages/renderers/svelte) - Svelte avatar renderer
+- [`@avatune/angular`](https://github.com/avatune/avatune/tree/main/packages/renderers/angular) - Angular avatar renderer
+- [`@avatune/vanilla`](https://github.com/avatune/avatune/tree/main/packages/renderers/vanilla) - Vanilla JavaScript avatar renderer
+
+## Development
+
+```bash
+# Build the theme
+bun run build
+
+# Build in watch mode
+bun run dev
+
+# Type checking
+bun run check-types
+```

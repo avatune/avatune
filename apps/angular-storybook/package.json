@@ -35,6 +35,7 @@
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
     "@avatune/retro-cartoon-theme": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "rxjs": "^7.8.0",

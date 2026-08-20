@@ -13,6 +13,7 @@ import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/react-native'
 import type { AvatarProps } from '@avatune/react-native'
 import { Avatar } from '@avatune/react-native'
 import retrocartoonTheme from '@avatune/retro-cartoon-theme/react-native'
+import toonflatTheme from '@avatune/toon-flat-theme/react-native'
 import type {
   ReactNativeAvatarItem,
   ReactNativeTheme,
@@ -48,6 +49,7 @@ type PacovqzzArgs = ExtractStoryArgs<typeof pacovqzzTheme>
 type PawelOlekManArgs = ExtractStoryArgs<typeof pawelolekmanTheme>
 type PawelOlekWomanArgs = ExtractStoryArgs<typeof pawelolekwomanTheme>
 type RetroCartoonArgs = ExtractStoryArgs<typeof retrocartoonTheme>
+type ToonFlatArgs = ExtractStoryArgs<typeof toonflatTheme>
 type YanliuArgs = ExtractStoryArgs<typeof yanliuTheme>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -279,6 +281,21 @@ export const RetroCartoon: StoryObj<RetroCartoonArgs> = {
   },
 }
 
+export const ToonFlat: StoryObj<ToonFlatArgs> = {
+  argTypes: getArgTypes(toonflatTheme),
+  render: (args) => (
+    <Avatar
+      theme={toonflatTheme}
+      {...args}
+      borderRadius={toBorderRadius(args.borderRadius)}
+    />
+  ),
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args) => (
@@ -308,6 +325,7 @@ const themes = {
   'Pawel Olek Man': pawelolekmanTheme,
   'Pawel Olek Woman': pawelolekwomanTheme,
   'Retro Cartoon': retrocartoonTheme,
+  'Toon Flat': toonflatTheme,
   Yanliu: yanliuTheme,
 } as const
 

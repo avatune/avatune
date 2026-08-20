@@ -61,5 +61,10 @@ export const themeDocItems: ThemeDocItem[] = [
     previewId: 'retro-cartoon',
     slugs: ['packages', 'retro-cartoon-theme'],
   },
+  {
+    label: 'Toon Flat',
+    previewId: 'toon-flat',
+    slugs: ['packages', 'toon-flat-theme'],
+  },
   { label: 'Yanliu', previewId: 'yanliu', slugs: ['packages', 'yanliu-theme'] },
 ]

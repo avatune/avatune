@@ -13,6 +13,7 @@ import pacovqzzTheme from '@avatune/pacovqzz-theme/react'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/react'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/react'
 import retroCartoonTheme from '@avatune/retro-cartoon-theme/react'
+import toonFlatTheme from '@avatune/toon-flat-theme/react'
 import type { ReactTheme } from '@avatune/types'
 import yanliuTheme from '@avatune/yanliu-theme/react'
 
@@ -30,6 +31,7 @@ export type ThemeId =
   | 'pawelOlekMan'
   | 'pawelOlekWoman'
   | 'retroCartoon'
+  | 'toonFlat'
   | 'yanliu'
 
 export interface ThemeInfo {
@@ -52,6 +54,7 @@ export const themeMap: Record<string, ReactTheme> = {
   pawelOlekMan: pawelOlekManTheme,
   pawelOlekWoman: pawelOlekWomanTheme,
   retroCartoon: retroCartoonTheme,
+  toonFlat: toonFlatTheme,
   yanliu: yanliuTheme,
 }
 
@@ -70,6 +73,7 @@ export const themeMapBySlug: Record<string, ReactTheme> = {
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,
   'retro-cartoon': retroCartoonTheme,
+  'toon-flat': toonFlatTheme,
   yanliu: yanliuTheme,
 }
 
@@ -110,6 +114,11 @@ export const themeInfos: ThemeInfo[] = [
     id: 'retroCartoon',
     label: 'Retro Cartoon',
     packageName: '@avatune/retro-cartoon-theme',
+  },
+  {
+    id: 'toonFlat',
+    label: 'Toon Flat',
+    packageName: '@avatune/toon-flat-theme',
   },
   { id: 'yanliu', label: 'Yanliu', packageName: '@avatune/yanliu-theme' },
 ]
