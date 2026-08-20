@@ -10,6 +10,7 @@ import {
   PART_CATEGORIES,
   PART_DEFINITIONS,
   type PartCategory,
+  resolveIsolatedSubject,
   resolveVariants,
   SHEET_SIZE,
   type ThemeSpec,
@@ -178,6 +179,41 @@ Draw the nine styles the cell map names and no others. They belong to this theme
   return `Each design is a neck-only connector using ${canonicalSkinColor(themeSpec)} as the only fill plus the shared outline. Keep the same top anchor, bottom anchor, total height, and centerline across all nine cells. Make the shape a simple closed vertical silhouette with flat hidden overlap ends and at most two gentle side curves. No anatomy detail, muscles, collar lines, shading, or decoration.`
 }
 
+const FACE_ANGLE_VIEWS = {
+  threeQuarterLeft: { toward: "the viewer's left", featureSide: 'left', massSide: 'right' },
+  threeQuarterRight: { toward: "the viewer's right", featureSide: 'right', massSide: 'left' },
+} as const
+
+const angleContract = (themeSpec: ThemeSpec, category: PartCategory) => {
+  if (themeSpec.faceAngle === 'straight') return ''
+  const { toward, featureSide, massSide } = FACE_ANGLE_VIEWS[themeSpec.faceAngle]
+
+  const preamble = `
+
+BINDING VIEW ANGLE — HIGHEST PRIORITY
+Every design on this sheet is drawn from one identical three-quarter view, turned 30 degrees toward ${toward}. The head is not tilted or rotated in the picture plane. All nine cells use the exact same turn: never mix angles across cells, never draw a straight-on cell, and never draw a full side view. Build the turn into the shapes themselves rather than simulating it with shading, perspective lines, or a rotated camera. If reference images are attached, take construction and color relationships from them but never their view angle — the turn described here wins.`
+
+  if (category === 'faces') {
+    return `${preamble}
+
+THREE-QUARTER HEAD CONSTRUCTION
+The facial centerline — the gap between the eyes, the nose, and the mouth — sits toward the ${featureSide} of the silhouette's vertical midline by about one eighth of the head width. The ${massSide} contour is the fuller, rounder cheek-and-cranium curve. The ${featureSide} contour is the shorter brow, nose, and chin edge; the nose reads as one simplified shape breaking toward the ${featureSide} but never detaching from the head. One ear is visible, placed at the temple on the ${massSide} side; the opposite ear is hidden behind the cheek, so either omit it or reduce it to a small sliver and use that same choice in all nine cells. The head still reads clearly taller than wide, its height about 1.3 times its width excluding ears, with a domed crown and a rounded chin now offset toward the ${featureSide}. This turned construction replaces the symmetric contour described above and replaces the requirement to draw both ears; every other rule stated above still applies unchanged.`
+  }
+  if (category === 'hairs') {
+    return `${preamble}
+
+The hair mass follows the same turn: fuller volume and a longer silhouette edge on the ${massSide} where the cranium turns away, the parting shifted toward the ${featureSide}, and the face opening offset toward the ${featureSide} by the same one eighth of the head width as the faces sheet. Every overlay uses the identical turn and the identical offset opening, so any hair still fits any face.`
+  }
+  if (category === 'bodies') {
+    return `${preamble}
+
+The shoulder line turns 30 degrees toward ${toward} to match the head: the ${massSide} shoulder reads nearer and broader, the ${featureSide} shoulder is foreshortened and narrower. The neckline socket keeps one shape and one width across all nine bodies, offset from the horizontal center toward the ${featureSide} by the same amount in every cell so it receives the turned neck. This offset replaces the centered socket described above.`
+  }
+  return `${preamble}
+
+The connector follows the same turn: keep it a simple closed vertical silhouette, but offset its centerline toward the ${featureSide} by the same amount as the faces and bodies sheets, with the top anchor under the turned chin and the bottom anchor in the turned neckline socket. Keep both overlap ends flat and hidden, and keep the offset identical in all nine cells.`
+}
+
 const REFERENCE_CARRYOVER: Record<PartCategory, string> = {
   faces: 'the single shared head proportion, jaw and cranium contour, eye and eyebrow geometry, nose and mouth simplification, ear construction, feature spacing, and skin and feature color relationships',
   hairs: 'hair mass, parting logic, strand and curl grouping, silhouette edge rhythm, and hair color relationships',
@@ -207,7 +243,6 @@ Redraw everything as flat vector shapes in the palette above. Where the referenc
 }
 
 const buildImagePrompt = (themeSpec: ThemeSpec, category: PartCategory, correction?: string) => {
-  const definition = PART_DEFINITIONS[category]
   const cells = resolveVariants(themeSpec, category)
     .map((variant, index) => {
       const row = Math.floor(index / 3) + 1
@@ -222,7 +257,7 @@ const buildImagePrompt = (themeSpec: ThemeSpec, category: PartCategory, correcti
     ? `\n\nCORRECTION: ${correction}. Keep the established layer contract, cell order, palette, and art direction.`
     : ''
 
-  return `Create one production-quality avatar layer source sheet containing only ${definition.isolatedSubject}.
+  return `Create one production-quality avatar layer source sheet containing only ${resolveIsolatedSubject(themeSpec, category)}.
 
 ART DIRECTION
 Visual family: ${themeSpec.styleFamily}. Shape language: ${themeSpec.shapeLanguage}. Line treatment: ${themeSpec.lineTreatment}. Mood: ${themeSpec.mood}. Representation goal: ${themeSpec.representation}.${references}${avoided}
@@ -233,7 +268,7 @@ ${cells}
 The names above are instructions only. Do not render words or symbols.
 
 LAYER CONTRACT
-${layerContract(themeSpec, category)}${referenceContract(themeSpec, category)}
+${layerContract(themeSpec, category)}${angleContract(themeSpec, category)}${referenceContract(themeSpec, category)}
 
 COMPOSITION
 Render a clean 1024x1024 square contact sheet with exactly three equal visual columns and three equal visual rows. Put exactly one complete design in each invisible cell in the row-major order above. Center every design with generous white space. Keep scale and anchors consistent within the category. Do not draw cell borders, dividers, guides, labels, captions, numbers, or extra objects.

@@ -5,6 +5,10 @@ export type PaletteRole = 'skin' | 'hair' | 'features' | 'clothing' | 'outline'
 
 export const SHEET_SIZE = 1024
 
+export const FACE_ANGLES = ['straight', 'threeQuarterLeft', 'threeQuarterRight'] as const
+
+export type FaceAngle = (typeof FACE_ANGLES)[number]
+
 export const REFERENCE_KINDS = ['mascot', 'photo'] as const
 export const REFERENCE_INTENTS = ['style', 'likeness'] as const
 export const REFERENCE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp'] as const
@@ -20,6 +24,7 @@ export interface PartVariant {
 
 interface PartDefinition {
   isolatedSubject: string
+  angledSubject?: string
   paletteRoles: PaletteRole[]
   variants: readonly PartVariant[]
 }
@@ -28,6 +33,8 @@ export const PART_DEFINITIONS: Record<PartCategory, PartDefinition> = {
   faces: {
     isolatedSubject:
       'complete front-facing heads that all share one identical head silhouette and ear construction and differ only in eyes, eyebrows, nose, mouth, and expression, with no hair, neck, shoulders, clothing, or accessories',
+    angledSubject:
+      'complete heads drawn in one identical three-quarter view that all share one identical head silhouette and ear construction and differ only in eyes, eyebrows, nose, mouth, and expression, with no hair, neck, shoulders, clothing, or accessories',
     paletteRoles: ['skin', 'hair', 'features', 'outline'],
     variants: [
       { name: 'balancedFriendly', description: 'almond eyes, soft brows, compact nose, and a friendly closed smile' },
@@ -43,6 +50,8 @@ export const PART_DEFINITIONS: Record<PartCategory, PartDefinition> = {
   },
   hairs: {
     isolatedSubject: 'isolated front hair overlays with no head, face, ears, neck, shoulders, or clothing',
+    angledSubject:
+      'isolated hair overlays drawn in one identical three-quarter view, with no head, face, ears, neck, shoulders, or clothing',
     paletteRoles: ['hair', 'outline'],
     variants: [
       { name: 'buzzCut', description: 'short close-cropped textured silhouette' },
@@ -95,6 +104,13 @@ export const HAIR_VARIANT_COUNT = PART_DEFINITIONS.hairs.variants.length
 export const resolveVariants = (spec: ThemeSpec, category: PartCategory): readonly PartVariant[] =>
   category === 'hairs' && spec.hairVariants ? spec.hairVariants : PART_DEFINITIONS[category].variants
 
+export const resolveIsolatedSubject = (spec: ThemeSpec, category: PartCategory): string => {
+  const definition = PART_DEFINITIONS[category]
+  return spec.faceAngle !== 'straight' && definition.angledSubject
+    ? definition.angledSubject
+    : definition.isolatedSubject
+}
+
 export interface ReferenceSpec {
   kind: ReferenceKind
   intent: ReferenceIntent
@@ -113,6 +129,7 @@ export interface ThemeSpec {
   mood: string
   representation: string
   faceStyleSignature: string
+  faceAngle: FaceAngle
   hairVariants?: PartVariant[]
   references?: string
   reference?: ReferenceSpec
@@ -276,6 +293,11 @@ export const validateThemeSpec = (value: unknown, expectedName?: string): ThemeS
     throw new Error('faceStyleSignature must name at least 24 characters of concrete visible face traits')
   }
 
+  const faceAngle = candidate.faceAngle ?? 'straight'
+  if (!FACE_ANGLES.includes(faceAngle)) {
+    throw new Error(`faceAngle must be one of: ${FACE_ANGLES.join(', ')}`)
+  }
+
   if (candidate.categoryNotes) {
     for (const [category, note] of Object.entries(candidate.categoryNotes)) {
       const resolvedCategory = resolveCategoryName(category, 'categoryNotes')
@@ -296,6 +318,7 @@ export const validateThemeSpec = (value: unknown, expectedName?: string): ThemeS
     mood: requireText(candidate.mood, 'mood'),
     representation: requireText(candidate.representation, 'representation'),
     faceStyleSignature,
+    faceAngle,
     ...(candidate.hairVariants ? { hairVariants: validateHairVariants(candidate.hairVariants) } : {}),
     ...(candidate.references ? { references: requireText(candidate.references, 'references') } : {}),
     ...(candidate.reference ? { reference: validateReferenceSpec(candidate.reference) } : {}),

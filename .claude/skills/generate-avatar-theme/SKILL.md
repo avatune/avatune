@@ -1,6 +1,6 @@
 ---
 name: generate-avatar-theme
-description: Interview the user and generate or resume four high-end 3×3 raster source sheets for an Avatune theme: complete styled faces, hair overlays, clothing bodies, and simple neck connectors. Optionally anchors the whole theme to supplied reference images—a mascot or character illustration, or a photo of a person—used for style or likeness. Requires a concrete visible face-style signature, uses explicit user choices—not prompt enhancement—preserves completed sheets across interrupted runs, and outputs 1024×1024 PNGs for manual PerfectVector conversion. Use whenever the user asks to generate, continue, resume, or refine avatar theme artwork or consistent layered source assets, including from a supplied mascot, character, brand illustration, or personal photo.
+description: Interview the user and generate or resume four high-end 3×3 raster source sheets for an Avatune theme: complete styled faces, hair overlays, clothing bodies, and simple neck connectors. Optionally anchors the whole theme to supplied reference images—a mascot or character illustration, or a photo of a person—used for style or likeness. Supports one theme-wide view angle: straight-on, or a three-quarter turn 30 degrees to the viewer's left or right. Requires a concrete visible face-style signature, uses explicit user choices—not prompt enhancement—preserves completed sheets across interrupted runs, and outputs 1024×1024 PNGs for manual PerfectVector conversion. Use whenever the user asks to generate, continue, resume, or refine avatar theme artwork or consistent layered source assets, including from a supplied mascot, character, brand illustration, or personal photo.
 ---
 
 # Generate Avatar Theme Images
@@ -15,7 +15,7 @@ A run is either text-only or reference-anchored. A reference is one to four imag
 
 Generate exactly four 1024×1024 PNG contact sheets:
 
-- `faces.png` — nine complete front-facing heads that share one head silhouette and ear construction and differ only in eyes, eyebrows, nose, mouth, and expression; no hair or neck
+- `faces.png` — nine complete heads drawn at the theme's chosen view angle, front-facing by default, that share one head silhouette and ear construction and differ only in eyes, eyebrows, nose, mouth, and expression; no hair or neck
 - `hairs.png` — nine isolated hair overlays drawn from the theme's own world; short styles in row one, medium in row two, long in row three
 - `bodies.png` — nine shoulder-and-torso clothing layers with an open standardized neckline socket; no neck or head
 - `necks.png` — nine simple isolated neck connectors with shared top and bottom anchors
@@ -52,6 +52,8 @@ All nine faces share one head silhouette so any hair overlay fits any face and e
 
 That silhouette defaults to a portrait oval: roughly 1.3 times as tall as it is wide excluding ears, widest at the cheekbones, tapering to a rounded chin. A deliberately wider, boxier, or otherwise unusual head is only legitimate when the user asked for it in `faceStyleSignature` or `categoryNotes.faces`.
 
+`faceAngle` is one theme-wide decision that all four sheets share, because the layers only compose when they agree: a turned head on a straight-on neck does not stack. It describes the straight-on oval above when set to `straight`. At a three-quarter angle the contour is deliberately asymmetric — one side carries the cranium mass and the visible ear, the other is the shorter brow, nose, and chin edge — and the far ear is hidden. All nine cells still share that one silhouette.
+
 Use the first `skin` palette color as the sole raster source fill for faces and necks. The other skin colors remain available for recoloring after vectorization.
 
 ## Hard rules
@@ -60,6 +62,7 @@ Use the first `skin` palette color as the sole raster source fill for faces and 
 - Require a concrete `faceStyleSignature` before generating faces. “High-end,” “modern,” or a style name alone is insufficient; record 2–4 visible geometric traits.
 - Give a themed world its own hairstyles through `hairVariants`. Shipping the default salon cuts to an orc, fantasy, retro, or otherwise specific theme is a defect, not a neutral fallback.
 - Keep one shared head silhouette and ear construction across all nine faces. Never vary the head outline per cell, and never request or accept heart, diamond, triangle, pear, square, oblong, or other novelty head shapes.
+- Apply one theme-wide `faceAngle` to all four sheets. Never mix angles across cells, and never accept a straight-on or full-side-view cell in an angled theme.
 - Open every reference image with the Read tool before writing the spec. Never derive art direction from a filename, a URL, or the user's description of an image you have not looked at.
 - Treat reference-derived values as proposals the user confirms or overrides. A reference never replaces the interview or the face style signature.
 - Use only reference images the user owns or has the rights to use; for a photo of a person, that means their own photo or one they have permission to use. Never source a reference image yourself.
@@ -83,6 +86,7 @@ Convert the theme name to lowercase kebab-case and inspect `.preview/<name>-imag
 
 - If `theme-spec.json` exists, reuse its populated answers, including its `reference` block. Ask only for missing or explicitly changed decisions.
 - If `reference/` exists, the run already has reference images. Reuse them unless the user supplies new ones; replacing a reference file invalidates the sheets that used it.
+- If `theme-spec.json` sets a different `faceAngle` than the user now wants, changing it invalidates all four sheets by design; `--resume` regenerates every one of them.
 - If `.state/generation.json` exists, the four-sheet flow has started. Use `--resume`; compatible image files are reused without another OpenAI call.
 - If `manifest.json` exists and all four images are present, use `--resume` to refresh the manifest, then continue at visual inspection.
 - If only some current image files exist, resume from the checkpoint instead of restarting.
@@ -95,7 +99,7 @@ Skip this step for text-only runs. Run it whenever the user supplies, attaches, 
 1. Copy each supplied file into `.preview/<name>-images/reference/` under a descriptive lowercase name. Keep at most four `.png`, `.jpg`, `.jpeg`, or `.webp` files, and record them in the spec as `reference/<file>`. The harness attaches files from disk: when the reference exists only as a chat attachment, ask for a path or ask the user to save it there; download a user-supplied URL with `curl -L -o` into that folder.
 2. Open every copied file with the Read tool and look at it.
 3. Write `reference.readout` from what you actually see: outline weight, shape vocabulary, proportion logic, feature construction, and dominant colors. Observed geometry only, no quality adjectives.
-4. Derive proposals from the reference for `styleFamily`, `shapeLanguage`, `lineTreatment`, `mood`, `faceStyleSignature`, and exact six-digit hex values for each palette role, sampled from the reference rather than a preset.
+4. Derive proposals from the reference for `styleFamily`, `shapeLanguage`, `lineTreatment`, `mood`, `faceStyleSignature`, `faceAngle`, and exact six-digit hex values for each palette role, sampled from the reference rather than a preset.
 5. Ask `kind`, `intent`, and the sheets the reference guides in the same Ask batch that confirms the derived proposals:
    - `kind` — `mascot` for illustration or character art, `photo` for a photograph of a person
    - `intent` — `style` borrows the look only and invents all nine designs; `likeness` makes row 1, column 1 a stylized translation of the reference subject while the other eight extend the same system
@@ -115,6 +119,7 @@ Extract answers already present in the request and from confirmed reference prop
 5. `palette` — warm earth, cool pop, soft muted, bold vibrant, or custom
 6. `representation` — broadly inclusive, feminine leaning, masculine leaning, androgynous, or user-specified
 7. `faceStyleSignature` — 2–4 concrete traits that must visibly shape the shared head contour and the facial features, such as “a faceted tapered jaw, narrow offset eyes, single-arc noses, asymmetric editorial mouths”
+8. `faceAngle` — straight-on, a three-quarter turn 30 degrees toward the viewer's left, or a three-quarter turn 30 degrees toward the viewer's right. Directions are stated from the viewer's side, not the subject's. Default to straight-on when the user expresses no preference.
 
 If the user chooses a custom palette, ask for exact six-digit hex colors for `skin`, `hair`, `features`, `clothing`, and `outline`. Do not ask the user to name all 36 variants; the harness owns stable names and row-major order.
 The face style signature is required even when `styleFamily` is already known, and even when a reference exists — derive it from the reference and confirm it. It must describe observable geometry rather than quality adjectives, and it describes the single head contour every face shares plus the feature language drawn on it. Preserve the user's wording exactly.
@@ -138,6 +143,7 @@ Create `.preview/<name>-images/theme-spec.json`:
   "mood": "<user answer>",
   "representation": "<user answer>",
   "faceStyleSignature": "<2–4 concrete visible face traits>",
+  "faceAngle": "straight | threeQuarterLeft | threeQuarterRight",
   "hairVariants": [
     { "name": "<camelCase>", "description": "<concrete hair shape>" }
   ],
@@ -166,6 +172,8 @@ Create `.preview/<name>-images/theme-spec.json`:
   "avoid": ["<explicit user constraint>"]
 }
 ```
+
+`faceAngle` is optional and defaults to `straight`. `threeQuarterLeft` and `threeQuarterRight` name the direction the faces turn from the viewer's point of view, and the value applies to all four sheets at once.
 
 `references` is optional free-text direction; `reference` is the reference-image block. Omit `reference` entirely for text-only runs, and omit `reference.categories` to guide all four sheets. `readout` must contain at least 40 characters of observed traits, and every entry in `files` must resolve inside the output directory.
 
@@ -234,7 +242,8 @@ Check:
 - `faces`: each cell is a complete head with ears, eyes, brows, nose, and mouth; no hair or neck
   - all nine heads share one silhouette and one ear construction: same width, height, crown curve, cheek line, and chin
   - no cell uses a heart, diamond, triangle, pear, square, oblong, or other novelty head outline
-  - the silhouette is a curved portrait oval, clearly taller than wide, tapering to a rounded chin — not a rounded rectangle, squared oval, circle, or a shape with straight vertical sides and a flat chin
+  - at `faceAngle: straight` the silhouette is a curved portrait oval, clearly taller than wide, tapering to a rounded chin — not a rounded rectangle, squared oval, circle, or a shape with straight vertical sides and a flat chin
+  - at a three-quarter `faceAngle` the silhouette is asymmetric by design, but still clearly taller than wide: the cranium mass and the visible ear sit on one side, the shorter brow-nose-chin edge on the other, and the far ear is hidden identically in all nine cells
   - the requested face style signature is immediately recognizable in the head, eyes, brows, nose, mouth, ears, spacing, and expressions
   - the sheet feels like one high-end authored character system, not generic avatar-builder output, emoji geometry, stock icons, or clip art
   - within the shared head shape the nine faces read as materially distinct characters through feature geometry, not as one default face with swapped mouths
@@ -243,6 +252,8 @@ Check:
   - row one still reads short, row two medium, row three long
 - `bodies`: clothing and shoulders only, with the same centered open neckline socket
 - `necks`: simple closed silhouettes only; shared top/bottom anchors, flat hidden overlap ends, no anatomy detail
+- at a three-quarter `faceAngle`, all nine cells on every sheet share the identical turn: no straight-on cell, no full-side-view cell, and no cell mirrored the wrong way
+- at a three-quarter `faceAngle`, the four sheets agree on the offset: the face centerline, the hair face opening, the neck centerline, and the body neckline socket all shift the same direction by the same amount, so the layers still stack
 - all four sheets share one silhouette language, outline treatment, and compatible anchors
 - the canonical skin fill matches between faces and necks
 - pure white backgrounds and vector-friendly closed shapes
@@ -251,6 +262,7 @@ With a reference, open it beside the generated sheets and also check:
 
 - the referenced sheets read as the same hand as the reference in shape vocabulary, proportion logic, outline weight, and color relationships
 - nothing is traced, cropped, or lifted from the reference: no reference background, framing, text, logo, or photographic shading survives
+- the sheets use the theme's own `faceAngle`, not the reference's view angle
 - `style` intent: the reference subject appears in no cell
 - `likeness` intent: row 1, column 1 is a recognizable stylized translation of the subject, still fully flat vector, and the other eight designs are distinct from it while reusing the same head silhouette
 - a `photo` reference produced avatar layers, not rendered portraits — no soft shading, skin texture, or photographic detail
@@ -273,5 +285,5 @@ Do not perform those steps as part of this skill.
 ## Harness inventory
 
 - `scripts/setup-openai-key.ts` — secure local API-key setup
-- `scripts/generate-avatar-sheet.ts` — four image calls, deterministic prompts, reference attachment and fingerprinting, checkpoints, targeted regeneration, and manifest persistence
-- `scripts/avatar-theme-manifest.ts` — four categories, stable variants, theme-spec and reference schema, checkpoint types, and manifest validation
+- `scripts/generate-avatar-sheet.ts` — four image calls, deterministic prompts, view-angle contracts, reference attachment and fingerprinting, checkpoints, targeted regeneration, and manifest persistence
+- `scripts/avatar-theme-manifest.ts` — four categories, stable variants, view-angle values and subject resolution, theme-spec and reference schema, checkpoint types, and manifest validation
