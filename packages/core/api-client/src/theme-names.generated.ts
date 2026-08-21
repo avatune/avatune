@@ -15,6 +15,7 @@ export const themeNames = [
   'pawel-olek-man',
   'pawel-olek-woman',
   'retro-cartoon',
+  'toon-flat',
   'yanliu',
 ] as const
 

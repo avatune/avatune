@@ -13,6 +13,7 @@ import pacovqzzTheme from '@avatune/pacovqzz-theme/vanilla'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/vanilla'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
 import retroCartoonTheme from '@avatune/retro-cartoon-theme/vanilla'
+import toonFlatTheme from '@avatune/toon-flat-theme/vanilla'
 import type { VanillaTheme } from '@avatune/types'
 import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 
@@ -30,6 +31,7 @@ export const avatarApiThemes = {
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,
   'retro-cartoon': retroCartoonTheme,
+  'toon-flat': toonFlatTheme,
   yanliu: yanliuTheme,
 } satisfies Record<string, VanillaTheme>
 

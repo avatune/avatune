@@ -28,6 +28,7 @@
     "@avatune/pawel-olek-woman-theme": "workspace:*",
     "@avatune/react-native": "workspace:*",
     "@avatune/retro-cartoon-theme": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@gorhom/bottom-sheet": "5.2.6",

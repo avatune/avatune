@@ -1,0 +1,37 @@
+{
+  "extends": "@avatune/typescript-config/base",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/toon-flat-assets/svg": [
+        "../toon-flat-assets/dist/svg/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/react": [
+        "../toon-flat-assets/dist/react/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/svelte": [
+        "../toon-flat-assets/dist/svelte/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/vue": [
+        "../toon-flat-assets/dist/vue/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/react-native": [
+        "../toon-flat-assets/dist/react-native/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/solid": [
+        "../toon-flat-assets/dist/solid/index.d.ts"
+      ],
+      "@avatune/toon-flat-assets/angular": [
+        "../toon-flat-assets/dist/angular/index.d.ts"
+      ],
+      "@avatune/theme-builder": ["../theme-builder/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

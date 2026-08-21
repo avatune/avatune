@@ -51,6 +51,8 @@
     "@avatune/yanliu-theme": "workspace:*",
     "@avatune/orks-assets": "workspace:*",
     "@avatune/orks-theme": "workspace:*",
+    "@avatune/toon-flat-assets": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-wasm": "^4.22.0",
     "@tensorflow/tfjs-backend-webgl": "^4.22.0",
