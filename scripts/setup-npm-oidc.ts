@@ -64,12 +64,39 @@ const root = resolve(import.meta.dir, '..')
 
 const readJson = async <T>(path: string) => (await Bun.file(path).json()) as T
 
-const runNpm = (args: string[], cwd?: string) => {
+interface NpmOptions {
+  cwd?: string
+  interactive?: boolean
+}
+
+const runNpm = (args: string[], { cwd, interactive }: NpmOptions = {}) => {
   const { exitCode, stdout, stderr } = Bun.spawnSync(['npm', ...args], {
     cwd,
     stdin: 'inherit',
+    stdout: interactive ? 'inherit' : 'pipe',
+    stderr: interactive ? 'inherit' : 'pipe',
   })
-  return { exitCode, output: `${stdout.toString()}${stderr.toString()}` }
+  // Nothing to classify when the streams went straight to the terminal.
+  return {
+    exitCode,
+    output: `${stdout?.toString() ?? ''}${stderr?.toString() ?? ''}`,
+  }
+}
+
+const needsOtp = (output: string) => /EOTP|one-time password/i.test(output)
+
+/**
+ * npm's browser-based 2FA flow only starts on a TTY, so a captured run fails
+ * with EOTP rather than showing the URL it wants you to open. Retry those with
+ * the terminal attached — the output is no longer classifiable, but the exit
+ * code still is, and you can actually authenticate.
+ */
+const runNpmWithAuth = (args: string[], cwd?: string) => {
+  const captured = runNpm(args, { cwd })
+  if (captured.exitCode === 0 || !needsOtp(captured.output)) return captured
+
+  console.log('  npm wants a one-time password — reopening the prompt…')
+  return runNpm(args, { cwd, interactive: true })
 }
 
 /** The `npm error ...` lines, which is the part worth showing on a failure. */
@@ -233,7 +260,7 @@ const seed = (manifest: Manifest, dryRun: boolean): StepResult => {
   const args = ['publish', '--access', 'public', '--tag', SEED_TAG]
   if (dryRun) args.push('--dry-run')
 
-  const { exitCode, output } = runNpm(args, directory)
+  const { exitCode, output } = runNpmWithAuth(args, directory)
   if (exitCode === 0) return { ok: true, existed: false }
   // The registry is eventually consistent: a name published minutes ago can
   // still read as missing. Refusing the duplicate is npm doing its job.
@@ -267,10 +294,27 @@ const trust = (name: string, dryRun: boolean): StepResult => {
     return { ok: true, existed: false }
   }
 
-  const { exitCode, output } = runNpm(args)
+  const { exitCode, output } = runNpmWithAuth(args)
   if (exitCode === 0) return { ok: true, existed: false }
   if (/\b409\b|conflict/i.test(output)) return { ok: true, existed: true }
   return { ok: false, error: npmErrorSummary(output) }
+}
+
+/**
+ * An account on "auth-and-writes" is asked to authenticate for every publish
+ * and every trust registration, which no amount of retrying makes pleasant.
+ */
+const printOtpSteps = () => {
+  console.error(
+    [
+      '\nnpm asked for a one-time password on every write. If `npm profile get`',
+      'reports 2FA as "auth-and-writes", relax it for the duration:',
+      '',
+      '  npm profile enable-2fa auth-only',
+      '  bun run setup:npm-oidc',
+      '  npm profile enable-2fa auth-and-writes',
+    ].join('\n'),
+  )
 }
 
 const printManualSteps = (names: string[]) => {
@@ -321,7 +365,7 @@ const main = async () => {
     `\nSetting up ${selected.length} package(s) as ${user}${dryRun ? ' (dry run)' : ''}…\n`,
   )
 
-  const failed: string[] = []
+  const failed: { name: string; error: string }[] = []
   for (const { manifest, seeded } of selected) {
     const name = manifest.name
 
@@ -331,7 +375,7 @@ const main = async () => {
       const result = seed(manifest, dryRun)
       if (!result.ok) {
         console.error(`▸ ${name} — seed failed: ${result.error}`)
-        failed.push(name)
+        failed.push({ name, error: result.error })
         continue
       }
       console.log(
@@ -342,7 +386,7 @@ const main = async () => {
     const trusted = trust(name, dryRun)
     if (!trusted.ok) {
       console.error(`  trust failed: ${trusted.error}`)
-      failed.push(name)
+      failed.push({ name, error: trusted.error })
       continue
     }
     console.log(
@@ -355,8 +399,10 @@ const main = async () => {
     return
   }
 
-  console.error(`\nfailed: ${failed.join(', ')}\n  Re-run to retry these.`)
-  printManualSteps(failed)
+  const names = failed.map(({ name }) => name)
+  console.error(`\nfailed: ${names.join(', ')}\n  Re-run to retry these.`)
+  if (failed.some(({ error }) => needsOtp(error))) printOtpSteps()
+  printManualSteps(names)
   process.exitCode = 1
 }
 
