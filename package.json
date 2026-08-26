@@ -27,7 +27,7 @@
     "postinstall": "bun run --cwd examples/nuxt-example setup && bun run --cwd examples/sveltekit-example sync && bun run --cwd apps/website generate:mdx",
     "release:version": "changeset version && bun update",
     "release:publish": "changeset publish",
-    "release:bootstrap": "bun scripts/bootstrap-npm-package.ts"
+    "setup:npm-oidc": "bun scripts/setup-npm-oidc.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.6",
