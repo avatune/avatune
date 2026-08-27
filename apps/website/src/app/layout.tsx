@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Newsreader } from 'next/font/google'
 import type { ReactNode } from 'react'
 import { Provider } from '@/components/provider'
 import '@/styles/global.css'
+
 const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-newsreader',

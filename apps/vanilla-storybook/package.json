@@ -31,6 +31,7 @@
     "@avatune/types": "workspace:*",
     "@avatune/typescript-config": "workspace:*",
     "@avatune/utils": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/vanilla": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*"
   },

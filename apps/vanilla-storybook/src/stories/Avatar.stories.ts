@@ -13,6 +13,7 @@ import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
 import retrocartoonTheme from '@avatune/retro-cartoon-theme/vanilla'
 import toonflatTheme from '@avatune/toon-flat-theme/vanilla'
 import type { Theme, VanillaAvatarItem } from '@avatune/types'
+import vampireskinTheme from '@avatune/vampire-skin-theme/vanilla'
 import { type AvatarArgs, avatar } from '@avatune/vanilla'
 import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 import type { Meta, StoryObj } from '@storybook/html-vite'
@@ -39,6 +40,7 @@ type PawelOlekManArgs = Omit<AvatarArgs<typeof pawelolekmanTheme>, 'theme'>
 type PawelOlekWomanArgs = Omit<AvatarArgs<typeof pawelolekwomanTheme>, 'theme'>
 type RetroCartoonArgs = Omit<AvatarArgs<typeof retrocartoonTheme>, 'theme'>
 type ToonFlatArgs = Omit<AvatarArgs<typeof toonflatTheme>, 'theme'>
+type VampireSkinArgs = Omit<AvatarArgs<typeof vampireskinTheme>, 'theme'>
 type YanliuArgs = Omit<AvatarArgs<typeof yanliuTheme>, 'theme'>
 
 const toBorderRadius = (v: number | string | undefined) =>
@@ -284,6 +286,21 @@ export const ToonFlat: StoryObj<ToonFlatArgs> = {
   },
 }
 
+export const VampireSkin: StoryObj<VampireSkinArgs> = {
+  argTypes: getArgTypes(vampireskinTheme),
+  render: (args: VampireSkinArgs) => {
+    return avatar({
+      theme: vampireskinTheme,
+      ...args,
+      borderRadius: toBorderRadius(args.borderRadius),
+    })
+  },
+  args: {
+    size: 300,
+    borderRadius: 50,
+  },
+}
+
 export const Yanliu: StoryObj<YanliuArgs> = {
   argTypes: getArgTypes(yanliuTheme),
   render: (args: YanliuArgs) => {
@@ -314,6 +331,7 @@ const themes = {
   'Pawel Olek Woman': pawelolekwomanTheme,
   'Retro Cartoon': retrocartoonTheme,
   'Toon Flat': toonflatTheme,
+  'Vampire Skin': vampireskinTheme,
   Yanliu: yanliuTheme,
 } as const
 

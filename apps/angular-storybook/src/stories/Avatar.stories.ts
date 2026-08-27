@@ -14,6 +14,7 @@ import pawelolekwomanTheme from '@avatune/pawel-olek-woman-theme/angular'
 import retrocartoonTheme from '@avatune/retro-cartoon-theme/angular'
 import toonflatTheme from '@avatune/toon-flat-theme/angular'
 import type { AngularAvatarItem, Theme } from '@avatune/types'
+import vampireskinTheme from '@avatune/vampire-skin-theme/angular'
 import yanliuTheme from '@avatune/yanliu-theme/angular'
 import type { Meta, StoryObj } from '@storybook/angular'
 import type { Args } from 'storybook/internal/types'
@@ -103,5 +104,7 @@ export const PawelOlekWoman = createStory(pawelolekwomanTheme)
 export const RetroCartoon = createStory(retrocartoonTheme)
 
 export const ToonFlat = createStory(toonflatTheme)
+
+export const VampireSkin = createStory(vampireskinTheme)
 
 export const Yanliu = createStory(yanliuTheme)

@@ -30,6 +30,7 @@
     "@avatune/retro-cartoon-theme": "workspace:*",
     "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "react": "19.2.8",
     "react-dom": "19.2.8"

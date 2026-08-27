@@ -37,6 +37,7 @@
     "@avatune/retro-cartoon-theme": "workspace:*",
     "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "rxjs": "^7.8.0",
     "zone.js": "^0.15.0"
