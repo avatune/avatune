@@ -1,0 +1,37 @@
+{
+  "extends": "@avatune/typescript-config/base",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "paths": {
+      "@avatune/types": ["../types/dist/index.d.ts"],
+      "@avatune/vampire-skin-assets/svg": [
+        "../vampire-skin-assets/dist/svg/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/react": [
+        "../vampire-skin-assets/dist/react/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/svelte": [
+        "../vampire-skin-assets/dist/svelte/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/vue": [
+        "../vampire-skin-assets/dist/vue/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/react-native": [
+        "../vampire-skin-assets/dist/react-native/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/solid": [
+        "../vampire-skin-assets/dist/solid/index.d.ts"
+      ],
+      "@avatune/vampire-skin-assets/angular": [
+        "../vampire-skin-assets/dist/angular/index.d.ts"
+      ],
+      "@avatune/theme-builder": ["../theme-builder/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

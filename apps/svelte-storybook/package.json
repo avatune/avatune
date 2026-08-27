@@ -30,6 +30,7 @@
     "@avatune/svelte": "workspace:*",
     "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@sveltejs/kit": "^2.0.0",
     "svelte": "^5.43.8"

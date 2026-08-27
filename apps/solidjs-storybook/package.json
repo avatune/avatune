@@ -30,6 +30,7 @@
     "@avatune/solidjs": "workspace:*",
     "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "solid-js": "^1.9.11"
   },

@@ -66,5 +66,10 @@ export const themeDocItems: ThemeDocItem[] = [
     previewId: 'toon-flat',
     slugs: ['packages', 'toon-flat-theme'],
   },
+  {
+    label: 'Vampire Skin',
+    previewId: 'vampire-skin',
+    slugs: ['packages', 'vampire-skin-theme'],
+  },
   { label: 'Yanliu', previewId: 'yanliu', slugs: ['packages', 'yanliu-theme'] },
 ]

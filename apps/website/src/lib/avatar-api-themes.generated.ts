@@ -15,6 +15,7 @@ import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
 import retroCartoonTheme from '@avatune/retro-cartoon-theme/vanilla'
 import toonFlatTheme from '@avatune/toon-flat-theme/vanilla'
 import type { VanillaTheme } from '@avatune/types'
+import vampireSkinTheme from '@avatune/vampire-skin-theme/vanilla'
 import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 
 export const avatarApiThemes = {
@@ -32,6 +33,7 @@ export const avatarApiThemes = {
   'pawel-olek-woman': pawelOlekWomanTheme,
   'retro-cartoon': retroCartoonTheme,
   'toon-flat': toonFlatTheme,
+  'vampire-skin': vampireSkinTheme,
   yanliu: yanliuTheme,
 } satisfies Record<string, VanillaTheme>
 

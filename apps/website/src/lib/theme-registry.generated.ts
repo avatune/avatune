@@ -15,6 +15,7 @@ import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/react'
 import retroCartoonTheme from '@avatune/retro-cartoon-theme/react'
 import toonFlatTheme from '@avatune/toon-flat-theme/react'
 import type { ReactTheme } from '@avatune/types'
+import vampireSkinTheme from '@avatune/vampire-skin-theme/react'
 import yanliuTheme from '@avatune/yanliu-theme/react'
 
 export type ThemeId =
@@ -32,6 +33,7 @@ export type ThemeId =
   | 'pawelOlekWoman'
   | 'retroCartoon'
   | 'toonFlat'
+  | 'vampireSkin'
   | 'yanliu'
 
 export interface ThemeInfo {
@@ -55,6 +57,7 @@ export const themeMap: Record<string, ReactTheme> = {
   pawelOlekWoman: pawelOlekWomanTheme,
   retroCartoon: retroCartoonTheme,
   toonFlat: toonFlatTheme,
+  vampireSkin: vampireSkinTheme,
   yanliu: yanliuTheme,
 }
 
@@ -74,6 +77,7 @@ export const themeMapBySlug: Record<string, ReactTheme> = {
   'pawel-olek-woman': pawelOlekWomanTheme,
   'retro-cartoon': retroCartoonTheme,
   'toon-flat': toonFlatTheme,
+  'vampire-skin': vampireSkinTheme,
   yanliu: yanliuTheme,
 }
 
@@ -119,6 +123,11 @@ export const themeInfos: ThemeInfo[] = [
     id: 'toonFlat',
     label: 'Toon Flat',
     packageName: '@avatune/toon-flat-theme',
+  },
+  {
+    id: 'vampireSkin',
+    label: 'Vampire Skin',
+    packageName: '@avatune/vampire-skin-theme',
   },
   { id: 'yanliu', label: 'Yanliu', packageName: '@avatune/yanliu-theme' },
 ]

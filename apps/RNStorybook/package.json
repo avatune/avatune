@@ -30,6 +30,7 @@
     "@avatune/retro-cartoon-theme": "workspace:*",
     "@avatune/toon-flat-theme": "workspace:*",
     "@avatune/types": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
     "@avatune/yanliu-theme": "workspace:*",
     "@gorhom/bottom-sheet": "5.2.6",
     "@react-native-async-storage/async-storage": "2.2.0",
