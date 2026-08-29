@@ -49,3 +49,57 @@ jobs:
         run: bun run test
         env:
           CI: true
+
+      # No Swift toolchain needed: this only checks that the committed Swift
+      # still matches what the themes generate. SwiftDraw imports CoreGraphics
+      # unguarded, so the package itself cannot be built here.
+      - name: Check Generated Swift Is Current
+        run: bun run generate:swift
+
+      - name: Fail If Generated Swift Is Stale
+        run: |
+          if ! git diff --exit-code swift/; then
+            echo "::error::Generated Swift is out of date. Run 'bun run build && bun run generate:swift' and commit the result."
+            exit 1
+          fi
+
+  swift:
+    name: Swift
+    runs-on: macos-latest
+    # Only when something the package is generated from, or the package itself,
+    # actually changed. macOS runners are billed at a premium and the numeric
+    # suites do not need to re-run for a docs edit.
+    if: >-
+      github.event_name == 'push' ||
+      contains(github.event.pull_request.labels.*.name, 'swift')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: ".node-version"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: "package.json"
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      # dist/ is gitignored, and the generator reads it.
+      - name: Build Packages
+        run: bun run build
+
+      - name: Test Swift Package
+        run: swift test --package-path swift
+
+      # The only way to exercise the UIKit paths, which the macOS run cannot.
+      - name: Test On iOS Simulator
+        run: >-
+          xcodebuild test
+          -scheme Avatune
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
+        working-directory: swift

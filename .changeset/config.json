@@ -22,6 +22,8 @@
     "@avatune/nuxt-example",
     "@avatune/sveltekit-example",
     "@avatune/vanilla-tests",
+    "@avatune/swift-codegen-tests",
+    "@avatune/swift-tests",
     "@avatune/studio",
     "@avatune/solidstart-example",
     "@avatune/angular-ssr-example"

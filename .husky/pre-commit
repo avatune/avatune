@@ -13,6 +13,18 @@ echo "Checking if generated files are up to date..."
 bun run generate:root-readme
 bun run generate:theme-readme
 
+# The Swift package is generated from the themes' build output, so it is only
+# regenerated when something it derives from actually changed. A docs-only
+# commit should not require a full theme build.
+if git diff --cached --name-only | grep -qE '^(packages/(assets|themes)/|packages/core/(utils|types)/|scripts/(generate-swift|lib/)|swift/)'; then
+  echo "Regenerating Swift sources..."
+  if ! bun run generate:swift; then
+    echo ""
+    echo "Error: generate:swift failed. Did you run 'bun run build' first?"
+    exit 1
+  fi
+fi
+
 if ! git diff --quiet; then
   echo ""
   echo "Error: Generated files are out of date!"

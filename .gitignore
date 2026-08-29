@@ -27,6 +27,10 @@ out/
 build
 dist
 
+# SwiftPM (the bare `build` entry above does not match `.build`)
+.build/
+.swiftpm/
+
 
 # Debug
 npm-debug.log*

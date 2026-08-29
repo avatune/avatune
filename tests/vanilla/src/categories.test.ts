@@ -7,10 +7,14 @@ import kyuteTheme from '@avatune/kyute-theme/vanilla'
 import micahTheme from '@avatune/micah-theme/vanilla'
 import miniavsTheme from '@avatune/miniavs-theme/vanilla'
 import nevmstasTheme from '@avatune/nevmstas-theme/vanilla'
+import orksTheme from '@avatune/orks-theme/vanilla'
 import pacovqzzTheme from '@avatune/pacovqzz-theme/vanilla'
 import pawelOlekManTheme from '@avatune/pawel-olek-man-theme/vanilla'
 import pawelOlekWomanTheme from '@avatune/pawel-olek-woman-theme/vanilla'
+import retroCartoonTheme from '@avatune/retro-cartoon-theme/vanilla'
+import toonFlatTheme from '@avatune/toon-flat-theme/vanilla'
 import type { AvatarPartCategory, VanillaTheme } from '@avatune/types'
+import vampireSkinTheme from '@avatune/vampire-skin-theme/vanilla'
 import yanliuTheme from '@avatune/yanliu-theme/vanilla'
 
 import { cleanupTmpDir, saveTmpPng, setupTmpDir, svgToPng } from './utils.js'
@@ -29,6 +33,10 @@ const THEMES: Record<string, VanillaTheme> = {
   pacovqzz: pacovqzzTheme,
   'pawel-olek-man': pawelOlekManTheme,
   'pawel-olek-woman': pawelOlekWomanTheme,
+  orks: orksTheme,
+  'retro-cartoon': retroCartoonTheme,
+  'toon-flat': toonFlatTheme,
+  'vampire-skin': vampireSkinTheme,
   yanliu: yanliuTheme,
 }
 

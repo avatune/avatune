@@ -1,0 +1,105 @@
+name: Release Swift
+
+# Swift Package Manager resolves a package from the root of a repository, so the
+# package cannot be consumed from this monorepo's `swift/` directory. This job
+# mirrors that directory to a standalone repository and tags it.
+#
+# It runs after the changesets release PR merges, which is what moves the version
+# in swift/package.json.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "swift/**"
+  workflow_dispatch:
+
+concurrency:
+  group: release-swift
+  cancel-in-progress: false
+
+env:
+  MIRROR: avatune/avatune-swift
+
+jobs:
+  mirror:
+    name: Mirror and tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Read version
+        id: version
+        run: echo "value=$(jq -r .version swift/package.json)" >> "$GITHUB_OUTPUT"
+
+      # Idempotent: this workflow fires on any push touching swift/, including
+      # regenerated sources that carry no version change. Re-tagging an existing
+      # release would either fail or, worse, move a tag consumers have resolved.
+      - name: Check whether the tag already exists
+        id: existing
+        env:
+          GH_TOKEN: ${{ secrets.SWIFT_MIRROR_TOKEN }}
+        run: |
+          if git ls-remote --tags "https://x-access-token:${GH_TOKEN}@github.com/${MIRROR}.git" \
+              "refs/tags/${{ steps.version.outputs.value }}" | grep -q .; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.version.outputs.value }} already exists on ${MIRROR}; nothing to do."
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Clone the mirror
+        if: steps.existing.outputs.published == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.SWIFT_MIRROR_TOKEN }}
+        run: |
+          git clone --depth 1 \
+            "https://x-access-token:${GH_TOKEN}@github.com/${MIRROR}.git" mirror
+
+      # rsync rather than `git subtree split`: almost every commit under swift/
+      # is regenerated output, so preserved history would be noise, and SPM only
+      # needs immutable tags. --delete keeps removed files from lingering.
+      - name: Copy the package
+        if: steps.existing.outputs.published == 'false'
+        run: |
+          rsync -a --delete \
+            --exclude '.git' \
+            --exclude '.build' \
+            --exclude '.swiftpm' \
+            --exclude 'package.json' \
+            swift/ mirror/
+
+      - name: Commit and tag
+        if: steps.existing.outputs.published == 'false'
+        working-directory: mirror
+        run: |
+          git config user.name "avatune-bot"
+          git config user.email "bot@avatune.dev"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sources are identical to the previous release; tagging the existing commit."
+          else
+            git commit -m "Release ${{ steps.version.outputs.value }} (avatune/avatune@${GITHUB_SHA})"
+          fi
+          git tag "${{ steps.version.outputs.value }}"
+          git push origin HEAD:main
+          git push origin "${{ steps.version.outputs.value }}"
+
+      - name: Create the release
+        if: steps.existing.outputs.published == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.SWIFT_MIRROR_TOKEN }}
+          VERSION: ${{ steps.version.outputs.value }}
+        run: |
+          notes=$(awk -v version="## $VERSION" '
+            $0 == version { collecting = 1; next }
+            collecting && /^## / { exit }
+            collecting { print }
+          ' swift/CHANGELOG.md 2>/dev/null || true)
+
+          gh release create "$VERSION" \
+            --repo "$MIRROR" \
+            --title "$VERSION" \
+            --notes "${notes:-See the monorepo changelog.}"

@@ -1,0 +1,7559 @@
+{
+  "generator": "scripts/generate-swift.ts",
+  "warning": "AUTO-GENERATED. Do not edit by hand. Run `bun run generate:swift` to refresh.",
+  "rows": [
+    {
+      "input": "",
+      "hash": 0,
+      "values": [
+        0.21132115912208504,
+        0.7094221536351166,
+        0.5467721193415638
+      ],
+      "note": "empty string hashes to 0"
+    },
+    {
+      "input": "a",
+      "hash": 97,
+      "values": [
+        0.07876371742112483,
+        0.7926568930041152,
+        0.7130829903978052
+      ],
+      "note": "single ASCII code unit"
+    },
+    {
+      "input": "ysoa29udd蓢",
+      "hash": 2147483648,
+      "values": [
+        0.8456147119341564,
+        0.27375685871056243,
+        0.42386402606310014
+      ],
+      "note": "raw hash is Int32.min; Math.abs overflows Int32"
+    },
+    {
+      "input": "👩🏽‍🚀",
+      "hash": 1203236739,
+      "values": [
+        0.95480109739369,
+        0.8163280178326474,
+        0.8782150205761317
+      ],
+      "note": "non-BMP + ZWJ + modifier: 7 UTF-16 units, 4 scalars"
+    },
+    {
+      "input": "🎨🖌️",
+      "hash": 1343555732,
+      "values": [
+        0.23589248971193416,
+        0.24736796982167353,
+        0.9808084705075446
+      ],
+      "note": "surrogate pairs must hash as code units"
+    },
+    {
+      "input": "Àéïøü-unicode-test",
+      "hash": 700678917,
+      "values": [
+        0.2866683813443073,
+        0.5139360425240055,
+        0.3304526748971193
+      ],
+      "note": "BMP accents, already used as a seed"
+    },
+    {
+      "input": "日本語のシード",
+      "hash": 307251923,
+      "values": [
+        0.8621399176954733,
+        0.9746956447187929,
+        0.8555126886145404
+      ],
+      "note": "CJK, single-unit BMP"
+    },
+    {
+      "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "hash": 1408172032,
+      "values": [
+        0.12846793552812072,
+        0.09158950617283951,
+        0.08531807270233197
+      ],
+      "note": "long input drives the hash through many wraps"
+    },
+    {
+      "input": "seed999",
+      "hash": 1971563784,
+      "values": [
+        0.5478437928669411,
+        0.7064386145404664,
+        0.796875
+      ],
+      "note": "large positive hash; first LCG step ~1.8e13"
+    },
+    {
+      "input": "alice.wonder@example.com",
+      "hash": 1480138790,
+      "values": [
+        0.7642618312757201,
+        0.6106138545953361,
+        0.5307827503429355
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-background-item",
+      "hash": 313300821,
+      "values": [
+        0.7029235253772291,
+        0.10303069272976681,
+        0.49979423868312756
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-background-color",
+      "hash": 1128074037,
+      "values": [
+        0.30004286694101506,
+        0.9100265775034293,
+        0.3685185185185185
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-accessories-item",
+      "hash": 835129769,
+      "values": [
+        0.6065072016460905,
+        0.3348036694101509,
+        0.22025034293552812
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-accessories-color",
+      "hash": 124902241,
+      "values": [
+        0.23678840877914953,
+        0.5803112139917695,
+        0.6859224965706447
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-glasses-item",
+      "hash": 486216733,
+      "values": [
+        0.8067986968449932,
+        0.24600051440329218,
+        0.2621056241426612
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-glasses-color",
+      "hash": 2112833639,
+      "values": [
+        0.21208847736625513,
+        0.8462491426611797,
+        0.17459705075445817
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-hats-item",
+      "hash": 495413665,
+      "values": [
+        0.46888717421124826,
+        0.3309284979423868,
+        0.17728052126200275
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-hats-color",
+      "hash": 1827728747,
+      "values": [
+        0.6873456790123457,
+        0.21348165294924554,
+        0.8041752400548697
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-hair-item",
+      "hash": 705821385,
+      "values": [
+        0.2722136488340192,
+        0.07046896433470508,
+        0.6431584362139918
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-hair-color",
+      "hash": 411309633,
+      "values": [
+        0.14227537722908093,
+        0.5146047668038409,
+        0.5502572016460905
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-faceDetails-item",
+      "hash": 1399570818,
+      "values": [
+        0.06582218792866941,
+        0.42349108367626886,
+        0.10189043209876543
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-faceDetails-color",
+      "hash": 431339220,
+      "values": [
+        0.6287594307270233,
+        0.3027863511659808,
+        0.42717335390946504
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-body-item",
+      "hash": 236364663,
+      "values": [
+        0.3965192043895748,
+        0.2364411865569273,
+        0.35079732510288064
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-body-color",
+      "hash": 1268313217,
+      "values": [
+        0.39357853223593964,
+        0.8852494855967078,
+        0.9167866941015089
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-ears-item",
+      "hash": 152197604,
+      "values": [
+        0.14926697530864197,
+        0.5434585048010974,
+        0.9188743141289437
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-ears-color",
+      "hash": 428841606,
+      "values": [
+        0.40527692043895747,
+        0.6919581618655692,
+        0.11418467078189301
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-eyebrows-item",
+      "hash": 430293009,
+      "values": [
+        0.629312414266118,
+        0.44608624828532234,
+        0.2595164609053498
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-eyebrows-color",
+      "hash": 459864569,
+      "values": [
+        0.749511316872428,
+        0.41607938957475993,
+        0.1657235939643347
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-eyes-item",
+      "hash": 72931511,
+      "values": [
+        0.07196502057613169,
+        0.5579775377229081,
+        0.9603995198902606
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-eyes-color",
+      "hash": 2039773633,
+      "values": [
+        0.18617112482853224,
+        0.7889531893004115,
+        0.2649348422496571
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-faceHair-item",
+      "hash": 411962662,
+      "values": [
+        0.7623413923182442,
+        0.7486111111111111,
+        0.04326560356652949
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-faceHair-color",
+      "hash": 108376188,
+      "values": [
+        0.54923268175583,
+        0.6244941700960219,
+        0.6315972222222223
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-forelock-item",
+      "hash": 1260926930,
+      "values": [
+        0.12871656378600824,
+        0.40408093278463647,
+        0.5680769890260631
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-forelock-color",
+      "hash": 428345988,
+      "values": [
+        0.8470721879286695,
+        0.8297410836762689,
+        0.6331404320987655
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-head-item",
+      "hash": 1235417607,
+      "values": [
+        0.5987825788751715,
+        0.48808727709190675,
+        0.9110853909465021
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-head-color",
+      "hash": 351076669,
+      "values": [
+        0.23107853223593963,
+        0.4727494855967078,
+        0.2542866941015089
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-mouth-item",
+      "hash": 1924537440,
+      "values": [
+        0.7318972908093279,
+        0.5880229766803841,
+        0.4130272633744856
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-mouth-color",
+      "hash": 474564682,
+      "values": [
+        0.2199031207133059,
+        0.5302469135802469,
+        0.03786436899862826
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-neck-item",
+      "hash": 1514798374,
+      "values": [
+        0.1582261659807956,
+        0.8728909465020576,
+        0.9700145747599451
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-neck-color",
+      "hash": 280207484,
+      "values": [
+        0.42550154320987654,
+        0.8011745541838134,
+        0.9358496227709191
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-nose-item",
+      "hash": 123182106,
+      "values": [
+        0.5223036694101509,
+        0.15775034293552812,
+        0.4472608024691358
+      ]
+    },
+    {
+      "input": "alice.wonder@example.com-nose-color",
+      "hash": 470638832,
+      "values": [
+        0.4532278806584362,
+        0.6838391632373114,
+        0.5993784293552812
+      ]
+    },
+    {
+      "input": "bob.builder@test.io",
+      "hash": 1192034852,
+      "values": [
+        0.6505015432098765,
+        0.5261745541838134,
+        0.16084962277091908
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-background-item",
+      "hash": 718245545,
+      "values": [
+        0.2632973251028807,
+        0.13974194101508916,
+        0.9511145404663923
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-background-color",
+      "hash": 785092237,
+      "values": [
+        0.09342421124828532,
+        0.1499099794238683,
+        0.524039780521262
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-accessories-item",
+      "hash": 1078036505,
+      "values": [
+        0.7869598765432099,
+        0.7251328875171468,
+        0.6723079561042524
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-accessories-color",
+      "hash": 946289891,
+      "values": [
+        0.901440329218107,
+        0.5078232167352538,
+        0.4750600137174211
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-glasses-item",
+      "hash": 625663711,
+      "values": [
+        0.37734910836762686,
+        0.9353780864197531,
+        0.16290294924554183
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-glasses-color",
+      "hash": 2084944617,
+      "values": [
+        0.7936128257887517,
+        0.6042138203017833,
+        0.0040637860082304526
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-hats-item",
+      "hash": 1667275233,
+      "values": [
+        0.1443329903978052,
+        0.6524648491083677,
+        0.7868827160493828
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-hats-color",
+      "hash": 151607849,
+      "values": [
+        0.29786522633744855,
+        0.6557913237311386,
+        0.726423182441701
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-hair-item",
+      "hash": 1426457013,
+      "values": [
+        0.22843792866941015,
+        0.9124957133058985,
+        0.3339506172839506
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-hair-color",
+      "hash": 1264811265,
+      "values": [
+        0.6698473936899862,
+        0.46192986968449934,
+        0.6210390946502058
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-faceDetails-item",
+      "hash": 982230204,
+      "values": [
+        0.654582475994513,
+        0.4829303840877915,
+        0.9468235596707819
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-faceDetails-color",
+      "hash": 390048430,
+      "values": [
+        0.45853480795610424,
+        0.04356995884773662,
+        0.45550840192043895
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-body-item",
+      "hash": 1926324235,
+      "values": [
+        0.21670096021947874,
+        0.7469521604938272,
+        0.6133659122085048
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-body-color",
+      "hash": 407807681,
+      "values": [
+        0.41854423868312757,
+        0.09128515089163237,
+        0.25450960219478735
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-ears-item",
+      "hash": 1980080794,
+      "values": [
+        0.3513846021947874,
+        0.43950617283950616,
+        0.05823473936899863
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-ears-color",
+      "hash": 1247279292,
+      "values": [
+        0.40684585048010974,
+        0.2845764746227709,
+        0.05711162551440329
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-eyebrows-item",
+      "hash": 402403987,
+      "values": [
+        0.21083676268861454,
+        0.2040509259259259,
+        0.08898319615912209
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-eyebrows-color",
+      "hash": 404695113,
+      "values": [
+        0.6458762002743484,
+        0.5058599108367627,
+        0.21435185185185185
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-eyes-item",
+      "hash": 2089757387,
+      "values": [
+        0.5412551440329219,
+        0.42541580932784634,
+        0.0037637174211248283
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-eyes-color",
+      "hash": 363652735,
+      "values": [
+        0.7966906721536351,
+        0.23126286008230454,
+        0.18718278463648835
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-faceHair-item",
+      "hash": 384073640,
+      "values": [
+        0.3438657407407407,
+        0.5065757887517147,
+        0.8727323388203018
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-faceHair-color",
+      "hash": 972935870,
+      "values": [
+        0.5219778806584362,
+        0.1275891632373114,
+        0.9181284293552812
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-forelock-item",
+      "hash": 1288815952,
+      "values": [
+        0.5471922153635117,
+        0.6461162551440329,
+        0.7386102537722908
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-forelock-color",
+      "hash": 1292905670,
+      "values": [
+        0.8198173868312757,
+        0.3328360768175583,
+        0.9196716392318244
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-head-item",
+      "hash": 896860791,
+      "values": [
+        0.9018689986282579,
+        0.49487740054869683,
+        0.06602366255144033
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-head-color",
+      "hash": 2027197567,
+      "values": [
+        0.6205589849108367,
+        0.030439814814814815,
+        0.3320387517146776
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-mouth-item",
+      "hash": 694308958,
+      "values": [
+        0.5698516803840878,
+        0.40180041152263374,
+        0.35694873113854597
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-mouth-color",
+      "hash": 54424396,
+      "values": [
+        0.3690543552812071,
+        0.7858796296296297,
+        0.6777563443072703
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-neck-item",
+      "hash": 617480024,
+      "values": [
+        0.3424254115226337,
+        0.11007373113854595,
+        0.007094478737997257
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-neck-color",
+      "hash": 1956328382,
+      "values": [
+        0.8149819958847737,
+        0.35886488340192046,
+        0.01360168038408779
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-nose-item",
+      "hash": 2009096292,
+      "values": [
+        0.9783479080932784,
+        0.8252143347050754,
+        0.5298482510288066
+      ]
+    },
+    {
+      "input": "bob.builder@test.io-nose-color",
+      "hash": 2146759730,
+      "values": [
+        0.8427083333333333,
+        0.24152949245541838,
+        0.6771304869684499
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org",
+      "hash": 2078949000,
+      "values": [
+        0.29516889574759947,
+        0.5772205075445817,
+        0.9392618312757202
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-background-item",
+      "hash": 1942542851,
+      "values": [
+        0.22448559670781892,
+        0.15185613854595337,
+        0.6252657750342936
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-background-color",
+      "hash": 94969415,
+      "values": [
+        0.2454218106995885,
+        0.879582475994513,
+        0.2079303840877915
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-accessories-item",
+      "hash": 197974853,
+      "values": [
+        0.8707561728395061,
+        0.11448473936899863,
+        0.03388203017832647
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-accessories-color",
+      "hash": 1836569969,
+      "values": [
+        0.9989969135802469,
+        0.8816143689986282,
+        0.10656721536351166
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-glasses-item",
+      "hash": 344545269,
+      "values": [
+        0.7741169410150892,
+        0.27298954046639234,
+        0.28703703703703703
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-glasses-color",
+      "hash": 2096651925,
+      "values": [
+        0.5070387517146776,
+        0.1787508573388203,
+        0.7730452674897119
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-hats-item",
+      "hash": 1408234381,
+      "values": [
+        0.016881001371742112,
+        0.22151491769547324,
+        0.5215706447187929
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-hats-color",
+      "hash": 711276029,
+      "values": [
+        0.8840277777777777,
+        0.5536822702331962,
+        0.010116598079561043
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-hair-item",
+      "hash": 1685497865,
+      "values": [
+        0.35588991769547323,
+        0.34344564471879285,
+        0.5992626886145405
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-hair-color",
+      "hash": 705143085,
+      "values": [
+        0.08368484224965707,
+        0.5640389231824418,
+        0.3373456790123457
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-faceDetails-item",
+      "hash": 1862291856,
+      "values": [
+        0.5707861796982168,
+        0.09357853223593965,
+        0.5852494855967079
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-faceDetails-color",
+      "hash": 1902155866,
+      "values": [
+        0.2493269890260631,
+        0.20164609053497942,
+        0.7216092249657065
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-body-item",
+      "hash": 1667283383,
+      "values": [
+        0.08924897119341564,
+        0.3160022290809328,
+        0.34805384087791497
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-body-color",
+      "hash": 151860499,
+      "values": [
+        0.5902606310013717,
+        0.22545010288065845,
+        0.12272805212620028
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-ears-item",
+      "hash": 2055845650,
+      "values": [
+        0.21239283264746228,
+        0.6770576131687243,
+        0.5241812414266118
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-ears-color",
+      "hash": 687611112,
+      "values": [
+        0.8206832990397805,
+        0.38668552812071333,
+        0.7734182098765432
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-eyebrows-item",
+      "hash": 414111295,
+      "values": [
+        0.9242626886145404,
+        0.778587962962963,
+        0.8579646776406036
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-eyebrows-color",
+      "hash": 41768565,
+      "values": [
+        0.5296724965706447,
+        0.6952117626886145,
+        0.37592592592592594
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-eyes-item",
+      "hash": 1830716535,
+      "values": [
+        0.4138031550068587,
+        0.994465877914952,
+        0.7384516460905349
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-eyes-color",
+      "hash": 923320915,
+      "values": [
+        0.38285322359396434,
+        0.12915380658436215,
+        0.4708762002743484
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-faceHair-item",
+      "hash": 395780948,
+      "values": [
+        0.057291666666666664,
+        0.08111282578875172,
+        0.6417138203017833
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-faceHair-color",
+      "hash": 610009322,
+      "values": [
+        0.4057741769547325,
+        0.3169410150891632,
+        0.07970250342935528
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-forelock-item",
+      "hash": 1277108644,
+      "values": [
+        0.8337662894375857,
+        0.07157921810699588,
+        0.9696287722908093
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-forelock-color",
+      "hash": 929979122,
+      "values": [
+        0.703613683127572,
+        0.5221879286694101,
+        0.08124571330589848
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-head-item",
+      "hash": 1155901643,
+      "values": [
+        0.029320987654320986,
+        0.9258273319615912,
+        0.3313357338820302
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-head-color",
+      "hash": 1467529387,
+      "values": [
+        0.03439643347050755,
+        0.1325488683127572,
+        0.048345336076817555
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-mouth-item",
+      "hash": 1253977138,
+      "values": [
+        0.156014231824417,
+        0.2996913580246914,
+        0.6406421467764061
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-mouth-color",
+      "hash": 224268792,
+      "values": [
+        0.46574502743484225,
+        0.1058213305898491,
+        0.455516975308642
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-neck-item",
+      "hash": 876520876,
+      "values": [
+        0.46987740054869687,
+        0.5410236625514403,
+        0.2724065500685871
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-neck-color",
+      "hash": 1396660202,
+      "values": [
+        0.22881944444444444,
+        0.4609739368998628,
+        0.7299082647462277
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-nose-item",
+      "hash": 2026830152,
+      "values": [
+        0.5854295267489712,
+        0.291349451303155,
+        0.05256772976680384
+      ]
+    },
+    {
+      "input": "charlie.chaplin@demo.org-nose-color",
+      "hash": 1587091550,
+      "values": [
+        0.2565457818930041,
+        0.34363854595336074,
+        0.39343707133058986
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev",
+      "hash": 1731715949,
+      "values": [
+        0.407690329218107,
+        0.13907321673525377,
+        0.7313100137174211
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-background-item",
+      "hash": 524424424,
+      "values": [
+        0.14935270919067214,
+        0.340869341563786,
+        0.6370670438957476
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-background-color",
+      "hash": 917028862,
+      "values": [
+        0.8204689643347051,
+        0.39315843621399177,
+        0.9779363854595337
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-accessories-item",
+      "hash": 1209973130,
+      "values": [
+        0.5140046296296297,
+        0.9683813443072702,
+        0.126204561042524
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-accessories-color",
+      "hash": 1151221812,
+      "values": [
+        0.6316400891632373,
+        0.09579046639231824,
+        0.15844907407407408
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-glasses-item",
+      "hash": 823423184,
+      "values": [
+        0.719483024691358,
+        0.1229338134430727,
+        0.6187199931412894
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-glasses-color",
+      "hash": 249368250,
+      "values": [
+        0.45604852537722906,
+        0.9186556927297668,
+        0.6279192386831276
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-hats-item",
+      "hash": 166429134,
+      "values": [
+        0.9615526406035665,
+        0.6124314128943759,
+        0.4358924897119342
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-hats-color",
+      "hash": 858652680,
+      "values": [
+        0.813687414266118,
+        0.31796124828532235,
+        0.5688914609053498
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-hair-item",
+      "hash": 1034805916,
+      "values": [
+        0.779548182441701,
+        0.7889660493827161,
+        0.3845464677640604
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-hair-color",
+      "hash": 2019895502,
+      "values": [
+        0.33247170781893004,
+        0.5306755829903979,
+        0.02491855281207133
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-faceDetails-item",
+      "hash": 850293579,
+      "values": [
+        0.9275377229080933,
+        0.23968192729766805,
+        0.4929269547325103
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-faceDetails-color",
+      "hash": 594980351,
+      "values": [
+        0.18873456790123458,
+        0.6315372085048011,
+        0.1388974622770919
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-body-item",
+      "hash": 92619868,
+      "values": [
+        0.5334576474622771,
+        0.9009002057613169,
+        0.4841349451303155
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-body-color",
+      "hash": 1418068210,
+      "values": [
+        0.107454561042524,
+        0.64619341563786,
+        0.45628000685871056
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-ears-item",
+      "hash": 481182135,
+      "values": [
+        0.6566015089163237,
+        0.2619555898491084,
+        0.6602623456790123
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-ears-color",
+      "hash": 2037427475,
+      "values": [
+        0.5954732510288065,
+        0.7080289780521262,
+        0.5888460219478738
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-eyebrows-item",
+      "hash": 1433172380,
+      "values": [
+        0.5493698559670782,
+        0.9003515089163238,
+        0.38070558984910835
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-eyebrows-color",
+      "hash": 1472987642,
+      "values": [
+        0.6187371399176955,
+        0.08545953360768176,
+        0.07044324417009602
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-eyes-item",
+      "hash": 256053020,
+      "values": [
+        0.8580118312757201,
+        0.5793638545953361,
+        0.8745327503429355
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-eyes-color",
+      "hash": 646607794,
+      "values": [
+        0.3148619684499314,
+        0.7424897119341564,
+        0.10813185871056241
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-faceHair-item",
+      "hash": 1451502727,
+      "values": [
+        0.416340877914952,
+        0.5978266460905349,
+        0.5969564471879286
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-faceHair-color",
+      "hash": 2041228399,
+      "values": [
+        0.4948388203017833,
+        0.7071887860082304,
+        0.7742198216735254
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-forelock-item",
+      "hash": 1170574977,
+      "values": [
+        0.8064729080932784,
+        0.21583933470507544,
+        0.7329732510288066
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-forelock-color",
+      "hash": 1933769097,
+      "values": [
+        0.89855109739369,
+        0.6350780178326475,
+        0.07196502057613169
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-head-item",
+      "hash": 1564402138,
+      "values": [
+        0.10611711248285323,
+        0.20658436213991768,
+        0.6524734224965707
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-head-color",
+      "hash": 1257509200,
+      "values": [
+        0.38176011659807957,
+        0.9621656378600824,
+        0.31391889574759946
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-mouth-item",
+      "hash": 315951571,
+      "values": [
+        0.5417009602194788,
+        0.5719521604938271,
+        0.9383659122085048
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-mouth-color",
+      "hash": 1198880931,
+      "values": [
+        0.5296982167352537,
+        0.9344350137174211,
+        0.39138374485596705
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-neck-item",
+      "hash": 1843782905,
+      "values": [
+        0.6655606995884774,
+        0.5913880315500686,
+        0.7114026063100137
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-neck-color",
+      "hash": 1328378385,
+      "values": [
+        0.18733710562414266,
+        0.6337405692729767,
+        0.6323559670781893
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-nose-item",
+      "hash": 452166637,
+      "values": [
+        0.029638203017832647,
+        0.876247427983539,
+        0.1886488340192044
+      ]
+    },
+    {
+      "input": "diana.prince@avatune.dev-nose-color",
+      "hash": 1137947037,
+      "values": [
+        0.15961076817558298,
+        0.7510759602194788,
+        0.9688271604938271
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co",
+      "hash": 120827176,
+      "values": [
+        0.1872127914951989,
+        0.4774948559670782,
+        0.39097650891632374
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-background-item",
+      "hash": 1729646163,
+      "values": [
+        0.9183813443072703,
+        0.076204561042524,
+        0.98994341563786
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-background-color",
+      "hash": 2085106679,
+      "values": [
+        0.2933641975308642,
+        0.7917223936899863,
+        0.021304869684499315
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-accessories-item",
+      "hash": 1792162411,
+      "values": [
+        0.5998285322359397,
+        0.2164994855967078,
+        0.873036694101509
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-accessories-color",
+      "hash": 271856929,
+      "values": [
+        0.27300240054869684,
+        0.40664866255144033,
+        0.4505315500685871
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-glasses-item",
+      "hash": 604763,
+      "values": [
+        0.4398148148148148,
+        0.9289137517146776,
+        0.038125857338820304
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-glasses-color",
+      "hash": 13064475,
+      "values": [
+        0.9084019204389575,
+        0.2575831618655693,
+        0.992309670781893
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-hats-item",
+      "hash": 62972893,
+      "values": [
+        0.5763460219478738,
+        0.8056712962962963,
+        0.7600480109739369
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-hats-color",
+      "hash": 1957842861,
+      "values": [
+        0.9133144718792867,
+        0.9492241083676269,
+        0.9447530864197531
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-hair-item",
+      "hash": 1264207943,
+      "values": [
+        0.8948045267489712,
+        0.788224451303155,
+        0.48694272976680386
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-hair-color",
+      "hash": 541423747,
+      "values": [
+        0.36824417009602195,
+        0.2503472222222222,
+        0.690835048010974
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-faceDetails-item",
+      "hash": 442538176,
+      "values": [
+        0.07250085733882031,
+        0.541795267489712,
+        0.44910408093278464
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-faceDetails-color",
+      "hash": 828098390,
+      "values": [
+        0.7159079218106996,
+        0.8709019204389574,
+        0.47008316186556925
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-body-item",
+      "hash": 322021895,
+      "values": [
+        0.6487139917695474,
+        0.9001586076817558,
+        0.586531207133059
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-body-color",
+      "hash": 1398427331,
+      "values": [
+        0.6195473251028807,
+        0.6209919410150891,
+        0.05736454046639232
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-ears-item",
+      "hash": 710584162,
+      "values": [
+        0.771857853223594,
+        0.26121399176954735,
+        0.7626586076817559
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-ears-color",
+      "hash": 558955720,
+      "values": [
+        0.6312457133058985,
+        0.4277006172839506,
+        0.2547625171467764
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-eyebrows-item",
+      "hash": 1695605105,
+      "values": [
+        0.49117798353909464,
+        0.6577460562414266,
+        0.9073902606310014
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-eyebrows-color",
+      "hash": 1018467525,
+      "values": [
+        0.2776148834019204,
+        0.3073516803840878,
+        0.8893004115226337
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-eyes-item",
+      "hash": 485455047,
+      "values": [
+        0.9732681755829904,
+        0.578622256515775,
+        0.976929012345679
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-eyes-color",
+      "hash": 2125079549,
+      "values": [
+        0.2790895061728395,
+        0.02281807270233196,
+        0.4422153635116598
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-faceHair-item",
+      "hash": 1713935452,
+      "values": [
+        0.35814900548696843,
+        0.35522119341563785,
+        0.12364111796982168
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-faceHair-color",
+      "hash": 1586708282,
+      "values": [
+        0.15371656378600823,
+        0.9290809327846364,
+        0.5930769890260631
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-forelock-item",
+      "hash": 908142252,
+      "values": [
+        0.864664780521262,
+        0.4584447873799726,
+        0.20628858024691357
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-forelock-color",
+      "hash": 1906678082,
+      "values": [
+        0.45155606995884773,
+        0.1343278463648834,
+        0.5946201989026063
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-head-item",
+      "hash": 1793804165,
+      "values": [
+        0.22137345679012346,
+        0.20584276406035665,
+        0.7548696844993141
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-head-color",
+      "hash": 220962555,
+      "values": [
+        0.005109739368998628,
+        0.7370070301783265,
+        0.11370884773662551
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-mouth-item",
+      "hash": 1794423326,
+      "values": [
+        0.5059284979423868,
+        0.8522805212620027,
+        0.2724494170096022
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-mouth-color",
+      "hash": 213134920,
+      "values": [
+        0.9563485939643347,
+        0.20959362139917695,
+        0.6415937928669411
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-neck-item",
+      "hash": 2073184932,
+      "values": [
+        0.7808170438957476,
+        0.5906464334705075,
+        0.8137988683127572
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-neck-color",
+      "hash": 150093370,
+      "values": [
+        0.19953275034293552,
+        0.0654320987654321,
+        0.7952717764060356
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-nose-item",
+      "hash": 681568664,
+      "values": [
+        0.14489454732510287,
+        0.8755058299039781,
+        0.2910450960219479
+      ]
+    },
+    {
+      "input": "eve.gardner@company.co-nose-color",
+      "hash": 340524718,
+      "values": [
+        0.2272590877914952,
+        0.9480967078189301,
+        0.45880058299039783
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm",
+      "hash": 1284373006,
+      "values": [
+        0.8828146433470507,
+        0.27031893004115226,
+        0.4476894718792867
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-background-item",
+      "hash": 792235373,
+      "values": [
+        0.7961676954732511,
+        0.367056755829904,
+        0.20620713305898491
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-background-color",
+      "hash": 1204824035,
+      "values": [
+        0.30637860082304524,
+        0.8386874142661179,
+        0.8429612482853224
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-accessories-item",
+      "hash": 1497768303,
+      "values": [
+        0.9999142661179699,
+        0.41391032235939645,
+        0.9912294238683128
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-accessories-color",
+      "hash": 819506041,
+      "values": [
+        0.10561556927297668,
+        0.5417309670781894,
+        0.8510459533607682
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-glasses-item",
+      "hash": 2113039563,
+      "values": [
+        0.5135459533607681,
+        0.7022333676268862,
+        0.6838734567901235
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-glasses-color",
+      "hash": 1085400191,
+      "values": [
+        0.9377057613168724,
+        0.8126071673525377,
+        0.2705847050754458
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-hats-item",
+      "hash": 2086469239,
+      "values": [
+        0.2988511659807956,
+        0.8260159465020576,
+        0.9856395747599451
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-hats-color",
+      "hash": 261720147,
+      "values": [
+        0.2821673525377229,
+        0.6498671124828532,
+        0.6253343621399177
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-hair-item",
+      "hash": 1007263007,
+      "values": [
+        0.07391975308641975,
+        0.7389446159122085,
+        0.1351937585733882
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-hair-color",
+      "hash": 1154698967,
+      "values": [
+        0.6855452674897119,
+        0.46785408093278463,
+        0.722127914951989
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-faceDetails-item",
+      "hash": 562498406,
+      "values": [
+        0.4416280864197531,
+        0.7941529492455418,
+        0.6279020919067215
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-faceDetails-color",
+      "hash": 263264580,
+      "values": [
+        0.6627100480109739,
+        0.07747770919067215,
+        0.831494341563786
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-body-item",
+      "hash": 1949449055,
+      "values": [
+        0.32001028806584364,
+        0.6270104595336077,
+        0.035605281207133056
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-body-color",
+      "hash": 297695383,
+      "values": [
+        0.4342421124828532,
+        0.0972093621399177,
+        0.35559842249657064
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-ears-item",
+      "hash": 1560886788,
+      "values": [
+        0.19686642661179699,
+        0.2659550754458162,
+        0.8594778806584362
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-ears-color",
+      "hash": 1137166994,
+      "values": [
+        0.4225437242798354,
+        0.29050068587105626,
+        0.15820044581618656
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-eyebrows-item",
+      "hash": 597140439,
+      "values": [
+        0.06771262002743485,
+        0.006400034293552812,
+        0.7380401234567902
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-eyebrows-color",
+      "hash": 1325801247,
+      "values": [
+        0.2988854595336077,
+        0.14498028120713305,
+        0.6729166666666667
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-eyes-item",
+      "hash": 1786015903,
+      "values": [
+        0.9954561042524005,
+        0.9485468106995885,
+        0.645207475994513
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-eyes-color",
+      "hash": 473765033,
+      "values": [
+        0.7809927983539094,
+        0.22533864883401922,
+        0.08609396433470508
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-faceHair-item",
+      "hash": 615470786,
+      "values": [
+        0.9346836419753086,
+        0.703875171467764,
+        0.9542909807956105
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-faceHair-color",
+      "hash": 1894042004,
+      "values": [
+        0.17498713991769546,
+        0.7667095336076818,
+        0.37669324417009603
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-forelock-item",
+      "hash": 2006606918,
+      "values": [
+        0.2881301440329218,
+        0.10979080932784636,
+        0.3756387174211248
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-forelock-color",
+      "hash": 2080955492,
+      "values": [
+        0.21840277777777778,
+        0.5755572702331961,
+        0.46949159807956103
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-head-item",
+      "hash": 477666785,
+      "values": [
+        0.7473508230452675,
+        0.3213263031550069,
+        0.867266803840878
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-head-color",
+      "hash": 1917085269,
+      "values": [
+        0.6362568587105624,
+        0.03636402606310014,
+        0.4331275720164609
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-mouth-item",
+      "hash": 804421256,
+      "values": [
+        0.5541538065843621,
+        0.39587620027434844,
+        0.2558599108367627
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-mouth-color",
+      "hash": 827061662,
+      "values": [
+        0.8088091563786008,
+        0.9452846364883402,
+        0.30372513717421123
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-neck-item",
+      "hash": 198286018,
+      "values": [
+        0.18790723593964334,
+        0.936522633744856,
+        0.8083376200274348
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-neck-color",
+      "hash": 1846216084,
+      "values": [
+        0.8306798696844994,
+        0.36478909465020576,
+        0.11469050068587106
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-nose-item",
+      "hash": 1589902286,
+      "values": [
+        0.823829732510288,
+        0.6516632373113854,
+        0.3310913923182442
+      ]
+    },
+    {
+      "input": "frank.ocean@music.fm-nose-color",
+      "hash": 2036647432,
+      "values": [
+        0.8584062071330589,
+        0.2474537037037037,
+        0.7782193072702333
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu",
+      "hash": 472836940,
+      "values": [
+        0.21020661865569273,
+        0.3430812757201646,
+        0.21026663237311385
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-background-item",
+      "hash": 280789305,
+      "values": [
+        0.9440243484224966,
+        0.5817858367626886,
+        0.4013888888888889
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-background-color",
+      "hash": 108850685,
+      "values": [
+        0.0017232510288065844,
+        0.2392789780521262,
+        0.7450960219478738
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-accessories-item",
+      "hash": 401794953,
+      "values": [
+        0.6952589163237312,
+        0.8145018861454046,
+        0.8933641975308642
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-accessories-color",
+      "hash": 434941523,
+      "values": [
+        0.4012345679012346,
+        0.0940372085048011,
+        0.8513974622770919
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-glasses-item",
+      "hash": 200635983,
+      "values": [
+        0.5657578875171467,
+        0.3254329561042524,
+        0.06324588477366255
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-glasses-color",
+      "hash": 1919064999,
+      "values": [
+        0.5440500685871056,
+        0.4210090877914952,
+        0.01684670781893004
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-hats-item",
+      "hash": 375814993,
+      "values": [
+        0.6131258573388203,
+        0.894920267489712,
+        0.8647290809327847
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-hats-color",
+      "hash": 1228953927,
+      "values": [
+        0.1749142661179698,
+        0.08891032235939643,
+        0.16622942386831277
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-hair-item",
+      "hash": 1577050043,
+      "values": [
+        0.9315843621399177,
+        0.8774734224965707,
+        0.5916237997256516
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-hair-color",
+      "hash": 1649594255,
+      "values": [
+        0.9712448559670782,
+        0.7597265089163238,
+        0.42758058984910835
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-faceDetails-item",
+      "hash": 1658471756,
+      "values": [
+        0.7462834362139917,
+        0.3935613854595336,
+        0.7257673182441701
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-faceDetails-color",
+      "hash": 121299938,
+      "values": [
+        0.4643132716049383,
+        0.7890603566529493,
+        0.26169838820301783
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-body-item",
+      "hash": 634863995,
+      "values": [
+        0.6854938271604938,
+        0.9894075788751715,
+        0.6912122770919067
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-body-color",
+      "hash": 1788369457,
+      "values": [
+        0.46868141289437587,
+        0.4171424897119342,
+        0.05361796982167352
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-ears-item",
+      "hash": 1023426262,
+      "values": [
+        0.8086376886145404,
+        0.350462962962963,
+        0.8673396776406036
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-ears-color",
+      "hash": 1667126228,
+      "values": [
+        0.23424639917695472,
+        0.9370799039780521,
+        0.9915080589849108
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-eyebrows-item",
+      "hash": 693361667,
+      "values": [
+        0.56440329218107,
+        0.7263417352537723,
+        0.9158007544581619
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-eyebrows-color",
+      "hash": 25058375,
+      "values": [
+        0.20015432098765432,
+        0.8466606652949246,
+        0.0021690672153635115
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-eyes-item",
+      "hash": 798297147,
+      "values": [
+        0.0100480109739369,
+        0.6678712277091907,
+        0.08161008230452675
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-eyes-color",
+      "hash": 1016909041,
+      "values": [
+        0.6760888203017833,
+        0.5134387860082305,
+        0.7054698216735253
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-faceHair-item",
+      "hash": 675031320,
+      "values": [
+        0.6974322702331962,
+        0.028866598079561042,
+        0.6995498971193416
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-faceHair-color",
+      "hash": 543182382,
+      "values": [
+        0.09858967764060357,
+        0.19391289437585735,
+        0.7951517489711935
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-forelock-item",
+      "hash": 997858272,
+      "values": [
+        0.19362568587105625,
+        0.12382544581618656,
+        0.911792695473251
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-forelock-color",
+      "hash": 863152182,
+      "values": [
+        0.39642918381344305,
+        0.39915980795610423,
+        0.7966949588477367
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-head-item",
+      "hash": 2106646265,
+      "values": [
+        0.25815329218106997,
+        0.2950917352537723,
+        0.8595507544581619
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-head-color",
+      "hash": 887207953,
+      "values": [
+        0.02053326474622771,
+        0.19121656378600824,
+        0.7165809327846365
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-mouth-item",
+      "hash": 686252818,
+      "values": [
+        0.9029278120713305,
+        0.3429012345679012,
+        0.5357038751714678
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-mouth-color",
+      "hash": 206682300,
+      "values": [
+        0.5006730109739369,
+        0.9709962277091907,
+        0.44723508230452674
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-neck-item",
+      "hash": 1908940264,
+      "values": [
+        0.8736325445816187,
+        0.8676183127572017,
+        0.9292481138545954
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-neck-color",
+      "hash": 958077138,
+      "values": [
+        0.8261102537722909,
+        0.8627914951989026,
+        0.03501800411522634
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-nose-item",
+      "hash": 994410764,
+      "values": [
+        0.18167438271604938,
+        0.9647548010973936,
+        0.39572616598079563
+      ]
+    },
+    {
+      "input": "grace.hopper@tech.edu-nose-color",
+      "hash": 767645790,
+      "values": [
+        0.7983839163237312,
+        0.9801268861454047,
+        0.3714891975308642
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com",
+      "hash": 992591791,
+      "values": [
+        0.7425754458161865,
+        0.9055426954732511,
+        0.6639317558299039
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-background-item",
+      "hash": 1211683542,
+      "values": [
+        0.5672110768175583,
+        0.8415466392318244,
+        0.43661265432098767
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-background-color",
+      "hash": 1098199040,
+      "values": [
+        0.9822402263374486,
+        0.027666323731138545,
+        0.535798182441701
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-accessories-item",
+      "hash": 805254772,
+      "values": [
+        0.288704561042524,
+        0.45244341563786006,
+        0.3875300068587106
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-accessories-color",
+      "hash": 801222666,
+      "values": [
+        0.03773576817558299,
+        0.19170096021947874,
+        0.22195216049382716
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-glasses-item",
+      "hash": 2131570222,
+      "values": [
+        0.9284936556927298,
+        0.1308127572016461,
+        0.9007758916323731
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-glasses-color",
+      "hash": 1659850620,
+      "values": [
+        0.8010845336076817,
+        0.09856824417009602,
+        0.9945601851851852
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-hats-item",
+      "hash": 1029271540,
+      "values": [
+        0.20969221536351165,
+        0.5586162551440329,
+        0.9011102537722908
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-hats-color",
+      "hash": 1848329846,
+      "values": [
+        0.6669367283950617,
+        0.38983196159122085,
+        0.038395919067215366
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-hair-item",
+      "hash": 2064460706,
+      "values": [
+        0.1630787037037037,
+        0.0063443072702331965,
+        0.21972307956104253
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-hair-color",
+      "hash": 431910732,
+      "values": [
+        0.12186642661179699,
+        0.6909550754458161,
+        0.7844778806584363
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-faceDetails-item",
+      "hash": 1429445815,
+      "values": [
+        0.38362482853223595,
+        0.3058513374485597,
+        0.934610768175583
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-faceDetails-color",
+      "hash": 1357464127,
+      "values": [
+        0.4806412894375857,
+        0.6559542181069958,
+        0.24150377229080933
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-body-item",
+      "hash": 1288320542,
+      "values": [
+        0.28206018518518516,
+        0.6531035665294924,
+        0.7275934499314128
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-body-color",
+      "hash": 1288914316,
+      "values": [
+        0.3731695816186557,
+        0.06159979423868313,
+        0.1510073731138546
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-ears-item",
+      "hash": 1676882809,
+      "values": [
+        0.4052040466392318,
+        0.014158950617283951,
+        0.9037208504801097
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-ears-color",
+      "hash": 449442705,
+      "values": [
+        0.38486796982167354,
+        0.8683084705075446,
+        0.3484053497942387
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-eyebrows-item",
+      "hash": 22690010,
+      "values": [
+        0.20433384773662552,
+        0.7204389574759945,
+        0.014064643347050754
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-eyebrows-color",
+      "hash": 697707132,
+      "values": [
+        0.6084919410150892,
+        0.7948645404663923,
+        0.24641203703703704
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-eyes-item",
+      "hash": 1451753694,
+      "values": [
+        0.6066143689986283,
+        0.33156721536351164,
+        0.11799125514403293
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-eyes-color",
+      "hash": 2060374732,
+      "values": [
+        0.16576217421124828,
+        0.9653034979423868,
+        0.49915552126200274
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-faceHair-item",
+      "hash": 41020357,
+      "values": [
+        0.07130486968449931,
+        0.41791409465020574,
+        0.23031550068587106
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-faceHair-color",
+      "hash": 1265947889,
+      "values": [
+        0.48459362139917694,
+        0.41659379286694104,
+        0.9501886145404664
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-forelock-item",
+      "hash": 1713909949,
+      "values": [
+        0.5397205075445817,
+        0.15176183127572015,
+        0.7481138545953361
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-forelock-color",
+      "hash": 1585917689,
+      "values": [
+        0.7824331275720164,
+        0.6218407064471879,
+        0.9517318244170097
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-head-item",
+      "hash": 1534864484,
+      "values": [
+        0.8365097736625514,
+        0.5887259945130315,
+        0.9517961248285323
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-head-color",
+      "hash": 330475570,
+      "values": [
+        0.2514874828532236,
+        0.2963991769547325,
+        0.02006601508916324
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-mouth-item",
+      "hash": 1903936341,
+      "values": [
+        0.7523062414266118,
+        0.4116726680384088,
+        0.17880658436213992
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-mouth-color",
+      "hash": 1113198751,
+      "values": [
+        0.5872256515775034,
+        0.9971064814814815,
+        0.2987054183813443
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-neck-item",
+      "hash": 1255483717,
+      "values": [
+        0.2770661865569273,
+        0.20392232510288066,
+        0.8928669410150891
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-neck-color",
+      "hash": 259606385,
+      "values": [
+        0.44591049382716047,
+        0.6248242455418381,
+        0.7016289437585734
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-nose-item",
+      "hash": 1647867311,
+      "values": [
+        0.7782407407407408,
+        0.6284507887517147,
+        0.4321073388203018
+      ]
+    },
+    {
+      "input": "henry.ford@auto.com-nose-color",
+      "hash": 450037733,
+      "values": [
+        0.47363683127572015,
+        0.5074888545953361,
+        0.3651577503429355
+      ]
+    },
+    {
+      "input": "John Michael Smith",
+      "hash": 1259858347,
+      "values": [
+        0.14550754458161866,
+        0.5769933127572017,
+        0.8261231138545954
+      ]
+    },
+    {
+      "input": "John Michael Smith-background-item",
+      "hash": 948314330,
+      "values": [
+        0.3812885802469136,
+        0.5764060356652949,
+        0.3638588820301783
+      ]
+    },
+    {
+      "input": "John Michael Smith-background-color",
+      "hash": 672710020,
+      "values": [
+        0.20866340877914952,
+        0.9896862139917696,
+        0.28279749657064474
+      ]
+    },
+    {
+      "input": "John Michael Smith-accessories-item",
+      "hash": 379765752,
+      "values": [
+        0.515127743484225,
+        0.41446330589849106,
+        0.13452932098765433
+      ]
+    },
+    {
+      "input": "John Michael Smith-accessories-color",
+      "hash": 1106480398,
+      "values": [
+        0.21285579561042525,
+        0.9830761316872428,
+        0.8024219821673525
+      ]
+    },
+    {
+      "input": "John Michael Smith-glasses-item",
+      "hash": 494673330,
+      "values": [
+        0.911295438957476,
+        0.17019890260631002,
+        0.23131430041152262
+      ]
+    },
+    {
+      "input": "John Michael Smith-glasses-color",
+      "hash": 1839312776,
+      "values": [
+        0.200244341563786,
+        0.6839420438957476,
+        0.5562714334705076
+      ]
+    },
+    {
+      "input": "John Michael Smith-hats-item",
+      "hash": 309834000,
+      "values": [
+        0.6711977023319616,
+        0.021150548696844993,
+        0.9325745884773663
+      ]
+    },
+    {
+      "input": "John Michael Smith-hats-color",
+      "hash": 1009236230,
+      "values": [
+        0.5440972222222222,
+        0.8595850480109739,
+        0.21185270919067214
+      ]
+    },
+    {
+      "input": "John Michael Smith-hair-item",
+      "hash": 891401050,
+      "values": [
+        0.0699031207133059,
+        0.3802469135802469,
+        0.8878643689986283
+      ]
+    },
+    {
+      "input": "John Michael Smith-hair-color",
+      "hash": 1869311952,
+      "values": [
+        0.6020618998628258,
+        0.9890517832647462,
+        0.381957304526749
+      ]
+    },
+    {
+      "input": "John Michael Smith-faceDetails-item",
+      "hash": 1854934835,
+      "values": [
+        0.15720164609053497,
+        0.3438314471879287,
+        0.18761145404663923
+      ]
+    },
+    {
+      "input": "John Michael Smith-faceDetails-color",
+      "hash": 1662721859,
+      "values": [
+        0.655761316872428,
+        0.44732938957475993,
+        0.8219735939643347
+      ]
+    },
+    {
+      "input": "John Michael Smith-body-item",
+      "hash": 50784998,
+      "values": [
+        0.598829732510288,
+        0.9266632373113854,
+        0.10609139231824417
+      ]
+    },
+    {
+      "input": "John Michael Smith-body-color",
+      "hash": 1568651760,
+      "values": [
+        0.8378643689986283,
+        0.18781721536351165,
+        0.09924125514403292
+      ]
+    },
+    {
+      "input": "John Michael Smith-ears-item",
+      "hash": 337777269,
+      "values": [
+        0.9469564471879287,
+        0.8532364540466393,
+        0.16358024691358025
+      ]
+    },
+    {
+      "input": "John Michael Smith-ears-color",
+      "hash": 1886843925,
+      "values": [
+        0.8650634430727023,
+        0.1664051783264746,
+        0.9458847736625514
+      ]
+    },
+    {
+      "input": "John Michael Smith-eyebrows-item",
+      "hash": 773113890,
+      "values": [
+        0.9082090192043896,
+        0.4634087791495199,
+        0.3763760288065844
+      ]
+    },
+    {
+      "input": "John Michael Smith-eyebrows-color",
+      "hash": 1797590008,
+      "values": [
+        0.8330975651577504,
+        0.8517746913580246,
+        0.5677254801097393
+      ]
+    },
+    {
+      "input": "John Michael Smith-eyes-item",
+      "hash": 112648154,
+      "values": [
+        0.1483667695473251,
+        0.17064471879286694,
+        0.3778506515775034
+      ]
+    },
+    {
+      "input": "John Michael Smith-eyes-color",
+      "hash": 797191344,
+      "values": [
+        0.04527177640603566,
+        0.28411351165980797,
+        0.7510931069958847
+      ]
+    },
+    {
+      "input": "John Michael Smith-faceHair-item",
+      "hash": 754783543,
+      "values": [
+        0.04123799725651577,
+        0.7659336419753087,
+        0.16012517146776406
+      ]
+    },
+    {
+      "input": "John Michael Smith-faceHair-color",
+      "hash": 1929136531,
+      "values": [
+        0.9820301783264747,
+        0.07400977366255145,
+        0.5762259945130316
+      ]
+    },
+    {
+      "input": "John Michael Smith-forelock-item",
+      "hash": 918106049,
+      "values": [
+        0.8498199588477366,
+        0.386758401920439,
+        0.45121742112482854
+      ]
+    },
+    {
+      "input": "John Michael Smith-forelock-color",
+      "hash": 1609166731,
+      "values": [
+        0.6841906721536352,
+        0.8687628600823045,
+        0.5746827846364884
+      ]
+    },
+    {
+      "input": "John Michael Smith-head-item",
+      "hash": 1420997272,
+      "values": [
+        0.3964720507544582,
+        0.7978652263374486,
+        0.15579132373113855
+      ]
+    },
+    {
+      "input": "John Michael Smith-head-color",
+      "hash": 1106925650,
+      "values": [
+        0.6513503086419753,
+        0.42054183813443075,
+        0.670957647462277
+      ]
+    },
+    {
+      "input": "John Michael Smith-mouth-item",
+      "hash": 466535121,
+      "values": [
+        0.272110768175583,
+        0.11357596021947874,
+        0.5813271604938272
+      ]
+    },
+    {
+      "input": "John Michael Smith-mouth-color",
+      "hash": 1572003685,
+      "values": [
+        0.9038151577503429,
+        0.5961033950617284,
+        0.5689986282578875
+      ]
+    },
+    {
+      "input": "John Michael Smith-neck-item",
+      "hash": 1700378039,
+      "values": [
+        0.9559156378600823,
+        0.18266889574759945,
+        0.2147205075445816
+      ]
+    },
+    {
+      "input": "John Michael Smith-neck-color",
+      "hash": 1177794835,
+      "values": [
+        0.4569272976680384,
+        0.0921167695473251,
+        0.9893947187928669
+      ]
+    },
+    {
+      "input": "John Michael Smith-nose-item",
+      "hash": 308761771,
+      "values": [
+        0.31999314128943757,
+        0.46752829218106995,
+        0.6919667352537723
+      ]
+    },
+    {
+      "input": "John Michael Smith-nose-color",
+      "hash": 987363487,
+      "values": [
+        0.42920096021947873,
+        0.20945216049382717,
+        0.3258659122085048
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez",
+      "hash": 782514066,
+      "values": [
+        0.018702846364883403,
+        0.1664951989026063,
+        0.7831661522633745
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-background-item",
+      "hash": 200048883,
+      "values": [
+        0.5706447187928669,
+        0.7778506515775034,
+        0.0002314814814814815
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-background-color",
+      "hash": 1900864899,
+      "values": [
+        0.6955418381344307,
+        0.4459576474622771,
+        0.06340020576131687
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-accessories-item",
+      "hash": 2101158129,
+      "values": [
+        0.3021519204389575,
+        0.5263331618655692,
+        0.636059670781893
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-accessories-color",
+      "hash": 717075737,
+      "values": [
+        0.38449074074074074,
+        0.3597007887517147,
+        0.7883573388203018
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-glasses-item",
+      "hash": 499785941,
+      "values": [
+        0.48207304526748973,
+        0.9727151920438958,
+        0.4353223593964335
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-glasses-color",
+      "hash": 1692188191,
+      "values": [
+        0.27858367626886144,
+        0.31809413580246915,
+        0.8048782578875171
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-hats-item",
+      "hash": 164255721,
+      "values": [
+        0.8076045953360769,
+        0.7416623799725651,
+        0.4131172839506173
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-hats-color",
+      "hash": 791276877,
+      "values": [
+        0.0412980109739369,
+        0.32412122770919066,
+        0.8628600823045267
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-hair-item",
+      "hash": 1036979329,
+      "values": [
+        0.9334962277091907,
+        0.6597350823045267,
+        0.40732167352537724
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-hair-color",
+      "hash": 2087271305,
+      "values": [
+        0.10486111111111111,
+        0.5245156035665295,
+        0.7309499314128943
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-faceDetails-item",
+      "hash": 133542458,
+      "values": [
+        0.37017746913580246,
+        0.23196159122085047,
+        0.6860811042524005
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-faceDetails-color",
+      "hash": 160834276,
+      "values": [
+        0.941585219478738,
+        0.8954475308641975,
+        0.7688057270233196
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-body-item",
+      "hash": 94793281,
+      "values": [
+        0.6874056927297668,
+        0.7716692386831275,
+        0.5069101508916324
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-body-color",
+      "hash": 1350692407,
+      "values": [
+        0.33506515775034296,
+        0.6523533950617284,
+        0.7502486282578875
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-ears-item",
+      "hash": 483355548,
+      "values": [
+        0.8105495541838135,
+        0.13272462277091907,
+        0.6830375514403292
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-ears-color",
+      "hash": 2104803278,
+      "values": [
+        0.36786265432098764,
+        0.7018689986282579,
+        0.2948774005486968
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-eyebrows-item",
+      "hash": 9647561,
+      "values": [
+        0.6958076131687243,
+        0.9179312414266118,
+        0.8897976680384088
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-eyebrows-color",
+      "hash": 304757569,
+      "values": [
+        0.6166237997256516,
+        0.4292824074074074,
+        0.9669924554183813
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-eyes-item",
+      "hash": 258226433,
+      "values": [
+        0.011959876543209876,
+        0.45013288751714675,
+        0.8973079561042524
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-eyes-color",
+      "hash": 579231991,
+      "values": [
+        0.5424725651577503,
+        0.7486496913580247,
+        0.40210048010973937
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-faceHair-item",
+      "hash": 8682786,
+      "values": [
+        0.5938057270233196,
+        0.19838820301783264,
+        0.4199974279835391
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-faceHair-color",
+      "hash": 263483188,
+      "values": [
+        0.6821201989026063,
+        0.6112911522633745,
+        0.8303283607681756
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-forelock-item",
+      "hash": 1681572378,
+      "values": [
+        0.06222136488340192,
+        0.9322359396433471,
+        0.9377957818930042
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-forelock-color",
+      "hash": 583452988,
+      "values": [
+        0.9799597050754458,
+        0.8165380658436214,
+        0.8318715706447188
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-head-item",
+      "hash": 1566575551,
+      "values": [
+        0.26006515775034295,
+        0.07735339506172839,
+        0.6752486282578876
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-head-color",
+      "hash": 1324885003,
+      "values": [
+        0.15414951989026063,
+        0.956005658436214,
+        0.019950274348422496
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-mouth-item",
+      "hash": 248575768,
+      "values": [
+        0.7693115569272977,
+        0.5781121399176955,
+        0.23233453360768175
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-mouth-color",
+      "hash": 889768962,
+      "values": [
+        0.8370156035665295,
+        0.2934499314128944,
+        0.5891332304526748
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-neck-item",
+      "hash": 1845956318,
+      "values": [
+        0.819508744855967,
+        0.46215706447187926,
+        0.7341778120713306
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-neck-color",
+      "hash": 1395754188,
+      "values": [
+        0.9597265089163237,
+        0.6275805898491084,
+        0.33838734567901235
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-nose-item",
+      "hash": 454340050,
+      "values": [
+        0.18358624828532236,
+        0.7470164609053498,
+        0.21142403978052127
+      ]
+    },
+    {
+      "input": "Maria Garcia Rodriguez-nose-color",
+      "hash": 1205322840,
+      "values": [
+        0.932000171467764,
+        0.7449159807956104,
+        0.6748585390946502
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang",
+      "hash": 1106364641,
+      "values": [
+        0.9185442386831276,
+        0.5912851508916324,
+        0.7545096021947874
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-background-item",
+      "hash": 393571748,
+      "values": [
+        0.05626286008230453,
+        0.5121827846364884,
+        0.023401063100137173
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-background-color",
+      "hash": 689860878,
+      "values": [
+        0.21011231138545952,
+        0.46592935528120716,
+        0.8202546296296296
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-accessories-item",
+      "hash": 396916610,
+      "values": [
+        0.516576646090535,
+        0.8907064471879287,
+        0.6719864540466393
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-accessories-color",
+      "hash": 574803800,
+      "values": [
+        0.16793981481481482,
+        0.21953875171467763,
+        0.1412508573388203
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-glasses-item",
+      "hash": 1498601924,
+      "values": [
+        0.9208719135802469,
+        0.24098936899862825,
+        0.6534422153635117
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-glasses-color",
+      "hash": 793663790,
+      "values": [
+        0.5559284979423869,
+        0.9022805212620028,
+        0.32244941700960217
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-hats-item",
+      "hash": 1995103578,
+      "values": [
+        0.8893818587105624,
+        0.3519890260631001,
+        0.06125257201646091
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-hats-color",
+      "hash": 1712985596,
+      "values": [
+        0.0847608024691358,
+        0.5715449245541838,
+        0.1506644375857339
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-hair-item",
+      "hash": 793868528,
+      "values": [
+        0.570923353909465,
+        0.3694358710562414,
+        0.33435785322359396
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-hair-color",
+      "hash": 1165562586,
+      "values": [
+        0.06139831961591221,
+        0.27709190672153633,
+        0.44314557613168726
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-faceDetails-item",
+      "hash": 1837783977,
+      "values": [
+        0.15575274348422496,
+        0.8675883058984911,
+        0.6501543209876544
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-faceDetails-color",
+      "hash": 1131045261,
+      "values": [
+        0.6108453360768176,
+        0.6837920096021948,
+        0.16080246913580246
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-body-item",
+      "hash": 1736054576,
+      "values": [
+        0.8170138888888889,
+        0.2575017146776406,
+        0.2347693758573388
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-body-color",
+      "hash": 2022566170,
+      "values": [
+        0.3127014746227709,
+        0.6477366255144033,
+        0.8096750685871056
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-ears-item",
+      "hash": 1347492309,
+      "values": [
+        0.6938700274348423,
+        0.8964463305898491,
+        0.05864197530864197
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-ears-color",
+      "hash": 1183094559,
+      "values": [
+        0.32439986282578875,
+        0.45444530178326475,
+        0.007073045267489712
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-eyebrows-item",
+      "hash": 888876840,
+      "values": [
+        0.4494898834019204,
+        0.9167266803840878,
+        0.6861754115226337
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-eyebrows-color",
+      "hash": 1779695086,
+      "values": [
+        0.5968064128943759,
+        0.10776748971193416,
+        0.5567429698216735
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-eyes-item",
+      "hash": 1572621424,
+      "values": [
+        0.49245970507544584,
+        0.5790380658436214,
+        0.8443715706447188
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-eyes-color",
+      "hash": 1500940710,
+      "values": [
+        0.5859353566529493,
+        0.9960733882030178,
+        0.6899048353909465
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-faceHair-item",
+      "hash": 907207187,
+      "values": [
+        0.31646090534979426,
+        0.6142018175582991,
+        0.902426268861454
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-faceHair-color",
+      "hash": 1947031453,
+      "values": [
+        0.21832133058984912,
+        0.8180169753086419,
+        0.5872085048010974
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-forelock-item",
+      "hash": 1714870517,
+      "values": [
+        0.9063528806584362,
+        0.1994641632373114,
+        0.4275034293552812
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-forelock-color",
+      "hash": 1627061653,
+      "values": [
+        0.9204818244170097,
+        0.6127700617283951,
+        0.5856652949245542
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-head-item",
+      "hash": 264272306,
+      "values": [
+        0.24435442386831277,
+        0.9518175582990398,
+        0.06643089849108368
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-head-color",
+      "hash": 403176284,
+      "values": [
+        0.11068672839506173,
+        0.7085819615912209,
+        0.7321459190672154
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-mouth-item",
+      "hash": 1170284487,
+      "values": [
+        0.8127743484224965,
+        0.8255358367626886,
+        0.5201388888888889
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-mouth-color",
+      "hash": 1913397551,
+      "values": [
+        0.32145061728395063,
+        0.023512517146776407,
+        0.9012431412894376
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-neck-item",
+      "hash": 15108461,
+      "values": [
+        0.7377314814814815,
+        0.8518304183813443,
+        0.08604252400548697
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-neck-color",
+      "hash": 474045469,
+      "values": [
+        0.9162637174211248,
+        0.3801568930041152,
+        0.050582990397805214
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-nose-item",
+      "hash": 1376507807,
+      "values": [
+        0.32083333333333336,
+        0.2821544924554184,
+        0.5302554869684499
+      ]
+    },
+    {
+      "input": "Wei Chen Zhang-nose-color",
+      "hash": 283614121,
+      "values": [
+        0.8885373799725652,
+        0.4974922839506173,
+        0.3870541838134431
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed",
+      "hash": 1350971609,
+      "values": [
+        0.27008744855967076,
+        0.2946802126200274,
+        0.031978737997256514
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-background-item",
+      "hash": 872412588,
+      "values": [
+        0.8012902949245542,
+        0.012354252400548696,
+        0.1182227366255144
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-background-color",
+      "hash": 1269303274,
+      "values": [
+        0.502619170096022,
+        0.07222222222222222,
+        0.950210048010974
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-accessories-item",
+      "hash": 1562247542,
+      "values": [
+        0.1961548353909465,
+        0.6474451303155007,
+        0.09847822359396434
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-accessories-color",
+      "hash": 1179350368,
+      "values": [
+        0.4004843964334705,
+        0.11669238683127572,
+        0.5672110768175583
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-glasses-item",
+      "hash": 208441020,
+      "values": [
+        0.6200145747599451,
+        0.9668810013717422,
+        0.17151491769547325
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-glasses-color",
+      "hash": 2133946150,
+      "values": [
+        0.46522205075445816,
+        0.24161522633744856,
+        0.47454132373113855
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-hats-item",
+      "hash": 1339951970,
+      "values": [
+        0.29229681069958846,
+        0.863957475994513,
+        0.8798053840877915
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-hats-color",
+      "hash": 1416845068,
+      "values": [
+        0.7731695816186557,
+        0.46159979423868314,
+        0.5510073731138546
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-hair-item",
+      "hash": 138716920,
+      "values": [
+        0.9738383058984911,
+        0.8814043209876543,
+        0.15291066529492456
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-hair-color",
+      "hash": 425954,
+      "values": [
+        0.22809927983539094,
+        0.7627229080932785,
+        0.2970893347050754
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-faceDetails-item",
+      "hash": 498019167,
+      "values": [
+        0.2453875171467764,
+        0.5606181412894375,
+        0.5206532921810699
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-faceDetails-color",
+      "hash": 1735591829,
+      "values": [
+        0.8433899176954732,
+        0.5809456447187928,
+        0.5867626886145405
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-body-item",
+      "hash": 1080902968,
+      "values": [
+        0.21992884087791495,
+        0.7694701646090535,
+        0.05332218792866941
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-body-color",
+      "hash": 857429538,
+      "values": [
+        0.47940243484224965,
+        0.1333676268861454,
+        0.6636188271604938
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-ears-item",
+      "hash": 692340701,
+      "values": [
+        0.09678497942386831,
+        0.408414780521262,
+        0.8771947873799726
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-ears-color",
+      "hash": 17957927,
+      "values": [
+        0.4911008230452675,
+        0.9400763031550069,
+        0.8610168038408779
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-eyebrows-item",
+      "hash": 451405520,
+      "values": [
+        0.882445987654321,
+        0.8414523319615912,
+        0.5594607338820302
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-eyebrows-color",
+      "hash": 1114352410,
+      "values": [
+        0.5966520919067215,
+        0.6724279835390946,
+        0.4639960562414266
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-eyes-item",
+      "hash": 917469816,
+      "values": [
+        0.8953746570644718,
+        0.0910065157750343,
+        0.6629243827160494
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-eyes-color",
+      "hash": 1628889954,
+      "values": [
+        0.2719950274348423,
+        0.03707133058984911,
+        0.011766975308641976
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-faceHair-item",
+      "hash": 433075173,
+      "values": [
+        0.015474965706447187,
+        0.14397719478737997,
+        0.3432098765432099
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-faceHair-color",
+      "hash": 546111653,
+      "values": [
+        0.7205504115226338,
+        0.050698731138545956,
+        0.7602194787379972
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-forelock-item",
+      "hash": 1239814419,
+      "values": [
+        0.8755829903978052,
+        0.008714849108367628,
+        0.2681327160493827
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-forelock-color",
+      "hash": 226141853,
+      "values": [
+        0.4227109053497942,
+        0.845451817558299,
+        0.758676268861454
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-head-item",
+      "hash": 390879302,
+      "values": [
+        0.7753729423868313,
+        0.9550582990397806,
+        0.2085605281207133
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-head-color",
+      "hash": 761960348,
+      "values": [
+        0.14525462962962962,
+        0.22463134430727022,
+        0.507454561042524
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-mouth-item",
+      "hash": 1959546177,
+      "values": [
+        0.04515603566529493,
+        0.20760888203017833,
+        0.18153292181069958
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-mouth-color",
+      "hash": 622072521,
+      "values": [
+        0.6862054183813443,
+        0.6079175240054869,
+        0.4522119341563786
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-neck-item",
+      "hash": 670260069,
+      "values": [
+        0.33481652949245544,
+        0.33986196844993144,
+        0.2674897119341564
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-neck-color",
+      "hash": 691091163,
+      "values": [
+        0.33967764060356653,
+        0.5530564128943759,
+        0.18901748971193416
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-nose-item",
+      "hash": 721356199,
+      "values": [
+        0.7237482853223594,
+        0.7941229423868312,
+        0.3488082990397805
+      ]
+    },
+    {
+      "input": "Fatima Hassan Ahmed-nose-color",
+      "hash": 881522511,
+      "values": [
+        0.3674039780521262,
+        0.4357210219478738,
+        0.8525462962962963
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel",
+      "hash": 1585199047,
+      "values": [
+        0.13650548696844994,
+        0.8488554526748971,
+        0.41588648834019204
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-background-item",
+      "hash": 655783234,
+      "values": [
+        0.07926526063100137,
+        0.4575102880658436,
+        0.5145104595336076
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-background-color",
+      "hash": 1139873048,
+      "values": [
+        0.26176697530864196,
+        0.9059585048010974,
+        0.5313743141289438
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-accessories-item",
+      "hash": 1432817316,
+      "values": [
+        0.9553026406035665,
+        0.4811814128943759,
+        0.6796424897119342
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-accessories-color",
+      "hash": 1461980658,
+      "values": [
+        0.20265346364883402,
+        0.09118655692729767,
+        0.33748713991769547
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-glasses-item",
+      "hash": 196567786,
+      "values": [
+        0.3470636145404664,
+        0.25,
+        0.46132115912208504
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-glasses-color",
+      "hash": 1792950892,
+      "values": [
+        0.7645276063100137,
+        0.08258744855967078,
+        0.3571802126200274
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-hats-item",
+      "hash": 191277580,
+      "values": [
+        0.9674082647462278,
+        0.07559156378600823,
+        0.2884559327846365
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-hats-color",
+      "hash": 1640320862,
+      "values": [
+        0.7676568930041152,
+        0.1880829903978052,
+        0.5712148491083676
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-hair-item",
+      "hash": 1392512630,
+      "values": [
+        0.2858667695473251,
+        0.058144718792866944,
+        0.015350651577503429
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-hair-color",
+      "hash": 223901748,
+      "values": [
+        0.22258659122085048,
+        0.4892061042524006,
+        0.3172968106995885
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-faceDetails-item",
+      "hash": 627449393,
+      "values": [
+        0.4862397119341564,
+        0.7268818587105624,
+        0.9394890260631001
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-faceDetails-color",
+      "hash": 2018222119,
+      "values": [
+        0.6455589849108367,
+        0.5554398148148149,
+        0.35703875171467764
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-body-item",
+      "hash": 450326582,
+      "values": [
+        0.039776234567901234,
+        0.17007887517146777,
+        0.11493912894375857
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-body-color",
+      "hash": 1080905332,
+      "values": [
+        0.4738897462277092,
+        0.8598508230452675,
+        0.6838263031550068
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-ears-item",
+      "hash": 838888849,
+      "values": [
+        0.16292009602194787,
+        0.5311342592592593,
+        0.29106652949245543
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-ears-color",
+      "hash": 241433721,
+      "values": [
+        0.485588134430727,
+        0.666559499314129,
+        0.881224279835391
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-eyebrows-item",
+      "hash": 819475774,
+      "values": [
+        0.34392575445816187,
+        0.06476337448559671,
+        0.5754672496570644
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-eyebrows-color",
+      "hash": 360371604,
+      "values": [
+        0.3258787722908093,
+        0.20978223593964335,
+        0.395897633744856
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-eyes-item",
+      "hash": 613759734,
+      "values": [
+        0.36433041838134433,
+        0.848542524005487,
+        0.5053369341563786
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-eyes-color",
+      "hash": 1852365748,
+      "values": [
+        0.26648233882030176,
+        0.7635545267489712,
+        0.03197445130315501
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-faceHair-item",
+      "hash": 801145427,
+      "values": [
+        0.4769547325102881,
+        0.36728823731138543,
+        0.35921639231824415
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-faceHair-color",
+      "hash": 928612361,
+      "values": [
+        0.20198045267489712,
+        0.8315114883401921,
+        0.09967421124828532
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-forelock-item",
+      "hash": 871744165,
+      "values": [
+        0.41410322359396434,
+        0.7854038065843622,
+        0.2521262002743484
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-forelock-color",
+      "hash": 1248582161,
+      "values": [
+        0.4998199588477366,
+        0.03675840192043896,
+        0.10121742112482854
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-head-item",
+      "hash": 1922108852,
+      "values": [
+        0.6124356995884773,
+        0.4757630315500686,
+        0.2832776063100137
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-head-color",
+      "hash": 538484554,
+      "values": [
+        0.15076731824417008,
+        0.4981481481481482,
+        0.48724708504801095
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-mouth-item",
+      "hash": 2111945325,
+      "values": [
+        0.6515860768175583,
+        0.6134216392318245,
+        0.6459876543209877
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-mouth-color",
+      "hash": 1040112457,
+      "values": [
+        0.44450445816186557,
+        0.5472865226337449,
+        0.5232681755829904
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-neck-item",
+      "hash": 2093477677,
+      "values": [
+        0.5193501371742113,
+        0.6869470164609054,
+        0.5055212620027435
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-neck-color",
+      "hash": 467615369,
+      "values": [
+        0.345190329218107,
+        0.8265732167352537,
+        0.16881001371742113
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-nose-item",
+      "hash": 809873351,
+      "values": [
+        0.5359567901234568,
+        0.14542609739368997,
+        0.8194530178326475
+      ]
+    },
+    {
+      "input": "Raj Kumar Patel-nose-color",
+      "hash": 658046717,
+      "values": [
+        0.3729166666666667,
+        0.7092378257887517,
+        0.8323388203017833
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson",
+      "hash": 1997138731,
+      "values": [
+        0.5422153635116598,
+        0.35641718106995884,
+        0.24752229080932783
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-background-item",
+      "hash": 835133274,
+      "values": [
+        0.3527563443072702,
+        0.198079561042524,
+        0.5493184156378601
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-background-color",
+      "hash": 113644540,
+      "values": [
+        0.5980667009602195,
+        0.8297067901234568,
+        0.31417609739369
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-accessories-item",
+      "hash": 406588808,
+      "values": [
+        0.291602366255144,
+        0.40492969821673525,
+        0.4624442729766804
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-accessories-color",
+      "hash": 286332018,
+      "values": [
+        0.9145876200274349,
+        0.7907750342935528,
+        0.20991512345679011
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-glasses-item",
+      "hash": 930647090,
+      "values": [
+        0.9497042181069959,
+        0.41025377229080934,
+        0.9816572359396434
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-glasses-color",
+      "hash": 1209028104,
+      "values": [
+        0.8153335048010973,
+        0.6282493141289438,
+        0.5581918724279835
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-hats-item",
+      "hash": 1442418576,
+      "values": [
+        0.3938314471879287,
+        0.23761145404663922,
+        0.23545524691358025
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-hats-color",
+      "hash": 1759619718,
+      "values": [
+        0.7970464677640604,
+        0.5405178326474622,
+        0.5676826131687243
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-hair-item",
+      "hash": 241183526,
+      "values": [
+        0.07537294238683127,
+        0.2550582990397805,
+        0.5085605281207133
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-hair-color",
+      "hash": 1118928464,
+      "values": [
+        0.34911265432098765,
+        0.30811899862825787,
+        0.026127400548696843
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-faceDetails-item",
+      "hash": 1653677901,
+      "values": [
+        0.14993998628257887,
+        0.803133573388203,
+        0.15668724279835392
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-faceDetails-color",
+      "hash": 269909443,
+      "values": [
+        0.950960219478738,
+        0.09232253086419753,
+        0.9031807270233196
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-body-item",
+      "hash": 1183369574,
+      "values": [
+        0.32146347736625513,
+        0.1431241426611797,
+        0.40897205075445814
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-body-color",
+      "hash": 1975932048,
+      "values": [
+        0.6004158093278463,
+        0.6787637174211248,
+        0.3926568930041152
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-ears-item",
+      "hash": 794807307,
+      "values": [
+        0.1983196159122085,
+        0.7820687585733882,
+        0.2328446502057613
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-ears-color",
+      "hash": 1136460437,
+      "values": [
+        0.6121141975308642,
+        0.4854723936899863,
+        0.5900548696844993
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-eyebrows-item",
+      "hash": 1403398562,
+      "values": [
+        0.2931198559670782,
+        0.5191015089163238,
+        0.3744555898491084
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-eyebrows-color",
+      "hash": 561365640,
+      "values": [
+        0.44743227023319615,
+        0.778866598079561,
+        0.44954989711934157
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-eyes-item",
+      "hash": 1019936422,
+      "values": [
+        0.9969092935528121,
+        0.4646604938271605,
+        0.018574245541838133
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-eyes-color",
+      "hash": 1547574832,
+      "values": [
+        0.2982210219478738,
+        0.9650462962962963,
+        0.1069230109739369
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-faceHair-item",
+      "hash": 1385068215,
+      "values": [
+        0.4261488340192044,
+        0.8216263717421125,
+        0.15820473251028808
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-faceHair-color",
+      "hash": 6875117,
+      "values": [
+        0.8513117283950618,
+        0.26170696159122087,
+        0.34777091906721536
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-forelock-item",
+      "hash": 287821377,
+      "values": [
+        0.46490912208504803,
+        0.33106567215363514,
+        0.4531378600823045
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-forelock-color",
+      "hash": 326844917,
+      "values": [
+        0.14915123456790125,
+        0.46695387517146775,
+        0.3493141289437586
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-head-item",
+      "hash": 288412696,
+      "values": [
+        0.673838305898491,
+        0.5814043209876543,
+        0.8529106652949245
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-head-color",
+      "hash": 356542162,
+      "values": [
+        0.3984010631001372,
+        0.7396090534979424,
+        0.31512774348422495
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-mouth-item",
+      "hash": 1216918609,
+      "values": [
+        0.5250600137174212,
+        0.7945087448559671,
+        0.9371570644718793
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-mouth-color",
+      "hash": 935911963,
+      "values": [
+        0.28892318244170095,
+        0.48584104938271605,
+        0.018921467764060357
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-neck-item",
+      "hash": 567793463,
+      "values": [
+        0.23328189300411523,
+        0.9662079903978052,
+        0.9118398491083676
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-neck-color",
+      "hash": 427411347,
+      "values": [
+        0.20397805212620027,
+        0.41118398491083674,
+        0.6335648148148149
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-nose-item",
+      "hash": 823822805,
+      "values": [
+        0.8252829218106996,
+        0.16777692043895748,
+        0.7044581618655693
+      ]
+    },
+    {
+      "input": "Sofia Andersson Nilsson-nose-color",
+      "hash": 236979999,
+      "values": [
+        0.17625171467764061,
+        0.5285193758573388,
+        0.9700360082304527
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato",
+      "hash": 286882963,
+      "values": [
+        0.39026063100137176,
+        0.025450102880658437,
+        0.9227280521262002
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-background-item",
+      "hash": 1711841806,
+      "values": [
+        0.5577117626886146,
+        0.48842592592592593,
+        0.06085819615912209
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-background-color",
+      "hash": 1533171612,
+      "values": [
+        0.11260716735253773,
+        0.5705847050754458,
+        0.21966306584362139
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-accessories-item",
+      "hash": 1240227344,
+      "values": [
+        0.4190715020576132,
+        0.9953617969821673,
+        0.071394890260631
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-accessories-color",
+      "hash": 201974822,
+      "values": [
+        0.8021219135802469,
+        0.7472393689986283,
+        0.28469221536351164
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-glasses-item",
+      "hash": 253133770,
+      "values": [
+        0.7787508573388203,
+        0.37304526748971195,
+        0.9053540809327847
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-glasses-color",
+      "hash": 737104544,
+      "values": [
+        0.7719521604938272,
+        0.1383659122085048,
+        0.15267061042524005
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-hats-item",
+      "hash": 1132290008,
+      "values": [
+        0.3481867283950617,
+        0.6960819615912208,
+        0.46964591906721537
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-hats-color",
+      "hash": 746935058,
+      "values": [
+        0.6916795267489712,
+        0.522599451303155,
+        0.9088177297668039
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-hair-item",
+      "hash": 1961442238,
+      "values": [
+        0.024584190672153634,
+        0.8688786008230452,
+        0.6511874142661179
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-hair-color",
+      "hash": 669484056,
+      "values": [
+        0.27603309327846365,
+        0.5951217421124828,
+        0.4386445473251029
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-faceDetails-item",
+      "hash": 994473243,
+      "values": [
+        0.2532578875171468,
+        0.7629329561042524,
+        0.25074588477366255
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-faceDetails-color",
+      "hash": 758216283,
+      "values": [
+        0.24502743484224965,
+        0.2114926268861454,
+        0.3042438271604938
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-body-item",
+      "hash": 1391339010,
+      "values": [
+        0.42055469821673525,
+        0.7905692729766803,
+        0.29612911522633745
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-body-color",
+      "hash": 187519528,
+      "values": [
+        0.3979123799725652,
+        0.19436728395061728,
+        0.021429183813443074
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-ears-item",
+      "hash": 1779901277,
+      "values": [
+        0.5436985596707818,
+        0.15162465706447187,
+        0.4722565157750343
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-ears-color",
+      "hash": 651952083,
+      "values": [
+        0.013031550068587106,
+        0.41776834705075444,
+        0.8747170781893004
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-eyebrows-item",
+      "hash": 1875322122,
+      "values": [
+        0.33650120027434843,
+        0.008984910836762689,
+        0.7799768518518518
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-eyebrows-color",
+      "hash": 1988873184,
+      "values": [
+        0.7047367969821674,
+        0.968269890260631,
+        0.0895704732510288
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-eyes-item",
+      "hash": 1554772162,
+      "values": [
+        0.7451088820301783,
+        0.4690329218106996,
+        0.6865269204389575
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-eyes-color",
+      "hash": 958979944,
+      "values": [
+        0.19050497256515775,
+        0.09807098765432098,
+        0.3695773319615912
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-faceHair-item",
+      "hash": 1856991775,
+      "values": [
+        0.46953017832647465,
+        0.31150977366255145,
+        0.5637259945130315
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-faceHair-color",
+      "hash": 1737853355,
+      "values": [
+        0.11039094650205761,
+        0.9575145747599452,
+        0.054381001371742115
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-forelock-item",
+      "hash": 184102183,
+      "values": [
+        0.0011145404663923182,
+        0.577662037037037,
+        0.04592764060356653
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-forelock-color",
+      "hash": 1417883555,
+      "values": [
+        0.8125514403292181,
+        0.7522676611796982,
+        0.052837791495198905
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-head-item",
+      "hash": 1431846016,
+      "values": [
+        0.6980152606310014,
+        0.4512602880658436,
+        0.38326045953360766
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-head-color",
+      "hash": 1431870358,
+      "values": [
+        0.22674468449931412,
+        0.16363168724279836,
+        0.14964420438957476
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-mouth-item",
+      "hash": 1289636167,
+      "values": [
+        0.9636659807956104,
+        0.2686085390946502,
+        0.5393432784636488
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-mouth-color",
+      "hash": 1329698691,
+      "values": [
+        0.5029492455418382,
+        0.1422539437585734,
+        0.3152520576131687
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-neck-item",
+      "hash": 1152465249,
+      "values": [
+        0.13857167352537722,
+        0.06645661865569273,
+        0.3243312757201646
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-neck-color",
+      "hash": 1361001173,
+      "values": [
+        0.421167695473251,
+        0.492056755829904,
+        0.8312071330589849
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-nose-item",
+      "hash": 1750885779,
+      "values": [
+        0.9167352537722908,
+        0.7659164951989026,
+        0.0006430041152263374
+      ]
+    },
+    {
+      "input": "Yuki Tanaka Sato-nose-color",
+      "hash": 1551432521,
+      "values": [
+        0.4488940329218107,
+        0.3747213648834019,
+        0.49473593964334706
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi",
+      "hash": 251963683,
+      "values": [
+        0.7760631001371742,
+        0.3742155349794239,
+        0.7900120027434843
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-background-item",
+      "hash": 1544595544,
+      "values": [
+        0.47136917009602197,
+        0.41597222222222224,
+        0.16896004801097395
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-background-color",
+      "hash": 643504786,
+      "values": [
+        0.70457390260631,
+        0.4531893004115226,
+        0.32500428669410153
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-accessories-item",
+      "hash": 350560518,
+      "values": [
+        0.01103823731138546,
+        0.8779663923182441,
+        0.17673611111111112
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-accessories-color",
+      "hash": 2011842652,
+      "values": [
+        0.8396304869684499,
+        0.6144804526748971,
+        0.49401148834019204
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-glasses-item",
+      "hash": 324849216,
+      "values": [
+        0.4689343278463649,
+        0.7695044581618655,
+        0.37228652263374484
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-glasses-color",
+      "hash": 1474707926,
+      "values": [
+        0.2739326131687243,
+        0.058556241426611796,
+        0.8429226680384088
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-hats-item",
+      "hash": 1215456674,
+      "values": [
+        0.3844778806584362,
+        0.2400891632373114,
+        0.2806284293552812
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-hats-color",
+      "hash": 969865592,
+      "values": [
+        0.8745241769547325,
+        0.16069101508916322,
+        0.7984525034293553
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-hair-item",
+      "hash": 1878275572,
+      "values": [
+        0.9882930384087791,
+        0.32487139917695473,
+        0.8402049039780521
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-hair-color",
+      "hash": 1908682590,
+      "values": [
+        0.2716349451303155,
+        0.6879458161865569,
+        0.7953575102880659
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-faceDetails-item",
+      "hash": 1884140069,
+      "values": [
+        0.6612911522633745,
+        0.8803283607681756,
+        0.14540466392318244
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-faceDetails-color",
+      "hash": 1726883183,
+      "values": [
+        0.4086934156378601,
+        0.4687800068587106,
+        0.33416495198902607
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-body-item",
+      "hash": 1474505676,
+      "values": [
+        0.4568458504801097,
+        0.3345764746227709,
+        0.10711162551440329
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-body-color",
+      "hash": 1529281122,
+      "values": [
+        0.16829132373113856,
+        0.48892318244170097,
+        0.6858410493827161
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-ears-item",
+      "hash": 1863067943,
+      "values": [
+        0.5799897119341564,
+        0.6956318587105624,
+        0.28323902606310014
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-ears-color",
+      "hash": 1926214563,
+      "values": [
+        0.5346364883401921,
+        0.8652992112482853,
+        0.35928497942386833
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-eyebrows-item",
+      "hash": 1137718740,
+      "values": [
+        0.8345207475994513,
+        0.0887945816186557,
+        0.08972479423868313
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-eyebrows-color",
+      "hash": 915225750,
+      "values": [
+        0.7680341220850481,
+        0.6966906721536351,
+        0.13126286008230453
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-eyes-item",
+      "hash": 1637938828,
+      "values": [
+        0.7814000342935528,
+        0.013040123456790124,
+        0.4975094307270233
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-eyes-color",
+      "hash": 757820706,
+      "values": [
+        0.37569873113854596,
+        0.5852194787379973,
+        0.3376929012345679
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-faceHair-item",
+      "hash": 1119388393,
+      "values": [
+        0.9675497256515775,
+        0.39131944444444444,
+        0.8734739368998629
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-faceHair-color",
+      "hash": 346984993,
+      "values": [
+        0.8919324417009602,
+        0.07496141975308641,
+        0.42748628257887517
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-forelock-item",
+      "hash": 553501199,
+      "values": [
+        0.9235082304526749,
+        0.7613725994513032,
+        0.7378686556927297
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-forelock-color",
+      "hash": 27015193,
+      "values": [
+        0.5940929355281207,
+        0.8697145061728395,
+        0.42594307270233195
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-head-item",
+      "hash": 1348679350,
+      "values": [
+        0.6617241083676269,
+        0.9072530864197531,
+        0.5722779492455419
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-head-color",
+      "hash": 1146296288,
+      "values": [
+        0.320923353909465,
+        0.11943587105624143,
+        0.08435785322359396
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-mouth-item",
+      "hash": 427164483,
+      "values": [
+        0.6025377229080933,
+        0.41468192729766806,
+        0.1679269547325103
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-mouth-color",
+      "hash": 351513907,
+      "values": [
+        0.14705075445816188,
+        0.9303883744855967,
+        0.7535922496570645
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-neck-item",
+      "hash": 1069298583,
+      "values": [
+        0.10228052126200274,
+        0.5224494170096022,
+        0.5133487654320987
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-neck-color",
+      "hash": 1217165473,
+      "values": [
+        0.12650034293552812,
+        0.7910108024691358,
+        0.4027949245541838
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-nose-item",
+      "hash": 1834052445,
+      "values": [
+        0.9530264060356652,
+        0.30992369684499316,
+        0.8116255144032922
+      ]
+    },
+    {
+      "input": "Isabella Rossi Bianchi-nose-color",
+      "hash": 1026734125,
+      "values": [
+        0.09877400548696845,
+        0.9083461934156378,
+        0.7392661179698217
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000",
+      "hash": 1716781005,
+      "values": [
+        0.09808813443072702,
+        0.529059499314129,
+        0.9937242798353909
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-background-item",
+      "hash": 513808978,
+      "values": [
+        0.5654792524005487,
+        0.7338477366255144,
+        0.7291195130315501
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-background-color",
+      "hash": 1257474044,
+      "values": [
+        0.6929912551440329,
+        0.7229852537722908,
+        0.6971664951989026
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-accessories-item",
+      "hash": 964529776,
+      "values": [
+        0.9994555898491083,
+        0.14776234567901234,
+        0.5488983196159122
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-accessories-color",
+      "hash": 158664838,
+      "values": [
+        0.2730409807956104,
+        0.7654835390946502,
+        0.9737182784636488
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-glasses-item",
+      "hash": 747562026,
+      "values": [
+        0.24555469821673526,
+        0.11556927297668039,
+        0.12112911522633744
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-glasses-color",
+      "hash": 1705269504,
+      "values": [
+        0.31584790809327845,
+        0.9127143347050755,
+        0.3673482510288066
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-hats-item",
+      "hash": 738731144,
+      "values": [
+        0.19530606995884775,
+        0.7530778463648834,
+        0.5883701989026063
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-hats-color",
+      "hash": 1420145806,
+      "values": [
+        0.9856953017832647,
+        0.16332304526748972,
+        0.27896519204389575
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-hair-item",
+      "hash": 462503906,
+      "values": [
+        0.5457947530864198,
+        0.6483196159122085,
+        0.2320687585733882
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-hair-color",
+      "hash": 1458402376,
+      "values": [
+        0.16046382030178327,
+        0.6853137860082305,
+        0.3148448216735254
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-faceDetails-item",
+      "hash": 1270170811,
+      "values": [
+        0.6728737997256515,
+        0.6105324074074074,
+        0.7732424554183813
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-faceDetails-color",
+      "hash": 714906299,
+      "values": [
+        0.7159465020576131,
+        0.22973679698216734,
+        0.993269890260631
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-body-item",
+      "hash": 479682142,
+      "values": [
+        0.12293810013717421,
+        0.6585905349794239,
+        0.7618870027434842
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-body-color",
+      "hash": 1979561336,
+      "values": [
+        0.2794624485596708,
+        0.49155521262002744,
+        0.16635373799725653
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-ears-item",
+      "hash": 91119875,
+      "values": [
+        0.9997942386831276,
+        0.29753515089163235,
+        0.5857596021947874
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-ears-color",
+      "hash": 1475934349,
+      "values": [
+        0.4234653635116598,
+        0.8626671810699589,
+        0.8787722908093278
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-eyebrows-item",
+      "hash": 22728874,
+      "values": [
+        0.7330718449931413,
+        0.5125514403292181,
+        0.45226766117969824
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-eyebrows-color",
+      "hash": 710278272,
+      "values": [
+        0.7718149862825788,
+        0.862508573388203,
+        0.4035622427983539
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-eyes-item",
+      "hash": 316248990,
+      "values": [
+        0.7983839163237312,
+        0.9801268861454047,
+        0.3714891975308642
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-eyes-color",
+      "hash": 1208100920,
+      "values": [
+        0.4868698559670782,
+        0.5878515089163238,
+        0.8182055898491084
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-faceHair-item",
+      "hash": 4398527,
+      "values": [
+        0.8661008230452675,
+        0.8150763031550069,
+        0.23601680384087792
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-faceHair-color",
+      "hash": 142037515,
+      "values": [
+        0.8957133058984911,
+        0.2407793209876543,
+        0.6997856652949246
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-forelock-item",
+      "hash": 1668491065,
+      "values": [
+        0.02495713305898491,
+        0.33761574074074074,
+        0.3753257887517147
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-forelock-color",
+      "hash": 177932285,
+      "values": [
+        0.8247685185185185,
+        0.38331189986282577,
+        0.39530178326474624
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-head-item",
+      "hash": 992100128,
+      "values": [
+        0.8723636831275721,
+        0.06593792866941015,
+        0.4999957133058985
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-head-color",
+      "hash": 696016074,
+      "values": [
+        0.20975222908093277,
+        0.11680384087791496,
+        0.6038451646090535
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-mouth-item",
+      "hash": 877444697,
+      "values": [
+        0.7137088477366255,
+        0.41731395747599453,
+        0.6484396433470507
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-mouth-color",
+      "hash": 1425298653,
+      "values": [
+        0.7875943072702332,
+        0.6259730795610425,
+        0.38693415637860085
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-neck-item",
+      "hash": 1271480895,
+      "values": [
+        0.43180727023319615,
+        0.45074159807956105,
+        0.5589248971193416
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-neck-color",
+      "hash": 766885259,
+      "values": [
+        0.015329218106995885,
+        0.7883787722908093,
+        0.9222822359396433
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-nose-item",
+      "hash": 120135373,
+      "values": [
+        0.6267575445816187,
+        0.6832433127572016,
+        0.057373113854595335
+      ]
+    },
+    {
+      "input": "550e8400-e29b-41d4-a716-446655440000-nose-color",
+      "hash": 576453911,
+      "values": [
+        0.9876028806584363,
+        0.9057141632373114,
+        0.25875342935528123
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002",
+      "hash": 1232765836,
+      "values": [
+        0.05218192729766804,
+        0.5554269547325102,
+        0.23742712620027434
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-background-item",
+      "hash": 287129617,
+      "values": [
+        0.6188871742112483,
+        0.48092849794238685,
+        0.32728052126200274
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-background-color",
+      "hash": 305400357,
+      "values": [
+        0.9224708504801098,
+        0.11270147462277091,
+        0.4477366255144033
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-accessories-item",
+      "hash": 598344625,
+      "values": [
+        0.6160065157750343,
+        0.6879243827160494,
+        0.5960048010973937
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-accessories-color",
+      "hash": 1363131013,
+      "values": [
+        0.29599622770919065,
+        0.27223508230452675,
+        0.2698216735253772
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-glasses-item",
+      "hash": 1062148489,
+      "values": [
+        0.980306927297668,
+        0.04605195473251029,
+        0.5405521262002744
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-glasses-color",
+      "hash": 1427452031,
+      "values": [
+        0.1352366255144033,
+        0.04717506858710562,
+        0.9866340877914952
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-hats-item",
+      "hash": 171424377,
+      "values": [
+        0.006575788751714677,
+        0.37273233882030177,
+        0.9948045267489712
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-hats-color",
+      "hash": 1024871569,
+      "values": [
+        0.9818501371742112,
+        0.39944701646090536,
+        0.46802126200274347
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-hair-item",
+      "hash": 1372659427,
+      "values": [
+        0.32503429355281205,
+        0.3552854938271605,
+        0.7216992455418382
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-hair-color",
+      "hash": 391547545,
+      "values": [
+        0.9858624828532236,
+        0.7182741769547325,
+        0.8794410150891633
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-faceDetails-item",
+      "hash": 1461922084,
+      "values": [
+        0.8255358367626886,
+        0.5201388888888889,
+        0.023126714677640603
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-faceDetails-color",
+      "hash": 1919372474,
+      "values": [
+        0.7389017489711934,
+        0.7364883401920439,
+        0.2893732853223594
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-body-item",
+      "hash": 430473379,
+      "values": [
+        0.0789437585733882,
+        0.46721965020576134,
+        0.8212877229080933
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-body-color",
+      "hash": 465456039,
+      "values": [
+        0.6880829903978052,
+        0.07121484910836763,
+        0.5806327160493827
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-ears-item",
+      "hash": 819035646,
+      "values": [
+        0.20208762002743486,
+        0.8282750342935528,
+        0.9974151234567902
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-ears-color",
+      "hash": 374015572,
+      "values": [
+        0.7228609396433471,
+        0.5409207818930041,
+        0.3155135459533608
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-eyebrows-item",
+      "hash": 1184974635,
+      "values": [
+        0.9732167352537723,
+        0.10017575445816186,
+        0.9460133744855967
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-eyebrows-color",
+      "hash": 1914808801,
+      "values": [
+        0.6236196844993142,
+        0.49800668724279834,
+        0.17151920438957477
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-eyes-item",
+      "hash": 593906531,
+      "values": [
+        0.4034979423868313,
+        0.14568329903978053,
+        0.2116855281207133
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-eyes-color",
+      "hash": 1236916455,
+      "values": [
+        0.4806755829903978,
+        0.9749185528120713,
+        0.9287808641975308
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-faceHair-item",
+      "hash": 1166644288,
+      "values": [
+        0.10624571330589849,
+        0.4027006172839506,
+        0.7297625171467764
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-faceHair-color",
+      "hash": 1811917738,
+      "values": [
+        0.19150805898491083,
+        0.42777777777777776,
+        0.9724322702331961
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-forelock-item",
+      "hash": 506245304,
+      "values": [
+        0.7848122427983539,
+        0.749991426611797,
+        0.8815800754458162
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-forelock-color",
+      "hash": 1491947938,
+      "values": [
+        0.8936685528120714,
+        0.22253086419753088,
+        0.9708890603566529
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-head-item",
+      "hash": 1902255649,
+      "values": [
+        0.6516032235939644,
+        0.7729038065843621,
+        0.9896262002743484
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-head-color",
+      "hash": 1153933847,
+      "values": [
+        0.9365740740740741,
+        0.286784122085048,
+        0.5904406721536352
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-mouth-item",
+      "hash": 1567572678,
+      "values": [
+        0.2538365912208505,
+        0.14545610425240055,
+        0.09854681069958848
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-mouth-color",
+      "hash": 1355795940,
+      "values": [
+        0.9610639574759945,
+        0.06718964334705076,
+        0.14219393004115227
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-neck-item",
+      "hash": 2113330880,
+      "values": [
+        0.4801826131687243,
+        0.3898062414266118,
+        0.7991726680384088
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-neck-color",
+      "hash": 1083064662,
+      "values": [
+        0.13099708504801097,
+        0.6152091906721536,
+        0.27200360082304526
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-nose-item",
+      "hash": 790020148,
+      "values": [
+        0.5751243141289437,
+        0.44256687242798354,
+        0.5258016117969821
+      ]
+    },
+    {
+      "input": "a3bb189e-8bf9-3888-9912-ace4e6543002-nose-color",
+      "hash": 1273496010,
+      "values": [
+        0.15872342249657065,
+        0.4978737997256516,
+        0.9355324074074074
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd",
+      "hash": 1983033188,
+      "values": [
+        0.8998842592592593,
+        0.034816529492455416,
+        0.039861968449931416
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-background-item",
+      "hash": 2127818017,
+      "values": [
+        0.48205589849108366,
+        0.813233024691358,
+        0.0916838134430727
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-background-color",
+      "hash": 1532165909,
+      "values": [
+        0.18906893004115227,
+        0.7414394718792867,
+        0.3398491083676269
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-accessories-item",
+      "hash": 1825110177,
+      "values": [
+        0.8826045953360768,
+        0.31666237997256513,
+        0.48811728395061726
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-accessories-color",
+      "hash": 738157461,
+      "values": [
+        0.14325274348422495,
+        0.605088305898491,
+        0.13765432098765432
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-glasses-item",
+      "hash": 839920793,
+      "values": [
+        0.32934670781893005,
+        0.4650505829903978,
+        0.6467935528120713
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-glasses-color",
+      "hash": 273423985,
+      "values": [
+        0.6448131001371742,
+        0.6179655349794239,
+        0.9087620027434842
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-hats-item",
+      "hash": 385220969,
+      "values": [
+        0.9727623456790123,
+        0.8738983196159122,
+        0.33959190672153633
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-hats-color",
+      "hash": 937368671,
+      "values": [
+        0.026183127572016462,
+        0.7405907064471879,
+        0.4454818244170096
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-hair-item",
+      "hash": 1586456019,
+      "values": [
+        0.29122085048010976,
+        0.8564514746227709,
+        0.06648662551440329
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-hair-color",
+      "hash": 1941179511,
+      "values": [
+        0.11997599451303155,
+        0.10804612482853224,
+        0.14832818930041153
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-faceDetails-item",
+      "hash": 235156532,
+      "values": [
+        0.5589377572016461,
+        0.8914008916323731,
+        0.13101423182441702
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-faceDetails-color",
+      "hash": 1294398922,
+      "values": [
+        0.5861582647462277,
+        0.06934156378600823,
+        0.1572059327846365
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-body-item",
+      "hash": 644269971,
+      "values": [
+        0.04513031550068587,
+        0.9683856310013718,
+        0.16607510288065844
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-body-color",
+      "hash": 1496784201,
+      "values": [
+        0.3199502743484225,
+        0.06882287379972565,
+        0.33287037037037037
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-ears-item",
+      "hash": 1032832238,
+      "values": [
+        0.1682741769547325,
+        0.32944101508916324,
+        0.34220250342935526
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-ears-color",
+      "hash": 1958711484,
+      "values": [
+        0.3829775377229081,
+        0.28539951989026063,
+        0.712255658436214
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-eyebrows-item",
+      "hash": 1409116645,
+      "values": [
+        0.36060528120713303,
+        0.20104166666666667,
+        0.09986282578875172
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-eyebrows-color",
+      "hash": 727259857,
+      "values": [
+        0.7670353223593964,
+        0.4068544238683128,
+        0.3643175582990398
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-eyes-item",
+      "hash": 807703123,
+      "values": [
+        0.36968449931412894,
+        0.646849279835391,
+        0.5564729080932784
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-eyes-color",
+      "hash": 725323785,
+      "values": [
+        0.5273576817558299,
+        0.16511917009602195,
+        0.9847222222222223
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-faceHair-item",
+      "hash": 1427446992,
+      "values": [
+        0.22757630315500685,
+        0.898516803840878,
+        0.31611368312757204
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-faceHair-color",
+      "hash": 1295500614,
+      "values": [
+        0.6431370027434842,
+        0.028583676268861453,
+        0.06809413580246913
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-forelock-item",
+      "hash": 1194630712,
+      "values": [
+        0.9952374828532236,
+        0.9151491769547325,
+        0.013816015089163237
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-forelock-color",
+      "hash": 1615470414,
+      "values": [
+        0.9409765089163238,
+        0.23383058984910837,
+        0.06963734567901235
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-head-item",
+      "hash": 2116052241,
+      "values": [
+        0.617789780521262,
+        0.27406978737997256,
+        0.3344135802469136
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-head-color",
+      "hash": 1178793209,
+      "values": [
+        0.16926440329218106,
+        0.5395361796982168,
+        0.43732853223593965
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-mouth-item",
+      "hash": 394667562,
+      "values": [
+        0.7541966735253772,
+        0.9945816186556927,
+        0.8149562757201646
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-mouth-color",
+      "hash": 655890644,
+      "values": [
+        0.5741640946502058,
+        0.511565500685871,
+        0.28204303840877915
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-neck-item",
+      "hash": 1899534288,
+      "values": [
+        0.5139960562414266,
+        0.8886402606310013,
+        0.4543852880658436
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-neck-color",
+      "hash": 1249662394,
+      "values": [
+        0.9748413923182442,
+        0.2111111111111111,
+        0.7557656035665294
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-nose-item",
+      "hash": 1003816740,
+      "values": [
+        0.5413108710562414,
+        0.943732853223594,
+        0.8705889917695473
+      ]
+    },
+    {
+      "input": "c73bcdcc-2669-4bf6-81d3-e4ae73fb11fd-nose-color",
+      "hash": 1059231046,
+      "values": [
+        0.9471150548696845,
+        0.32844650205761317,
+        0.09223679698216736
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "hash": 1885019005,
+      "values": [
+        0.31585219478737997,
+        0.9525848765432099,
+        0.20325788751714677
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-background-item",
+      "hash": 1248645896,
+      "values": [
+        0.648804012345679,
+        0.7374399862825789,
+        0.140633573388203
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-background-color",
+      "hash": 47633934,
+      "values": [
+        0.9697830932784637,
+        0.16387174211248284,
+        0.38239454732510286
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-accessories-item",
+      "hash": 340578202,
+      "values": [
+        0.6633187585733882,
+        0.7390946502057614,
+        0.5306627229080932
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-accessories-color",
+      "hash": 1962306492,
+      "values": [
+        0.2998499657064472,
+        0.11585219478737997,
+        0.7525848765432098
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-glasses-item",
+      "hash": 1734348512,
+      "values": [
+        0.12092335390946501,
+        0.9194358710562415,
+        0.884357853223594
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-glasses-color",
+      "hash": 2075454154,
+      "values": [
+        0.8915080589849108,
+        0.12777777777777777,
+        0.6724322702331962
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-hats-item",
+      "hash": 2065898942,
+      "values": [
+        0.4116898148148148,
+        0.33828875171467765,
+        0.6350008573388203
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-hats-color",
+      "hash": 387325416,
+      "values": [
+        0.41492198216735254,
+        0.4006772976680384,
+        0.9108667695473252
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-hair-item",
+      "hash": 864663892,
+      "values": [
+        0.09323131001371743,
+        0.35573559670781896,
+        0.9081061385459533
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-hair-color",
+      "hash": 1029093698,
+      "values": [
+        0.5527906378600823,
+        0.7170438957475994,
+        0.4365955075445816
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-faceDetails-item",
+      "hash": 1719688507,
+      "values": [
+        0.7782235939643347,
+        0.46896862139917694,
+        0.08846879286694101
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-faceDetails-color",
+      "hash": 1776419343,
+      "values": [
+        0.9484739368998628,
+        0.9674082647462278,
+        0.07559156378600823
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-body-item",
+      "hash": 1806849940,
+      "values": [
+        0.3393218449931413,
+        0.2438014403292181,
+        0.8085176611796983
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-body-color",
+      "hash": 172090114,
+      "values": [
+        0.3014874828532236,
+        0.3463991769547325,
+        0.07006601508916324
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-ears-item",
+      "hash": 1418287673,
+      "values": [
+        0.21617798353909465,
+        0.8827460562414267,
+        0.6323902606310013
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-ears-color",
+      "hash": 1011561725,
+      "values": [
+        0.28978909465020575,
+        0.5396905006858711,
+        0.8726680384087792
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-eyebrows-item",
+      "hash": 392913524,
+      "values": [
+        0.3087319958847737,
+        0.7276148834019205,
+        0.7573516803840878
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-eyebrows-color",
+      "hash": 698899466,
+      "values": [
+        0.6111239711934157,
+        0.27537722908093276,
+        0.49492884087791494
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-eyes-item",
+      "hash": 1643416788,
+      "values": [
+        0.014767661179698216,
+        0.5653377914951989,
+        0.4181198559670782
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-eyes-color",
+      "hash": 599370302,
+      "values": [
+        0.9137474279835391,
+        0.9761488340192044,
+        0.3716263717421125
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-faceHair-item",
+      "hash": 374583177,
+      "values": [
+        0.44176097393689984,
+        0.03013974622770919,
+        0.5411008230452675
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-faceHair-color",
+      "hash": 1267140223,
+      "values": [
+        0.4872256515775034,
+        0.8971064814814815,
+        0.1987054183813443
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-forelock-item",
+      "hash": 1298306415,
+      "values": [
+        0.44929698216735253,
+        0.1225522976680384,
+        0.0702417695473251
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-forelock-color",
+      "hash": 1587110023,
+      "values": [
+        0.7850651577503429,
+        0.1023533950617284,
+        0.20024862825788753
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-head-item",
+      "hash": 335067670,
+      "values": [
+        0.7666623799725651,
+        0.9381172839506173,
+        0.6401791838134431
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-head-color",
+      "hash": 1791480000,
+      "values": [
+        0.5035022290809328,
+        0.28555384087791497,
+        0.1475951646090535
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-mouth-item",
+      "hash": 930026525,
+      "values": [
+        0.6869084362139918,
+        0.1466863854595336,
+        0.5413923182441701
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-mouth-color",
+      "hash": 1228265619,
+      "values": [
+        0.962002743484225,
+        0.798838305898491,
+        0.20640432098765432
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-neck-item",
+      "hash": 55686903,
+      "values": [
+        0.207218792866941,
+        0.5533136145404663,
+        0.58125
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-neck-color",
+      "hash": 1720610815,
+      "values": [
+        0.6979252400548697,
+        0.6139789094650205,
+        0.8291580932784637
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-nose-item",
+      "hash": 1447303171,
+      "values": [
+        0.8431412894375857,
+        0.2684542181069959,
+        0.10400377229080933
+      ]
+    },
+    {
+      "input": "f47ac10b-58cc-4372-a567-0e02b2c3d479-nose-color",
+      "hash": 1911042163,
+      "values": [
+        0.7256515775034293,
+        0.4966435185185185,
+        0.49268689986282577
+      ]
+    },
+    {
+      "input": "user_1337_pro",
+      "hash": 919218968,
+      "values": [
+        0.5333719135802469,
+        0.10348936899862826,
+        0.7659422153635117
+      ]
+    },
+    {
+      "input": "user_1337_pro-background-item",
+      "hash": 1998739821,
+      "values": [
+        0.8680469821673525,
+        0.9163022976680384,
+        0.7389917695473252
+      ]
+    },
+    {
+      "input": "user_1337_pro-background-color",
+      "hash": 1825709129,
+      "values": [
+        0.4233796296296296,
+        0.06525634430727023,
+        0.160579561042524
+      ]
+    },
+    {
+      "input": "user_1337_pro-accessories-item",
+      "hash": 2118653397,
+      "values": [
+        0.11691529492455419,
+        0.6404792524005487,
+        0.3088477366255144
+      ]
+    },
+    {
+      "input": "user_1337_pro-accessories-color",
+      "hash": 1248062689,
+      "values": [
+        0.869710219478738,
+        0.3860725308641975,
+        0.07193072702331961
+      ]
+    },
+    {
+      "input": "user_1337_pro-glasses-item",
+      "hash": 1096133275,
+      "values": [
+        0.8123799725651577,
+        0.157445987654321,
+        0.6164523319615912
+      ]
+    },
+    {
+      "input": "user_1337_pro-glasses-color",
+      "hash": 385290021,
+      "values": [
+        0.1134173525377229,
+        0.10611711248285323,
+        0.20658436213991768
+      ]
+    },
+    {
+      "input": "user_1337_pro-hats-item",
+      "hash": 646091747,
+      "values": [
+        0.24135802469135803,
+        0.0823088134430727,
+        0.7655949931412894
+      ]
+    },
+    {
+      "input": "user_1337_pro-hats-color",
+      "hash": 1451675501,
+      "values": [
+        0.00933641975308642,
+        0.04936128257887517,
+        0.3206104252400549
+      ]
+    },
+    {
+      "input": "user_1337_pro-hair-item",
+      "hash": 555143303,
+      "values": [
+        0.49974279835390945,
+        0.3190886488340192,
+        0.05484396433470508
+      ]
+    },
+    {
+      "input": "user_1337_pro-hair-color",
+      "hash": 35256387,
+      "values": [
+        0.4642661179698217,
+        0.3504843964334705,
+        0.06669238683127572
+      ]
+    },
+    {
+      "input": "user_1337_pro-faceDetails-item",
+      "hash": 58386688,
+      "values": [
+        0.09801526063100137,
+        0.8512602880658436,
+        0.7832604595336077
+      ]
+    },
+    {
+      "input": "user_1337_pro-faceDetails-color",
+      "hash": 1804304150,
+      "values": [
+        0.3126157407407407,
+        0.8503257887517147,
+        0.09148233882030178
+      ]
+    },
+    {
+      "input": "user_1337_pro-body-item",
+      "hash": 387042745,
+      "values": [
+        0.1689900548696845,
+        0.9878215020576132,
+        0.9391117969821674
+      ]
+    },
+    {
+      "input": "user_1337_pro-body-color",
+      "hash": 892259971,
+      "values": [
+        0.7155692729766804,
+        0.7211291152263375,
+        0.4332218792866941
+      ]
+    },
+    {
+      "input": "user_1337_pro-ears-item",
+      "hash": 1519522,
+      "values": [
+        0.37679612482853225,
+        0.7920781893004115,
+        0.33055984224965707
+      ]
+    },
+    {
+      "input": "user_1337_pro-ears-color",
+      "hash": 52788360,
+      "values": [
+        0.7272676611796982,
+        0.5278377914951989,
+        0.6306198559670781
+      ]
+    },
+    {
+      "input": "user_1337_pro-eyebrows-item",
+      "hash": 1297250609,
+      "values": [
+        0.8920010288065844,
+        0.7128900891632373,
+        0.8020404663923183
+      ]
+    },
+    {
+      "input": "user_1337_pro-eyebrows-color",
+      "hash": 1554380037,
+      "values": [
+        0.5088906035665295,
+        0.4028249314128944,
+        0.8860082304526748
+      ]
+    },
+    {
+      "input": "user_1337_pro-eyes-item",
+      "hash": 223609593,
+      "values": [
+        0.8444358710562414,
+        0.30935785322359394,
+        0.5487139917695473
+      ]
+    },
+    {
+      "input": "user_1337_pro-eyes-color",
+      "hash": 1663720387,
+      "values": [
+        0.508161865569273,
+        0.6248328189300412,
+        0.7813700274348423
+      ]
+    },
+    {
+      "input": "user_1337_pro-faceHair-item",
+      "hash": 1315580956,
+      "values": [
+        0.7589720507544582,
+        0.41036522633744854,
+        0.018291323731138547
+      ]
+    },
+    {
+      "input": "user_1337_pro-faceHair-color",
+      "hash": 2122620794,
+      "values": [
+        0.3849922839506173,
+        0.024554183813443074,
+        0.5897848079561042
+      ]
+    },
+    {
+      "input": "user_1337_pro-forelock-item",
+      "hash": 1306496748,
+      "values": [
+        0.4638417352537723,
+        0.4033007544581619,
+        0.3116383744855967
+      ]
+    },
+    {
+      "input": "user_1337_pro-forelock-color",
+      "hash": 1852376702,
+      "values": [
+        0.008397633744855967,
+        0.31771262002743483,
+        0.2564000342935528
+      ]
+    },
+    {
+      "input": "user_1337_pro-head-item",
+      "hash": 1084739525,
+      "values": [
+        0.8263117283950617,
+        0.7367069615912208,
+        0.3227709190672154
+      ]
+    },
+    {
+      "input": "user_1337_pro-head-color",
+      "hash": 727129915,
+      "values": [
+        0.9090877914951989,
+        0.6368698559670782,
+        0.7378515089163238
+      ]
+    },
+    {
+      "input": "user_1337_pro-mouth-item",
+      "hash": 1994376610,
+      "values": [
+        0.28132287379972565,
+        0.7953703703703704,
+        0.9511359739368999
+      ]
+    },
+    {
+      "input": "user_1337_pro-mouth-color",
+      "hash": 1701815944,
+      "values": [
+        0.007377400548696845,
+        0.8285236625514403,
+        0.3099065500685871
+      ]
+    },
+    {
+      "input": "user_1337_pro-neck-item",
+      "hash": 1364120292,
+      "values": [
+        0.38575531550068587,
+        0.12151063100137174,
+        0.3817001028806584
+      ]
+    },
+    {
+      "input": "user_1337_pro-neck-color",
+      "hash": 656260730,
+      "values": [
+        0.1035108024691358,
+        0.9652949245541839,
+        0.4194144375857339
+      ]
+    },
+    {
+      "input": "user_1337_pro-nose-item",
+      "hash": 27495976,
+      "values": [
+        0.6728094993141289,
+        0.012474279835390947,
+        0.23459790809327846
+      ]
+    },
+    {
+      "input": "user_1337_pro-nose-color",
+      "hash": 846692078,
+      "values": [
+        0.13123713991769548,
+        0.8479595336076817,
+        0.08294324417009602
+      ]
+    },
+    {
+      "input": "test-account-42",
+      "hash": 1905807929,
+      "values": [
+        0.9799639917695473,
+        0.8564086076817559,
+        0.667781207133059
+      ]
+    },
+    {
+      "input": "test-account-42-background-item",
+      "hash": 1834347330,
+      "values": [
+        0.17775634430727022,
+        0.523079561042524,
+        0.37431841563786006
+      ]
+    },
+    {
+      "input": "test-account-42-background-color",
+      "hash": 1035875560,
+      "values": [
+        0.06540209190672154,
+        0.5161779835390946,
+        0.18274605624142662
+      ]
+    },
+    {
+      "input": "test-account-42-accessories-item",
+      "hash": 742931292,
+      "values": [
+        0.371866426611797,
+        0.9409550754458161,
+        0.03447788065843621
+      ]
+    },
+    {
+      "input": "test-account-42-accessories-color",
+      "hash": 1561716750,
+      "values": [
+        0.23151148834019206,
+        0.4996742112482853,
+        0.6811599794238683
+      ]
+    },
+    {
+      "input": "test-account-42-glasses-item",
+      "hash": 1965877014,
+      "values": [
+        0.9466349451303155,
+        0.862945816186557,
+        0.4703575102880658
+      ]
+    },
+    {
+      "input": "test-account-42-glasses-color",
+      "hash": 818328468,
+      "values": [
+        0.6320516117969822,
+        0.9233624828532236,
+        0.4057741769547325
+      ]
+    },
+    {
+      "input": "test-account-42-hats-item",
+      "hash": 67723252,
+      "values": [
+        0.9636016803840878,
+        0.6705504115226337,
+        0.0006987311385459533
+      ]
+    },
+    {
+      "input": "test-account-42-hats-color",
+      "hash": 2093737634,
+      "values": [
+        0.14579475308641976,
+        0.2483196159122085,
+        0.8320687585733882
+      ]
+    },
+    {
+      "input": "test-account-42-hair-item",
+      "hash": 1133511798,
+      "values": [
+        0.7774991426611797,
+        0.7308470507544582,
+        0.8197402263374486
+      ]
+    },
+    {
+      "input": "test-account-42-hair-color",
+      "hash": 784810548,
+      "values": [
+        0.0003643689986282579,
+        0.6003172153635117,
+        0.7617412551440329
+      ]
+    },
+    {
+      "input": "test-account-42-faceDetails-item",
+      "hash": 1491769295,
+      "values": [
+        0.300462962962963,
+        0.8173396776406036,
+        0.28766289437585735
+      ]
+    },
+    {
+      "input": "test-account-42-faceDetails-color",
+      "hash": 1005475289,
+      "values": [
+        0.7886059670781893,
+        0.03542095336076818,
+        0.6616083676268861
+      ]
+    },
+    {
+      "input": "test-account-42-body-item",
+      "hash": 191325750,
+      "values": [
+        0.5314086076817558,
+        0.8427812071330589,
+        0.9193287037037037
+      ]
+    },
+    {
+      "input": "test-account-42-body-color",
+      "hash": 1641814132,
+      "values": [
+        0.251667524005487,
+        0.9709619341563785,
+        0.1282707475994513
+      ]
+    },
+    {
+      "input": "test-account-42-ears-item",
+      "hash": 579888017,
+      "values": [
+        0.6545524691358025,
+        0.2038365912208505,
+        0.09545610425240054
+      ]
+    },
+    {
+      "input": "test-account-42-ears-color",
+      "hash": 802342521,
+      "values": [
+        0.2633659122085048,
+        0.7776706104252401,
+        0.3256687242798354
+      ]
+    },
+    {
+      "input": "test-account-42-eyebrows-item",
+      "hash": 864212162,
+      "values": [
+        0.3733667695473251,
+        0.8956447187928669,
+        0.6028506515775034
+      ]
+    },
+    {
+      "input": "test-account-42-eyebrows-color",
+      "hash": 1015090068,
+      "values": [
+        0.23698988340192043,
+        0.4542266803840878,
+        0.9736754115226337
+      ]
+    },
+    {
+      "input": "test-account-42-eyes-item",
+      "hash": 354758902,
+      "values": [
+        0.8559627914951989,
+        0.5212448559670781,
+        0.30972650891632375
+      ]
+    },
+    {
+      "input": "test-account-42-eyes-color",
+      "hash": 1881692748,
+      "values": [
+        0.6469693072702332,
+        0.6728480795610425,
+        0.37130915637860085
+      ]
+    },
+    {
+      "input": "test-account-42-faceHair-item",
+      "hash": 882542509,
+      "values": [
+        0.2403377914951989,
+        0.5931198559670782,
+        0.8191015089163237
+      ]
+    },
+    {
+      "input": "test-account-42-faceHair-color",
+      "hash": 1583330825,
+      "values": [
+        0.11309156378600824,
+        0.07595593278463648,
+        0.6774519890260631
+      ]
+    },
+    {
+      "input": "test-account-42-forelock-item",
+      "hash": 1739535195,
+      "values": [
+        0.9824759945130316,
+        0.22054612482853223,
+        0.5108281893004115
+      ]
+    },
+    {
+      "input": "test-account-42-forelock-color",
+      "hash": 1903300625,
+      "values": [
+        0.41093106995884776,
+        0.2812028463648834,
+        0.6789951989026063
+      ]
+    },
+    {
+      "input": "test-account-42-head-item",
+      "hash": 1663108020,
+      "values": [
+        0.10406807270233197,
+        0.14846536351165981,
+        0.08766718106995884
+      ]
+    },
+    {
+      "input": "test-account-42-head-color",
+      "hash": 22424246,
+      "values": [
+        0.049652777777777775,
+        0.03180727023319616,
+        0.050741598079561044
+      ]
+    },
+    {
+      "input": "test-account-42-mouth-item",
+      "hash": 1551036525,
+      "values": [
+        0.8738082990397805,
+        0.5023105281207133,
+        0.2015432098765432
+      ]
+    },
+    {
+      "input": "test-account-42-mouth-color",
+      "hash": 831808841,
+      "values": [
+        0.4077417695473251,
+        0.6175197187928669,
+        0.7622256515775034
+      ]
+    },
+    {
+      "input": "test-account-42-neck-item",
+      "hash": 1942488787,
+      "values": [
+        0.6635116598079561,
+        0.5332690329218107,
+        0.14659636488340191
+      ]
+    },
+    {
+      "input": "test-account-42-neck-color",
+      "hash": 93293431,
+      "values": [
+        0.8552297668038409,
+        0.7033822016460906,
+        0.3691786694101509
+      ]
+    },
+    {
+      "input": "test-account-42-nose-item",
+      "hash": 550872519,
+      "values": [
+        0.027589163237311386,
+        0.8181284293552812,
+        0.6238425925925926
+      ]
+    },
+    {
+      "input": "test-account-42-nose-color",
+      "hash": 97137917,
+      "values": [
+        0.5951388888888889,
+        0.5981267146776406,
+        0.3878943758573388
+      ]
+    },
+    {
+      "input": "avatar.creator.99",
+      "hash": 833916969,
+      "values": [
+        0.6133659122085048,
+        0.12767061042524006,
+        0.6756687242798354
+      ]
+    },
+    {
+      "input": "avatar.creator.99-background-item",
+      "hash": 811218524,
+      "values": [
+        0.31233281893004117,
+        0.21887002743484224,
+        0.9214463305898491
+      ]
+    },
+    {
+      "input": "avatar.creator.99-background-color",
+      "hash": 627712710,
+      "values": [
+        0.07770490397805213,
+        0.9446330589849108,
+        0.24340277777777777
+      ]
+    },
+    {
+      "input": "avatar.creator.99-accessories-item",
+      "hash": 334768442,
+      "values": [
+        0.3841692386831276,
+        0.36941015089163237,
+        0.09513460219478738
+      ]
+    },
+    {
+      "input": "avatar.creator.99-accessories-color",
+      "hash": 1793570288,
+      "values": [
+        0.4186599794238683,
+        0.167789780521262,
+        0.8240697873799726
+      ]
+    },
+    {
+      "input": "avatar.creator.99-glasses-item",
+      "hash": 800689164,
+      "values": [
+        0.023924039780521263,
+        0.7288151577503429,
+        0.9211033950617284
+      ]
+    },
+    {
+      "input": "avatar.creator.99-glasses-color",
+      "hash": 954122870,
+      "values": [
+        0.018377057613168723,
+        0.13633401920438956,
+        0.2540337791495199
+      ]
+    },
+    {
+      "input": "avatar.creator.99-hats-item",
+      "hash": 711102482,
+      "values": [
+        0.4711033950617284,
+        0.9439986282578875,
+        0.34256258573388204
+      ]
+    },
+    {
+      "input": "avatar.creator.99-hats-color",
+      "hash": 563657284,
+      "values": [
+        0.5354123799725652,
+        0.08186728395061728,
+        0.6589291838134431
+      ]
+    },
+    {
+      "input": "avatar.creator.99-hair-item",
+      "hash": 490132568,
+      "values": [
+        0.2699974279835391,
+        0.4573988340192044,
+        0.4778763717421125
+      ]
+    },
+    {
+      "input": "avatar.creator.99-hair-color",
+      "hash": 1980076398,
+      "values": [
+        0.0804826817558299,
+        0.7807441700960219,
+        0.9128472222222223
+      ]
+    },
+    {
+      "input": "avatar.creator.99-faceDetails-item",
+      "hash": 1899932145,
+      "values": [
+        0.2881601508916324,
+        0.3888846021947874,
+        0.22700617283950617
+      ]
+    },
+    {
+      "input": "avatar.creator.99-faceDetails-color",
+      "hash": 1237328827,
+      "values": [
+        0.9757544581618656,
+        0.7035365226337449,
+        0.8045181755829904
+      ]
+    },
+    {
+      "input": "avatar.creator.99-body-item",
+      "hash": 452053480,
+      "values": [
+        0.3987354252400549,
+        0.849511316872428,
+        0.51607938957476
+      ]
+    },
+    {
+      "input": "avatar.creator.99-body-color",
+      "hash": 1123072814,
+      "values": [
+        0.8291795267489712,
+        0.410099451303155,
+        0.5463177297668038
+      ]
+    },
+    {
+      "input": "avatar.creator.99-ears-item",
+      "hash": 63491213,
+      "values": [
+        0.27559156378600824,
+        0.4884559327846365,
+        0.3399519890260631
+      ]
+    },
+    {
+      "input": "avatar.creator.99-ears-color",
+      "hash": 1962544425,
+      "values": [
+        0.8174811385459534,
+        0.6033907750342935,
+        0.34891975308641976
+      ]
+    },
+    {
+      "input": "avatar.creator.99-eyebrows-item",
+      "hash": 728417760,
+      "values": [
+        0.9870413237311385,
+        0.6826731824417009,
+        0.754591049382716
+      ]
+    },
+    {
+      "input": "avatar.creator.99-eyebrows-color",
+      "hash": 1100430902,
+      "values": [
+        0.5294881687242798,
+        0.980778463648834,
+        0.43181155692729767
+      ]
+    },
+    {
+      "input": "avatar.creator.99-eyes-item",
+      "hash": 288620328,
+      "values": [
+        0.0741812414266118,
+        0.1710476680384088,
+        0.12568158436213991
+      ]
+    },
+    {
+      "input": "avatar.creator.99-eyes-color",
+      "hash": 351612398,
+      "values": [
+        0.0365869341563786,
+        0.5063957475994513,
+        0.1981695816186557
+      ]
+    },
+    {
+      "input": "avatar.creator.99-faceHair-item",
+      "hash": 746748107,
+      "values": [
+        0.8540123456790123,
+        0.3801483196159122,
+        0.9708419067215364
+      ]
+    },
+    {
+      "input": "avatar.creator.99-faceHair-color",
+      "hash": 1668671659,
+      "values": [
+        0.40558984910836765,
+        0.6025077160493827,
+        0.13558813443072704
+      ]
+    },
+    {
+      "input": "avatar.creator.99-forelock-item",
+      "hash": 1875329597,
+      "values": [
+        0.36880144032921813,
+        0.4335176611796982,
+        0.3590877914951989
+      ]
+    },
+    {
+      "input": "avatar.creator.99-forelock-color",
+      "hash": 1988641459,
+      "values": [
+        0.7034293552812071,
+        0.8077546296296296,
+        0.13713134430727023
+      ]
+    },
+    {
+      "input": "avatar.creator.99-head-item",
+      "hash": 1019728790,
+      "values": [
+        0.5965663580246914,
+        0.8750171467764061,
+        0.7458033264746228
+      ]
+    },
+    {
+      "input": "avatar.creator.99-head-color",
+      "hash": 1552504596,
+      "values": [
+        0.6600351508916323,
+        0.1982596021947874,
+        0.22388117283950618
+      ]
+    },
+    {
+      "input": "avatar.creator.99-mouth-item",
+      "hash": 20956175,
+      "values": [
+        0.26342592592592595,
+        0.3358581961591221,
+        0.02840363511659808
+      ]
+    },
+    {
+      "input": "avatar.creator.99-mouth-color",
+      "hash": 643958247,
+      "values": [
+        0.4403463648834019,
+        0.8728609396433471,
+        0.6909207818930041
+      ]
+    },
+    {
+      "input": "avatar.creator.99-neck-item",
+      "hash": 1299109557,
+      "values": [
+        0.1560099451303155,
+        0.25982081618655695,
+        0.8047325102880658
+      ]
+    },
+    {
+      "input": "avatar.creator.99-neck-color",
+      "hash": 1623373781,
+      "values": [
+        0.46561213991769546,
+        0.8698345336076817,
+        0.542318244170096
+      ]
+    },
+    {
+      "input": "avatar.creator.99-nose-item",
+      "hash": 92506711,
+      "values": [
+        0.9025548696844993,
+        0.8741640946502057,
+        0.8115655006858711
+      ]
+    },
+    {
+      "input": "avatar.creator.99-nose-color",
+      "hash": 1432942433,
+      "values": [
+        0.4378858024691358,
+        0.9871699245541838,
+        0.8787894375857339
+      ]
+    },
+    {
+      "input": "12345",
+      "hash": 46792755,
+      "values": [
+        0.7072702331961591,
+        0.5317601165980795,
+        0.11216563786008231
+      ]
+    },
+    {
+      "input": "12345-background-item",
+      "hash": 851742392,
+      "values": [
+        0.8868698559670782,
+        0.9878515089163238,
+        0.21820558984910837
+      ]
+    },
+    {
+      "input": "12345-background-color",
+      "hash": 628527198,
+      "values": [
+        0.1555855624142661,
+        0.31263717421124826,
+        0.04967849794238683
+      ]
+    },
+    {
+      "input": "12345-accessories-item",
+      "hash": 921471466,
+      "values": [
+        0.8491212277091906,
+        0.8878600823045267,
+        0.19794667352537723
+      ]
+    },
+    {
+      "input": "12345-accessories-color",
+      "hash": 1504838804,
+      "values": [
+        0.7058513374485597,
+        0.334610768175583,
+        0.42607596021947874
+      ]
+    },
+    {
+      "input": "12345-glasses-item",
+      "hash": 1525059280,
+      "values": [
+        0.04019633058984911,
+        0.07739197530864197,
+        0.03408350480109739
+      ]
+    },
+    {
+      "input": "12345-glasses-color",
+      "hash": 37880602,
+      "values": [
+        0.338215877914952,
+        0.9572016460905349,
+        0.14383144718792867
+      ]
+    },
+    {
+      "input": "12345-hats-item",
+      "hash": 2145559186,
+      "values": [
+        0.5029278120713306,
+        0.9429012345679012,
+        0.13570387517146776
+      ]
+    },
+    {
+      "input": "12345-hats-color",
+      "hash": 2093508504,
+      "values": [
+        0.6085433813443073,
+        0.2733110425240055,
+        0.27732767489711935
+      ]
+    },
+    {
+      "input": "12345-hair-item",
+      "hash": 948173060,
+      "values": [
+        0.8698431069958847,
+        0.6220593278463649,
+        0.9851294581618656
+      ]
+    },
+    {
+      "input": "12345-hair-color",
+      "hash": 677089390,
+      "values": [
+        0.06347307956104252,
+        0.5744341563786008,
+        0.023409636488340192
+      ]
+    },
+    {
+      "input": "12345-faceDetails-item",
+      "hash": 1138795243,
+      "values": [
+        0.5924211248285323,
+        0.32020318930041153,
+        0.4211848422496571
+      ]
+    },
+    {
+      "input": "12345-faceDetails-color",
+      "hash": 948597343,
+      "values": [
+        0.26294581618655694,
+        0.8703575102880658,
+        0.4065243484224966
+      ]
+    },
+    {
+      "input": "12345-body-item",
+      "hash": 1890359108,
+      "values": [
+        0.11593364197530864,
+        0.510125171467764,
+        0.8855409807956104
+      ]
+    },
+    {
+      "input": "12345-body-color",
+      "hash": 1534092974,
+      "values": [
+        0.3147762345679012,
+        0.9450788751714677,
+        0.3899391289437586
+      ]
+    },
+    {
+      "input": "12345-ears-item",
+      "hash": 1501796841,
+      "values": [
+        0.992789780521262,
+        0.14906978737997256,
+        0.7094135802469136
+      ]
+    },
+    {
+      "input": "12345-ears-color",
+      "hash": 694621363,
+      "values": [
+        0.32647462277091904,
+        0.7517875514403293,
+        0.5873371056241427
+      ]
+    },
+    {
+      "input": "12345-eyebrows-item",
+      "hash": 1644660028,
+      "values": [
+        0.6672025034293553,
+        0.8618055555555556,
+        0.8647933813443073
+      ]
+    },
+    {
+      "input": "12345-eyebrows-color",
+      "hash": 560829862,
+      "values": [
+        0.6882673182441701,
+        0.7856481481481481,
+        0.5247470850480109
+      ]
+    },
+    {
+      "input": "12345-eyes-item",
+      "hash": 1726925956,
+      "values": [
+        0.7913794581618656,
+        0.8316615226337448,
+        0.4951431755829904
+      ]
+    },
+    {
+      "input": "12345-eyes-color",
+      "hash": 1989413906,
+      "values": [
+        0.583860596707819,
+        0.6987311385459534,
+        0.10964077503429355
+      ]
+    },
+    {
+      "input": "12345-faceHair-item",
+      "hash": 1662990375,
+      "values": [
+        0.5341735253772291,
+        0.5592806927297668,
+        0.08104423868312757
+      ]
+    },
+    {
+      "input": "12345-faceHair-color",
+      "hash": 7410895,
+      "values": [
+        0.6104766803840878,
+        0.25492541152263376,
+        0.27257373113854594
+      ]
+    },
+    {
+      "input": "12345-forelock-item",
+      "hash": 959087329,
+      "values": [
+        0.6886402606310014,
+        0.2543852880658436,
+        0.2488854595336077
+      ]
+    },
+    {
+      "input": "12345-forelock-color",
+      "hash": 327380695,
+      "values": [
+        0.9083161865569273,
+        0.46017232510288064,
+        0.27411694101508915
+      ]
+    },
+    {
+      "input": "12345-head-item",
+      "hash": 418576838,
+      "values": [
+        0.5432741769547325,
+        0.20444101508916324,
+        0.7172025034293553
+      ]
+    },
+    {
+      "input": "12345-head-color",
+      "hash": 85296912,
+      "values": [
+        0.30988082990397803,
+        0.41292009602194785,
+        0.7811342592592593
+      ]
+    },
+    {
+      "input": "12345-mouth-item",
+      "hash": 1658757683,
+      "values": [
+        0.8106995884773662,
+        0.5281935871056241,
+        0.9398748285322359
+      ]
+    },
+    {
+      "input": "12345-mouth-color",
+      "hash": 123802557,
+      "values": [
+        0.23985768175582992,
+        0.12761917009602194,
+        0.19722222222222222
+      ]
+    },
+    {
+      "input": "12345-neck-item",
+      "hash": 139196071,
+      "values": [
+        0.9838305898491083,
+        0.8196373456790124,
+        0.6582733196159122
+      ]
+    },
+    {
+      "input": "12345-neck-color",
+      "hash": 14427727,
+      "values": [
+        0.5043038408779149,
+        0.7413451646090535,
+        0.46269718792866943
+      ]
+    },
+    {
+      "input": "12345-nose-item",
+      "hash": 1530812339,
+      "values": [
+        0.6197530864197531,
+        0.5347779492455418,
+        0.18102709190672153
+      ]
+    },
+    {
+      "input": "12345-nose-color",
+      "hash": 204859075,
+      "values": [
+        0.5320301783264746,
+        0.6240097736625514,
+        0.12622599451303154
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-background-item",
+      "hash": 1244516982,
+      "values": [
+        0.6104209533607682,
+        0.7366083676268862,
+        0.40574845679012345
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-background-color",
+      "hash": 68996044,
+      "values": [
+        0.8702889231824417,
+        0.7685956790123457,
+        0.9197316529492455
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-accessories-item",
+      "hash": 361940312,
+      "values": [
+        0.5638245884773663,
+        0.34381858710562413,
+        0.06799982853223593
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-accessories-color",
+      "hash": 1670435394,
+      "values": [
+        0.47569873113854594,
+        0.6852194787379973,
+        0.4376929012345679
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-glasses-item",
+      "hash": 1125290910,
+      "values": [
+        0.5185485253772291,
+        0.2311556927297668,
+        0.19041923868312757
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-glasses-color",
+      "hash": 518596664,
+      "values": [
+        0.20045010288065843,
+        0.5977280521262003,
+        0.6799339849108368
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-hats-item",
+      "hash": 1245118912,
+      "values": [
+        0.8856695816186557,
+        0.8240997942386832,
+        0.1635073731138546
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-hats-color",
+      "hash": 61702570,
+      "values": [
+        0.11002657750342935,
+        0.5685185185185185,
+        0.002061899862825789
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-hair-item",
+      "hash": 43883862,
+      "values": [
+        0.5672110768175583,
+        0.8415466392318244,
+        0.43661265432098767
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-hair-color",
+      "hash": 1354716544,
+      "values": [
+        0.8576860425240055,
+        0.5492026748971194,
+        0.34540037722908096
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-faceDetails-item",
+      "hash": 1698326397,
+      "values": [
+        0.8777177640603566,
+        0.8642446844993141,
+        0.5511316872427984
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-faceDetails-color",
+      "hash": 1114193933,
+      "values": [
+        0.03279320987654321,
+        0.22096622085048012,
+        0.4181412894375857
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-body-item",
+      "hash": 986069910,
+      "values": [
+        0.8133016117969821,
+        0.7296124828532236,
+        0.3370241769547325
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-body-color",
+      "hash": 497712960,
+      "values": [
+        0.6063828875171468,
+        0.1785579561042524,
+        0.9788708847736626
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-ears-item",
+      "hash": 597507643,
+      "values": [
+        0.6901577503429356,
+        0.3685570987654321,
+        0.16089677640603567
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-ears-color",
+      "hash": 1337184571,
+      "values": [
+        0.5946844993141289,
+        0.37184927983539096,
+        0.7814729080932785
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-eyebrows-item",
+      "hash": 2093830002,
+      "values": [
+        0.9080032578875171,
+        0.5496227709190672,
+        0.25271347736625516
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-eyebrows-color",
+      "hash": 489903800,
+      "values": [
+        0.16588220164609052,
+        0.0816786694101509,
+        0.9046253429355281
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-eyes-item",
+      "hash": 822636758,
+      "values": [
+        0.4887474279835391,
+        0.05114883401920439,
+        0.9466263717421125
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-eyes-color",
+      "hash": 273747456,
+      "values": [
+        0.608852023319616,
+        0.1439900548696845,
+        0.4628215020576132
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-faceHair-item",
+      "hash": 2075499655,
+      "values": [
+        0.04103223593964335,
+        0.8521476337448559,
+        0.03646262002743484
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-faceHair-color",
+      "hash": 78336957,
+      "values": [
+        0.13286179698216735,
+        0.958894890260631,
+        0.8926954732510288
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-forelock-item",
+      "hash": 402610063,
+      "values": [
+        0.572616598079561,
+        0.11829989711934157,
+        0.5186642661179698
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-forelock-color",
+      "hash": 398306757,
+      "values": [
+        0.4307013031550069,
+        0.16414180384087793,
+        0.894238683127572
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-head-item",
+      "hash": 485712360,
+      "values": [
+        0.18200017146776407,
+        0.9949159807956104,
+        0.9248585390946502
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-head-color",
+      "hash": 2117102846,
+      "values": [
+        0.808397633744856,
+        0.11771262002743484,
+        0.05640003429355281
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-mouth-item",
+      "hash": 604403679,
+      "values": [
+        0.3820130315500686,
+        0.3145276063100137,
+        0.6325874485596708
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-mouth-color",
+      "hash": 1562328043,
+      "values": [
+        0.8146433470507545,
+        0.20909207818930042,
+        0.9767403978052126
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-neck-item",
+      "hash": 765093127,
+      "values": [
+        0.7414437585733882,
+        0.3797196502057613,
+        0.9837877229080932
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-neck-color",
+      "hash": 2046233661,
+      "values": [
+        0.002820644718792867,
+        0.44613768861454045,
+        0.7379629629629629
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-nose-item",
+      "hash": 626523141,
+      "values": [
+        0.3171210562414266,
+        0.7542652606310014,
+        0.6325102880658436
+      ]
+    },
+    {
+      "input": "Àéïøü-unicode-test-nose-color",
+      "hash": 2058302287,
+      "values": [
+        0.6606824417009602,
+        0.21871141975308642,
+        0.44623628257887515
+      ]
+    }
+  ],
+  "numbers": [
+    {
+      "value": 0,
+      "text": "0",
+      "note": "Swift Double.description gives \"0.0\""
+    },
+    {
+      "value": 1,
+      "text": "1",
+      "note": "Swift Double.description gives \"1.0\""
+    },
+    {
+      "value": 42,
+      "text": "42",
+      "note": "integral seed, the common case"
+    },
+    {
+      "value": -7,
+      "text": "-7",
+      "note": "negative integral"
+    },
+    {
+      "value": 1.5,
+      "text": "1.5",
+      "note": "non-integral round-trips identically"
+    },
+    {
+      "value": 0.1,
+      "text": "0.1",
+      "note": "shortest round-trip representation"
+    },
+    {
+      "value": 1e+21,
+      "text": "1e+21",
+      "note": "JS switches to exponent notation at 1e21"
+    },
+    {
+      "value": 1e-7,
+      "text": "1e-7",
+      "note": "JS switches to exponent notation below 1e-6"
+    },
+    {
+      "value": 9007199254740992,
+      "text": "9007199254740992",
+      "note": "largest exactly representable integer"
+    }
+  ]
+}

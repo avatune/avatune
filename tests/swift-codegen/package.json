@@ -1,0 +1,34 @@
+{
+  "name": "@avatune/swift-codegen-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@avatune/ashley-seo-theme": "workspace:*",
+    "@avatune/ashleyy-theme": "workspace:*",
+    "@avatune/cyberpunk-theme": "workspace:*",
+    "@avatune/fatin-verse-theme": "workspace:*",
+    "@avatune/kyute-theme": "workspace:*",
+    "@avatune/micah-theme": "workspace:*",
+    "@avatune/miniavs-theme": "workspace:*",
+    "@avatune/nevmstas-theme": "workspace:*",
+    "@avatune/orks-theme": "workspace:*",
+    "@avatune/pacovqzz-theme": "workspace:*",
+    "@avatune/pawel-olek-man-theme": "workspace:*",
+    "@avatune/pawel-olek-woman-theme": "workspace:*",
+    "@avatune/retro-cartoon-theme": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
+    "@avatune/yanliu-theme": "workspace:*"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@types/bun": "^1.3.14",
+    "colord": "^2.9.3",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
+  }
+}

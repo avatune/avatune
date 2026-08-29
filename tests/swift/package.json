@@ -1,0 +1,15 @@
+{
+  "name": "@avatune/swift-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@avatune/typescript-config": "workspace:*",
+    "@types/bun": "^1.3.14",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
+  }
+}

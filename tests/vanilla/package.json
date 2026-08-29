@@ -17,11 +17,15 @@
     "@avatune/micah-theme": "workspace:*",
     "@avatune/miniavs-theme": "workspace:*",
     "@avatune/nevmstas-theme": "workspace:*",
+    "@avatune/orks-theme": "workspace:*",
     "@avatune/pacovqzz-theme": "workspace:*",
     "@avatune/pawel-olek-man-theme": "workspace:*",
     "@avatune/pawel-olek-woman-theme": "workspace:*",
-    "@avatune/yanliu-theme": "workspace:*",
-    "@avatune/vanilla": "workspace:*"
+    "@avatune/retro-cartoon-theme": "workspace:*",
+    "@avatune/toon-flat-theme": "workspace:*",
+    "@avatune/vampire-skin-theme": "workspace:*",
+    "@avatune/vanilla": "workspace:*",
+    "@avatune/yanliu-theme": "workspace:*"
   },
   "devDependencies": {
     "@blazediff/bun": "^1.2.12",
