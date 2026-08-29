@@ -1,0 +1,4 @@
+# The Swift package is developed here but released from avatune/avatune-swift,
+# where its language statistics belong. Almost all of it is generated theme
+# data, which would otherwise make this monorepo read as a Swift project.
+swift/** linguist-detectable=false
