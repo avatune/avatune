@@ -40,7 +40,7 @@ export function FrameworksTabs({ entries }: FrameworksTabsProps) {
   }
 
   async function copyInstall() {
-    const command = `npm i ${activeEntry.pkg}`
+    const { command } = activeEntry.install
 
     try {
       await navigator.clipboard.writeText(command)
@@ -83,25 +83,19 @@ export function FrameworksTabs({ entries }: FrameworksTabsProps) {
           </div>
 
           <div className="flex flex-col gap-2.5 font-code text-[11.5px] text-ink-3">
-            <div className="flex items-baseline gap-3.5">
-              <span className="w-[60px] shrink-0 text-ink-4">package</span>
-              <span className="min-w-0 truncate text-ink-2">{active.pkg}</span>
-            </div>
-            <div className="flex items-baseline gap-3.5">
-              <span className="w-[60px] shrink-0 text-ink-4">size</span>
-              <span className="text-ink-2">
-                {active.size}
-                <span className="text-ink-4">gzipped</span>
-              </span>
-            </div>
-            <div className="flex items-baseline gap-3.5">
-              <span className="w-[60px] shrink-0 text-ink-4">deps</span>
-              <span className="text-ink-2">{active.deps}</span>
-            </div>
-            <div className="flex items-baseline gap-3.5">
-              <span className="w-[60px] shrink-0 text-ink-4">since</span>
-              <span className="text-ink-2">{active.since}</span>
-            </div>
+            {active.specs.map((spec) => (
+              <div key={spec.label} className="flex items-baseline gap-3.5">
+                <span className="w-[60px] shrink-0 text-ink-4">
+                  {spec.label}
+                </span>
+                <span className="min-w-0 truncate text-ink-2">
+                  {spec.value}
+                  {spec.note && (
+                    <span className="text-ink-4"> {spec.note}</span>
+                  )}
+                </span>
+              </div>
+            ))}
           </div>
 
           <div>
@@ -120,7 +114,9 @@ export function FrameworksTabs({ entries }: FrameworksTabsProps) {
                 <path d="m4 17 6-6-6-6" />
                 <path d="M12 19h8" />
               </svg>
-              <code className="font-code text-[12px]">npm i {active.pkg}</code>
+              <code className="font-code text-[12px]">
+                {active.install.label}
+              </code>
             </button>
           </div>
         </div>

@@ -59,7 +59,7 @@ Avatar theme for Avatune using orks design assets.
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, Vanilla JavaScript, and Swift.
 
 ### React
 
@@ -148,6 +148,25 @@ const svg = avatar({
 })
 
 container?.appendChild(svg)
+```
+
+### Swift
+
+Add [avatune-swift](/packages/swift) and depend on its `AvatuneOrks` product:
+
+```swift
+import AvatuneOrks
+import AvatuneRender
+import SwiftUI
+
+struct AvatarPreview: View {
+    var body: some View {
+        AvatarView(
+            OrksAvatar(seed: .string("optional-seed-for-random-generation"))
+        )
+        .frame(width: 300, height: 300)
+    }
+}
 ```
 
 ## Customization

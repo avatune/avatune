@@ -265,6 +265,36 @@ const avatarUrl = computed(
 </script>
 ```
 
+### SwiftUI
+
+`AsyncImage` cannot decode SVG, so point it at the PNG endpoint:
+
+```swift
+struct RemoteAvatar: View {
+    let userID: String
+    var theme = "yanliu"
+    var size: Double = 200
+
+    private var url: URL? {
+        URL(
+            string:
+                "https://www.avatune.dev/api/png/?theme=\(theme)&seed=\(userID)&size=\(Int(size))"
+        )
+    }
+
+    var body: some View {
+        AsyncImage(url: url) { image in
+            image.resizable()
+        } placeholder: {
+            Color.clear
+        }
+        .frame(width: size, height: size)
+    }
+}
+```
+
+For avatars without a network round trip, render them on-device with the [Swift package](/packages/swift) instead — it produces the same output for the same seed.
+
 ### CSS Background
 
 ```css

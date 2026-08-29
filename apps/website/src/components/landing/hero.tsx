@@ -4,7 +4,7 @@ import { InstallCopy } from '../client/install-copy'
 
 const stats = [
   { num: themeInfos.length, label: 'Themes' },
-  { num: 7, label: 'Frameworks' },
+  { num: 8, label: 'Frameworks' },
   { num: 0, label: 'Dependencies' },
 ]
 
@@ -21,9 +21,9 @@ export function Hero({ docsLink = '/docs' }: { docsLink?: string }) {
             </h1>
 
             <p className="mt-6 max-w-[56ch] font-body text-[18px] leading-[1.55] text-ink-2">
-              Typed, SSR-first avatars for seven frameworks with a growing theme
-              library and no runtime dependencies. Build avatars manually or
-              draft one from a photo.
+              Typed, SSR-first avatars for seven web frameworks and a native
+              Swift package, with a growing theme library and no runtime
+              dependencies. Build avatars manually or draft one from a photo.
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3">

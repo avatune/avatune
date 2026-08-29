@@ -6,6 +6,7 @@ import reactLogo from '../assets/react-logo.svg'
 import reactNativeLogo from '../assets/react-native.svg'
 import solidjsLogo from '../assets/solidjs-logo.svg'
 import svelteLogo from '../assets/svelte-logo.svg'
+import swiftLogo from '../assets/swift-logo.svg'
 import vueLogo from '../assets/vue-logo.svg'
 
 export type FrameworkThemeId =
@@ -17,6 +18,17 @@ export type FrameworkThemeId =
   | 'pacovqzz'
   | 'fatinVerse'
 
+export interface FrameworkSpec {
+  label: string
+  value: string
+  note?: string
+}
+
+export interface FrameworkInstall {
+  label: string
+  command: string
+}
+
 export interface FrameworkShowcaseEntry {
   id: string
   label: string
@@ -25,10 +37,8 @@ export interface FrameworkShowcaseEntry {
   filePath: string
   language: string
   themeId: FrameworkThemeId
-  pkg: string
-  size: string
-  deps: string
-  since: string
+  install: FrameworkInstall
+  specs: FrameworkSpec[]
   snippet: string
   highlightedSnippet: string
   logo?: {
@@ -45,15 +55,28 @@ interface FrameworkDefinition {
   language: string
   filePath: string
   themeId: FrameworkThemeId
-  pkg: string
-  size: string
-  deps: string
-  since: string
+  install: FrameworkInstall
+  specs: FrameworkSpec[]
   logo?: {
     src: StaticImageData
     alt: string
   }
   getSnippet: (seed: string) => string
+}
+
+function npmPackage(
+  pkg: string,
+  { size, deps, since }: { size: string; deps: string; since: string },
+): Pick<FrameworkDefinition, 'install' | 'specs'> {
+  return {
+    install: { label: `npm i ${pkg}`, command: `npm i ${pkg}` },
+    specs: [
+      { label: 'package', value: pkg },
+      { label: 'size', value: size, note: 'gzipped' },
+      { label: 'deps', value: deps },
+      { label: 'since', value: since },
+    ],
+  }
 }
 
 const frameworkDefinitions: FrameworkDefinition[] = [
@@ -65,10 +88,11 @@ const frameworkDefinitions: FrameworkDefinition[] = [
     language: 'tsx',
     filePath: 'src/components/Profile.tsx',
     themeId: 'kyute',
-    pkg: '@avatune/react',
-    size: '8.1kb',
-    deps: '0',
-    since: 'v2.1',
+    ...npmPackage('@avatune/react', {
+      size: '8.1kb',
+      deps: '0',
+      since: 'v2.1',
+    }),
     logo: { src: reactLogo.src, alt: 'React logo' },
     getSnippet: (seed: string) => `import { Avatar } from '@avatune/react'
 import theme from '@avatune/kyute-theme/react'
@@ -91,10 +115,11 @@ export default function Profile({ user }) {
     language: 'svelte',
     filePath: 'lib/Profile.svelte',
     themeId: 'nevmstas',
-    pkg: '@avatune/svelte',
-    size: '6.4kb',
-    deps: '0',
-    since: 'v3.1',
+    ...npmPackage('@avatune/svelte', {
+      size: '6.4kb',
+      deps: '0',
+      since: 'v3.1',
+    }),
     logo: { src: svelteLogo.src, alt: 'Svelte logo' },
     getSnippet: (seed: string) => {
       const scriptTag = '<script lang="ts">'
@@ -116,10 +141,7 @@ ${scriptClose}
     language: 'vue',
     filePath: 'components/Profile.vue',
     themeId: 'miniavs',
-    pkg: '@avatune/vue',
-    size: '7.2kb',
-    deps: '0',
-    since: 'v2.1',
+    ...npmPackage('@avatune/vue', { size: '7.2kb', deps: '0', since: 'v2.1' }),
     logo: { src: vueLogo.src, alt: 'Vue logo' },
     getSnippet: (seed: string) => {
       const scriptTag = '<script setup lang="ts">'
@@ -144,10 +166,11 @@ ${scriptClose}
     language: 'tsx',
     filePath: 'src/components/Profile.tsx',
     themeId: 'yanliu',
-    pkg: '@avatune/solidjs',
-    size: '6.0kb',
-    deps: '0',
-    since: 'v1.1',
+    ...npmPackage('@avatune/solidjs', {
+      size: '6.0kb',
+      deps: '0',
+      since: 'v1.1',
+    }),
     logo: { src: solidjsLogo.src, alt: 'SolidJS logo' },
     getSnippet: (seed: string) => `import { Avatar } from '@avatune/solidjs'
 import theme from '@avatune/yanliu-theme/solidjs'
@@ -170,10 +193,11 @@ export default function Profile(props) {
     language: 'ts',
     filePath: 'src/app/profile.component.ts',
     themeId: 'pacovqzz',
-    pkg: '@avatune/angular',
-    size: '9.4kb',
-    deps: '0',
-    since: 'v1.2',
+    ...npmPackage('@avatune/angular', {
+      size: '9.4kb',
+      deps: '0',
+      since: 'v1.2',
+    }),
     logo: { src: angularLogo.src, alt: 'Angular logo' },
     getSnippet: (seed: string) => `import { Component } from '@angular/core'
 import { Avatar } from '@avatune/angular'
@@ -203,10 +227,11 @@ export class ProfileComponent {
     language: 'tsx',
     filePath: 'app/Profile.tsx',
     themeId: 'kyute',
-    pkg: '@avatune/react-native',
-    size: '7.8kb',
-    deps: '0',
-    since: 'v2.1',
+    ...npmPackage('@avatune/react-native', {
+      size: '7.8kb',
+      deps: '0',
+      since: 'v2.1',
+    }),
     logo: { src: reactNativeLogo.src, alt: 'React Native logo' },
     getSnippet: (
       seed: string,
@@ -224,6 +249,38 @@ export function Profile() {
 }`,
   },
   {
+    id: 'swift',
+    label: 'Swift',
+    tagline: 'Native on Apple platforms, drawn with CoreGraphics.',
+    description: 'SwiftUI, UIKit, and AppKit from the same themes.',
+    language: 'swift',
+    filePath: 'Sources/Profile/ProfileAvatar.swift',
+    themeId: 'fatinVerse',
+    install: {
+      label: 'github.com/avatune/avatune-swift',
+      command: 'https://github.com/avatune/avatune-swift',
+    },
+    specs: [
+      { label: 'product', value: 'AvatuneFatinVerse' },
+      { label: 'platforms', value: 'iOS 15+, macOS 12+' },
+      { label: 'deps', value: '1', note: 'SwiftDraw' },
+      { label: 'since', value: 'v0.1' },
+    ],
+    logo: { src: swiftLogo.src, alt: 'Swift logo' },
+    getSnippet: (seed: string) => `import AvatuneFatinVerse
+import AvatuneRender
+import SwiftUI
+
+struct ProfileAvatar: View {
+    let user: User
+
+    var body: some View {
+        AvatarView(FatinVerseAvatar(seed: .string("${seed}")))
+            .frame(width: 96, height: 96)
+    }
+}`,
+  },
+  {
     id: 'js',
     label: 'Vanilla',
     tagline: 'Just SVG strings. No framework needed.',
@@ -231,10 +288,11 @@ export function Profile() {
     language: 'ts',
     filePath: 'scripts/avatar.ts',
     themeId: 'micah',
-    pkg: '@avatune/vanilla',
-    size: '4.1kb',
-    deps: '0',
-    since: 'v2.1',
+    ...npmPackage('@avatune/vanilla', {
+      size: '4.1kb',
+      deps: '0',
+      since: 'v2.1',
+    }),
     logo: { src: jsLogo.src, alt: 'JavaScript logo' },
     getSnippet: (seed: string) => `import { avatar } from '@avatune/vanilla'
 import theme from '@avatune/micah-theme/vanilla'
@@ -255,7 +313,16 @@ export async function getFrameworkShowcaseEntries(): Promise<
 > {
   const highlighter = await getSingletonHighlighter({
     themes: ['github-dark'],
-    langs: ['tsx', 'html', 'ts', 'javascript', 'typescript', 'vue', 'svelte'],
+    langs: [
+      'tsx',
+      'html',
+      'ts',
+      'javascript',
+      'typescript',
+      'vue',
+      'svelte',
+      'swift',
+    ],
   })
 
   return Promise.all(
@@ -278,10 +345,8 @@ export async function getFrameworkShowcaseEntries(): Promise<
         filePath: definition.filePath,
         language: definition.language,
         themeId: definition.themeId,
-        pkg: definition.pkg,
-        size: definition.size,
-        deps: definition.deps,
-        since: definition.since,
+        install: definition.install,
+        specs: definition.specs,
         snippet,
         highlightedSnippet,
         logo: definition.logo,

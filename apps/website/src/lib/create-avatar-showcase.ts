@@ -4,6 +4,7 @@ import reactLogo from '../assets/react-logo.svg'
 import reactNativeLogo from '../assets/react-native.svg'
 import solidjsLogo from '../assets/solidjs-logo.svg'
 import svelteLogo from '../assets/svelte-logo.svg'
+import swiftLogo from '../assets/swift-logo.svg'
 import vueLogo from '../assets/vue-logo.svg'
 import {
   type ThemeId,
@@ -66,6 +67,13 @@ export const frameworks: FrameworkDefinition[] = [
     language: 'tsx',
     filePath: 'app/Avatar.tsx',
     logo: { src: reactNativeLogo.src, alt: 'React Native logo' },
+  },
+  {
+    id: 'swift',
+    label: 'Swift',
+    language: 'swift',
+    filePath: 'Sources/Avatar/AvatarPreview.swift',
+    logo: { src: swiftLogo.src, alt: 'Swift logo' },
   },
   {
     id: 'solidjs',
@@ -137,6 +145,16 @@ export function extractCategories(
     return 0
   })
 }
+
+/** Swift keywords an item identifier has to be escaped for. */
+const SWIFT_RESERVED = new Set(['none', 'default', 'repeat', 'static', 'where'])
+
+const swiftCase = (name: string) =>
+  SWIFT_RESERVED.has(name) ? `\`${name}\`` : name
+
+/** `fatinVerse` -> `FatinVerse`, the suffix of its Swift module and builder. */
+const swiftModuleSuffix = (themeId: string) =>
+  themeId.charAt(0).toUpperCase() + themeId.slice(1)
 
 export function generateSnippet(
   frameworkId: string,
@@ -278,6 +296,25 @@ function App() {
       seed="${seed}"${propsStr}
     />
   )
+}`
+    }
+
+    case 'swift': {
+      const suffix = swiftModuleSuffix(themeInfo.id)
+      const modifiers = filteredSelections
+        .map(([k, v]) => `\n                .${k}(.${swiftCase(v)})`)
+        .join('')
+      return `import Avatune${suffix}
+import AvatuneRender
+import SwiftUI
+
+struct AvatarPreview: View {
+    var body: some View {
+        AvatarView(
+            ${suffix}Avatar(seed: .string("${seed}"))${modifiers}
+        )
+        .frame(width: 300, height: 300)
+    }
 }`
     }
 

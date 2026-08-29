@@ -23,6 +23,7 @@ import reactLogo from '@/assets/react-logo.svg'
 import reactNativeLogo from '@/assets/react-native.svg'
 import solidjsLogo from '@/assets/solidjs-logo.svg'
 import svelteLogo from '@/assets/svelte-logo.svg'
+import swiftLogo from '@/assets/swift-logo.svg'
 import vueLogo from '@/assets/vue-logo.svg'
 import { source } from './source'
 import { themeDocItems } from './theme-docs.generated'
@@ -145,6 +146,9 @@ export const docsTree: PageTree.Root = {
         }),
         page('Angular', ['packages', 'angular'], {
           icon: frameworkIcon(angularLogo),
+        }),
+        page('Swift', ['packages', 'swift'], {
+          icon: frameworkIcon(swiftLogo),
         }),
         page('SolidJS', ['packages', 'solidjs'], {
           icon: frameworkIcon(solidjsLogo),

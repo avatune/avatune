@@ -25,6 +25,7 @@ import {
   MIT_LICENSE,
   RESTRICTED_LICENSE,
   readFileIfExists,
+  swiftThemeModule,
   type ThemeInfo,
 } from './shared'
 
@@ -274,7 +275,7 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push('## Usage')
   sections.push('')
   sections.push(
-    'This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.',
+    'This theme is available for multiple frameworks: React, Vue, Svelte, Angular, Vanilla JavaScript, and Swift.',
   )
   sections.push('')
 
@@ -301,6 +302,15 @@ function generateThemeMDX(theme: ThemeInfo): string {
   sections.push('### Vanilla JavaScript')
   sections.push('')
   sections.push(generateFrameworkExample('vanilla', packageName))
+  sections.push('')
+
+  sections.push('### Swift')
+  sections.push('')
+  sections.push(
+    `Add [avatune-swift](/packages/swift) and depend on its \`Avatune${swiftThemeModule(packageName)}\` product:`,
+  )
+  sections.push('')
+  sections.push(generateFrameworkExample('swift', packageName))
   sections.push('')
 
   // Customization

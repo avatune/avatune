@@ -1,0 +1,179 @@
+---
+title: "Avatune for Swift"
+description: "Swift package for rendering avatars natively on Apple platforms."
+source: "swift/README.md"
+---
+
+
+> Source: `swift/README.md`
+
+Native avatar rendering for Apple platforms, generated from the same theme packages the web renderers use. Same seeds, same themes, same output.
+
+## Installation
+
+Avatune for Swift is distributed with Swift Package Manager from a standalone mirror:
+
+```swift
+// Package.swift
+dependencies: [
+  .package(url: "https://github.com/avatune/avatune-swift", from: "0.1.0")
+],
+targets: [
+  .target(
+    name: "App",
+    dependencies: [
+      .product(name: "AvatuneKyute", package: "avatune-swift")
+    ]
+  )
+]
+```
+
+In Xcode, use **File → Add Package Dependencies…** and paste `https://github.com/avatune/avatune-swift`.
+
+Each theme is its own product and its own module — `@avatune/kyute-theme` becomes `AvatuneKyute`, `@avatune/fatin-verse-theme` becomes `AvatuneFatinVerse`. A theme product bundles the renderer, so one dependency is enough and you only pay for the themes you import.
+
+<Callout type="info">
+  `branch:` dependencies on the mirror are unsupported — its `main` is a
+  synthetic history rebuilt on each release. Depend on a tag.
+</Callout>
+
+## Usage
+
+<AvatarUsagePreview
+  themeId="kyute"
+  seed="user@example.com"
+  size={200}
+/>
+
+```swift
+import AvatuneKyute
+import AvatuneRender
+import SwiftUI
+
+struct ProfileAvatar: View {
+    var body: some View {
+        AvatarView(.kyute, seed: .string("user@example.com"))
+            .frame(width: 200, height: 200)
+    }
+}
+```
+
+`AvatarView` is backed by `Canvas`, so the avatar redraws at whatever size and scale the layout resolves to instead of being rasterised once and stretched.
+
+## Typed builder
+
+Every theme also ships a builder. A theme only has methods for the categories it actually defines, so `KyuteAvatar` has no `hats(_:)`, and a wrong identifier fails to compile rather than falling back to seeded selection:
+
+```swift
+AvatarView(
+    KyuteAvatar(seed: .string("user@example.com"))
+        .hair(.bob, color: .hex(0xFF5733))
+        .eyes(.big)
+        .body(.tshirt)
+        .background(.hex(0x202020))
+)
+```
+
+Available modifiers, all returning a copy the way SwiftUI modifiers do:
+
+```swift
+{
+  // Pin an item, optionally overriding its colour
+  .hair(_ id: Kyute.Hair, color: AvatuneColor? = nil)
+  .eyes(_ id: Kyute.Eyes, color: AvatuneColor? = nil)
+  // … one per category the theme defines
+
+  // Colour only
+  .hairColor(_ color: AvatuneColor)
+  .eyesColor(_ color: AvatuneColor)
+
+  // Whole-avatar
+  .background(_ color: AvatuneColor)
+  .cornerRadius(_ length: AvatuneLength)
+  .seed(_ seed: AvatuneSeed)
+  .predictions(_ predictions: Predictions)
+}
+```
+
+Identifiers are `CaseIterable`, so a picker can enumerate a category:
+
+```swift
+ForEach(Kyute.Hair.allCases, id: \.rawValue) { hair in
+    AvatarView(KyuteAvatar(seed: .string("user@example.com")).hair(hair))
+        .frame(width: 64, height: 64)
+}
+```
+
+## UIKit and AppKit
+
+```swift
+import AvatuneKyute
+import AvatuneRender
+
+// Selection is separate from drawing, so resolve once and reuse the result
+let avatar = KyuteAvatar(seed: .string("user@example.com")).resolved()
+
+// UIImage on iOS/tvOS/watchOS, NSImage on macOS
+imageView.image = AvatarImageRenderer.image(avatar, size: 96)
+
+// Or draw into any layer-backed view, vector-sharp at any contentsScale
+view.layer.addSublayer(AvatarLayer(avatar))
+```
+
+## SVG export
+
+`ResolvedAvatar.svg(size:)` is pure string work with no drawing stack, so it also runs server-side on Linux:
+
+```swift
+import AvatuneCore
+import AvatuneKyute
+
+let avatar = ResolvedAvatar(theme: .kyute, seed: .string("user@example.com"))
+let markup = avatar.svg(size: 512)
+```
+
+The output mirrors what `@avatune/vanilla` produces for the same seed.
+
+## Configuration
+
+`AvatarConfiguration` is the untyped escape hatch for server-driven identifiers. Its coding keys match the TypeScript `AvatarConfig`, so a payload from the [REST API](/api) decodes without a translation layer:
+
+```swift
+var configuration = AvatarConfiguration(seed: .string("user@example.com"))
+configuration[.hair] = "bob"
+configuration[color: .hair] = .hex(0xFF5733)
+
+let avatar = ResolvedAvatar(theme: .kyute, configuration: configuration)
+```
+
+## Predictions
+
+Output from the [predictors](/packages/skin-tone-predictor) steers selection towards a likeness. Supplying predictions replaces the seed entirely, exactly as it does in the web renderers:
+
+```swift
+AvatarView(
+    KyuteAvatar()
+        .predictions(
+            Predictions(
+                hairLength: .long,
+                hairColor: .black,
+                skinTone: .medium,
+                faceHair: .facialHair
+            )
+        )
+)
+```
+
+## Package layout
+
+| Target | What it is |
+| --- | --- |
+| `AvatuneCore` | Selection, colour maths, theme model, and SVG export. Pure Swift — no CoreGraphics, no dependencies, compiles on Linux. |
+| `AvatuneRender` | Drawing: CoreGraphics, SwiftUI `AvatarView`, `AvatarImageRenderer`, `AvatarLayer`. Depends on [SwiftDraw](https://github.com/swhitty/SwiftDraw). |
+| `Avatune<Theme>` | Generated theme data, one module per theme. Depends on `AvatuneCore` only. |
+
+## Requirements
+
+- Swift 6.0 or later to build
+- iOS 15, macOS 12, tvOS 15, watchOS 8, visionOS 1
+- `AvatuneCore` alone also builds on Linux, where no drawing stack is available

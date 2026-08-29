@@ -13,7 +13,13 @@ import { basename, join } from 'node:path'
 // Types
 // ============================================================================
 
-export type Framework = 'react' | 'vue' | 'svelte' | 'angular' | 'vanilla'
+export type Framework =
+  | 'react'
+  | 'vue'
+  | 'svelte'
+  | 'angular'
+  | 'vanilla'
+  | 'swift'
 
 export interface AssetFile {
   category: string
@@ -404,6 +410,15 @@ export function generateCodeBlock(code: string, language: string = ''): string {
 }
 
 /**
+ * The Swift package names a theme's module and builder after the theme, so
+ * `kyute-theme` ships `AvatuneKyute` and `KyuteAvatar`.
+ * @example swiftThemeModule('kyute-theme') => 'Kyute'
+ */
+export function swiftThemeModule(packageName: string): string {
+  return toPascalCase(packageName.replace(/-theme$/, ''))
+}
+
+/**
  * Generates framework-specific usage example
  * @param framework The framework to generate example for
  * @param packageName The theme package name
@@ -502,6 +517,25 @@ const svg = avatar({
 container?.appendChild(svg)`,
         'typescript',
       )
+
+    case 'swift': {
+      const module = swiftThemeModule(packageName)
+      return generateCodeBlock(
+        `import Avatune${module}
+import AvatuneRender
+import SwiftUI
+
+struct AvatarPreview: View {
+    var body: some View {
+        AvatarView(
+            ${module}Avatar(seed: .string("optional-seed-for-random-generation"))
+        )
+        .frame(width: 300, height: 300)
+    }
+}`,
+        'swift',
+      )
+    }
   }
 }
 

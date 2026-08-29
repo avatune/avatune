@@ -14,15 +14,16 @@ export async function Frameworks() {
               Framework adapters
             </div>
             <h2 className="mt-[18px] font-display text-[clamp(38px,4.6vw,64px)] leading-[1.02] font-[380] tracking-[-0.028em] [&_.soft]:text-ink-3">
-              Seven frameworks,
+              Eight frameworks,
               <br />
               one <span className="soft">API surface.</span>
             </h2>
           </div>
           <p className="max-w-[56ch] font-body text-[18px] leading-[1.55] text-ink-2">
-            Each adapter exposes idiomatic primitives for its host framework.
-            Theme tokens, deterministic seeds, and SSR behavior stay consistent
-            across frameworks.
+            Each adapter exposes idiomatic primitives for its host framework —
+            including a native Swift package for Apple platforms. Theme tokens,
+            deterministic seeds, and SSR behavior stay consistent across all of
+            them.
           </p>
         </div>
 

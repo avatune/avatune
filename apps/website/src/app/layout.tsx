@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 })
 
 const description =
-  'Typed, SSR-first avatars for seven frameworks with a growing theme library and no runtime dependencies. Build avatars manually or draft one from a photo.'
+  'Typed, SSR-first avatars for seven web frameworks and a native Swift package, with a growing theme library and no runtime dependencies. Build avatars manually or draft one from a photo.'
 
 export const metadata: Metadata = {
   title: {

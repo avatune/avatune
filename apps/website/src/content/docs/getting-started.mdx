@@ -4,13 +4,13 @@ description: Quick path to installing Avatune and rendering your first avatar.
 ---
 
 
-Follow these steps to go from zero to a rendered avatar using Avatune’s component packages. The examples below use React, but the same flow applies to Vue, Svelte, Vanilla JS, and React Native (see the Frameworks section in the sidebar for framework-specific snippets).
+Follow these steps to go from zero to a rendered avatar using Avatune’s component packages. The examples below use React, but the same flow applies to Vue, Svelte, SolidJS, Vanilla JS, React Native, and Swift (see the Frameworks section in the sidebar for framework-specific snippets).
 
 ## Install the renderer + a theme
 
 Use your preferred package manager to install the renderer for your framework and at least one theme:
 
-<Tabs items={['React', 'Angular', 'Vue', 'Svelte', 'Vanilla', 'React Native']}>
+<Tabs items={['React', 'Angular', 'Vue', 'Svelte', 'Vanilla', 'React Native', 'Swift']}>
   <Tab value="React">
 ```bash
 # yarn
@@ -137,6 +137,25 @@ npm install @avatune/react-native react-native-svg @avatune/pacovqzz-theme
 pnpm add @avatune/react-native react-native-svg @avatune/pacovqzz-theme
 ```
   </Tab>
+  <Tab value="Swift">
+Add the package to `Package.swift`, or use **File → Add Package Dependencies…** in Xcode:
+
+```swift
+dependencies: [
+  .package(url: "https://github.com/avatune/avatune-swift", from: "0.1.0")
+],
+targets: [
+  .target(
+    name: "App",
+    dependencies: [
+      .product(name: "AvatuneKyute", package: "avatune-swift")
+    ]
+  )
+]
+```
+
+Each theme is its own product; the renderer comes with it.
+  </Tab>
 </Tabs>
 
 ## Render your first avatar
@@ -177,7 +196,8 @@ Themes ship with documented part names inside their respective docs (e.g., `pack
 Need another stack? Head to:
 
 - `packages/react-native` for mobile apps
-- `packages/vue`, `packages/svelte`, `packages/vanilla` for web alternatives
+- `packages/swift` for native iOS, macOS, tvOS, watchOS, and visionOS apps
+- `packages/vue`, `packages/svelte`, `packages/solidjs`, `packages/vanilla` for web alternatives
 
 Each page includes installation commands and live previews showing the same seed as the code sample.
 

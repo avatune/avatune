@@ -71,7 +71,7 @@ Avatar theme for Avatune using vampire skin design assets.
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, Vanilla JavaScript, and Swift.
 
 ### React
 
@@ -160,6 +160,25 @@ const svg = avatar({
 })
 
 container?.appendChild(svg)
+```
+
+### Swift
+
+Add [avatune-swift](/packages/swift) and depend on its `AvatuneVampireSkin` product:
+
+```swift
+import AvatuneVampireSkin
+import AvatuneRender
+import SwiftUI
+
+struct AvatarPreview: View {
+    var body: some View {
+        AvatarView(
+            VampireSkinAvatar(seed: .string("optional-seed-for-random-generation"))
+        )
+        .frame(width: 300, height: 300)
+    }
+}
 ```
 
 ## Customization

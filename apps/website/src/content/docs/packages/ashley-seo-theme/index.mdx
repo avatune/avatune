@@ -70,7 +70,7 @@ Avatar theme for Avatune using ashley seo design assets.
 
 ## Usage
 
-This theme is available for multiple frameworks: React, Vue, Svelte, Angular, and Vanilla JavaScript.
+This theme is available for multiple frameworks: React, Vue, Svelte, Angular, Vanilla JavaScript, and Swift.
 
 ### React
 
@@ -159,6 +159,25 @@ const svg = avatar({
 })
 
 container?.appendChild(svg)
+```
+
+### Swift
+
+Add [avatune-swift](/packages/swift) and depend on its `AvatuneAshleySeo` product:
+
+```swift
+import AvatuneAshleySeo
+import AvatuneRender
+import SwiftUI
+
+struct AvatarPreview: View {
+    var body: some View {
+        AvatarView(
+            AshleySeoAvatar(seed: .string("optional-seed-for-random-generation"))
+        )
+        .frame(width: 300, height: 300)
+    }
+}
 ```
 
 ## Customization

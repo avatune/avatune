@@ -41,7 +41,7 @@ const cells = [
     desc: (
       <>
         Not a wrapper. <code>@avatune/react</code>, <code>@avatune/svelte</code>
-        , and friends each compile to idiomatic primitives.
+        , and the native Swift package each compile to idiomatic primitives.
       </>
     ),
     icon: 'fw',
