@@ -14,12 +14,12 @@
 
 **Production-ready avatar system with AI-powered generation and framework-native components.**
 
-Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with React, Vue, Svelte, and Vanilla JavaScript.
+Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with React, React Native, Angular, SolidJS, Vue, Svelte, and Vanilla JavaScript — plus native rendering on Apple platforms with Swift.
 
 ## Features
 
 - **AI-Powered Generation** - Train and use TensorFlow.js models for intelligent avatar attribute prediction (hair color, skin tone, hair length)
-- **Framework Native** - First-class support for React, Vue, Svelte, and Vanilla JS with framework-specific components
+- **Framework Native** - First-class support for React, React Native, Angular, SolidJS, Vue, Svelte, and Vanilla JavaScript with framework-specific components, plus a native Swift package for Apple platforms
 - **Theme System** - Multiple professionally designed themes with full customization support
 - **Type Safe** - Built with TypeScript for complete type safety across all packages
 - **Production Ready** - Optimized builds with Rspack, tree-shakeable, and performant
@@ -63,7 +63,7 @@ function App() {
 
 ## Available Themes
 
-All themes support React, Vue, Svelte, and Vanilla JavaScript.
+Every theme supports React, React Native, Angular, SolidJS, Vue, Svelte, and Vanilla JavaScript — and ships as a Swift module for Apple platforms.
 
 | Theme | Package |
 |-------|---------|
@@ -88,13 +88,16 @@ All themes support React, Vue, Svelte, and Vanilla JavaScript.
 
 | Framework | Package |
 |-----------|---------|
-| Angular | [`@avatune/angular`](./packages/renderers/angular) |
-| Solidjs | [`@avatune/solidjs`](./packages/renderers/solidjs) |
 | React | [`@avatune/react`](./packages/renderers/react) |
 | React Native | [`@avatune/react-native`](./packages/renderers/react-native) |
+| Angular | [`@avatune/angular`](./packages/renderers/angular) |
+| SolidJS | [`@avatune/solidjs`](./packages/renderers/solidjs) |
 | Vue 3 | [`@avatune/vue`](./packages/renderers/vue) |
 | Svelte 5 | [`@avatune/svelte`](./packages/renderers/svelte) |
 | Vanilla JS | [`@avatune/vanilla`](./packages/renderers/vanilla) |
+| Swift | [`avatune-swift`](./swift) |
+
+Swift is developed in [`swift/`](./swift) and released from [avatune/avatune-swift](https://github.com/avatune/avatune-swift), because Swift Package Manager resolves a package from a repository root. See [swift/README.md](./swift/README.md) for installation and usage.
 
 ## Predictors
 
@@ -118,7 +121,11 @@ Explore all themes and frameworks in the unified Storybook:
 bun run build && bun storybook
 ```
 
-This launches a single Storybook instance showcasing all themes across React, Vue, Svelte, and Vanilla implementations.
+This launches a single Storybook instance showcasing all themes across the web renderers. The Swift package ships the equivalent as a native browser app:
+
+```bash
+swift run -c release --package-path swift Avatune
+```
 
 ## Development
 

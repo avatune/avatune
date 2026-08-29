@@ -49,28 +49,98 @@ function generateThemesTable(themes: PackageInfo[]): string {
   return lines.join('\n')
 }
 
-function generateRenderersTable(renderers: PackageInfo[]): string {
-  const lines = ['| Framework | Package |', '|-----------|---------|']
+interface RendererInfo {
+  name: string
+  label: string
+  packageName: string
+  path: string
+}
 
-  const frameworkLabels: Record<string, string> = {
-    react: 'React',
-    'react-native': 'React Native',
-    vue: 'Vue 3',
-    svelte: 'Svelte 5',
-    vanilla: 'Vanilla JS',
+const FRAMEWORK_LABELS: Record<string, string> = {
+  react: 'React',
+  'react-native': 'React Native',
+  angular: 'Angular',
+  solidjs: 'SolidJS',
+  vue: 'Vue 3',
+  svelte: 'Svelte 5',
+  vanilla: 'Vanilla JS',
+  swift: 'Swift',
+}
+
+/** Version numbers read oddly mid-sentence, so prose uses its own names. */
+const PROSE_LABELS: Record<string, string> = {
+  vue: 'Vue',
+  svelte: 'Svelte',
+  vanilla: 'Vanilla JavaScript',
+}
+
+const RENDERER_ORDER = [
+  'react',
+  'react-native',
+  'angular',
+  'solidjs',
+  'vue',
+  'svelte',
+  'vanilla',
+  'swift',
+]
+
+/**
+ * The Swift package lives outside `packages/` and is released from its own
+ * repository — SPM resolves a package from a repository root — so it cannot be
+ * discovered the way the npm renderers are.
+ */
+const SWIFT_RENDERER: RendererInfo = {
+  name: 'swift',
+  label: 'Swift',
+  packageName: 'avatune-swift',
+  path: './swift',
+}
+
+/**
+ * Every renderer the README describes, in reading order. Both the table and the
+ * prose below derive from this, so a new renderer cannot appear in one and go
+ * missing from the other.
+ */
+function collectRenderers(discovered: PackageInfo[]): RendererInfo[] {
+  const rank = (name: string) => {
+    const index = RENDERER_ORDER.indexOf(name)
+    // An unlisted renderer sorts last rather than first.
+    return index === -1 ? RENDERER_ORDER.length : index
   }
 
-  // Sort renderers in logical order
-  const order = ['react', 'react-native', 'vue', 'svelte', 'vanilla']
-  const sorted = [...renderers].sort(
-    (a, b) => order.indexOf(a.name) - order.indexOf(b.name),
-  )
+  return [
+    ...discovered.map((renderer) => ({
+      name: renderer.name,
+      label: FRAMEWORK_LABELS[renderer.name] || capitalizeFirst(renderer.name),
+      packageName: `@avatune/${renderer.name}`,
+      path: renderer.path,
+    })),
+    SWIFT_RENDERER,
+  ].sort((a, b) => rank(a.name) - rank(b.name))
+}
 
-  for (const renderer of sorted) {
-    const label =
-      frameworkLabels[renderer.name] || capitalizeFirst(renderer.name)
+/** `React, Vue, and Svelte` */
+function proseList(names: string[]): string {
+  if (names.length < 2) return names.join('')
+  return `${names.slice(0, -1).join(', ')}, and ${names[names.length - 1]}`
+}
+
+/** The web renderers, named as prose. Swift is called out separately. */
+function webFrameworkList(renderers: RendererInfo[]): string {
+  return proseList(
+    renderers
+      .filter((renderer) => renderer.name !== SWIFT_RENDERER.name)
+      .map((renderer) => PROSE_LABELS[renderer.name] || renderer.label),
+  )
+}
+
+function generateRenderersTable(renderers: RendererInfo[]): string {
+  const lines = ['| Framework | Package |', '|-----------|---------|']
+
+  for (const renderer of renderers) {
     lines.push(
-      `| ${label} | [\`@avatune/${renderer.name}\`](${renderer.path}) |`,
+      `| ${renderer.label} | [\`${renderer.packageName}\`](${renderer.path}) |`,
     )
   }
 
@@ -103,12 +173,15 @@ function generatePredictorsTable(predictors: PackageInfo[]): string {
 
 function generateReadme(
   themes: PackageInfo[],
-  renderers: PackageInfo[],
+  discoveredRenderers: PackageInfo[],
   predictors: PackageInfo[],
 ): string {
   const previewTheme = 'pacovqzz-theme'
   const previewTheme2 = 'fatin-verse-theme'
   const previewTheme3 = 'micah-theme'
+
+  const renderers = collectRenderers(discoveredRenderers)
+  const webFrameworks = webFrameworkList(renderers)
 
   return `# Avatune
 
@@ -126,12 +199,12 @@ function generateReadme(
 
 **Production-ready avatar system with AI-powered generation and framework-native components.**
 
-Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with React, Vue, Svelte, and Vanilla JavaScript.
+Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with ${webFrameworks} — plus native rendering on Apple platforms with Swift.
 
 ## Features
 
 - **AI-Powered Generation** - Train and use TensorFlow.js models for intelligent avatar attribute prediction (hair color, skin tone, hair length)
-- **Framework Native** - First-class support for React, Vue, Svelte, and Vanilla JS with framework-specific components
+- **Framework Native** - First-class support for ${webFrameworks} with framework-specific components, plus a native Swift package for Apple platforms
 - **Theme System** - Multiple professionally designed themes with full customization support
 - **Type Safe** - Built with TypeScript for complete type safety across all packages
 - **Production Ready** - Optimized builds with Rspack, tree-shakeable, and performant
@@ -175,13 +248,15 @@ function App() {
 
 ## Available Themes
 
-All themes support React, Vue, Svelte, and Vanilla JavaScript.
+Every theme supports ${webFrameworks} — and ships as a Swift module for Apple platforms.
 
 ${generateThemesTable(themes)}
 
 ## Framework Renderers
 
 ${generateRenderersTable(renderers)}
+
+Swift is developed in [\`swift/\`](./swift) and released from [avatune/avatune-swift](https://github.com/avatune/avatune-swift), because Swift Package Manager resolves a package from a repository root. See [swift/README.md](./swift/README.md) for installation and usage.
 
 ## Predictors
 
@@ -199,7 +274,11 @@ Explore all themes and frameworks in the unified Storybook:
 bun run build && bun storybook
 \`\`\`
 
-This launches a single Storybook instance showcasing all themes across React, Vue, Svelte, and Vanilla implementations.
+This launches a single Storybook instance showcasing all themes across the web renderers. The Swift package ships the equivalent as a native browser app:
+
+\`\`\`bash
+swift run -c release --package-path swift Avatune
+\`\`\`
 
 ## Development
 
