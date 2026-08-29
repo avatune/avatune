@@ -147,7 +147,14 @@ const themes = baselineThemes()
 
 // Generous: this builds the Swift package and renders every avatar, which is
 // far past bun's default hook timeout.
+//
+// The guard is repeated here rather than left to the `describe.skipIf`s below:
+// a top-level `beforeAll` runs even when every suite in the file is skipped, so
+// without it the ubuntu CI job builds the snapshot tool and fails on the AppKit
+// it has no way to provide.
 beforeAll(() => {
+  if (!enabled || themes.length === 0) return
+
   rmSync(TMP, { recursive: true, force: true })
   mkdirSync(TMP, { recursive: true })
 

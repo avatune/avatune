@@ -97,9 +97,20 @@ jobs:
         run: swift test --package-path swift
 
       # The only way to exercise the UIKit paths, which the macOS run cannot.
+      #
+      # The device is resolved at runtime because runner images retire simulator
+      # models without notice, and a pinned name fails the job the day its
+      # device disappears rather than when anything actually broke. Any iPhone
+      # will do: these suites are not device-specific.
       - name: Test On iOS Simulator
-        run: >-
-          xcodebuild test
-          -scheme Avatune
-          -destination 'platform=iOS Simulator,name=iPhone 16 Pro'
         working-directory: swift
+        run: |
+          device=$(xcrun simctl list devices available --json \
+            | jq -r 'first(.devices[][] | select(.name | startswith("iPhone")) | .udid) // empty')
+
+          if [ -z "$device" ]; then
+            echo "::error::No iPhone simulator is available on this runner."
+            exit 1
+          fi
+
+          xcodebuild test -scheme Avatune -destination "id=$device"
