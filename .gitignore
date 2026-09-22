@@ -44,9 +44,9 @@ yarn-error.log*
 *storybook.log
 storybook-static
 
-.lethe
-
 # theme preview artifacts
 .preview/
 
 .playwright-mcp/
+
+.claude/settings.local.json

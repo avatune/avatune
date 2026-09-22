@@ -201,14 +201,6 @@ function generateReadme(
 
 Generate beautiful, customizable avatars with machine learning prediction or manual configuration. Works seamlessly with ${webFrameworks} — plus native rendering on Apple platforms with Swift.
 
-## Features
-
-- **AI-Powered Generation** - Train and use TensorFlow.js models for intelligent avatar attribute prediction (hair color, skin tone, hair length)
-- **Framework Native** - First-class support for ${webFrameworks} with framework-specific components, plus a native Swift package for Apple platforms
-- **Theme System** - Multiple professionally designed themes with full customization support
-- **Type Safe** - Built with TypeScript for complete type safety across all packages
-- **Production Ready** - Optimized builds with Rspack, tree-shakeable, and performant
-
 ## Quick Start
 
 ### Install Theme and Renderer
